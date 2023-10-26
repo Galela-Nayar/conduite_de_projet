@@ -14,7 +14,7 @@ public class Projet {
     private String id; // ID du projet
 
     private String nom;
-    private int createur; // ID de l'utilisateur créateur
+    private String createur; // ID de l'utilisateur créateur
     private Date dateCreation; // Date de création au format souhaité
     private List<Section> sections; // Liste des sections
     private List<Tache> taches; // Liste des tâches
@@ -32,10 +32,10 @@ public class Projet {
         this.nom = nom;
     }
 
-    public int getCreateur() {
+    public String getCreateur() {
         return createur;
     }
-    public void setCreateur(int createur) {
+    public void setCreateur(String createur) {
         this.createur = createur;
     }
 

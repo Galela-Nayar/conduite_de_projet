@@ -1,31 +1,36 @@
 package backend.cp.controller;
 
 import backend.cp.modele.Utilisateur;
-import backend.cp.service.UtilisateurService;
+import backend.cp.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/utilisateurs")
 public class UtilisateurController {
 
-    private final UtilisateurService utilisateurService;
-
     @Autowired
-    public UtilisateurController(UtilisateurService utilisateurService) {
-        this.utilisateurService = utilisateurService;
-    }
+    UtilisateurRepository utilisateurRepository;
 
     @PostMapping("/create")
-    public Utilisateur createUtilisateur(@RequestBody Utilisateur utilisateur) {
-        return utilisateurService.createUtilisateur(utilisateur);
-    }
+    public ResponseEntity<String> createUtilisateur(
+        @RequestParam String nom,
+        @RequestParam String prenom,
+        @RequestParam String usernam,
+        @RequestParam String email,
+        @RequestParam String miniature,
+        @RequestParam String description
+    ) {
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setNom(nom);
+        utilisateur.setUserName(usernam);
+        utilisateur.setMail(email);
+        utilisateur.setMiniature(miniature);
+        utilisateur.setBio(description);
 
-    @GetMapping("/all")
-    public List<Utilisateur> getAllUtilisateurs() {
-        return utilisateurService.getAllUtilisateurs();
+        utilisateurRepository.save(utilisateur);
+        return ResponseEntity.ok("Entité Utilisateur créée avec succès.");
     }
 
 }
