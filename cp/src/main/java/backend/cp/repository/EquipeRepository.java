@@ -1,4 +1,4 @@
-package backend.cp;
+package backend.cp.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

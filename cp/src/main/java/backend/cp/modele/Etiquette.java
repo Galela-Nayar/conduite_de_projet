@@ -1,18 +1,25 @@
 package backend.cp.modele;
 
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+@Document(collection = "etiquette")
+public class Etiquette {
 
-@Document(collection = "equipe")
-public class Equipe {
     @Id
     private String id;
 
     private String name;
-    private String color; // Utilisez ici un format de couleur (par exemple : "#RRGGBB")
-    private List<String> colaborateurs; // Liste d'ID sous forme d'entiers
+    private String color;
+
+    public Etiquette() {
+    }
+
+    public Etiquette(String name, String color) {
+        this.name = name;
+        this.color = color;
+    }
 
     public String getId() {
         return id;
@@ -36,13 +43,5 @@ public class Equipe {
 
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public List<String> getCollaborateurs() {
-        return colaborateurs;
-    }
-
-    public void setColaborateur(List<String> colaborateur) {
-        this.colaborateurs = colaborateur;
     }
 }
