@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router'; // Import Router
 
 @Component({
   selector: 'app-home-page',
@@ -10,10 +11,11 @@ export class HomePageComponent {
   email: string = '';
   password: string = '';
 
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient, private router: Router) {} // Inject Router
 
   goToRegister() {
-    // Navigate to RegisterComponent
+    this.router.navigate(['/register']);
   }
 
   submitForm() {
