@@ -28,5 +28,4 @@ public class SectionController {
         return sectionService.getAllSections();
     }
 
-    // Autres endpoints du contrôleur pour la gestion des sections
 }

@@ -28,5 +28,4 @@ public class TacheController {
         return tacheService.getAllTaches();
     }
 
-    // Autres endpoints du contrôleur pour la gestion des tâches
 }

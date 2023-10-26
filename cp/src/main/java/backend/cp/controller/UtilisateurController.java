@@ -28,5 +28,4 @@ public class UtilisateurController {
         return utilisateurService.getAllUtilisateurs();
     }
 
-    // Autres endpoints du contrôleur pour la gestion des utilisateurs
 }

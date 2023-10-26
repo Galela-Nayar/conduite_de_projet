@@ -28,5 +28,4 @@ public class ProjetController {
         return projetService.getAllProjets();
     }
 
-    // Autres endpoints du contrôleur pour la gestion des projets
 }
