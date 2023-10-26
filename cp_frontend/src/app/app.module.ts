@@ -6,13 +6,17 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { HomePageComponent } from './home-page/home-page.component';
+import { RegisterComponent } from './register/register.component';
 
 
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomePageComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

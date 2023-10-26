@@ -1,0 +1,22 @@
+<h1>Création d'utilisateur</h1>
+<div>
+  <label for="nom">Nom :</label>
+  <input type="text" id="nom" [(ngModel)]="user.nom" name="nom" required><br><br>
+
+  <label for="prenom">Prénom :</label>
+  <input type="text" id="prenom" [(ngModel)]="user.prenom" name="prenom" required><br><br>
+
+  <label for="user_name">Nom d'utilisateur :</label>
+  <input type="text" id="user_name" [(ngModel)]="user.user_name" name="user_name" required><br><br>
+
+  <label for="mail">Adresse e-mail :</label>
+  <input type="email" id="mail" [(ngModel)]="user.mail" name="mail" required><br><br>
+
+  <label for="miniature">Lien vers miniature :</label>
+  <input type="text" id="miniature" [(ngModel)]="user.miniature" name="miniature"><br><br>
+
+  <label for="bio">Description de l'utilisateur :</label>
+  <textarea id="bio" [(ngModel)]="user.bio" name="bio" rows="4" cols="50"></textarea><br><br>
+
+  <button (click)="createUtilisateur()">Créer l'utilisateur</button>
+</div>

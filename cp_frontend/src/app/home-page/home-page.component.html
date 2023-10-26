@@ -1,0 +1,6 @@
+<div>
+    <input v-model="email" type="email" placeholder="Email" [(ngModel)]="email">
+    <input v-model="password" type="password" placeholder="Password" [(ngModel)]="password">
+    <p class="clickable-text" (click)="goToRegister()">Register</p>
+    <button (click)="submitForm()">Submit</button>
+</div>

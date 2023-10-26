@@ -5,30 +5,35 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
-import java.util.Map;
-
+import java.util.UUID;
 @Document(collection = "utilisateur")
 public class Utilisateur {
     @Id
-    private String id;
+    private UUID id;
     private String nom;
     private String prenom;
     private String userName;
+    private String password;
     private String mail;
-    private String miniature;
-    private List<String> listeProjet;
-    private List<String> amis;
+    private List<UUID> listeProjet;
     private String bio;
-    private Map<String, String> notification;
-    private Map<String, String> message;
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
+
+     public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 
     public String getNom() {
         return nom;
@@ -62,28 +67,13 @@ public class Utilisateur {
         this.mail = mail;
     }
 
-    public String getMiniature() {
-        return miniature;
-    }
 
-    public void setMiniature(String miniature) {
-        this.miniature = miniature;
-    }
-
-    public List<String> getListeProjet() {
+    public List<UUID> getListeProjet() {
         return listeProjet;
     }
 
-    public void setListeProjet(List<String> listeProjet) {
+    public void setListeProjet(List<UUID> listeProjet) {
         this.listeProjet = listeProjet;
-    }
-
-    public List<String> getAmis() {
-        return amis;
-    }
-
-    public void setAmis(List<String> amis) {
-        this.amis = amis;
     }
 
     public String getBio() {
@@ -92,21 +82,5 @@ public class Utilisateur {
 
     public void setBio(String bio) {
         this.bio = bio;
-    }
-
-    public Map<String, String> getNotification() {
-        return notification;
-    }
-
-    public void setNotification(Map<String, String> notification) {
-        this.notification = notification;
-    }
-
-    public Map<String, String> getMessage() {
-        return message;
-    }
-
-    public void setMessage(Map<String, String> message) {
-        this.message = message;
     }
 }
