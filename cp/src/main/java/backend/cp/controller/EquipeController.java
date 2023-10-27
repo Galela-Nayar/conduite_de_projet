@@ -11,27 +11,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 import backend.cp.modele.Equipe;
 import backend.cp.repository.EquipeRepository;
+import backend.cp.service.EquipeService;
 
 @RestController
 @RequestMapping("/equipe")
 public class EquipeController {
 
     @Autowired
-    private EquipeRepository equipeRepository;
+    private EquipeService equipeService;
+
+    public EquipeController(EquipeService equipeService) {
+        this.equipeService = equipeService;
+    }
 
     @PostMapping("/create")
     public ResponseEntity<String> createEquipe(
             @RequestParam String name,
-            @RequestParam String color,
-            @RequestParam List<String> colaborateur
+            @RequestParam String color
     ) {
-        Equipe equipe = new Equipe();
-        equipe.setName(name);
-        equipe.setColor(color);
-        equipe.setColaborateur(colaborateur);
-
-        equipeRepository.save(equipe);
-
+        
+        equipeService.createEquipe(name, color);
         return ResponseEntity.ok("Entité Equipe créée avec succès.");
     }
 }

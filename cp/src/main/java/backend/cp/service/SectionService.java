@@ -17,13 +17,14 @@ public class SectionService {
         this.sectionRepository = sectionRepository;
     }
 
-    public Section createSection(Section section) {
-        return sectionRepository.save(section);
+    public void createSection(String name) {
+        Section section = new Section();
+        section.setName(name);
+        sectionRepository.save(section);
     }
 
     public List<Section> getAllSections() {
         return sectionRepository.findAll();
     }
 
-    // Autres méthodes de service pour la gestion des sections
 }

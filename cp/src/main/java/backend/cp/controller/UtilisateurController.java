@@ -2,6 +2,7 @@ package backend.cp.controller;
 
 import backend.cp.modele.Utilisateur;
 import backend.cp.repository.UtilisateurRepository;
+import backend.cp.service.UtilisateurService;
 
 import java.util.UUID;
 
@@ -13,8 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/utilisateurs")
 public class UtilisateurController {
 
+    private final UtilisateurService utilisateurService;
+
     @Autowired
-    UtilisateurRepository utilisateurRepository;
+    public UtilisateurController(UtilisateurService sectionService) {
+        this.utilisateurService = sectionService;
+    }
 
     @PostMapping("/create")
     public ResponseEntity<String> createUtilisateur(
@@ -22,19 +27,9 @@ public class UtilisateurController {
         @RequestParam String prenom,
         @RequestParam String username,
         @RequestParam String password,
-        @RequestParam String email,
-        @RequestParam String description
+        @RequestParam String email
     ) {
-        Utilisateur utilisateur = new Utilisateur();
-        utilisateur.setId(UUID.randomUUID());
-        utilisateur.setNom(nom);
-        utilisateur.setPrenom(prenom);
-        utilisateur.setUserName(username);
-        utilisateur.setPassword(password);
-        utilisateur.setMail(email);
-        utilisateur.setBio(description);
-
-        utilisateurRepository.save(utilisateur);
+        utilisateurService.createUtilisateur(nom, prenom, username, password, email);
         return ResponseEntity.ok("Entité Utilisateur créée avec succès.");
     }
 

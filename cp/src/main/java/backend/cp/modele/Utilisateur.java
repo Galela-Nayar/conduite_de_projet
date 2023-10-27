@@ -9,7 +9,7 @@ import java.util.UUID;
 @Document(collection = "utilisateur")
 public class Utilisateur {
     @Id
-    private UUID id;
+    private String id;
     private String nom;
     private String prenom;
     private String userName;
@@ -18,13 +18,6 @@ public class Utilisateur {
     private List<UUID> listeProjet;
     private String bio;
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
      public String getPassword() {
         return password;
