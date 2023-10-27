@@ -30,7 +30,7 @@ public class UtilisateurService {
         utilisateur.setPrenom(prenom);
         utilisateur.setUserName(username);
         utilisateur.setPassword(password);
-        utilisateur.setMail(email);
+        utilisateur.setEmail(email);
 
         utilisateurRepository.save(utilisateur);
     }
@@ -39,5 +39,16 @@ public class UtilisateurService {
         return utilisateurRepository.findAll();
     }
 
-    // Autres méthodes de service pour la gestion des utilisateurs
+    public boolean existUser(String email){
+        Utilisateur user = utilisateurRepository.findByEmail(email);
+        return user != null;
+    }
+
+    public boolean connect(String email, String password){
+        Utilisateur user = utilisateurRepository.findByEmail(email);
+        if(user.getEmail()==email && user.getPassword()==password){
+            return true;
+        }
+        return false;
+    }
 }

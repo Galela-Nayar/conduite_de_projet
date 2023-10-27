@@ -1,8 +1,6 @@
 package backend.cp.controller;
 
 import backend.cp.dto.UtilisateurDto;
-import backend.cp.modele.Utilisateur;
-import backend.cp.repository.UtilisateurRepository;
 import backend.cp.service.UtilisateurService;
 
 
@@ -26,6 +24,17 @@ public class UtilisateurController {
     public ResponseEntity<String> createUtilisateur(@RequestBody UtilisateurDto utilisateurDto) {
         utilisateurService.createUtilisateur(utilisateurDto.getNom(), utilisateurDto.getPrenom(), utilisateurDto.getUserName(), utilisateurDto.getMail(), utilisateurDto.getPassword());
         return ResponseEntity.ok("Entité Utilisateur créée avec succès.");
+    }
+
+    @GetMapping("/login")
+    public int loginUtilisateur(@RequestParam String email, @RequestParam String password){
+        if(utilisateurService.existUser(email) == true){
+            if(utilisateurService.connect(email, password)){
+                return 1;
+            }
+            return 2;
+        };
+        return 0;
     }
 
 }

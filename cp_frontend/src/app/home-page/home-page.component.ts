@@ -26,15 +26,19 @@ export class HomePageComponent {
 
     const headers = { 'Content-Type': 'application/json' };
 
-    this.http.post('http://localhost:8080/login', user, { headers }).subscribe(
+    this.http.get(`http://localhost:8080/utilisateurs/login?email=${this.email}&password=${this.password}`).subscribe(
       (response) => {
-        console.log('Login successful', response);
-        // Handle successful login
+        if(response.valueOf() == 1){
+          document.body.innerHTML = "";
+          const test_connexion_utilisateur = document.createElement("h1");
+          test_connexion_utilisateur.textContent = "wéééééé il existe et peut se connecté"
+          document.body.appendChild(test_connexion_utilisateur);
+
+        }
+        else{
+          console.log("l'ulisateur n'xiste pas");
+        }
       },
-      (error) => {
-        console.error('Error during login', error);
-        // Handle login error
-      }
     );
   }
 }
