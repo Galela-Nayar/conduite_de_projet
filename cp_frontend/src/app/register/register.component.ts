@@ -13,11 +13,12 @@ export class RegisterComponent {
     user = {
       nom: '',
       prenom: '',
-      user_name: '',
-      mail: '',
-      miniature: '',
-      bio: ''
+      username: '',
+      password: '',
+      email: '',
     };
+
+
 
   constructor(private http: HttpClient) {}
 
@@ -26,6 +27,7 @@ export class RegisterComponent {
     const headers = { 'Content-Type': 'application/json' };
     console.log("222222222222");
 
+
     this.http.post('http://localhost:8080/utilisateurs/create', this.user, { headers }).subscribe(
       (response) => {
         console.log('Utilisateur créé avec succès', response);
@@ -33,7 +35,7 @@ export class RegisterComponent {
       (error) => {
         console.error('Erreur lors de la création de l\'utilisateur', error);
       }
-    );
-    console.log("333333333");
+    );    console.log("333333333333");
+
   }
 }
