@@ -11,7 +11,7 @@ public class Equipe {
     private String id;
 
     private String name;
-    private String color; // Utilisez ici un format de couleur (par exemple : "#RRGGBB")
+    private String color; 
     private List<String> colaborateurs; 
 
     public String getId() {

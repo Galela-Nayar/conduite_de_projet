@@ -15,11 +15,10 @@ public class EquipeService {
     @Autowired
     private EquipeRepository equipeRepository;
 
-    public Equipe createEquipe(@RequestParam String name, @RequestParam String color, @RequestParam List<String> colaborateur) {
+    public void createEquipe(String name, String color) {
         Equipe equipe = new Equipe();
         equipe.setName(name);
         equipe.setColor(color);
-        equipe.setColaborateur(colaborateur);
-        return equipeRepository.save(equipe);
+        equipeRepository.save(equipe);
     }
 }

@@ -3,6 +3,7 @@ package backend.cp.controller;
 import backend.cp.modele.Section;
 import backend.cp.service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +20,9 @@ public class SectionController {
     }
 
     @PostMapping("/create")
-    public Section createSection(@RequestBody Section section) {
-        return sectionService.createSection(section);
+    public ResponseEntity<String> createSection(@RequestParam String name) {
+        sectionService.createSection(name);
+        return ResponseEntity.ok("section creer");
     }
 
     @GetMapping("/all")
