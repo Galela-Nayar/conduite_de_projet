@@ -3,7 +3,7 @@ import { Component, ElementRef, AfterViewInit, Renderer2 } from '@angular/core';
 @Component({
   selector: 'app-log-app',
   templateUrl: './log-app.component.html',
-  styleUrls: ['./log-app.component.css']
+  styleUrls: ['./log-app.component.scss']
 })
 export class LogAppComponent implements AfterViewInit {
   constructor(private renderer: Renderer2, private el: ElementRef) {}

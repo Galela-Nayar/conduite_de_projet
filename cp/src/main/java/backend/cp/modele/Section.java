@@ -3,8 +3,11 @@ package backend.cp.modele;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import lombok.Data;
+
 import java.util.List;
 
+@Data
 @Document(collection = "section")
 public class Section {
     @Id
@@ -12,27 +15,5 @@ public class Section {
     private String name;
     private List<Tache> taches;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Tache> getTaches() {
-        return taches;
-    }
-
-    public void setTaches(List<Tache> taches) {
-        this.taches = taches;
-    }
+  
 }

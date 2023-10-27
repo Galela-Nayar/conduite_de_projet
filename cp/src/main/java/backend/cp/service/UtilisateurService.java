@@ -4,10 +4,8 @@ import backend.cp.modele.Utilisateur;
 import backend.cp.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class UtilisateurService {
@@ -23,8 +21,9 @@ public class UtilisateurService {
         String nom,
         String prenom,
         String username,
-        String password,
-        String email
+        String email,
+        String password
+        
     ) {
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setNom(nom);

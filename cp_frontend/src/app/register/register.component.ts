@@ -14,8 +14,8 @@ export class RegisterComponent {
       nom: '',
       prenom: '',
       username: '',
-      password: '',
       email: '',
+      password: '',
     };
 
 
@@ -28,14 +28,15 @@ export class RegisterComponent {
     console.log("222222222222");
 
 
-    this.http.post('http://localhost:8080/utilisateurs/create', this.user, { headers }).subscribe(
-      (response) => {
-        console.log('Utilisateur créé avec succès', response);
-      },
-      (error) => {
-        console.error('Erreur lors de la création de l\'utilisateur', error);
-      }
-    );    console.log("333333333333");
+
+  this.http.post('http://localhost:8080/utilisateurs/create', this.user).subscribe(
+    (response) => {
+      console.log('Utilisateur créé avec succès', response);
+    },
+    (error) => {
+      console.error('Erreur lors de la création de l\'utilisateur', error);
+    }
+  );
 
   }
 }
