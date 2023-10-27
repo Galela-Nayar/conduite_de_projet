@@ -4,10 +4,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HomePageComponent } from './home-page/home-page.component';
 import { RegisterComponent } from './register/register.component';
+import { LogAppComponent } from './log-app/log-app.component';
 
 
 
@@ -16,7 +16,9 @@ import { RegisterComponent } from './register/register.component';
   declarations: [
     AppComponent,
     HomePageComponent,
-    RegisterComponent
+    RegisterComponent,
+    LogAppComponent,
+    LogAppComponent
   ],
   imports: [
     BrowserModule,
