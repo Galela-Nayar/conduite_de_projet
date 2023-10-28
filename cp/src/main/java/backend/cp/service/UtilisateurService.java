@@ -46,7 +46,7 @@ public class UtilisateurService {
 
     public boolean connect(String email, String password){
         Utilisateur user = utilisateurRepository.findByEmail(email);
-        if(user.getEmail()==email && user.getPassword()==password){
+        if(user.getEmail().equals(email) && user.getPassword().equals(password)){
             return true;
         }
         return false;

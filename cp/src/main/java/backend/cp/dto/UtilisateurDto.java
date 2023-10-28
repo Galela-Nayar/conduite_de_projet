@@ -9,9 +9,9 @@ public class UtilisateurDto {
 
     private String nom;
     private String prenom;
-    private String userName;
+    private String username;
     private String password;
-    private String mail;
+    private String email;
     private List<String> listeProjet;
     private String bio;
 

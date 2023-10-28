@@ -28,12 +28,14 @@ export class HomePageComponent {
 
     this.http.get(`http://localhost:8080/utilisateurs/login?email=${this.email}&password=${this.password}`).subscribe(
       (response) => {
-        if(response.valueOf() == 1){
+        if(response.valueOf()== 1){
           document.body.innerHTML = "";
           const test_connexion_utilisateur = document.createElement("h1");
           test_connexion_utilisateur.textContent = "wéééééé il existe et peut se connecté"
           document.body.appendChild(test_connexion_utilisateur);
-
+        }
+        else if(response.valueOf() == 2) {
+          console.log("existe mais mdp ou emaail incorrect");
         }
         else{
           console.log("l'ulisateur n'xiste pas");

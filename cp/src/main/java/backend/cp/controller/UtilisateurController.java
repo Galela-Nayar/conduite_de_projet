@@ -22,14 +22,15 @@ public class UtilisateurController {
 
     @PostMapping("/create")
     public ResponseEntity<String> createUtilisateur(@RequestBody UtilisateurDto utilisateurDto) {
-        utilisateurService.createUtilisateur(utilisateurDto.getNom(), utilisateurDto.getPrenom(), utilisateurDto.getUserName(), utilisateurDto.getMail(), utilisateurDto.getPassword());
+        System.out.println(utilisateurDto.getNom() +"     "+ utilisateurDto.getPrenom()+"     "+ utilisateurDto.getUsername()+"     "+ utilisateurDto.getEmail()+"     "+ utilisateurDto.getPassword());
+        utilisateurService.createUtilisateur(utilisateurDto.getNom(), utilisateurDto.getPrenom(), utilisateurDto.getUsername(), utilisateurDto.getEmail(), utilisateurDto.getPassword());
         return ResponseEntity.ok("Entité Utilisateur créée avec succès.");
     }
 
     @GetMapping("/login")
     public int loginUtilisateur(@RequestParam String email, @RequestParam String password){
         if(utilisateurService.existUser(email) == true){
-            if(utilisateurService.connect(email, password)){
+            if(utilisateurService.connect(email, password) == true){
                 return 1;
             }
             return 2;
