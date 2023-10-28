@@ -35,9 +35,17 @@ export class HomePageComponent {
           document.body.appendChild(test_connexion_utilisateur);
         }
         else if(response.valueOf() == 2) {
+          document.body.innerHTML = "";
+          const test_connexion_utilisateur = document.createElement("h1");
+          test_connexion_utilisateur.textContent = "existe mais mdp ou emaail incorrect"
+          document.body.appendChild(test_connexion_utilisateur);
           console.log("existe mais mdp ou emaail incorrect");
         }
         else{
+          document.body.innerHTML = "";
+          const test_connexion_utilisateur = document.createElement("h1");
+          test_connexion_utilisateur.textContent = "l'ulisateur n'xiste pas"
+          document.body.appendChild(test_connexion_utilisateur);
           console.log("l'ulisateur n'xiste pas");
         }
       },
