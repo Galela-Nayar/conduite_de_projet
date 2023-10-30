@@ -1,4 +1,6 @@
-import { Component, ElementRef, AfterViewInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-log-app',
@@ -6,69 +8,131 @@ import { Component, ElementRef, AfterViewInit, Renderer2 } from '@angular/core';
   styleUrls: ['./log-app.component.scss']
 })
 export class LogAppComponent implements AfterViewInit {
-  constructor(private renderer: Renderer2, private el: ElementRef) {}
+  user = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: ""
+  };
+
+  email!: string;
+  password!: string;
+  // Gestion de input du formulaire
+  constructor(private http: HttpClient, private el: ElementRef, private renderer: Renderer2) { }
+
   ngAfterViewInit() {
-    const formInputs = this.el.nativeElement.querySelectorAll('.form input, .form textarea');
-    formInputs.forEach((input: any) => {
-      this.renderer.listen(input, 'keyup', (event) => this.handleInputEvent(event));
-      this.renderer.listen(input, 'blur', (event) => this.handleInputEvent(event));
-      this.renderer.listen(input, 'focus', (event) => this.handleInputEvent(event));
+
+    const formElements = document.querySelectorAll('.form input, .form textarea');
+
+    formElements.forEach((element: Element) => {
+      const inputElement = element as HTMLInputElement;
+      const label = inputElement.previousElementSibling;
+
+      if (inputElement instanceof HTMLInputElement) {
+        inputElement.addEventListener('keyup', (e) => {
+          if (e.type === 'keyup') {
+            if (inputElement.value === '') {
+              label?.classList.remove('active', 'highlight');
+            } else {
+              label?.classList.add('active', 'highlight');
+            }
+          } else if (e.type === 'blur') {
+            if (inputElement.value === '') {
+              label?.classList.remove('active', 'highlight');
+            } else {
+              label?.classList.remove('highlight');
+            }
+          } else if (e.type === 'focus') {
+            if (inputElement.value === '') {
+              label?.classList.remove('highlight');
+            } else if (inputElement.value !== '') {
+              label?.classList.add('highlight');
+            }
+          }
+        });
+      }
     });
 
-    const tabLinks = this.el.nativeElement.querySelectorAll('.tab a');
-    tabLinks.forEach((link: any) => {
-      this.renderer.listen(link, 'click', (event) => this.handleTabClick(event));
+
+    // Gestion de navivation du formulaire (login signup)
+    const tabs = this.el.nativeElement.querySelectorAll('.tab a');
+
+    tabs.forEach((tab: HTMLElement) => {
+      this.renderer.listen(tab, 'click', (e) => {
+        e.preventDefault();
+
+        const parentElement = tab.parentElement as HTMLElement;
+        parentElement.classList.add('active');
+
+        const parentElementParent = parentElement.parentElement;
+        if (parentElementParent) {
+          Array.from(parentElementParent.children as HTMLCollectionOf<HTMLElement>).forEach((child: HTMLElement) => {
+            if (child !== parentElement) {
+              child.classList.remove('active');
+            }
+          });
+        }
+
+        const target = tab.getAttribute('href');
+        const tabContents = this.el.nativeElement.querySelectorAll('.tab-content > div');
+
+        tabContents.forEach((tabContent: HTMLElement) => {
+          if ('#' + tabContent.id !== target) {
+            this.renderer.setStyle(tabContent, 'display', 'none');
+          } else {
+            this.renderer.setStyle(tabContent, 'display', 'block');
+          }
+        });
+      });
     });
+
   }
 
-  handleInputEvent(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const label = input.previousElementSibling;
+  onSubmitForm(form: NgForm) {
+    // Logique pour la soumission du formulaire d'inscription ici
+    console.log(form.value); // Affichage du contenu du formulaire sur la console
 
-    if (event.type === 'keyup') {
-      if (input.value === '') {
-        label?.classList.remove('active', 'highlight');
-      } else {
-        label?.classList.add('active', 'highlight');
+    const headers = { 'Content-Type': 'application/json' };
+
+    this.http.post('http://localhost:8080/utilisateurs/create', this.user).subscribe(
+      (response) => {
+        console.log('Utilisateur créé avec succès', response);
+      },
+      (error) => {
+        console.error("Erreur lors de la création de l'utilisateur", error);
       }
-    } else if (event.type === 'blur') {
-      if (input.value === '') {
-        label?.classList.remove('active', 'highlight');
-      } else {
-        label?.classList.remove('highlight');
-      }
-    } else if (event.type === 'focus') {
-      if (input.value === '') {
-        label?.classList.remove('highlight');
-      } else {
-        label?.classList.add('highlight');
-      }
-    }
+    );
   }
 
-  handleTabClick(event: Event) {
-    event.preventDefault();
+  onSubmit(form: NgForm) {
+    // Logique pour la soumission du formulaire de connexion ici
 
-    const tabLink = event.target as HTMLAnchorElement;
-    const tab = tabLink.parentElement;
+    console.log(form.value); // Affichage du contenu du formulaire sur la console
+    const headers = { 'Content-Type': 'application/json' };
 
-    tab?.classList.add('active');
-    const siblings = Array.from(tab?.parentElement?.children || []);
-    siblings.forEach((sibling) => {
-      if (sibling !== tab) {
-        sibling.classList.remove('active');
-      }
-    });
-
-    const target = tabLink.getAttribute('href');
-    const tabContents = this.el.nativeElement.querySelectorAll('.tab-content > div');
-    tabContents.forEach((content: { id: string | null; }) => {
-      if (content.id === target) {
-        this.renderer.setStyle(content, 'display', 'block');
-      } else {
-        this.renderer.setStyle(content, 'display', 'none');
-      }
-    });
-
+    this.http.get(`http://localhost:8080/utilisateurs/login?email=${this.email}&password=${this.password}`).subscribe(
+      (response) => {
+        if (response.valueOf() == 1) {
+          document.body.innerHTML = "";
+          const test_connexion_utilisateur = document.createElement("h1");
+          test_connexion_utilisateur.textContent = "wéééééé il existe et peut se connecté"
+          document.body.appendChild(test_connexion_utilisateur);
+        }
+        else if (response.valueOf() == 2) {
+          document.body.innerHTML = "";
+          const test_connexion_utilisateur = document.createElement("h1");
+          test_connexion_utilisateur.textContent = "existe mais mdp ou emaail incorrect"
+          document.body.appendChild(test_connexion_utilisateur);
+          console.log("existe mais mdp ou emaail incorrect");
+        }
+        else {
+          document.body.innerHTML = "";
+          const test_connexion_utilisateur = document.createElement("h1");
+          test_connexion_utilisateur.textContent = "l'ulisateur n'existe pas"
+          document.body.appendChild(test_connexion_utilisateur);
+          console.log("l'ulisateur n'existe pas");
+        }
+      },
+    );
   }
 }
