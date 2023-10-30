@@ -44,9 +44,22 @@ public class UtilisateurService {
         return user != null;
     }
 
-    public boolean connect(String email, String password){
+    public boolean existUserName(String userName){
+        Utilisateur user = utilisateurRepository.findByUserName(userName);
+        return user != null;
+    }
+
+    public boolean connectMail(String email, String password){
         Utilisateur user = utilisateurRepository.findByEmail(email);
         if(user.getEmail().equals(email) && user.getPassword().equals(password)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean connectName(String username, String password){
+        Utilisateur user = utilisateurRepository.findByUserName(username);
+        if(user.getUserName().equals(username) && user.getPassword().equals(password)){
             return true;
         }
         return false;

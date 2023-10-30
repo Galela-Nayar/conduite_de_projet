@@ -5,6 +5,7 @@ import backend.cp.service.UtilisateurService;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,12 @@ public class UtilisateurController {
     @PostMapping("/create")
     public ResponseEntity<String> createUtilisateur(@RequestBody UtilisateurDto utilisateurDto) {
         System.out.println(utilisateurDto.getNom() +"     "+ utilisateurDto.getPrenom()+"     "+ utilisateurDto.getUsername()+"     "+ utilisateurDto.getEmail()+"     "+ utilisateurDto.getPassword());
+        if(utilisateurService.existUser(utilisateurDto.getEmail()) == true){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exist.");
+        }
+        if(utilisateurService.existUserName(utilisateurDto.getUsername()) == true){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exist.");
+        }
         utilisateurService.createUtilisateur(utilisateurDto.getNom(), utilisateurDto.getPrenom(), utilisateurDto.getUsername(), utilisateurDto.getEmail(), utilisateurDto.getPassword());
         return ResponseEntity.ok("Entité Utilisateur créée avec succès.");
     }
@@ -30,11 +37,17 @@ public class UtilisateurController {
     @GetMapping("/login")
     public int loginUtilisateur(@RequestParam String email, @RequestParam String password){
         if(utilisateurService.existUser(email) == true){
-            if(utilisateurService.connect(email, password) == true){
+            if(utilisateurService.connectMail(email, password) == true){
                 return 1;
             }
             return 2;
-        };
+        }
+        if(utilisateurService.existUserName(email) == true){
+            if(utilisateurService.connectName(email, password) == true){
+                return 1;
+            }
+            return 2;
+        }
         return 0;
     }
 
