@@ -29,7 +29,7 @@ export class RegisterComponent {
 
 
 
-  this.http.post('http://localhost:8080/utilisateurs/create', this.user).subscribe(
+  this.http.post('http://localhost:8080/utilisateurs/create', this.user, {responseType: 'text'}).subscribe(
     (response) => {
       console.log('Utilisateur créé avec succès', response);
     },

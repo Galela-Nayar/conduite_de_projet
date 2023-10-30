@@ -37,14 +37,14 @@ export class HomePageComponent {
         else if(response.valueOf() == 2) {
           document.body.innerHTML = "";
           const test_connexion_utilisateur = document.createElement("h1");
-          test_connexion_utilisateur.textContent = "existe mais mdp ou emaail incorrect"
+          test_connexion_utilisateur.textContent = "existe mais mdp ou email incorect"
           document.body.appendChild(test_connexion_utilisateur);
           console.log("existe mais mdp ou emaail incorrect");
         }
         else{
           document.body.innerHTML = "";
           const test_connexion_utilisateur = document.createElement("h1");
-          test_connexion_utilisateur.textContent = "l'ulisateur n'xiste pas"
+          test_connexion_utilisateur.textContent = "l'ulisateur n'existe pas"
           document.body.appendChild(test_connexion_utilisateur);
           console.log("l'ulisateur n'xiste pas");
         }

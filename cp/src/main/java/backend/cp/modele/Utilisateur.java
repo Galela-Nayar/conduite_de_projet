@@ -3,6 +3,7 @@ package backend.cp.modele;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import lombok.Data;
 
@@ -13,8 +14,9 @@ import java.util.List;
 public class Utilisateur {
     @Id
     private String id;
-
     private String password;
+    
+    @Indexed(unique = true)
     private String email;
     private String nom;
     private String prenom;
