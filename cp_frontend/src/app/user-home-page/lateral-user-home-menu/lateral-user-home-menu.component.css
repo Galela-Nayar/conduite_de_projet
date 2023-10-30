@@ -20,3 +20,11 @@
     background-color: #ddd; /* Change this to your preferred color */
     color: black; /* Change this to your preferred color */
   }
+
+  .centered {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }

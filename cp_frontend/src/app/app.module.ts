@@ -13,6 +13,7 @@ import { UserHomePageComponent } from './user-home-page/user-home-page.component
 import { HorizontalUserHomeMenuComponent } from './user-home-page/horizontal-user-home-menu/horizontal-user-home-menu.component';
 import { ProjectComponent } from './user-home-page/project/project.component';
 import { CreateProjectComponent } from './user-home-page/create-project/create-project.component';
+import { UserHomeComponent } from './user-home-page/user-home/user-home.component';
 
 
 
@@ -27,7 +28,8 @@ import { CreateProjectComponent } from './user-home-page/create-project/create-p
     UserHomePageComponent,
     HorizontalUserHomeMenuComponent,
     ProjectComponent,
-    CreateProjectComponent
+    CreateProjectComponent,
+    UserHomeComponent
   ],
   imports: [
     BrowserModule,
