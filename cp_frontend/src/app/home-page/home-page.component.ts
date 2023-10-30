@@ -26,27 +26,24 @@ export class HomePageComponent {
 
     const headers = { 'Content-Type': 'application/json' };
 
-    this.http.get(`http://localhost:8080/utilisateurs/login?email=${this.email}&password=${this.password}`).subscribe(
+    this.http.get(`http://localhost:8080/utilisateurs/login?email=${this.email}&password=${this.password}`, {responseType: 'text'}).subscribe(
       (response) => {
-        if(response.valueOf()== 1){
+        if(response.valueOf() == "-0"){
           document.body.innerHTML = "";
           const test_connexion_utilisateur = document.createElement("h1");
-          test_connexion_utilisateur.textContent = "wéééééé il existe et peut se connecté"
+          test_connexion_utilisateur.textContent = "l'utisateur n'existe pas"
           document.body.appendChild(test_connexion_utilisateur);
+          console.log("l'utisateur n'existe pas");
         }
-        else if(response.valueOf() == 2) {
+        else if(response.valueOf() == "-1") {
           document.body.innerHTML = "";
           const test_connexion_utilisateur = document.createElement("h1");
           test_connexion_utilisateur.textContent = "existe mais mdp ou email incorect"
           document.body.appendChild(test_connexion_utilisateur);
-          console.log("existe mais mdp ou emaail incorrect");
+          console.log("existe mais mdp ou email incorrect");
         }
         else{
-          document.body.innerHTML = "";
-          const test_connexion_utilisateur = document.createElement("h1");
-          test_connexion_utilisateur.textContent = "l'ulisateur n'existe pas"
-          document.body.appendChild(test_connexion_utilisateur);
-          console.log("l'ulisateur n'xiste pas");
+          this.router.navigate([response.valueOf() + '/home'])
         }
       },
     );

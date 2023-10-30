@@ -35,20 +35,14 @@ public class UtilisateurController {
     }
 
     @GetMapping("/login")
-    public int loginUtilisateur(@RequestParam String email, @RequestParam String password){
+    public String loginUtilisateur(@RequestParam String email, @RequestParam String password){
         if(utilisateurService.existUser(email) == true){
-            if(utilisateurService.connectMail(email, password) == true){
-                return 1;
-            }
-            return 2;
+            return utilisateurService.connectMail(email, password);
         }
         if(utilisateurService.existUserName(email) == true){
-            if(utilisateurService.connectName(email, password) == true){
-                return 1;
-            }
-            return 2;
+            return utilisateurService.connectName(email, password);
         }
-        return 0;
+        return "-0";
     }
 
 }

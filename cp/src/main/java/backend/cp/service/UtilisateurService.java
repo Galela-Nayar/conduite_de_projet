@@ -39,6 +39,10 @@ public class UtilisateurService {
         return utilisateurRepository.findAll();
     }
 
+    public Utilisateur getUtilisateur(String ID){
+        return utilisateurRepository.findByid(ID);
+    }
+
     public boolean existUser(String email){
         Utilisateur user = utilisateurRepository.findByEmail(email);
         return user != null;
@@ -49,19 +53,19 @@ public class UtilisateurService {
         return user != null;
     }
 
-    public boolean connectMail(String email, String password){
+    public String connectMail(String email, String password){
         Utilisateur user = utilisateurRepository.findByEmail(email);
         if(user.getEmail().equals(email) && user.getPassword().equals(password)){
-            return true;
+            return user.getId();
         }
-        return false;
+        return "-1";
     }
 
-    public boolean connectName(String username, String password){
+    public String connectName(String username, String password){
         Utilisateur user = utilisateurRepository.findByUserName(username);
         if(user.getUserName().equals(username) && user.getPassword().equals(password)){
-            return true;
+            return user.getId();
         }
-        return false;
+        return "-1";
     }
 }
