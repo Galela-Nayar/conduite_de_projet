@@ -8,6 +8,11 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HomePageComponent } from './home-page/home-page.component';
 import { RegisterComponent } from './register/register.component';
 import { LogAppComponent } from './log-app/log-app.component';
+import { LateralUserHomeMenuComponent } from './user-home-page/lateral-user-home-menu/lateral-user-home-menu.component';
+import { UserHomePageComponent } from './user-home-page/user-home-page.component';
+import { HorizontalUserHomeMenuComponent } from './user-home-page/horizontal-user-home-menu/horizontal-user-home-menu.component';
+import { ProjectComponent } from './user-home-page/project/project.component';
+import { CreateProjectComponent } from './user-home-page/create-project/create-project.component';
 
 
 
@@ -18,7 +23,11 @@ import { LogAppComponent } from './log-app/log-app.component';
     HomePageComponent,
     RegisterComponent,
     LogAppComponent,
-    LogAppComponent
+    LateralUserHomeMenuComponent,
+    UserHomePageComponent,
+    HorizontalUserHomeMenuComponent,
+    ProjectComponent,
+    CreateProjectComponent
   ],
   imports: [
     BrowserModule,

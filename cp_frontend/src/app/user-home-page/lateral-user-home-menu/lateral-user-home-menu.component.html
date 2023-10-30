@@ -1,0 +1,8 @@
+<!-- lateral-user-home-menu.component.html -->
+<div class="lateral-menu">
+    <a [routerLink]="['/', id, 'home']">Home</a>
+    <div *ngFor="let project of projects">
+        <a [routerLink]="['/', id, 'projects', project.id]">{{ project.name }}</a>
+      </div>
+      <button *ngIf="projects.length === 0" [routerLink]="['/', id, 'create-project']">+</button>
+  </div>

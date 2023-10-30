@@ -3,6 +3,7 @@ package backend.cp.controller;
 import backend.cp.dto.UtilisateurDto;
 import backend.cp.service.UtilisateurService;
 
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,6 +44,11 @@ public class UtilisateurController {
             return utilisateurService.connectName(email, password);
         }
         return "-0";
+    }
+
+    @GetMapping("/projects")
+    public List<String> projects(@RequestParam String id){
+        return utilisateurService.getUtilisateur(id).getListeProjet();
     }
 
 }
