@@ -21,7 +21,7 @@ public class Projet {
     private Date dateCreation; // Date de création au format souhaité
     private List<Section> sections; // Liste des sections
     private List<Tache> taches; // Liste des tâches
-    private List<Integer> collaborateurs; // Liste des ID des collaborateurs (utilisateurs)
+    private List<String> collaborateurs; // Liste des ID des collaborateurs (utilisateurs)
     private List<Label> labels; // Liste des labels
     private List<Equipe> equipe; // Liste des équipes
     private String description; // Description du projet, texte ou référence à des fichiers

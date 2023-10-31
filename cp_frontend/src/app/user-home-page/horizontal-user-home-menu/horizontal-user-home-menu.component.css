@@ -22,3 +22,8 @@
     background-color: #ddd; /* Change this to your preferred color */
     color: black; /* Change this to your preferred color */
   }
+
+  .app-horizontal-user-home-menu {
+    border: 2px solid #444; /* Close to the original background color */
+    background: linear-gradient(to bottom, #333, #444); /* Gradient from original background color to border color */
+}

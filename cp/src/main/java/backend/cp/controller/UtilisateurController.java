@@ -1,6 +1,7 @@
 package backend.cp.controller;
 
 import backend.cp.dto.UtilisateurDto;
+import backend.cp.modele.Utilisateur;
 import backend.cp.service.UtilisateurService;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:4200") // replace with the domain your frontend is running on
 @RequestMapping("/utilisateurs")
 public class UtilisateurController {
 
@@ -48,7 +49,18 @@ public class UtilisateurController {
 
     @GetMapping("/projects")
     public List<String> projects(@RequestParam String id){
-        return utilisateurService.getUtilisateur(id).getListeProjet();
+        return utilisateurService.getUtilisateur(id).getListProjet();
     }
 
+    @GetMapping("/add-projet")
+    public ResponseEntity<String> addProjet(@RequestParam String userId, @RequestParam String projetId){
+    Utilisateur user = utilisateurService.getUtilisateur(userId);
+    if (user == null) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+    }
+    user.addProjet(projetId);
+    utilisateurService.saveUtilisateur(user);  // save the updated user back to the database
+
+    return ResponseEntity.ok("project add");
+}
 }

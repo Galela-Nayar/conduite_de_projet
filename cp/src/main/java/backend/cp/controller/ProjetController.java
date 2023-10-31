@@ -1,15 +1,14 @@
 package backend.cp.controller;
 
-import backend.cp.modele.Projet;
-import backend.cp.repository.ProjetRepository;
+import backend.cp.dto.ProjetDto;
 import backend.cp.service.ProjetService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 
+@CrossOrigin(origins = "http://localhost:4200") // replace with the domain your frontend is running on
 @RestController
 @RequestMapping("/projets")
 public class ProjetController {
@@ -21,17 +20,12 @@ public class ProjetController {
     public ProjetController(ProjetService projetService) {
         this.projetService = projetService;
     }
-
+/* ajouter un test pour voir si aucun autre projet dont le créateur est l'utilisateur avec le même nom  */
     @PostMapping("/create")
     public ResponseEntity<String> createProjet(
-        @RequestParam String nom,
-        @RequestParam String createur,
-        @RequestParam Date date,
-        @RequestParam String description,
-        @RequestParam Date dateButtoire
-        ) {
-            projetService.createProjet(nom, createur, description, dateButtoire);
-        return ResponseEntity.ok("projet creer");
+        @RequestBody ProjetDto projet) {
+            String id =projetService.createProjet(projet.getNom(), projet.getCreateur(), projet.getDate(), projet.isStandardSection(), projet.getDescription(), projet.getDateButoire());
+        return ResponseEntity.ok(id);
     }
 
 

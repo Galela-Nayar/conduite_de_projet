@@ -3,8 +3,8 @@
     <a [routerLink]="['/', id, 'home']">Home</a>
     <hr> <!-- Barre de séparation -->
     <div *ngIf="projects.length > 0; else noProjects">
-        <div *ngFor="let project of projects">
-            <a [routerLink]="['/', id, 'projects', project.id]">{{ project.name }}</a>
+        <div *ngFor="let projectId of projects">
+            <a [routerLink]="['/', id, 'projects', projectId]">{{ projectId }}</a>
         </div>
     </div>
     <ng-template #noProjects>

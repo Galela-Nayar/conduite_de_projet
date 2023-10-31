@@ -14,10 +14,12 @@ import { HorizontalUserHomeMenuComponent } from './user-home-page/horizontal-use
 import { ProjectComponent } from './user-home-page/project/project.component';
 import { CreateProjectComponent } from './user-home-page/create-project/create-project.component';
 import { UserHomeComponent } from './user-home-page/user-home/user-home.component';
-
-
-
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,14 +31,20 @@ import { UserHomeComponent } from './user-home-page/user-home/user-home.componen
     HorizontalUserHomeMenuComponent,
     ProjectComponent,
     CreateProjectComponent,
-    UserHomeComponent
+    UserHomeComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    RouterModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

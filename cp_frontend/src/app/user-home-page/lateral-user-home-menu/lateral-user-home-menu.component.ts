@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./lateral-user-home-menu.component.css']
 })
 export class LateralUserHomeMenuComponent implements OnInit {
-  id!: string;
+  id: string = '';
   projects: any[] = [];
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {}
@@ -18,9 +18,12 @@ export class LateralUserHomeMenuComponent implements OnInit {
     if (id !== null) {
       this.id = id;
       this.http.get<any[]>(`http://localhost:8080/utilisateurs/projects?id=${this.id}`).subscribe((projects) => {
-        if(projects != null)
+      
+      console.log(projects);  
+      if(projects != null)
             this.projects = projects;
-      });
+        }
+      );
     }
   }
 }

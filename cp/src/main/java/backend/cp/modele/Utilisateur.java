@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -21,7 +22,10 @@ public class Utilisateur {
     private String nom;
     private String prenom;
     private String userName;
-    private List<String> listeProjet;
+    private List<String> listProjet = new ArrayList<>();
     private String bio;
 
+    public void addProjet(String id){
+        listProjet.add(id);
+    }
 }

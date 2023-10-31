@@ -68,4 +68,8 @@ public class UtilisateurService {
         }
         return "-1";
     }
+
+    public void saveUtilisateur(Utilisateur utilisateur) {
+        utilisateurRepository.save(utilisateur);
+    }
 }
