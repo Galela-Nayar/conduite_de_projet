@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router'; // Import Router
 
@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router'; // Import Router
   styleUrls: ['./create-project.component.css']
 })
 export class CreateProjectComponent {
+  
   id: string = ''
   project = {
     nom: '',
@@ -17,8 +18,8 @@ export class CreateProjectComponent {
     description: "",
     dateButoire: new Date(),
   };
-
-  constructor(private http: HttpClient, private route: ActivatedRoute) {} // Inject Router
+  @Output() projectCreated = new EventEmitter<void>();
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {} // Inject Router
   
   submitForm() {
     const id = this.route.parent ? this.route.parent.snapshot.paramMap.get('id') : null;
@@ -37,6 +38,8 @@ export class CreateProjectComponent {
           (reponse)=>{
 
           console.log('C\'est bon, ', reponse);
+          this.router.navigate([`/${this.id}/project/${reponse}`])
+          this.projectCreated.emit(); // Emit the event
         })
         document.location.reload();
       },
@@ -46,4 +49,6 @@ export class CreateProjectComponent {
     );
     
   }
+
+  
 }
