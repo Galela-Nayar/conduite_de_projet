@@ -1,6 +1,7 @@
 package backend.cp.controller;
 
 import backend.cp.dto.ProjetDto;
+import backend.cp.modele.Projet;
 import backend.cp.service.ProjetService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,12 @@ public class ProjetController {
         @RequestBody ProjetDto projet) {
             String id =projetService.createProjet(projet.getNom(), projet.getCreateur(), projet.getDate(), projet.isStandardSection(), projet.getDescription(), projet.getDateButoire());
         return ResponseEntity.ok(id);
+    }
+
+    @GetMapping("/projet")
+    public Projet projet(@RequestParam String id) {
+            
+        return projetService.getProject(id);
     }
 
 

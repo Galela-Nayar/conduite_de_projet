@@ -39,11 +39,18 @@ public class ProjetService {
     }
 
     private List<Section> setSection() {
-        return null;
+        return new ArrayList<>();
     }
 
     public List<Projet> getAllProjets() {
         return projetRepository.findAll();
+    }
+
+    public Projet getProject(String id) {
+        for (Projet project : getAllProjets()) {
+            if(project.getId().equals(id)) return project;
+        }
+        return null;
     }
 
 }

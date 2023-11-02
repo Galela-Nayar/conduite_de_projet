@@ -1,16 +1,14 @@
 <!-- lateral-user-home-menu.component.html -->
-<div class="lateral-menu">
+<div>
     <a [routerLink]="['/', id, 'home']">Home</a>
     <hr> <!-- Barre de séparation -->
-    <div *ngIf="projects.length > 0; else noProjects">
-        <div *ngFor="let projectId of projects">
-            <a [routerLink]="['/', id, 'projects', projectId]">{{ projectId }}</a>
+    <div *ngIf="projects_id.length > 0">
+        <div *ngFor="let project of projet">
+            <a [routerLink]="['/', id, 'project', project.id]">{{ project.nom }}</a>
         </div>
     </div>
-    <ng-template #noProjects>
-        <div class="centered">
-            <p>Creer un nouveau projet !</p>
-            <button [routerLink]="['/', id, 'create-project']">+</button>
-        </div>
-    </ng-template>
+    <div style="margin-top: 40px;" class="centered">
+        <button [routerLink]="['/', id, 'create-project']">+</button>
+        <p>Creer un nouveau projet !</p>
+    </div>
   </div>
