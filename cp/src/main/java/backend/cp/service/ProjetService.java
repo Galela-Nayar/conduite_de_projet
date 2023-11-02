@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -44,6 +45,16 @@ public class ProjetService {
 
     public List<Projet> getAllProjets() {
         return projetRepository.findAll();
+    }
+
+    public Projet getProjetById(String projetId) {
+        Optional<Projet> projetOptional = projetRepository.findById(projetId);
+        if (projetOptional.isPresent()) {
+            return projetOptional.get();
+        }
+        else{
+            return null;
+        }
     }
 
 }

@@ -38,6 +38,7 @@ export class CreateProjectComponent {
 
           console.log('C\'est bon, ', reponse);
         })
+        document.location.reload();
       },
       (error) => {
         console.error('Erreur lors de la création de l\'utilisateur', error);

@@ -1,7 +1,9 @@
 package backend.cp.controller;
 
 import backend.cp.dto.UtilisateurDto;
+import backend.cp.modele.Projet;
 import backend.cp.modele.Utilisateur;
+import backend.cp.service.ProjetService;
 import backend.cp.service.UtilisateurService;
 
 import java.util.List;
@@ -17,10 +19,12 @@ import org.springframework.web.bind.annotation.*;
 public class UtilisateurController {
 
     private final UtilisateurService utilisateurService;
+    private final ProjetService projetService;
 
     @Autowired
-    public UtilisateurController(UtilisateurService sectionService) {
+    public UtilisateurController(UtilisateurService sectionService, ProjetService projetService) {
         this.utilisateurService = sectionService;
+        this.projetService = projetService;
     }
 
     @PostMapping("/create")
@@ -48,7 +52,7 @@ public class UtilisateurController {
     }
 
     @GetMapping("/projects")
-    public List<String> projects(@RequestParam String id){
+    public List<Projet> projects(@RequestParam String id){
         return utilisateurService.getUtilisateur(id).getListProjet();
     }
 
@@ -58,7 +62,8 @@ public class UtilisateurController {
     if (user == null) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
     }
-    user.addProjet(projetId);
+    
+    user.addProjet(projetService.getProjetById(projetId));
     utilisateurService.saveUtilisateur(user);  // save the updated user back to the database
 
     return ResponseEntity.ok("project add");

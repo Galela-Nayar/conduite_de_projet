@@ -22,10 +22,10 @@ public class Utilisateur {
     private String nom;
     private String prenom;
     private String userName;
-    private List<String> listProjet = new ArrayList<>();
+    private List<Projet> listProjet = new ArrayList<>();
     private String bio;
 
-    public void addProjet(String id){
-        listProjet.add(id);
+    public void addProjet(Projet projet){
+        listProjet.add(projet);
     }
 }
