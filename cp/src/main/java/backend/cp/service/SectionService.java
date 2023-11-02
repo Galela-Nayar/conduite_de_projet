@@ -17,10 +17,10 @@ public class SectionService {
         this.sectionRepository = sectionRepository;
     }
 
-    public void createSection(String name) {
-        Section section = new Section();
-        section.setName(name);
+    public String createSection(String name) {
+        Section section = new Section(name);
         sectionRepository.save(section);
+        return section.getId();
     }
 
     public List<Section> getAllSections() {

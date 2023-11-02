@@ -9,14 +9,8 @@
     </div>
 
     <!-- Colonnes pour chaque section du projet -->
-    <div class="row">
-        <div class="col" *ngFor="let section of projet.section">
-            <!-- Contenu de la section -->
-        </div>
+    <app-section class="app-section table-style" *ngFor="let section of projet?.sections" [id]="section.id"></app-section>
+<button class="app-section table-style" *ngIf="id" [routerLink]="['/', id, 'project', projetId, 'create-section']">+</button>
 
-        <!-- Bouton "+" si aucune section n'est présente -->
-        <div class="col" *ngIf="!projet.section || projet.section.length === 0">
-            <button class="btn btn-primary">+</button>
-        </div>
-    </div>
+    <router-outlet></router-outlet>
 </div>

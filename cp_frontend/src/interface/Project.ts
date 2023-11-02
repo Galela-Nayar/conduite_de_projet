@@ -3,7 +3,7 @@ interface Project {
     nom: string;
     date: Date;
     description: string;
-    section: any[];
+    sections: any[];
     taches: any[];
     dateButtoire: Date;
   }

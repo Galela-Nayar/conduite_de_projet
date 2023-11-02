@@ -1,7 +1,6 @@
 package backend.cp.service;
 
 import backend.cp.modele.Projet;
-import backend.cp.modele.Section;
 import backend.cp.repository.ProjetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,25 +8,24 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class ProjetService {
 
     private final ProjetRepository projetRepository;
+    private final SectionService sectionService;
 
     @Autowired
-    public ProjetService(ProjetRepository projetRepository) {
+    public ProjetService(ProjetRepository projetRepository, SectionService sectionService) {
         this.projetRepository = projetRepository;
+        this.sectionService = sectionService;
     }
 
     public String createProjet(String nom, String createur, Date date, boolean standardSection, String description, Date dateButtoire) {
         Projet projet = new Projet();
-        projet.setId(UUID.randomUUID().toString());
         projet.setNom(nom);
         projet.setCreateur(createur);
         if(standardSection) projet.setSections(setSection());
-        else projet.setSections(null);
         projet.setDateCreation(date);
         List<String> collab = new ArrayList<>();
         collab.add(createur);
@@ -38,8 +36,12 @@ public class ProjetService {
         return projet.getId();
     }
 
-    private List<Section> setSection() {
-        return new ArrayList<>();
+    private List<String> setSection() {
+        ArrayList<String> sections = new ArrayList<>();
+        sections.add(sectionService.createSection("a faire"));
+        sections.add(sectionService.createSection("en cours"));
+        sections.add(sectionService.createSection("terminé"));
+        return sections;
     }
 
     public List<Projet> getAllProjets() {
@@ -51,6 +53,13 @@ public class ProjetService {
             if(project.getId().equals(id)) return project;
         }
         return null;
+    }
+
+    public void addSection(String projectId, String sectionId) {
+        Projet pj = getProject(projectId);
+        pj.addSection(sectionId);
+        projetRepository.save(pj);
+
     }
 
 }

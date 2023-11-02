@@ -28,6 +28,12 @@ public class ProjetController {
             String id =projetService.createProjet(projet.getNom(), projet.getCreateur(), projet.getDate(), projet.isStandardSection(), projet.getDescription(), projet.getDateButoire());
         return ResponseEntity.ok(id);
     }
+    
+    @GetMapping("/create-section")
+    public ResponseEntity<String> addsection(@RequestParam String projectId, @RequestParam String sectionId) {
+        projetService.addSection(projectId,sectionId);
+        return ResponseEntity.ok("section ajouté");
+    }
 
     @GetMapping("/projet")
     public Projet projet(@RequestParam String id) {
