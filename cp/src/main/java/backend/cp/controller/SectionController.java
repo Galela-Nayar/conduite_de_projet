@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200") // replace with the domain your frontend is running on
 @RestController
 @RequestMapping("/sections")
 public class SectionController {
@@ -19,10 +20,9 @@ public class SectionController {
         this.sectionService = sectionService;
     }
 
-    @PostMapping("/create")
+    @GetMapping("/create")
     public ResponseEntity<String> createSection(@RequestParam String name) {
-        sectionService.createSection(name);
-        return ResponseEntity.ok("section creer");
+        return ResponseEntity.ok(sectionService.createSection(name));
     }
 
     @GetMapping("/all")

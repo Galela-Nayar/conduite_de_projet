@@ -5,23 +5,25 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Document(collection = "tache")
 public class Tache {
     @Id
-    private String id;
+    private String id = UUID.randomUUID().toString();
     private String name;
-    private List<String> membreAttribue;
-    private List<String> equipeAttitre;
+    private List<String> membreAttribue = new ArrayList<>();
+    private List<String> equipeAttitre = new ArrayList<>();
     private int priorite;
     private int ponderation;
     private String statut;
     private Date dateLimite;
-    private List<String> description;
-    private List<Etiquette> etiquettes;
+    private List<String> description = new ArrayList<>();
+    private List<Etiquette> etiquettes = new ArrayList<>();
 
  
 }

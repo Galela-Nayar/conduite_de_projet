@@ -20,6 +20,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CreateSectionComponent } from './user-home-page/create-section/create-section.component';
+import { SectionComponent } from './user-home-page/project/section/section.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +34,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ProjectComponent,
     CreateProjectComponent,
     UserHomeComponent,
+    CreateSectionComponent,
+    SectionComponent,
   ],
   imports: [
     BrowserModule,
