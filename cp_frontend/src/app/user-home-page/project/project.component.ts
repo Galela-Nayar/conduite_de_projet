@@ -14,6 +14,9 @@ export class ProjectComponent {
   projetId: string = '';
   projet!: Project;
   @ViewChild('sectionContainer', { read: ViewContainerRef }) container!: ViewContainerRef;
+  mouseX: number = 0;
+  mouseY: number = 0;
+  showCreateSection = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private componentFactoryResolver: ComponentFactoryResolver) {}
 
@@ -35,5 +38,12 @@ export class ProjectComponent {
         componentRef.instance.id = section.id;
       });
     }
+  }
+
+  onPlusClick(event: MouseEvent) {
+    this.mouseX = event.clientX;
+    this.mouseY = event.clientY;
+    this.showCreateSection = true;
+
   }
 }

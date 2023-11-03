@@ -1,6 +1,7 @@
-<div class="modal" [ngStyle]="contextMenuStyle" *ngIf="showContextMenu">
+<div [style.left.px]="mouseX" [style.top.px]="mouseY" class="modal" [ngStyle]="contextMenuStyle" *ngIf="showContextMenu">
     <div class="modal-content">
       <input [(ngModel)]="nom" type="text" placeholder="Nom section...">
       <button (click)="onButtonClick()">creer</button>
+      <button class="close-button" [routerLink]="['..']">X</button>
     </div>
   </div>

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -8,6 +8,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./create-section.component.css']
 })
 export class CreateSectionComponent {
+  @Input() mouseX!: number;
+  @Input() mouseY!: number;
   id: string = '';
   projectId: string = '';
   nom: string = '';
