@@ -1,0 +1,14 @@
+<!-- lateral-user-home-menu.component.html -->
+<div>
+    <a [routerLink]="['/', id, 'home']">Home</a>
+    <hr> <!-- Barre de séparation -->
+    <div *ngIf="projects_id.length > 0">
+        <div *ngFor="let project of projet">
+            <a [routerLink]="['/', id, 'project', project.id]">{{ project.nom }}</a>
+        </div>
+    </div>
+    <div style="margin-top: 40px;" class="centered">
+        <button [routerLink]="['/', id, 'create-project']">+</button>
+        <p>Creer un nouveau projet !</p>
+    </div>
+  </div>

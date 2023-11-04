@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    height: 100%; /* Utilise toute la hauteur de la fenêtre de visualisation */
+  }
+  
+  .app-lateral-user-home-menu {
+    /* Ajustez la largeur du menu latéral ici */
+    width: 200px; /* exemple */
+    
+  }
+  
+  .right-section {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 200px; /* décalage à droite de la largeur du menu latéral */
+  }
+  
+  .app-horizontal-user-home-menu {
+    /* Ajustez la hauteur du menu horizontal ici */
+    height: 50px; /* exemple */
+  }
+  
+  .router-content {
+    height: 100%;
+    flex-grow: 1;
+    overflow: auto; /* Ajoute une barre de défilement si le contenu est trop grand */
+    margin-top: 60px; /* décalage vers le bas de la hauteur du menu horizontal */
+  }
