@@ -31,7 +31,12 @@ public class ProjetController {
     
     @GetMapping("/create-section")
     public ResponseEntity<String> addsection(@RequestParam String projectId, @RequestParam String sectionId) {
+        System.out.println("Enter in create-section");
+        if(projectId.isBlank()) System.out.println("projectId is blank: " + projectId);
+        if(sectionId.isBlank()) System.out.println("sectionId is blank" + sectionId);
+
         projetService.addSection(projectId,sectionId);
+        System.out.println("section added");
         return ResponseEntity.ok("section ajouté");
     }
 

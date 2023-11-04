@@ -32,7 +32,7 @@ public class Projet {
     private Map<Integer, String> droitUtilisateur = new HashMap<>(); // Gestion des droits des utilisateurs
     
     public void addSection(String section) {
-        sections.add(section);
+        this.sections.add(section);
     }
 
 

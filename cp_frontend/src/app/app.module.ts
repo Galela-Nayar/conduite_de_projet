@@ -22,6 +22,8 @@ import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateSectionComponent } from './user-home-page/create-section/create-section.component';
 import { SectionComponent } from './user-home-page/project/section/section.component';
+import { TacheComponent } from './user-home-page/project/section/tache/tache.component';
+import { CreateTaskComponent } from './user-home-page/create-task/create-task.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +38,8 @@ import { SectionComponent } from './user-home-page/project/section/section.compo
     UserHomeComponent,
     CreateSectionComponent,
     SectionComponent,
+    TacheComponent,
+    CreateTaskComponent,
   ],
   imports: [
     BrowserModule,

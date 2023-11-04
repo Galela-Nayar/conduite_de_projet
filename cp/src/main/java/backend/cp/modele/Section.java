@@ -20,4 +20,8 @@ public class Section {
     public Section(String nom){
         this.nom = nom;
     }
+
+    public void addTache(String tacheId) {
+        taches.add(tacheId);
+    }
 }

@@ -1,5 +1,6 @@
 package backend.cp.service;
 
+import backend.cp.modele.Projet;
 import backend.cp.modele.Section;
 import backend.cp.repository.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,19 @@ public class SectionService {
             if(section.getId().equals(sectionId)) return section;
         }
         return null;
+    }
+
+    public void addTache(String sectionId, String tacheId) {
+        System.out.println("Enter in addTache");
+        System.out.println("sectionId" + sectionId);
+        Section section = getSection(sectionId);
+        System.out.println("section getted: " + section);
+        System.out.println("tacheId" + tacheId);
+        section.addTache(tacheId);
+        System.out.println("project with section added");
+        sectionRepository.save(section);
+        System.out.println("section save");
+
     }
 
 }

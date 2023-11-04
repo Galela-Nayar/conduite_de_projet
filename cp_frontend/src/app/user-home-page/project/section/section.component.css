@@ -11,3 +11,8 @@
     border-radius: 10px;
     margin: 10px;
 }
+
+.parent-container {
+  display: flex;
+  justify-content: center;
+}

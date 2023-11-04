@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import Project from 'src/interface/Project';
 import { SectionComponent } from './section/section.component';
 import { BehaviorSubject, mergeMap } from 'rxjs';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-project',
@@ -23,7 +25,7 @@ export class ProjectComponent {
 
 
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {}
+  constructor(private http: HttpClient, private route: ActivatedRoute, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
     const id = this.route.parent ? this.route.parent.snapshot.paramMap.get('id') : null;
@@ -60,12 +62,7 @@ export class ProjectComponent {
   }
 
   createSections() {
-    console.log('createSections called');
-    if (!this.projet){
-      console.log('projet null');
-    }else if(!this.projet.sections) {
-      console.log('section null');
-    }else{
+    if (this.projet && this.projet.sections) {
       this.projet.sections.forEach(section => {
         console.log('createSections\n');
         console.log('section.id: ', section);
@@ -80,6 +77,6 @@ export class ProjectComponent {
     this.mouseX = event.clientX;
     this.mouseY = event.clientY;
     this.showCreateSection = true;
-
+    this.cd.detectChanges();
   }
 }

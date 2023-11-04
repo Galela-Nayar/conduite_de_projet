@@ -11,8 +11,8 @@
     <!-- Colonnes pour chaque section du projet -->
     <div style="display: flex;">
         <div  #sectionContainer> </div>
-        <button (click)="onPlusClick($event)" class="app-section table-style" *ngIf="id" [routerLink]="['/', id, 'project', projetId, 'create-section']">+</button>
         <app-create-section *ngIf="showCreateSection" [mouseX]="mouseX" [mouseY]="mouseY"></app-create-section>
-        <router-outlet ></router-outlet>
+        <button (click)="onPlusClick($event)" class="app-section table-style" *ngIf="id">+</button>
+        
     </div>
 </div>

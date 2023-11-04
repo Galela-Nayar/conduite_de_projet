@@ -15,7 +15,7 @@ import java.util.UUID;
 public class Tache {
     @Id
     private String id = UUID.randomUUID().toString();
-    private String name;
+    private String nom = "";
     private List<String> membreAttribue = new ArrayList<>();
     private List<String> equipeAttitre = new ArrayList<>();
     private int priorite;
@@ -24,6 +24,8 @@ public class Tache {
     private Date dateLimite;
     private List<String> description = new ArrayList<>();
     private List<Etiquette> etiquettes = new ArrayList<>();
-
  
+    public Tache(String nom) {
+        this.nom = nom;
+    }
 }
