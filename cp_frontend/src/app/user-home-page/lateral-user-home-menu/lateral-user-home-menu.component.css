@@ -1,0 +1,35 @@
+/* lateral-user-home-menu.component.css */
+:host {
+    display: block;
+    height: calc(100% - 60px); /* Adjust 60px to the height of your horizontal menu */
+    position: fixed;
+    top: 60px; /* Adjust 60px to the height of your horizontal menu */
+    left: 0;
+    width: 200px; /* Adjust this to your preferred width */
+    background-color: #333; /* Change this to your preferred color */
+  }
+  
+  :host a {
+    display: block;
+    color: #f2f2f2; /* Change this to your preferred color */
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+  
+  :host a:hover {
+    background-color: #ddd; /* Change this to your preferred color */
+    color: black; /* Change this to your preferred color */
+  }
+
+  .centered {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  .lateral-menu {
+    border: 2px solid #444; /* Close to the original background color */
+    background: radial-gradient(circle at center, #333, #444); /* Radial gradient from original background color to border color */
+}
