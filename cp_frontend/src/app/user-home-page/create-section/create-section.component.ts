@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-create-section',
@@ -16,43 +16,62 @@ export class CreateSectionComponent {
   showContextMenu = true;
   contextMenuStyle = {};
   
-  constructor(private http: HttpClient, private route: ActivatedRoute) {}
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
   
   ngOnInit() {
-    const id = this.route.parent ? this.route.parent.snapshot.paramMap.get('id') : null;
-    if(id) this.id = id;
-    const projectId = this.route.parent ? this.route.parent.snapshot.paramMap.get('projectId') : null;
-    if(projectId) this.projectId = projectId;
-  }
-
-  showContextMenuAtPosition(x: number, y: number) {
-    this.showContextMenu = true;
+    const x = this.route.snapshot.paramMap.get('x');
+    if(x) this.mouseX =  parseInt(x);
+    const y = this.route.snapshot.paramMap.get('y');
+    if(y) this.mouseY =  parseInt(y);
     this.contextMenuStyle = {
-      position: 'fixed',
-      left: `${x}px`,
-      top: `${y}px`
+      'position': 'absolute',
+      'left': `${this.mouseX}px`,
+      'top': `${this.mouseY}px`
     };
+    const id = this.route.parent ? this.route.parent.snapshot.paramMap.get('id') : null;
+    if(id){
+      this.id = id;
+
+      console.log("id: " + this.id);
+    } else {
+
+      console.log("id (null): " + this.id);
+    }
+    const projectId = this.route.snapshot.paramMap.get('projectId');
+    if(projectId){
+      this.projectId = projectId;
+
+      console.log("projectId: " + this.projectId);
+    } else {
+
+      console.log("projectId (null): " + this.projectId);
+    }
   }
 
-  hideContextMenu() {
-    this.showContextMenu = false;
-  }
+
 
   onButtonClick() {
 
     this.http.get(`http://localhost:8080/sections/create?name=${this.nom}`, {responseType: 'text'}).subscribe(
-      (sectionId) => {
-        this.http.get(`http://localhost:8080/projets/create-section?projectId=${this.projectId}&sectionId=${sectionId}`, {responseType: 'text'}).subscribe(
-          (response) => {
-            
-          },
-          (error) => {
-            console.error('Erreur lors de la création de l\'utilisateur', error);
-          }
-        );
+      (sectionId: String) => {
+        if(sectionId){
+          console.log(sectionId);
+
+          console.log(this.projectId);
+          this.http.get(`http://localhost:8080/projets/create-section?projectId=${this.projectId}&sectionId=${sectionId}`, {responseType: 'text'}).subscribe(
+            (response) => {
+              this.router.navigate(['/', this.id, 'project', this.projectId]);
+            },
+            (error) => {
+              console.error('Erreur lors de l\'ajout de la section', error);
+            }
+          );
+        } else{
+          console.error('sectionId null');
+        }
       },
       (error) => {
-        console.error('Erreur lors de la création de l\'utilisateur', error);
+        console.error('Erreur lors de la création de la section', error);
       }
     );
   }

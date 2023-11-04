@@ -30,6 +30,17 @@ public class SectionController {
         return ResponseEntity.ok(sectionService.createSection(name));
     }
 
+    @GetMapping("/add-tache")
+    public ResponseEntity<String> addTache(@RequestParam String sectionId, @RequestParam String tacheId) {
+        System.out.println("Enter in add-tache");
+        if(tacheId.isBlank()) System.out.println("tacheId is blank: " + tacheId);
+        if(sectionId.isBlank()) System.out.println("sectionId is blank" + sectionId);
+
+        sectionService.addTache(sectionId,tacheId);
+        System.out.println("tache added");
+        return ResponseEntity.ok("tache ajouté");
+    }
+
     @GetMapping("/all")
     public List<Section> getAllSections() {
         return sectionService.getAllSections();

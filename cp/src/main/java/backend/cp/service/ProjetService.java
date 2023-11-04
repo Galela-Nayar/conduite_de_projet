@@ -56,9 +56,15 @@ public class ProjetService {
     }
 
     public void addSection(String projectId, String sectionId) {
+        System.out.println("Enter in addSection");
+        System.out.println("projectId" + projectId);
         Projet pj = getProject(projectId);
+        System.out.println("project getted: " + pj);
+        System.out.println("sectionId" + sectionId);
         pj.addSection(sectionId);
+        System.out.println("project with section added");
         projetRepository.save(pj);
+        System.out.println("project save");
 
     }
 
