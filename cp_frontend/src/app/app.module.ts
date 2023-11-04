@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HomePageComponent } from './home-page/home-page.component';
-import { RegisterComponent } from './register/register.component';
+import { RegisterComponent } from './home-page/register/register.component';
 import { LogAppComponent } from './log-app/log-app.component';
 import { LateralUserHomeMenuComponent } from './user-home-page/lateral-user-home-menu/lateral-user-home-menu.component';
 import { UserHomePageComponent } from './user-home-page/user-home-page.component';
@@ -24,6 +24,7 @@ import { CreateSectionComponent } from './user-home-page/create-section/create-s
 import { SectionComponent } from './user-home-page/project/section/section.component';
 import { TacheComponent } from './user-home-page/project/section/tache/tache.component';
 import { CreateTaskComponent } from './user-home-page/create-task/create-task.component';
+import { LogInComponent } from './home-page/log-in/log-in.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +41,7 @@ import { CreateTaskComponent } from './user-home-page/create-task/create-task.co
     SectionComponent,
     TacheComponent,
     CreateTaskComponent,
+    LogInComponent,
   ],
   imports: [
     BrowserModule,
