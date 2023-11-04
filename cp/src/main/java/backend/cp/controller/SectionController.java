@@ -5,7 +5,6 @@ import backend.cp.service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200") // replace with the domain your frontend is running on
@@ -18,6 +17,12 @@ public class SectionController {
     @Autowired
     public SectionController(SectionService sectionService) {
         this.sectionService = sectionService;
+    }
+
+    @GetMapping("/section")
+    public Section getSection(@RequestParam String id){
+        return sectionService.getSection(id);
+
     }
 
     @GetMapping("/create")

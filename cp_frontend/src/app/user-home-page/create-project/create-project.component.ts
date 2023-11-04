@@ -18,7 +18,7 @@ export class CreateProjectComponent {
     dateButoire: new Date(),
   };
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {} // Inject Router
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {} // Inject Router
   
   submitForm() {
     const id = this.route.parent ? this.route.parent.snapshot.paramMap.get('id') : null;
@@ -37,6 +37,7 @@ export class CreateProjectComponent {
           (reponse)=>{
 
           console.log('C\'est bon, ', reponse);
+          this.router.navigate([`/${this.id}/home`]);
         })
       },
       (error) => {

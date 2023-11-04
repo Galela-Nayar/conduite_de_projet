@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,10 +14,10 @@ import java.util.UUID;
 public class Section {
     @Id
     private String id = UUID.randomUUID().toString();
-    private String name;
-    private List<Tache> taches;
+    private String nom;
+    private List<String> taches = new ArrayList<>();
 
     public Section(String nom){
-        name = nom;
+        this.nom = nom;
     }
 }

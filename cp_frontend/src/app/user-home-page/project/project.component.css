@@ -12,3 +12,7 @@
 .app-create-section {
     position: absolute;
   }
+
+  .container {
+    height: 100%;
+}
