@@ -1,9 +1,0 @@
-.create-project-container {
-    margin-left: 33.33%; /* Déplace le contenu à 1/3 de l'espace disponible */
-    margin-right: 33.33%; /* Déplace le contenu à 1/3 de l'espace disponible */
-    text-align: left; /* Justifie le texte à gauche */
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Ajustez cette valeur pour changer l'espace entre les éléments */
-    padding: 20px; /* Ajustez cette valeur pour changer l'espace autour des éléments */
-  }
