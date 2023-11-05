@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Project from 'src/interface/Project';
-import { BehaviorSubject, Subscription, mergeMap } from 'rxjs';
+import {Subscription} from 'rxjs';
 import { ChangeDetectorRef } from '@angular/core';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
 

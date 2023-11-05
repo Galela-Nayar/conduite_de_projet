@@ -47,7 +47,6 @@ export class TacheComponent {
           this.tache = tacheData;  
           console.log('tacheId : ' + this.tacheId + '\ntacheData : ' + tacheData.nom + '\ntache : ' + this.tache.nom);
         });
-        
     }
   }
 

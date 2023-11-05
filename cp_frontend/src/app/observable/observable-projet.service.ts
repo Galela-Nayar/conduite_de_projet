@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 export class ObservableService {
   private projectSubject$ = new BehaviorSubject<string>("init projet");
   private section$ = new BehaviorSubject<string>("init section");
+  private task$ = new BehaviorSubject<string>("init task");
 
   constructor(private http: HttpClient) { }
 
@@ -19,11 +20,19 @@ export class ObservableService {
     return this.section$.asObservable();
   }
 
-  notifySection(){
-    this.section$.next("updated");
+  getObservableTask(): Observable<string>{
+    return this.task$.asObservable();
   }
 
   notifyProject() {
     this.projectSubject$.next("updated");
+  }
+
+  notifySection(){
+    this.section$.next("updated");
+  }
+
+  notifyTask(){
+    this.task$.next("updated");
   }
 }
