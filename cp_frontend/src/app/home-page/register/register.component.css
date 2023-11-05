@@ -7,6 +7,7 @@
   }
   
   .login-box {
+    min-width: 400px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -25,7 +26,7 @@
   }
   
   .input-field label {
-    width: 120px; /* Adjust this value as needed */
+    width: 180px;
     text-align: right;
     margin-right: 10px;
   }
@@ -33,6 +34,4 @@
   .actions {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    width: 60%; /* Adjust this value as needed */
-  }
+  }  

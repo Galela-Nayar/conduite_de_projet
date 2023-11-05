@@ -7,6 +7,10 @@
     top: 0;
     left: 0;
     background-color: #333; /* Change this to your preferred color */
+
+    border-bottom: 2px solid;
+    border-image-source: linear-gradient(to right, rgba(122, 243, 9, 0.664),rgba(218, 255, 9, 0.712));
+    border-image-slice: 1;
   }
   
   :host a {
