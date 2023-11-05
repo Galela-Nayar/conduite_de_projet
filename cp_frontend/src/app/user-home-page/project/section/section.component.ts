@@ -38,18 +38,10 @@ export class SectionComponent {
         })
       )
       .subscribe(() => {
+
+        this.createTaches();
       });
     }
-  }
-
-  ngAfterViewInit() {
-    console.log('ngAfterViewInit called');
-    this.sectionData.subscribe((projectData: Section | null) => {
-        setTimeout(() => {
-          this.createTaches();
-        });
-      console.log('data not load');
-    });
   }
 
   createTaches() {
