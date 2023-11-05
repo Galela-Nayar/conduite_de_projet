@@ -19,6 +19,7 @@ export class SectionComponent {
   mouseX: number = 0;
   mouseY: number = 0;
   showCreateTask = false;
+  showSetting = false;
   @ViewChild('taskContainer', { read: ViewContainerRef, static:false }) container!: ViewContainerRef;
   private sectionData = new BehaviorSubject<Section | null>(null);
 
@@ -70,6 +71,12 @@ export class SectionComponent {
     this.mouseX = event.clientX;
     this.mouseY = event.clientY;
     this.showCreateTask = true;
+    this.cd.detectChanges();
+  }
+  onSettingClick(event: MouseEvent) {
+    this.mouseX = event.clientX;
+    this.mouseY = event.clientY;
+    this.showSetting = true;
     this.cd.detectChanges();
   }
 }

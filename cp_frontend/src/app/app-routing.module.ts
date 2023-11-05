@@ -11,6 +11,7 @@ import { SectionComponent } from './user-home-page/project/section/section.compo
 import { TacheComponent } from './user-home-page/project/section/tache/tache.component';
 import { CreateTaskComponent } from './user-home-page/create-task/create-task.component';
 import { LogInComponent } from './home-page/log-in/log-in.component';
+import { SectionSettingComponent } from './user-home-page/project/section/section-setting/section-setting.component';
 
 
 
@@ -26,18 +27,19 @@ const routes: Routes = [
     component: UserHomePageComponent,
     children: [
       { path: 'home', component: UserHomeComponent},
+      { path: 'create-project', component: CreateProjectComponent },
       { path: 'project/:projectId', component: ProjectComponent,
         children:[
           { path: 'create-section/:x/:y', component: CreateSectionComponent},
           { path: ':sectionId', component: SectionComponent,
             children:[
+              { path: 'float-setting', component: SectionSettingComponent},
+              { path: 'create-tache/:x/:y', component: CreateTaskComponent},
               { path: ':tacheId', component: TacheComponent},
-              { path: 'create-tache/:x/:y', component: CreateTaskComponent}
             ]
           }
         ] 
       },
-      { path: 'create-project', component: CreateProjectComponent },
     ]
   },
 ];

@@ -25,6 +25,7 @@ import { SectionComponent } from './user-home-page/project/section/section.compo
 import { TacheComponent } from './user-home-page/project/section/tache/tache.component';
 import { CreateTaskComponent } from './user-home-page/create-task/create-task.component';
 import { LogInComponent } from './home-page/log-in/log-in.component';
+import { SectionSettingComponent } from './user-home-page/project/section/section-setting/section-setting.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +43,7 @@ import { LogInComponent } from './home-page/log-in/log-in.component';
     TacheComponent,
     CreateTaskComponent,
     LogInComponent,
+    SectionSettingComponent,
   ],
   imports: [
     BrowserModule,
