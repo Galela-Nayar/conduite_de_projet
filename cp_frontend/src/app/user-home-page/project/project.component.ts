@@ -39,6 +39,7 @@ export class ProjectComponent implements OnDestroy{
       this.sectionSubscription = this.observableService.getObservableSection().subscribe((response)=>{
         this.http.get<Project>(`http://localhost:8080/projets/projet?id=${this.projetId}`).subscribe((projectData: Project)=>{
           this.sections=projectData.sections;
+          this.projet = projectData;
         });
       });
     }
