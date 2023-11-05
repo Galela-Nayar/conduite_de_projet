@@ -54,4 +54,12 @@ public class SectionService {
         this.sectionRepository.delete(section);
     }
 
+    public boolean removeTache(String id, String tacheId) {
+        Section sc = this.getSection(id);
+        System.out.println("service section : " + sc);
+        boolean ok = sc.getTaches().remove(tacheId);
+        System.out.println("removed : " + ok);
+        if(ok) this.sectionRepository.save(sc);
+        return ok;
+    }
 }

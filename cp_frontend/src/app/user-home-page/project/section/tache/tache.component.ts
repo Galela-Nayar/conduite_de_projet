@@ -17,8 +17,9 @@ export class TacheComponent {
   @Input()
   tacheId: string = '';
   tache?: Tache;
-  private tacheData = new BehaviorSubject<Tache | null>(null);
-
+  mouseX: number = 0;
+  mouseY: number = 0;
+  showSetting = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private cd: ChangeDetectorRef) {}
 
@@ -51,4 +52,10 @@ export class TacheComponent {
     }
   }
 
+  onSettingClick(event: MouseEvent) {
+    this.mouseX = event.clientX;
+    this.mouseY = event.clientY;
+    this.showSetting = true;
+    this.cd.detectChanges();
+  }
 }

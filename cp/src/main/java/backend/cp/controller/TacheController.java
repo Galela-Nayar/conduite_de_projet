@@ -36,8 +36,17 @@ public class TacheController {
 
     @GetMapping("/tache")
     public Tache getTaches(@RequestParam String id) {
-        Tache tache = tacheService.getTaches(id);
+        Tache tache = tacheService.getTache(id);
         System.out.println("tache: " + tache);
         return tache;
+    }
+
+    @GetMapping("/removeTache")
+    public ResponseEntity<String>removeTache(@RequestParam String id){
+        System.out.println("ctr remove start");
+        tacheService.removeTache(id);
+
+        System.out.println("ctr remove end");
+        return ResponseEntity.ok("ok");
     }
 }

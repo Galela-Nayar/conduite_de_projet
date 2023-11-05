@@ -1,3 +1,7 @@
-<div class="task-container">
-    <p>{{ tache?.nom }}</p>
+<div class="table-style">
+    <div class="app-section section-entry">
+        <p>{{ tache?.nom }}</p>
+        <app-tache-setting *ngIf="showSetting" [mouseX]="mouseX" [mouseY]="mouseY" [tacheId]="tacheId"></app-tache-setting>
+        <button (click)="onSettingClick($event)" class="settings-button"></button>
+    </div>
 </div>

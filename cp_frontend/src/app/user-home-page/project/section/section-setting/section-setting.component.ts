@@ -11,11 +11,9 @@ export class SectionSettingComponent {
   @Input() mouseX!: number;
   @Input() mouseY!: number;
   @Input() sectionId!: String;
-  showContextMenu = true;
   contextMenuStyle = {};
   id: string = '';
   projectId: string = '';
-  nom: string = '';
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {}
 

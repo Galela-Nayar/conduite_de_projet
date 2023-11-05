@@ -12,6 +12,7 @@ import { TacheComponent } from './user-home-page/project/section/tache/tache.com
 import { CreateTaskComponent } from './user-home-page/create-task/create-task.component';
 import { LogInComponent } from './home-page/log-in/log-in.component';
 import { SectionSettingComponent } from './user-home-page/project/section/section-setting/section-setting.component';
+import { TacheSettingComponent } from './user-home-page/project/section/tache/tache-setting/tache-setting.component';
 
 
 
@@ -35,7 +36,11 @@ const routes: Routes = [
             children:[
               { path: 'float-setting', component: SectionSettingComponent},
               { path: 'create-tache/:x/:y', component: CreateTaskComponent},
-              { path: ':tacheId', component: TacheComponent},
+              { path: ':tacheId', component: TacheComponent,
+                children:[
+                  { path: 'float-setting', component: TacheSettingComponent},
+                ]
+              },
             ]
           }
         ] 
