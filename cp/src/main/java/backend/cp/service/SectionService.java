@@ -1,13 +1,11 @@
 package backend.cp.service;
 
-import backend.cp.modele.Projet;
 import backend.cp.modele.Section;
 import backend.cp.repository.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SectionService {
@@ -48,6 +46,12 @@ public class SectionService {
         sectionRepository.save(section);
         System.out.println("section save");
 
+    }
+
+    public void removeSection(String id) {
+        Section section = this.getSection(id);
+        System.out.println("service section : " + section);
+        this.sectionRepository.delete(section);
     }
 
 }

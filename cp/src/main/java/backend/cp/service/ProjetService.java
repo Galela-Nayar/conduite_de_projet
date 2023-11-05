@@ -68,4 +68,13 @@ public class ProjetService {
 
     }
 
+    public boolean removeSection(String id, String sectionId) {
+        Projet pj = this.getProject(id);
+        System.out.println("service projet : " + pj);
+        boolean ok = pj.getSections().remove(sectionId);
+        System.out.println("removed : " + ok);
+        if(ok) this.projetRepository.save(pj);
+        return ok;
+    }
+
 }

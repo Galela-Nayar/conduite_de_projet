@@ -46,4 +46,13 @@ public class SectionController {
         return sectionService.getAllSections();
     }
 
+    @GetMapping("/removeSection")
+    public ResponseEntity<String>removeSection(@RequestParam String id){
+        System.out.println("ctr remove start");
+        sectionService.removeSection(id);
+
+        System.out.println("ctr remove end");
+        return ResponseEntity.ok("ok");
+    }
+
 }
