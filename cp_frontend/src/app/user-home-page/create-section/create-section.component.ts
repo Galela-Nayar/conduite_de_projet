@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ObservableService } from 'src/app/observable/observable-projet.service';
 
 @Component({
   selector: 'app-create-section',
@@ -16,7 +17,7 @@ export class CreateSectionComponent {
   showContextMenu = true;
   contextMenuStyle = {};
   
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private observableService: ObservableService) {}
   
   ngOnInit() {
     const x = this.route.snapshot.paramMap.get('x');
@@ -66,6 +67,7 @@ export class CreateSectionComponent {
               console.error('Erreur lors de l\'ajout de la section', error);
             }
           );
+          this.observableService.notifySection();
         } else{
           console.error('sectionId null');
         }

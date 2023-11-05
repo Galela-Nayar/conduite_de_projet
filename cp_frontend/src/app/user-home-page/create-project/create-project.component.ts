@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router'; // Import Router
+import { ObservableService } from 'src/app/observable/observable-projet.service';
 
 @Component({
   selector: 'app-create-project',
@@ -18,7 +19,7 @@ export class CreateProjectComponent {
     dateButoire: new Date(),
   };
 
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {} // Inject Router
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private projectService: ObservableService) {} // Inject Router
   
   submitForm() {
     const id = this.route.parent ? this.route.parent.snapshot.paramMap.get('id') : null;
@@ -36,6 +37,7 @@ export class CreateProjectComponent {
         this.http.get(`http://localhost:8080/utilisateurs/add-projet?userId=${this.project.createur}&projetId=${response}`, {responseType: 'text'}).subscribe(
           (reponse)=>{
           console.log('C\'est bon, ', reponse);
+          this.projectService.notifyProject();
           this.router.navigate([`/${this.id}/home`]);
         })
       },

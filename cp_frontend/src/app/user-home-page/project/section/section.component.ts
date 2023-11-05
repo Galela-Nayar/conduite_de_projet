@@ -1,16 +1,17 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Section from 'src/interface/Section';
 import { TacheComponent } from './tache/tache.component';
-import { BehaviorSubject, mergeMap } from 'rxjs';
+import { BehaviorSubject, Subscription, mergeMap } from 'rxjs';
+import { ObservableService } from 'src/app/observable/observable-projet.service';
 
 @Component({
   selector: 'app-section',
   templateUrl: './section.component.html',
   styleUrls: ['./section.component.css']
 })
-export class SectionComponent {
+export class SectionComponent{
   id: String | null = '';
   projetId: String | null = '';
   @Input()
@@ -19,11 +20,15 @@ export class SectionComponent {
   mouseX: number = 0;
   mouseY: number = 0;
   showCreateTask = false;
+  sectionSubscription$!: Subscription;
+
+
   @ViewChild('taskContainer', { read: ViewContainerRef, static:false }) container!: ViewContainerRef;
   private sectionData = new BehaviorSubject<Section | null>(null);
 
 
-  constructor(private http: HttpClient,private cd: ChangeDetectorRef, private route: ActivatedRoute) {}
+  constructor(private http: HttpClient,private cd: ChangeDetectorRef, private route: ActivatedRoute,private observableService: ObservableService) {}
+
 
   ngOnInit(){
     this.id = this.route.parent ? this.route.parent.snapshot.paramMap.get('id') : null;
@@ -38,18 +43,20 @@ export class SectionComponent {
         })
       )
       .subscribe(() => {
-      });
+      }); 
+      this.fetchSectionData();
     }
+    
   }
 
   ngAfterViewInit() {
     console.log('ngAfterViewInit called');
-    this.sectionData.subscribe((projectData: Section | null) => {
-        setTimeout(() => {
-          this.createTaches();
-        });
-      console.log('data not load');
-    });
+        this.sectionData.subscribe((projectData: Section | null) => {
+          setTimeout(() => {
+            this.createTaches();
+          });
+        console.log('data not load');
+      });
   }
 
   createTaches() {

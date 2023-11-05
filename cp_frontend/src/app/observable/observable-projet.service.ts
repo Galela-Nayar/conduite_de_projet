@@ -1,27 +1,29 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, switchMap } from 'rxjs';
+import { Observable, switchMap, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ObservableProjetService {
-  private projectSubject = new BehaviorSubject<any[]>([]);
-  data$: any;
+export class ObservableService {
+  private projectSubject$ = new BehaviorSubject<string>("init projet");
+  private section$ = new BehaviorSubject<string>("init section");
 
   constructor(private http: HttpClient) { }
 
-  retourneProjects(id: string): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:8080/utilisateurs/projects?id=${id}`)
-      .pipe(
-        switchMap((projects) => {
-          this.projectSubject.next(projects);
-          return this.projectSubject.asObservable();
-        })
-      );
+  getObservableProjet(): Observable<string>{
+    return this.projectSubject$.asObservable();
   }
 
-  updateData(newData: any[]) {
-    this.projectSubject.next(newData);
+  getObservableSection(): Observable<string>{
+    return this.section$.asObservable();
+  }
+
+  notifySection(){
+    this.section$.next("updated");
+  }
+
+  notifyProject() {
+    this.projectSubject$.next("updated");
   }
 }
