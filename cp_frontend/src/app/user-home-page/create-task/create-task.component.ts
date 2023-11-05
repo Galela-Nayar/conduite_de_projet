@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ObservableService } from 'src/app/observable/observable-projet.service';
 
 @Component({
   selector: 'app-create-task',
@@ -17,7 +18,7 @@ export class CreateTaskComponent {
   showContextMenu = true;
   contextMenuStyle = {};
   
-  constructor(private http: HttpClient, private route: ActivatedRoute) {}
+  constructor(private http: HttpClient, private route: ActivatedRoute, private ObservableService: ObservableService) {}
   
   ngOnInit() {
     const x = this.route.snapshot.paramMap.get('x');
@@ -46,11 +47,11 @@ export class CreateTaskComponent {
         console.log('tache created')
 
         console.log('tacheId: ', tacheId)
-
         console.log('add-tache:')
         this.http.get(`http://localhost:8080/sections/add-tache?sectionId=${this.sectionId}&tacheId=${tacheId}`, {responseType: 'text'}).subscribe(
           (response) => {
           console.log('tache added')
+          this.ObservableService.notifyTask();
           },
           (error) => {
             console.error('Erreur lors de l\'attribution de la tache', error);
