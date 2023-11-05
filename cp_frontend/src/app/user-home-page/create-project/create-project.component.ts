@@ -35,7 +35,6 @@ export class CreateProjectComponent {
         console.log(response);
         this.http.get(`http://localhost:8080/utilisateurs/add-projet?userId=${this.project.createur}&projetId=${response}`, {responseType: 'text'}).subscribe(
           (reponse)=>{
-
           console.log('C\'est bon, ', reponse);
           this.router.navigate([`/${this.id}/home`]);
         })
