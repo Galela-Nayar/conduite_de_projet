@@ -3,34 +3,46 @@
     border: 1px solid black;
     border-radius: 10px;
     margin: 10px;
+    width: calc(100% - 20px); /* Ajusté pour prendre en compte la marge */
+    box-sizing: border-box; 
 }
 
 .app-section {
     display: inline-block;
-
     padding-left: 10px;
     padding-right: 10px;
-  }
-
+    width: calc(100% - 20px); /* Ajusté pour prendre en compte le padding */
+    box-sizing: border-box; 
+}
 
 .section-entry {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  
-  .settings-button {
-    border: none; /* remove border */
-    color: gray; /* change color of ... to light gray */
-    background-color: transparent; /* remove background color */
-  }
-  
-  .settings-button:hover {
-    background-color: #d0d0d0; /* change this to a darker color */
-  }
-  
-  .settings-button:before {
-    content: "\2022 \2022 \2022"; /* add space between dots */
-    letter-spacing: 2px; /* adjust space between dots */
-    font-size: 20px; /* adjust size of ... */
-  }
+    width: 100%;
+    box-sizing: border-box; 
+}
+
+.task-content {
+    flex: 1;
+    text-align: justify;
+    margin-right: 10px;
+    padding-left: 10px;
+    box-sizing: border-box; 
+}
+
+.settings-button {
+    border: none;
+    color: gray;
+    background-color: transparent;
+}
+
+.settings-button:hover {
+    background-color: #d0d0d0;
+}
+
+.settings-button:before {
+    content: "\2022 \2022 \2022";
+    letter-spacing: 2px;
+    font-size: 20px;
+}
