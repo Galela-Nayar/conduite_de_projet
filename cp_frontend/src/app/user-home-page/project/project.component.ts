@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Project from 'src/interface/Project';
-import { BehaviorSubject, mergeMap } from 'rxjs';
+import { BehaviorSubject, Subscription, mergeMap } from 'rxjs';
 import { ChangeDetectorRef } from '@angular/core';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
 
@@ -12,7 +12,7 @@ import { ObservableService } from 'src/app/observable/observable-projet.service'
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.css']
 })
-export class ProjectComponent {
+export class ProjectComponent implements OnDestroy{
   id: string = '';
   projetId: string = '';
   projet?: Project;
@@ -20,13 +20,15 @@ export class ProjectComponent {
   mouseY: number = 0;
   showCreateSection = false;
   dataLoad = false;
-  private projetData = new BehaviorSubject<Project | null>(null);
   sections: any[] = [];
-
+  sectionSubscription!: Subscription;
 
 
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private cd: ChangeDetectorRef, private observableService: ObservableService) {}
+  ngOnDestroy(): void {
+    this.sectionSubscription.unsubscribe();
+  }
 
   ngOnInit() {
     const id = this.route.parent ? this.route.parent.snapshot.paramMap.get('id') : null;
@@ -34,13 +36,11 @@ export class ProjectComponent {
     const projetId = this.route.snapshot.paramMap.get('projectId');
     if(projetId != null){
       this.projetId = projetId;
-      this.observableService.getObservableSection().subscribe((response)=>{
+      this.sectionSubscription = this.observableService.getObservableSection().subscribe((response)=>{
         this.http.get<Project>(`http://localhost:8080/projets/projet?id=${this.projetId}`).subscribe((projectData: Project)=>{
-          console.log(projectData);
           this.sections=projectData.sections;
         });
       });
-      
     }
   }
 

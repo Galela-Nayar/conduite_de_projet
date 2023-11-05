@@ -61,13 +61,13 @@ export class CreateSectionComponent {
           console.log(this.projectId);
           this.http.get(`http://localhost:8080/projets/create-section?projectId=${this.projectId}&sectionId=${sectionId}`, {responseType: 'text'}).subscribe(
             (response) => {
+              this.observableService.notifySection();
               this.router.navigate(['/', this.id, 'project', this.projectId]);
             },
             (error) => {
               console.error('Erreur lors de l\'ajout de la section', error);
             }
           );
-          this.observableService.notifySection();
         } else{
           console.error('sectionId null');
         }
