@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import Section from 'src/interface/Section';
 import { BehaviorSubject, Subscription, mergeMap} from 'rxjs';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
-import Tache from 'src/interface/Tache';
 
 @Component({
   selector: 'app-section',
@@ -22,7 +21,6 @@ export class SectionComponent{
   showCreateTask = false;
   taskSubscription!: Subscription;
   tasks: any[]=[];
-  private sectionData = new BehaviorSubject<Section | null>(null);
 
   constructor(private http: HttpClient,private cd: ChangeDetectorRef, private route: ActivatedRoute, private observableService: ObservableService) {}
 

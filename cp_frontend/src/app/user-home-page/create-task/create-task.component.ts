@@ -35,7 +35,6 @@ export class CreateTaskComponent {
     const projectId = this.route.parent ? this.route.parent.snapshot.paramMap.get('projectId') : null;
     if(projectId) this.projectId = projectId;
     
-
   }
 
   

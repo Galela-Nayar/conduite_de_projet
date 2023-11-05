@@ -1,6 +1,5 @@
 package backend.cp.service;
 
-import backend.cp.modele.Section;
 import backend.cp.modele.Tache;
 import backend.cp.repository.TacheRepository;
 import org.springframework.beans.factory.annotation.Autowired;
