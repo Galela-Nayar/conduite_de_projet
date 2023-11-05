@@ -36,7 +36,6 @@ export class SectionComponent{
         this.http.get<Section>(`http://localhost:8080/sections/section?id=${this.sectionId}`).subscribe((response)=>{
           this.section = response;  
           this.tasks=this.section.taches;
-          console.log("lalalala"+this.section.taches)
         })
       });
     }
