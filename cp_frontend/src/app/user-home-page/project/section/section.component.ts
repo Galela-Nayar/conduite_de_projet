@@ -5,6 +5,8 @@ import Section from 'src/interface/Section';
 import { BehaviorSubject, Subscription, mergeMap} from 'rxjs';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
 import Tache from 'src/interface/Tache';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateTaskComponent } from '../../create-task/create-task.component';
 
 @Component({
   selector: 'app-section',
@@ -25,7 +27,7 @@ export class SectionComponent{
   tasks: any[]=[];
   private sectionData = new BehaviorSubject<Section | null>(null);
 
-  constructor(private http: HttpClient,private cd: ChangeDetectorRef, private route: ActivatedRoute, private observableService: ObservableService) {}
+  constructor(private http: HttpClient,private cd: ChangeDetectorRef, private route: ActivatedRoute, private observableService: ObservableService, public dialog: MatDialog) {}
 
   ngOnInit(){
     this.id = this.route.parent ? this.route.parent.snapshot.paramMap.get('id') : null;
@@ -43,10 +45,13 @@ export class SectionComponent{
   }
 
   onPlusClick(event: MouseEvent): void {
-    this.mouseX = event.clientX;
-    this.mouseY = event.clientY;
-    this.showCreateTask = true;
-    this.cd.detectChanges();
+    const dialogRef = this.dialog.open(CreateTaskComponent, {
+      data: this.sectionId
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
   onSettingClick(event: MouseEvent) {
     this.mouseX = event.clientX;

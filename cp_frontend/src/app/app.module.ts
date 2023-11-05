@@ -26,6 +26,7 @@ import { TacheComponent } from './user-home-page/project/section/tache/tache.com
 import { CreateTaskComponent } from './user-home-page/create-task/create-task.component';
 import { LogInComponent } from './home-page/log-in/log-in.component';
 import { SectionSettingComponent } from './user-home-page/project/section/section-setting/section-setting.component';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,8 +58,10 @@ import { SectionSettingComponent } from './user-home-page/project/section/sectio
     MatDatepickerModule,
     MatNativeDateModule,
     BrowserAnimationsModule,
+    MatDialogModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [{provide:MatDialogRef , useValue:{} },
+    { provide: MAT_DIALOG_DATA, useValue: {} }],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

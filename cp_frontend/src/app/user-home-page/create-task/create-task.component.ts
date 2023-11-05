@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
 
@@ -9,33 +10,22 @@ import { ObservableService } from 'src/app/observable/observable-projet.service'
   styleUrls: ['./create-task.component.css']
 })
 export class CreateTaskComponent {
-  @Input() mouseX!: number;
-  @Input() mouseY!: number;
   id: string = '';
   projectId: string = '';
   @Input() sectionId!: String;
   nom: string = '';
-  showContextMenu = true;
-  contextMenuStyle = {};
   
-  constructor(private http: HttpClient, private route: ActivatedRoute, private ObservableService: ObservableService) {}
+  constructor(private http: HttpClient, private route: ActivatedRoute, 
+    private ObservableService: ObservableService, 
+    public dialogRef: MatDialogRef<CreateTaskComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: string) {}
+
+    onNoClick(): void {
+      this.dialogRef.close();
+    }
   
   ngOnInit() {
-    const x = this.route.snapshot.paramMap.get('x');
-    if(x) this.mouseX =  parseInt(x);
-    const y = this.route.snapshot.paramMap.get('y');
-    if(y) this.mouseY =  parseInt(y);
-    this.contextMenuStyle = {
-      'position': 'absolute',
-      'left': `${this.mouseX}px`,
-      'top': `${this.mouseY}px`
-    };
-    const id = this.route.parent ? this.route.parent.snapshot.paramMap.get('id') : null;
-    if(id) this.id = id;
-    const projectId = this.route.parent ? this.route.parent.snapshot.paramMap.get('projectId') : null;
-    if(projectId) this.projectId = projectId;
-    
-
+    this.sectionId = this.data;
   }
 
   
@@ -57,6 +47,7 @@ export class CreateTaskComponent {
             console.error('Erreur lors de l\'attribution de la tache', error);
           }
         );
+        this.dialogRef.close();
       },
       (error) => {
         console.error('Erreur lors de la création de la tache', error);
