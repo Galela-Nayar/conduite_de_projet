@@ -3,8 +3,9 @@
     <a [routerLink]="['/', id, 'home']">Home</a>
     <hr> <!-- Barre de séparation -->
     <div *ngIf="projects_id.length > 0">
-        <div *ngFor="let project of projet">
+        <div  class="project-entry"  *ngFor="let project of projet">
             <a [routerLink]="['/', id, 'project', project.id]">{{ project.nom }}</a>
+            <button class="settings-button"></button>
         </div>
     </div>
     <div style="margin-top: 40px;" class="centered">
