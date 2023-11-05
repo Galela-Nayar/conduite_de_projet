@@ -46,7 +46,7 @@
 }
 
 .settings-button:hover {
-  background-color: #d0d0d0; /* change this to a darker color */
+  background-color: gray; /* change this to a darker color */
 }
 
 .settings-button:before {

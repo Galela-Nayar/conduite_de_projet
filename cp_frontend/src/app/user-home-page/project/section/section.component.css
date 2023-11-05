@@ -6,6 +6,7 @@
   }
 
   .table-style {
+    width: 200px;
     display: inline-block;
     border: 1px solid black;
     border-radius: 10px;
@@ -15,4 +16,26 @@
 .parent-container {
   display: flex;
   justify-content: center;
+}
+
+.section-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.settings-button {
+  border: none; /* remove border */
+  color: gray; /* change color of ... to light gray */
+  background-color: transparent; /* remove background color */
+}
+
+.settings-button:hover {
+  background-color: #d0d0d0; /* change this to a darker color */
+}
+
+.settings-button:before {
+  content: "\2022 \2022 \2022"; /* add space between dots */
+  letter-spacing: 2px; /* adjust space between dots */
+  font-size: 20px; /* adjust size of ... */
 }
