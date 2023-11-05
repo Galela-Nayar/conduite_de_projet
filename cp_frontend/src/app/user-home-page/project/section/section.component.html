@@ -5,7 +5,11 @@
         <button (click)="onSettingClick($event)" class="settings-button"></button>
     </div>
     <hr>
-    <div  #taskContainer> </div>
+    <!-- <div  #taskContainer> </div> -->
+
+    <div *ngFor="let task of tasks">
+        <app-tache [tacheId]="task"></app-tache>
+    </div>
     <div class="parent-container">
         <app-create-task *ngIf="showCreateTask" [mouseX]="mouseX" [mouseY]="mouseY" [sectionId]="sectionId"></app-create-task>
         <button (click)="onPlusClick($event)" class="app-section table-style" *ngIf="id">+</button>

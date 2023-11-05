@@ -10,7 +10,11 @@
 
     <!-- Colonnes pour chaque section du projet -->
     <div style="display: flex;">
-        <div  #sectionContainer> </div>
+        <!-- <div  #sectionContainer> </div> -->
+        <div *ngFor="let section of sections">
+            <app-section [sectionId]="section"></app-section>
+        </div>
+        
         <app-create-section *ngIf="showCreateSection" [mouseX]="mouseX" [mouseY]="mouseY"></app-create-section>
         <button (click)="onPlusClick($event)" class="app-section table-style" *ngIf="id">+</button>
         
