@@ -33,6 +33,7 @@ export class TacheComponent {
           console.log('tacheId : ',this.tacheId + '\ntacheData : ' + tacheData + '\ntache : ' +this.tache);
         })
     }
+    this.fetchTacheData();
     console.log("tache: " + this.tache)
   }
 
