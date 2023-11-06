@@ -53,6 +53,7 @@ export class SectionComponent{
       console.log('The dialog was closed');
     });
   }
+  
   onSettingClick(event: MouseEvent) {
     this.mouseX = event.clientX;
     this.mouseY = event.clientY;

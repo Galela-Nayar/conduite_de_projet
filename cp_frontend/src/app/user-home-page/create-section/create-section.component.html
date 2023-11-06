@@ -2,6 +2,6 @@
     <div class="modal-content">
       <input [(ngModel)]="nom" type="text" placeholder="Nom section...">
       <button (click)="onButtonClick()">creer</button>
-      <button class="close-button" [routerLink]="['..']">X</button>
+      <button class="close-button" (click)="onNoClick()">X</button>
     </div>
   </div>
