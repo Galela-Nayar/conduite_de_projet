@@ -36,11 +36,47 @@
 /* horizontal-user-home-menu.component.css */
 .horizontal-menu {
   height: 60px; /* Ajustez cette valeur en fonction de vos besoins */
-  width: 60px; /* Ajustez cette valeur en fonction de vos besoins */
+  width: 100%; /* Ajustez cette valeur en fonction de vos besoins */
 }
 
 .menu-icon {
-  width: 100%;
+  width: 60px;
   height: 100%;
   object-fit: contain;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  float: right;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* ... le reste de votre CSS ... */
+
+.dropbtn {
+  cursor: pointer;
+  height: 60px; /* Ajoutez cette ligne */
 }
