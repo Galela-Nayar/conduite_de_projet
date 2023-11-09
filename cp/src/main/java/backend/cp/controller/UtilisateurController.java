@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.RequestEntity.HeadersBuilder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -54,13 +55,57 @@ public class UtilisateurController {
 
     @GetMapping("/add-projet")
     public ResponseEntity<String> addProjet(@RequestParam String userId, @RequestParam String projetId){
-    Utilisateur user = utilisateurService.getUtilisateur(userId);
-    if (user == null) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-    }
-    user.addProjet(projetId);
-    utilisateurService.saveUtilisateur(user);  // save the updated user back to the database
+        Utilisateur user = utilisateurService.getUtilisateur(userId);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+        user.addProjet(projetId);
+        utilisateurService.saveUtilisateur(user);  // save the updated user back to the database
 
-    return ResponseEntity.ok("project add");
-}
+        return ResponseEntity.ok("project add");
+    }
+
+    @GetMapping("/user")
+    public Utilisateur user(@RequestParam String id){
+        return utilisateurService.getUtilisateur(id);
+    }
+
+
+    @GetMapping("/set_userName")
+    public ResponseEntity<String> setNomUtilisateur(@RequestParam String id, @RequestParam String param){
+
+        System.out.println("ok");
+        if(utilisateurService.getUtilisateur(id) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("utilisateur not found");
+        utilisateurService.setUserName(id,param);
+        System.out.println("ok");
+        return ResponseEntity.ok("ok");
+    }
+
+    @GetMapping("/set_nom")
+    public ResponseEntity<String> setNom(@RequestParam String id, @RequestParam String param){
+        if(utilisateurService.getUtilisateur(id) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("utilisateur not found");
+        utilisateurService.setNom(id, param);
+        return ResponseEntity.ok("ok");
+    }
+
+    @GetMapping("/set_prenom")
+    public ResponseEntity<String> setPrenom(@RequestParam String id, @RequestParam String param){
+        if(utilisateurService.getUtilisateur(id) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("utilisateur not found");
+        utilisateurService.setPrenom(id,param);
+        return ResponseEntity.ok("ok");
+    }
+
+    @GetMapping("/set_email")
+    public ResponseEntity<String> setEmail(@RequestParam String id, @RequestParam String param){
+        if(utilisateurService.getUtilisateur(id) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("utilisateur not found");
+        utilisateurService.setEmail(id, param);
+        return ResponseEntity.ok("ok");
+    }
+
+    @GetMapping("/set_bio")
+    public ResponseEntity<String> setBio(@RequestParam String id, @RequestParam String param){
+        if(utilisateurService.getUtilisateur(id) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("utilisateur not found");
+        utilisateurService.setBio(id, param);
+        return ResponseEntity.ok("ok");
+    }
 }
