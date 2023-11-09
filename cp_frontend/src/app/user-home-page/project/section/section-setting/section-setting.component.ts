@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
+import { ModifySectionComponent } from './modify-section/modify-section.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-section-setting',
@@ -14,7 +16,8 @@ export class SectionSettingComponent {
   id: string = '';
   projectId: string = '';
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private observableService: ObservableService) {}
+  constructor(private http: HttpClient, private route: ActivatedRoute, 
+    private observableService: ObservableService, public dialog: MatDialog) {}
 
   ngOnInit() {
     const id = this.route.parent ? this.route.parent.snapshot.paramMap.get('id') : null;
@@ -40,4 +43,15 @@ export class SectionSettingComponent {
   ajouterTache(){
     
   }
+
+  modifier(){
+    const dialogRef = this.dialog.open(ModifySectionComponent, {
+      data: this.sectionId,
+    });
+  
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('Le dialogue a été fermé');
+    });
+  }
 }
+

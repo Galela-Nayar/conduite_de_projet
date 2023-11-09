@@ -1,0 +1,20 @@
+<div *ngIf="section">
+  <h2 *ngIf="!isEditing">{{ section.nom }}</h2>
+
+  <div *ngIf="isEditing">
+    <form [formGroup]="sectionForm" (ngSubmit)="saveChanges()">
+      <input formControlName="nom" placeholder="Nouveau nom" />
+      <button type="submit">Enregistrer</button>
+      <button type="button" (click)="cancelEditing()">Annuler</button>
+    </form>
+  </div>
+
+  <button *ngIf="!isEditing" (click)="startEditing()" class="app-section table-style">
+    <mat-icon>create</mat-icon>
+  </button>
+
+  <h3>Tâches:</h3>
+  <ul>
+    <li *ngFor="let tacheId of section.taches">{{ tacheId }}</li>
+  </ul>
+</div>

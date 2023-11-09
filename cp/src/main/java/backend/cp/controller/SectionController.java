@@ -1,6 +1,5 @@
 package backend.cp.controller;
 
-import backend.cp.modele.Projet;
 import backend.cp.modele.Section;
 import backend.cp.service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200") // replace with the domain your frontend is running on
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/sections")
 public class SectionController {
@@ -23,7 +22,6 @@ public class SectionController {
     @GetMapping("/section")
     public Section getSection(@RequestParam String id){
         return sectionService.getSection(id);
-
     }
 
     @GetMapping("/create")
@@ -61,7 +59,13 @@ public class SectionController {
         System.out.println("ctr remove start section id : " + id + "   |  tacheID : " + tacheId);
         if(sectionService.removeTache(id, tacheId)) return ResponseEntity.ok("ok");
         System.out.println("ctr remove end");
-        return ResponseEntity.ok("pas ok, section non retiré du projet");
+        return ResponseEntity.ok("probleme");
+    }
+
+    @PutMapping("/updateNom")
+    public ResponseEntity<String> updateNom(@RequestParam String id, @RequestParam String nom){
+        sectionService.updateNom(id, nom);
+        return ResponseEntity.ok("ok");
     }
 
 }

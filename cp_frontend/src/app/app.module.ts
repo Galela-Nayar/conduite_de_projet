@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule, FormGroup } from '@angular/forms';
 import { HomePageComponent } from './home-page/home-page.component';
 import { RegisterComponent } from './home-page/register/register.component';
 import { LogAppComponent } from './log-app/log-app.component';
@@ -32,6 +32,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
+import { ModifySectionComponent } from './user-home-page/project/section/section-setting/modify-section/modify-section.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +53,7 @@ import {MatCardModule} from '@angular/material/card';
     LogInComponent,
     SectionSettingComponent,
     TacheSettingComponent,
+    ModifySectionComponent,
   ],
   imports: [
     BrowserModule,
