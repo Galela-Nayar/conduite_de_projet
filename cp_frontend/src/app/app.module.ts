@@ -31,6 +31,7 @@ import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,7 +67,8 @@ import {MatButtonModule} from '@angular/material/button';
     MatDialogModule,
     MatButtonModule, 
     MatMenuModule, 
-    MatIconModule
+    MatIconModule,
+    MatCardModule,
   ],
   providers: [{provide:MatDialogRef , useValue:{} },
     { provide: MAT_DIALOG_DATA, useValue: {} }],

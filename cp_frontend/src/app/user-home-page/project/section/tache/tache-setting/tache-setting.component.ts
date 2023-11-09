@@ -3,6 +3,9 @@ import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SectionService } from '../../section.service';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
+import { ModifyTaskComponent } from './modify-task/modify-task.component';
+import { MatDialog } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-tache-setting',
@@ -14,7 +17,9 @@ export class TacheSettingComponent {
   contextMenuStyle = {};
   sectionId: String | null = '';
 
-  constructor(private http: HttpClient, private sectionService: SectionService, private route: ActivatedRoute, private observableService: ObservableService) {}
+  constructor(private http: HttpClient, private sectionService: SectionService, 
+    private route: ActivatedRoute, private observableService: ObservableService,
+    public dialog: MatDialog) {}
 
   ngOnInit() {
     const tacheId = this.route.snapshot.paramMap.get('tacheId');
@@ -33,4 +38,15 @@ export class TacheSettingComponent {
       })
     })
   }
+
+  modifier(){
+    const dialogRef = this.dialog.open(ModifyTaskComponent, {
+      data: this.tacheId,
+    });
+  
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('Le dialogue a été fermé');
+    });
+  }
+  
 }

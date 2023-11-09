@@ -1,0 +1,22 @@
+<h2>{{ tache.nom }}</h2>
+<p>Priorité: {{ tache.Priorite }}</p>
+<p>Pondération: {{ tache.Ponderation }}</p>
+<p>Statut: {{ tache.Statut }}</p>
+<p>Date limite: {{ tache.limite }}</p>
+
+<div *ngIf="tache.description.length > 0">
+    <h3>Description:</h3>
+    <ul>
+    <li *ngFor="let desc of tache.description">{{ desc }}</li>
+    </ul>
+</div>
+
+<div *ngIf="tache.etiquettes.length > 0">
+    <h3>Étiquettes:</h3>
+    <ul>
+    <li *ngFor="let etiquette of tache.etiquettes">
+        {{ etiquette.nom }} ({{ etiquette.couleur }})
+    </li>
+    </ul>
+</div>
+  

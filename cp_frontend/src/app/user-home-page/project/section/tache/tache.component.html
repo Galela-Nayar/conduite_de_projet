@@ -1,8 +1,7 @@
-<div class="table-style">
-    <div class="app-section section-entry">
-        <div class="task-content"> <!-- Ajout d'une div pour le contenu de la tâche -->
-            <p>{{ tache?.nom }}</p>
-            <app-tache-setting [tacheId]="tacheId"></app-tache-setting>
-        </div>
-    </div>
-</div>
+<mat-card class="card-custom-background">
+    <mat-card-content>
+        <p>{{ tache?.nom }}</p>
+        <app-tache-setting [tacheId]="tacheId"></app-tache-setting>
+    </mat-card-content>
+</mat-card>
+  
