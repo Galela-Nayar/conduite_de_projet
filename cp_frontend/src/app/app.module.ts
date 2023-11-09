@@ -26,6 +26,7 @@ import { TacheComponent } from './user-home-page/project/section/tache/tache.com
 import { CreateTaskComponent } from './user-home-page/create-task/create-task.component';
 import { LogInComponent } from './home-page/log-in/log-in.component';
 import { SectionSettingComponent } from './user-home-page/project/section/section-setting/section-setting.component';
+import { TacheSettingComponent } from './user-home-page/project/section/tache/tache-setting/tache-setting.component';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/
     CreateTaskComponent,
     LogInComponent,
     SectionSettingComponent,
+    TacheSettingComponent,
   ],
   imports: [
     BrowserModule,

@@ -46,5 +46,12 @@ public class ProjetController {
         return projetService.getProject(id);
     }
 
+    @GetMapping("/removeSection")
+    public ResponseEntity<String> removeSection(@RequestParam String id, @RequestParam String sectionId){
+        System.out.println("ctr remove start");
+        if(projetService.removeSection(id, sectionId)) return ResponseEntity.ok("ok");
+        System.out.println("ctr remove end");
+        return ResponseEntity.ok("pas ok, section non retiré du projet");
+    }
 
 }

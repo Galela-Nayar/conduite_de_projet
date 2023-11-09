@@ -20,9 +20,9 @@ export class CreateTaskComponent {
     public dialogRef: MatDialogRef<CreateTaskComponent>,
     @Inject(MAT_DIALOG_DATA) public data: string) {}
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
+    onNoClick(): void {
+      this.dialogRef.close();
+    }
   
   ngOnInit() {
     this.sectionId = this.data;

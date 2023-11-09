@@ -32,13 +32,19 @@ public class TacheService {
         return tacheRepository.findAll();
     }
 
-    public Tache getTaches(String id) {
+    public Tache getTache(String id) {
         if(tacheRepository.findById(id) != null) return tacheRepository.findById(id).get();
         List<Tache> taches = getAllTaches();
         for (Tache tache : taches) {
             if(tache.getId().equals(id)) return tache;
         }
         return null;
+    }
+
+    public void removeTache(String id) {
+        Tache tache = this.getTache(id);
+        System.out.println("service tache : " + tache);
+        this.tacheRepository.delete(tache);
     }
 
     // Autres méthodes de service pour la gestion des tâches

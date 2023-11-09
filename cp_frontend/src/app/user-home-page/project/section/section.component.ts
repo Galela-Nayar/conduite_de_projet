@@ -5,6 +5,7 @@ import Section from 'src/interface/Section';
 import { BehaviorSubject, Subscription, mergeMap} from 'rxjs';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
 import Tache from 'src/interface/Tache';
+import { SectionService } from './section.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateTaskComponent } from '../../create-task/create-task.component';
 
@@ -27,12 +28,14 @@ export class SectionComponent{
   tasks: any[]=[];
   private sectionData = new BehaviorSubject<Section | null>(null);
 
-  constructor(private http: HttpClient,private cd: ChangeDetectorRef, private route: ActivatedRoute, private observableService: ObservableService, public dialog: MatDialog) {}
-
+  constructor(private http: HttpClient, private sectionService: SectionService, private cd: ChangeDetectorRef, private route: ActivatedRoute, private observableService: ObservableService, public dialog: MatDialog) {}
+  
   ngOnInit(){
+    
     this.id = this.route.parent ? this.route.parent.snapshot.paramMap.get('id') : null;
     this.projetId = this.route.parent ? this.route.parent.snapshot.paramMap.get('projetId') : null;
     if (this.sectionId) {
+      this.sectionService.changeSectionId(this.sectionId);
       this.sectionId = this.sectionId;
       this.taskSubscription = this.observableService.getObservableTask().subscribe((response)=>{
         this.http.get<Section>(`http://localhost:8080/sections/section?id=${this.sectionId}`).subscribe((response)=>{

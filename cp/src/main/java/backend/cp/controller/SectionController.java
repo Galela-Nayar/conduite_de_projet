@@ -1,5 +1,6 @@
 package backend.cp.controller;
 
+import backend.cp.modele.Projet;
 import backend.cp.modele.Section;
 import backend.cp.service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,23 @@ public class SectionController {
     @GetMapping("/all")
     public List<Section> getAllSections() {
         return sectionService.getAllSections();
+    }
+
+    @GetMapping("/removeSection")
+    public ResponseEntity<String>removeSection(@RequestParam String id){
+        System.out.println("ctr remove start");
+        sectionService.removeSection(id);
+
+        System.out.println("ctr remove end");
+        return ResponseEntity.ok("ok");
+    }
+
+    @GetMapping("/removeTache")
+    public ResponseEntity<String> removeTache(@RequestParam String id, @RequestParam String tacheId){
+        System.out.println("ctr remove start section id : " + id + "   |  tacheID : " + tacheId);
+        if(sectionService.removeTache(id, tacheId)) return ResponseEntity.ok("ok");
+        System.out.println("ctr remove end");
+        return ResponseEntity.ok("pas ok, section non retiré du projet");
     }
 
 }
