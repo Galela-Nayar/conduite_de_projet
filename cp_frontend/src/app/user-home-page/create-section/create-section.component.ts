@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
 
@@ -9,50 +10,28 @@ import { ObservableService } from 'src/app/observable/observable-projet.service'
   styleUrls: ['./create-section.component.css']
 })
 export class CreateSectionComponent {
-  @Input() mouseX!: number;
-  @Input() mouseY!: number;
   id: string = '';
   projectId: string = '';
   nom: string = '';
   showContextMenu = true;
   contextMenuStyle = {};
   
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private observableService: ObservableService) {}
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute,
+    private observableService: ObservableService,
+    public dialogRef: MatDialogRef<CreateSectionComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: string) {}
   
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
   ngOnInit() {
-    const x = this.route.snapshot.paramMap.get('x');
-    if(x) this.mouseX =  parseInt(x);
-    const y = this.route.snapshot.paramMap.get('y');
-    if(y) this.mouseY =  parseInt(y);
-    this.contextMenuStyle = {
-      'position': 'absolute',
-      'left': `${this.mouseX}px`,
-      'top': `${this.mouseY}px`
-    };
-    const id = this.route.parent ? this.route.parent.snapshot.paramMap.get('id') : null;
-    if(id){
-      this.id = id;
-
-      console.log("id: " + this.id);
-    } else {
-
-      console.log("id (null): " + this.id);
-    }
-    const projectId = this.route.snapshot.paramMap.get('projectId');
-    if(projectId){
-      this.projectId = projectId;
-
-      console.log("projectId: " + this.projectId);
-    } else {
-
-      console.log("projectId (null): " + this.projectId);
-    }
+    this.projectId = this.data;
   }
 
 
 
   onButtonClick() {
-
     this.http.get(`http://localhost:8080/sections/create?name=${this.nom}`, {responseType: 'text'}).subscribe(
       (sectionId: String) => {
         if(sectionId){
@@ -76,5 +55,6 @@ export class CreateSectionComponent {
         console.error('Erreur lors de la création de la section', error);
       }
     );
+    this.dialogRef.close();
   }
 }

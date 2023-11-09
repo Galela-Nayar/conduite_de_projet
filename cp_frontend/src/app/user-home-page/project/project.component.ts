@@ -5,6 +5,8 @@ import Project from 'src/interface/Project';
 import {Subscription} from 'rxjs';
 import { ChangeDetectorRef } from '@angular/core';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
+import { CreateSectionComponent } from '../create-section/create-section.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -25,7 +27,7 @@ export class ProjectComponent implements OnDestroy{
 
 
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private cd: ChangeDetectorRef, private observableService: ObservableService) {}
+  constructor(private http: HttpClient, private route: ActivatedRoute, private cd: ChangeDetectorRef, private observableService: ObservableService, public dialog: MatDialog) {}
   ngOnDestroy(): void {
     this.sectionSubscription.unsubscribe();
   }
@@ -45,11 +47,15 @@ export class ProjectComponent implements OnDestroy{
     }
   }
 
+  onPlusClick(event: MouseEvent): void {
+    const dialogRef = this.dialog.open(CreateSectionComponent, {
 
-  onPlusClick(event: MouseEvent) {
-    this.mouseX = event.clientX;
-    this.mouseY = event.clientY;
-    this.showCreateSection = true;
-    this.cd.detectChanges();
+      data: this.projetId
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
+
 }
