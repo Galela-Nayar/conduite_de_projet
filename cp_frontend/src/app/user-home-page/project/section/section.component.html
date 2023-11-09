@@ -1,8 +1,8 @@
 <div class="table-style">
     <div class="app-section section-entry">
         <p> {{section?.nom}} </p>
-        <app-section-setting *ngIf="showSetting" [mouseX]="mouseX" [mouseY]="mouseY" [sectionId]="sectionId"></app-section-setting>
-        <button (click)="onSettingClick($event)" class="settings-button"></button>
+        <app-section-setting [sectionId]="sectionId"></app-section-setting>
+        <!-- <button (click)="onSettingClick($event)" class="settings-button"></button> -->
     </div>
     <hr>
     <!-- <div  #taskContainer> </div> -->

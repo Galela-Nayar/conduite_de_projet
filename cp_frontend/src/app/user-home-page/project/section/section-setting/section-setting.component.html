@@ -1,5 +1,14 @@
-<div  class="modal" [ngStyle]="contextMenuStyle" >
-        <div class="clickable" (click)="supprimer()">Supprimer la section</div>
-        <div class="clickable" (click)="ajouterTache()">Ajouter une tâche</div>
+<button mat-icon-button [matMenuTriggerFor]="menu">
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="supprimer()">
+    <mat-icon>delete</mat-icon>
+    <span>Supprimer la section</span>
+  </button>
+  <button mat-menu-item>
+          <mat-icon>add</mat-icon>
+          <span>Ajouter une tâche</span>
+        </button>
+</mat-menu>
     
-</div>

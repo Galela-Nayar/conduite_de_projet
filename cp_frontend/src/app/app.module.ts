@@ -28,6 +28,9 @@ import { LogInComponent } from './home-page/log-in/log-in.component';
 import { SectionSettingComponent } from './user-home-page/project/section/section-setting/section-setting.component';
 import { TacheSettingComponent } from './user-home-page/project/section/tache/tache-setting/tache-setting.component';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,6 +64,9 @@ import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/
     MatNativeDateModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    MatButtonModule, 
+    MatMenuModule, 
+    MatIconModule
   ],
   providers: [{provide:MatDialogRef , useValue:{} },
     { provide: MAT_DIALOG_DATA, useValue: {} }],
