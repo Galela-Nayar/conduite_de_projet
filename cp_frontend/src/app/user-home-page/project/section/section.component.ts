@@ -31,7 +31,6 @@ export class SectionComponent{
   constructor(private http: HttpClient, private sectionService: SectionService, private cd: ChangeDetectorRef, private route: ActivatedRoute, private observableService: ObservableService, public dialog: MatDialog) {}
   
   ngOnInit(){
-    
     this.id = this.route.parent ? this.route.parent.snapshot.paramMap.get('id') : null;
     this.projetId = this.route.parent ? this.route.parent.snapshot.paramMap.get('projetId') : null;
     if (this.sectionId) {
