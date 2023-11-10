@@ -65,7 +65,7 @@ public class SectionController {
     @PutMapping("/updateNom")
     public ResponseEntity<String> updateNom(@RequestParam String id, @RequestParam String nom){
         sectionService.updateNom(id, nom);
-        return ResponseEntity.ok("ok");
+        return ResponseEntity.ok("");
     }
 
 }
