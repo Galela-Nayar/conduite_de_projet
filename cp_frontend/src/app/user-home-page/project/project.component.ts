@@ -35,17 +35,20 @@ export class ProjectComponent implements OnDestroy{
   ngOnInit() {
     const id = this.route.parent ? this.route.parent.snapshot.paramMap.get('id') : null;
     if(id != null) this.id = id;
-    const projetId = this.route.snapshot.paramMap.get('projectId');
-    if(projetId != null){
-      this.projetId = projetId;
-      this.sectionSubscription = this.observableService.getObservableSection().subscribe((response)=>{
-        this.http.get<Project>(`http://localhost:8080/projets/projet?id=${this.projetId}`).subscribe((projectData: Project)=>{
-          this.sections=projectData.sections;
-          this.projet = projectData;
-          console.log("hehehehehe");
+    this.route.paramMap.subscribe((param)=>{
+      const projetId= param.get('projectId');
+      console.log(projetId);
+      if(projetId != null){
+        this.projetId = projetId;
+        this.sectionSubscription = this.observableService.getObservableSection().subscribe((response)=>{
+          this.http.get<Project>(`http://localhost:8080/projets/projet?id=${this.projetId}`).subscribe((projectData: Project)=>{
+            this.sections=projectData.sections;
+            this.projet = projectData;
+            console.log("hehehehehe");
+          });
         });
-      });
-    }
+      }
+    });
   }
 
   onPlusClick(event: MouseEvent): void {
