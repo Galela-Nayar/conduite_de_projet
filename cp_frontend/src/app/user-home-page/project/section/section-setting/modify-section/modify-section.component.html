@@ -1,23 +1,30 @@
-<div *ngIf="section">
-  <h2 *ngIf="!isEditing">{{ section.nom }}</h2>
+<div *ngIf="section" class="container">
+  <div class="header">
+    <h2 *ngIf="!isEditing">
+      <h3>section: </h3>
+    <button *ngIf="!isEditing" (click)="startEditing()" class="app-section table-style create-button">
+      <mat-icon class="create-icon">create</mat-icon>{{ section.nom }}
+    </button>
+    </h2>
+  </div>
 
   <div *ngIf="isEditing">
     <form [formGroup]="sectionForm" (ngSubmit)="saveChanges()">
       <input formControlName="nom" placeholder="Nouveau nom" />
-      <button type="submit">Enregistrer</button>
-      <button type="button" (click)="cancelEditing()">Annuler</button>
+      <div class="button-container">
+        <button type="submit">Enregistrer</button>
+        <button type="button" (click)="cancelEditing()">Annuler</button>
+      </div>
     </form>
   </div>
 
-  <button *ngIf="!isEditing" (click)="startEditing()" class="app-section table-style">
-    <mat-icon>create</mat-icon>
-  </button>
 
   <h3>Tâches:</h3>
-  <ul>
+  <ul *ngIf="section.taches && section.taches.length > 0">
     <li *ngFor="let tacheId of section.taches">
       {{ tacheId }}
       <mat-icon (click)="supprimer(tacheId)">delete</mat-icon>
     </li>
   </ul>
+  <p *ngIf="!section.taches || section.taches.length === 0">Aucune tâche</p>
 </div>

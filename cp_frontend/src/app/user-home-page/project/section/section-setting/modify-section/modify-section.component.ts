@@ -43,7 +43,7 @@ export class ModifySectionComponent implements OnInit{
       console.log(this.sectionForm.value.nom)
       this.httpClient.put<string>(`http://localhost:8080/sections/updateNom?id=${this.sectionId}&nom=${this.sectionForm.value.nom}`,{})
         .subscribe((response) => {
-          this.dialogRef.close();
+            this.section.nom=this.sectionForm.value.nom;
             this.observerService.notifyTask();
             this.isEditing = false;
         });
