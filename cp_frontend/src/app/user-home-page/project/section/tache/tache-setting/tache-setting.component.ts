@@ -14,20 +14,12 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class TacheSettingComponent {
   @Input() tacheId!: String;
-  contextMenuStyle = {};
-  sectionId: String | null = '';
+  @Input() sectionId: String | null = '';
 
   constructor(private http: HttpClient, private sectionService: SectionService, 
     private route: ActivatedRoute, private observableService: ObservableService,
     public dialog: MatDialog) {}
 
-  ngOnInit() {
-    const tacheId = this.route.snapshot.paramMap.get('tacheId');
-    if(tacheId) this.tacheId = tacheId;
-    if(!this.route.parent) console.log("!!! route parent doesn't exist !!!")
-    this.sectionService.currentSectionId.subscribe(sectionId => this.sectionId = sectionId);
-
-  }
 
   supprimer(){
     this.http.get(`http://localhost:8080/taches/removeTache?id=${this.tacheId}`,{responseType: 'text'}).subscribe((response:String)=>{

@@ -6,7 +6,7 @@
     <hr>
 
     <div *ngFor="let task of tasks">
-        <app-tache [tacheId]="task"></app-tache>
+        <app-tache [tacheId]="task" [sectionId]="sectionId"></app-tache>
     </div>
     <div class="parent-container">
         <button (click)="onPlusClick($event)" class="app-section table-style" *ngIf="id">+</button>

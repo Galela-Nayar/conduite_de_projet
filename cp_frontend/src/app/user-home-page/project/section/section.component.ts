@@ -17,8 +17,7 @@ import { CreateTaskComponent } from '../../create-task/create-task.component';
 export class SectionComponent{
   id: String | null = '';
   projetId: String | null = '';
-  @Input()
-  sectionId: String = '';
+  @Input() sectionId: String = '';
   section?: Section;
   mouseX: number = 0;
   mouseY: number = 0;
