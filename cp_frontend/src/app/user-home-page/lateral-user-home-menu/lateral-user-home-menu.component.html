@@ -4,7 +4,9 @@
     <hr> <!-- Barre de séparation -->
     <div *ngIf="projects_id.length > 0">
         <div  class="project-entry"  *ngFor="let project of projet">
-            <a [routerLink]="['/', id, 'project', project.id]">{{ project.nom }}</a>
+            <a [routerLink]="['/', id, 'project', project.id]">
+                {{ project.nom }}
+            </a>
             <button class="settings-button"></button>
         </div>
     </div>

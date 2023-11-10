@@ -55,5 +55,6 @@ export class LateralUserHomeMenuComponent implements OnInit, OnDestroy {
     });
     return bl;
   }
+
 }
 

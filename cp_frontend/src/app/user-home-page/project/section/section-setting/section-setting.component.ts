@@ -1,16 +1,17 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
 import { ModifySectionComponent } from './modify-section/modify-section.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CreateTaskComponent } from 'src/app/user-home-page/create-task/create-task.component';
 
 @Component({
   selector: 'app-section-setting',
   templateUrl: './section-setting.component.html',
   styleUrls: ['./section-setting.component.css']
 })
-export class SectionSettingComponent {
+export class SectionSettingComponent implements OnInit{
   @Input() sectionId!: String;
   contextMenuStyle = {};
   id: string = '';
@@ -41,7 +42,13 @@ export class SectionSettingComponent {
   }
 
   ajouterTache(){
-    
+    const dialogRef = this.dialog.open(CreateTaskComponent, {
+      data: this.sectionId
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
   modifier(){
