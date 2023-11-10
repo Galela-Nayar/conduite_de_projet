@@ -1,6 +1,7 @@
 package backend.cp.service;
 
 import backend.cp.modele.Projet;
+import backend.cp.modele.Utilisateur;
 import backend.cp.repository.ProjetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,6 +76,12 @@ public class ProjetService {
         System.out.println("removed : " + ok);
         if(ok) this.projetRepository.save(pj);
         return ok;
+    }
+
+    public void setNom(String id, String param) {
+        Projet projet = this.getProject(id);
+        projet.setNom(param);
+        projetRepository.save(projet);
     }
 
 }

@@ -20,6 +20,7 @@ export class TacheComponent {
   mouseX: number = 0;
   mouseY: number = 0;
   showSetting = false;
+  
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private cd: ChangeDetectorRef) {}
 

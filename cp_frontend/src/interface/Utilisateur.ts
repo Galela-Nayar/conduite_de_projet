@@ -8,3 +8,6 @@ export interface Utilisateur {
     listProjet: any[];
     [key:string]:any;
   }
+
+
+export default Utilisateur

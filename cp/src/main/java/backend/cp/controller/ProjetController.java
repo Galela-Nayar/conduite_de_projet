@@ -5,6 +5,7 @@ import backend.cp.modele.Projet;
 import backend.cp.service.ProjetService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,6 +53,13 @@ public class ProjetController {
         if(projetService.removeSection(id, sectionId)) return ResponseEntity.ok("ok");
         System.out.println("ctr remove end");
         return ResponseEntity.ok("pas ok, section non retiré du projet");
+    }
+
+    @GetMapping("/set_nom")
+    public ResponseEntity<String> setNom(@RequestParam String id, @RequestParam String param){
+        if(projetService.getProject(id) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("utilisateur not found");
+        projetService.setNom(id, param);
+        return ResponseEntity.ok("ok");
     }
 
 }
