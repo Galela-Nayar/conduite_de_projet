@@ -24,6 +24,4 @@ export class ModifyTaskComponent implements OnInit{
     });
   }
 
-
-
 }

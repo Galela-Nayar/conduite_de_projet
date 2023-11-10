@@ -55,4 +55,23 @@ export class ModifySectionComponent implements OnInit{
     this.isEditing = false;
   }
 
+  supprimer(idTask: string): void {
+  this.httpClient.get(`http://localhost:8080/taches/removeTache?id=${idTask}`, { responseType: 'text' }).subscribe((response: string) => {
+    console.log("supprimer tache : " + response)
+    this.httpClient.get(`http://localhost:8080/sections/removeTache?id=${this.sectionId}&tacheId=${idTask}`, { responseType: 'text' }).subscribe((response2: string) => {
+      console.log("supprimer tache dans section: " + response)
+      this.observerService.notifyTask();
+
+      // Assuming each task has an 'id' property
+      for (let i = 0; i < this.section.taches.length; i++) {
+        if (this.section.taches[i] === idTask) {
+          this.section.taches.splice(i, 1); // Remove the task at index i
+          break; // Exit the loop once the task is found and removed
+        }
+      }
+    });
+  });
+}
+
+
 }

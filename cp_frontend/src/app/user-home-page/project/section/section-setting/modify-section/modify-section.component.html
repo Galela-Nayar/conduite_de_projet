@@ -15,6 +15,9 @@
 
   <h3>Tâches:</h3>
   <ul>
-    <li *ngFor="let tacheId of section.taches">{{ tacheId }}</li>
+    <li *ngFor="let tacheId of section.taches">
+      {{ tacheId }}
+      <mat-icon (click)="supprimer(tacheId)">delete</mat-icon>
+    </li>
   </ul>
 </div>
