@@ -8,13 +8,15 @@
     </div>
   </div>
 
-  <div>
-    <div cdkDropList (cdkDropListDropped)="drop($event)">
-      <div cdkDrag *ngFor="let section of sections">
-        <app-section [sectionId]="section"></app-section>
-      </div>
+  <div
+    cdkDropList
+    cdkDropListOrientation="horizontal"
+    class="section-list"
+    (cdkDropListDropped)="drop($event)"
+  >
+    <div cdkDrag *ngFor="let section of sections">
+      <app-section [sectionId]="section"></app-section>
     </div>
-
     <app-create-section *ngIf="showCreateSection"></app-create-section>
     <button
       (click)="onPlusClick($event)"
