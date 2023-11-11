@@ -1,7 +1,6 @@
 package backend.cp.service;
 
 import backend.cp.modele.Projet;
-import backend.cp.modele.Utilisateur;
 import backend.cp.repository.ProjetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +42,15 @@ public class ProjetService {
         sections.add(sectionService.createSection("en cours"));
         sections.add(sectionService.createSection("terminé"));
         return sections;
+    }
+
+
+    public void updateSections(String projetId, List<String> sections) {
+        Projet projet = projetRepository.findById(projetId).orElse(null);
+        if (projet != null) {
+            projet.setSections(sections);
+            projetRepository.save(projet);
+        }
     }
 
     public List<Projet> getAllProjets() {
