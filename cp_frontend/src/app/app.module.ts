@@ -27,12 +27,22 @@ import { CreateTaskComponent } from './user-home-page/create-task/create-task.co
 import { LogInComponent } from './home-page/log-in/log-in.component';
 import { SectionSettingComponent } from './user-home-page/project/section/section-setting/section-setting.component';
 import { TacheSettingComponent } from './user-home-page/project/section/tache/tache-setting/tache-setting.component';
-import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
-import {MatIconModule} from '@angular/material/icon';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { ModifySectionComponent } from './user-home-page/project/section/section-setting/modify-section/modify-section.component';
+import {
+  CdkDragDrop,
+  CdkDropList,
+  CdkDrag,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -68,13 +78,17 @@ import { ModifySectionComponent } from './user-home-page/project/section/section
     MatNativeDateModule,
     BrowserAnimationsModule,
     MatDialogModule,
-    MatButtonModule, 
-    MatMenuModule, 
+    MatButtonModule,
+    MatMenuModule,
     MatIconModule,
     MatCardModule,
+    CdkDropList,
+    CdkDrag,
   ],
-  providers: [{provide:MatDialogRef , useValue:{} },
-    { provide: MAT_DIALOG_DATA, useValue: {} }],
+  providers: [
+    { provide: MatDialogRef, useValue: {} },
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
