@@ -1,7 +1,9 @@
 <mat-card class="card-custom-background">
     <mat-card-content>
-        <p>{{ tache?.nom }}</p>
-        <app-tache-setting [tacheId]="tacheId" [sectionId]="sectionId"></app-tache-setting>
+        <div class="section-entry">
+            <p>{{ tache?.nom }}</p>
+            <app-tache-setting [tacheId]="tacheId" [sectionId]="sectionId"></app-tache-setting>
+        </div>
     </mat-card-content>
 </mat-card>
   

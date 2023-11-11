@@ -44,6 +44,9 @@ import {
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
 
+import { UserSettingComponent } from './user-home-page/user-setting/user-setting.component';
+import { ProjectSettingComponent } from './user-home-page/lateral-user-home-menu/project-setting/project-setting.component';
+import { ProjetParametresComponent } from './user-home-page/projet-parametres/projet-parametres.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,6 +67,9 @@ import {
     SectionSettingComponent,
     TacheSettingComponent,
     ModifySectionComponent,
+    UserSettingComponent,
+    ProjectSettingComponent,
+    ProjetParametresComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,12 @@
 <div class="table-style">
-  <div class="app-section section-entry">
-    <p>{{ section?.nom }}</p>
-    <app-section-setting [sectionId]="sectionId"></app-section-setting>
-  </div>
-  <hr />
+    <div class="app-section section-entry">
+        <div class="task-content"> <!-- Ajout d'une div pour le contenu de la tâche -->
+            <p> {{section?.nom}} </p>
+            
+        </div>
+        <app-section-setting [mouseX]="mouseX" [mouseY]="mouseY" [sectionId]="sectionId"></app-section-setting>
+    </div>
+    <hr>
 
   <div cdkDropList (cdkDropListDropped)="drop($event)">
     <div cdkDrag *ngFor="let task of tasks">
@@ -18,6 +21,7 @@
         +
       </button>
     </div>
-    <p>Créer Section</p>
-  </div>
+    <p style="text-align: center;">
+        Créer Section
+    </p>
 </div>
