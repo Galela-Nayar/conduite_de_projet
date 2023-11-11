@@ -34,6 +34,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import { ModifySectionComponent } from './user-home-page/project/section/section-setting/modify-section/modify-section.component';
 
+import { UserSettingComponent } from './user-home-page/user-setting/user-setting.component';
+import { ProjectSettingComponent } from './user-home-page/lateral-user-home-menu/project-setting/project-setting.component';
+import { ProjetParametresComponent } from './user-home-page/projet-parametres/projet-parametres.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,6 +57,9 @@ import { ModifySectionComponent } from './user-home-page/project/section/section
     SectionSettingComponent,
     TacheSettingComponent,
     ModifySectionComponent,
+    UserSettingComponent,
+    ProjectSettingComponent,
+    ProjetParametresComponent,
   ],
   imports: [
     BrowserModule,

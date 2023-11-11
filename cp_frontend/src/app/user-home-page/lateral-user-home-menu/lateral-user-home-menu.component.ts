@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import Project from 'src/interface/Project';
@@ -16,9 +16,12 @@ export class LateralUserHomeMenuComponent implements OnInit, OnDestroy {
   id: string = '';
   projects_id: any[] = [];
   projet: Project[] = [];
+  mouseX: number = 0;
+  mouseY: number = 0;
+  showSetting = false;
   projectSubscription!: Subscription;
   
-  constructor(private http: HttpClient, private route: ActivatedRoute, private projetService: ObservableService) {}
+  constructor(private http: HttpClient, private cd: ChangeDetectorRef, private route: ActivatedRoute, private projetService: ObservableService) {}
   ngOnDestroy(): void {
     this.projectSubscription.unsubscribe();
   }
@@ -56,5 +59,11 @@ export class LateralUserHomeMenuComponent implements OnInit, OnDestroy {
     return bl;
   }
 
+  onSettingClick(event: MouseEvent) {
+    this.mouseX = event.clientX;
+    this.mouseY = event.clientY;
+    this.showSetting = true;
+    this.cd.detectChanges();
+  }
 }
 

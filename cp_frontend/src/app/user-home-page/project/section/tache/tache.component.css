@@ -1,3 +1,10 @@
 .card-custom-background {
     background-color: rgba(128, 128, 128, 0.5); /* Remplacez ceci par la couleur de fond de votre choix */
 }
+.section-entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box; 
+  }

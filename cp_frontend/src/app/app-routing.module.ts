@@ -13,6 +13,9 @@ import { CreateTaskComponent } from './user-home-page/create-task/create-task.co
 import { LogInComponent } from './home-page/log-in/log-in.component';
 import { SectionSettingComponent } from './user-home-page/project/section/section-setting/section-setting.component';
 import { TacheSettingComponent } from './user-home-page/project/section/tache/tache-setting/tache-setting.component';
+import { UserSettingComponent } from './user-home-page/user-setting/user-setting.component';
+import { ProjectSettingComponent } from './user-home-page/lateral-user-home-menu/project-setting/project-setting.component';
+import { ProjetParametresComponent } from './user-home-page/projet-parametres/projet-parametres.component';
 
 
 
@@ -29,18 +32,15 @@ const routes: Routes = [
     children: [
       { path: 'home', component: UserHomeComponent},
       { path: 'create-project', component: CreateProjectComponent },
+      { path: 'user-setting', component: UserSettingComponent },
+      { path: 'parametres-project/:projectId', component: ProjetParametresComponent},
       { path: 'project/:projectId', component: ProjectComponent,
         children:[
           { path: 'create-section/:x/:y', component: CreateSectionComponent},
           { path: ':sectionId', component: SectionComponent,
             children:[
-              { path: 'float-setting', component: SectionSettingComponent},
               { path: 'create-tache/:x/:y', component: CreateTaskComponent},
-              { path: ':tacheId', component: TacheComponent,
-                children:[
-                  { path: 'float-setting', component: TacheSettingComponent},
-                ]
-              },
+              { path: ':tacheId', component: TacheComponent},
             ]
           }
         ] 

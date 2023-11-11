@@ -25,5 +25,5 @@
     height: 100%;
     flex-grow: 1;
     overflow: auto; /* Ajoute une barre de défilement si le contenu est trop grand */
-    margin-top: 60px; /* décalage vers le bas de la hauteur du menu horizontal */
+    margin-top: 42px; /* décalage vers le bas de la hauteur du menu horizontal */
   }

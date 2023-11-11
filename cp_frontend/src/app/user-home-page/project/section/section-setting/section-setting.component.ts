@@ -13,6 +13,8 @@ import { CreateTaskComponent } from 'src/app/user-home-page/create-task/create-t
 })
 export class SectionSettingComponent implements OnInit{
   @Input() sectionId!: String;
+  @Input() mouseX!: number;
+  @Input() mouseY!: number;
   contextMenuStyle = {};
   id: string = '';
   projectId: string = '';

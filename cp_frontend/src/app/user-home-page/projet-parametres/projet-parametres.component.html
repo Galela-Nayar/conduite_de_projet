@@ -1,0 +1,25 @@
+<div class="parent-container">
+    <div class="container">
+        <div class="header">
+            <p>Créateur : {{createur.userName}}</p>
+            <p>Date de création : {{getFormattedDate(project.dateCreation)}}</p>
+        </div>
+        <div class="section">
+            <div class="section-container">
+                <div class="field-group">
+                    <label>{{ fields[0].label }} :</label>
+                    <p>{{project[fields[0].key]}}</p>
+                    <input [(ngModel)]="fields[0].value" (ngModelChange)="fields[0].saved = false">
+                    <button *ngIf="!fields[0].saved" [disabled]="!fields[0].value || fields[0].value === getUserProperty(fields[0].key)" (click)="save(fields[0])">Enregistrer</button>
+                    <span *ngIf="fields[0].saved">&#10004;</span> <!-- This is a checkmark -->
+                </div>
+            </div>
+        </div>
+        <div class="section-last">
+            <div class="section-container">
+                <p>Contenu de la dernière section</p>  
+            </div>
+        </div>
+        <!-- Ajoutez autant de sections que nécessaire -->
+  </div>
+</div>
