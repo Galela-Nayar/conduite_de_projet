@@ -1,15 +1,23 @@
 <div class="table-style">
-    <div class="app-section section-entry">
-        <p> {{section?.nom}} </p>
-        <app-section-setting [sectionId]="sectionId"></app-section-setting>
-    </div>
-    <hr>
+  <div class="app-section section-entry">
+    <p>{{ section?.nom }}</p>
+    <app-section-setting [sectionId]="sectionId"></app-section-setting>
+  </div>
+  <hr />
 
-    <div *ngFor="let task of tasks">
-        <app-tache [tacheId]="task" [sectionId]="sectionId"></app-tache>
+  <div cdkDropList (cdkDropListDropped)="drop($event)">
+    <div cdkDrag *ngFor="let task of tasks">
+      <app-tache [tacheId]="task" [sectionId]="sectionId"></app-tache>
     </div>
     <div class="parent-container">
-        <button (click)="onPlusClick($event)" class="app-section table-style" *ngIf="id">+</button>
+      <button
+        (click)="onPlusClick($event)"
+        class="app-section table-style"
+        *ngIf="id"
+      >
+        +
+      </button>
     </div>
     <p>Créer Section</p>
+  </div>
 </div>
