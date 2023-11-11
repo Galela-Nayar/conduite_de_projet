@@ -62,4 +62,10 @@ public class SectionService {
         if(ok) this.sectionRepository.save(sc);
         return ok;
     }
+
+    public void updateNom(String id, String nom){
+        Section sc = this.getSection(id);
+        sc.setNom(nom);
+        this.sectionRepository.save(sc);
+    }
 }

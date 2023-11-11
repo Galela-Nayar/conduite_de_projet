@@ -13,6 +13,7 @@ import Tache from 'src/interface/Tache';
 export class TacheComponent {
   id: String | null = '';
   projetId: String | null = '';
+  @Input()
   sectionId: String | null = '';
   @Input()
   tacheId: string = '';
@@ -25,38 +26,19 @@ export class TacheComponent {
   constructor(private http: HttpClient, private route: ActivatedRoute, private cd: ChangeDetectorRef) {}
 
   ngOnInit(){
-    this.id = this.route.parent ? this.route.parent.snapshot.paramMap.get('id') : null;
-    this.projetId = this.route.parent ? this.route.parent.snapshot.paramMap.get('projetId') : null;
-    this.sectionId = this.route.parent ? this.route.parent.snapshot.paramMap.get('sectionId') : null;
-    if (this.sectionId) {
+    if (this.tacheId) {
       this.http.get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`).
         subscribe((tacheData: Tache) => {
           this.tache = tacheData;  
           console.log('tacheId : ',this.tacheId + '\ntacheData : ' + tacheData + '\ntache : ' +this.tache);
         })
-    }
-    this.fetchTacheData();
+      }
     console.log("tache: " + this.tache)
   }
 
-  fetchTacheData() {
-    console.log('fetchTacheData');
-    if (this.tacheId) {
-      console.log('tacheId not null');
-      this.http.get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`)
-        .subscribe((tacheData: Tache) => {
-
-          console.log('requeste reponse')
-          this.tache = tacheData;  
-          console.log('tacheId : ' + this.tacheId + '\ntacheData : ' + tacheData.nom + '\ntache : ' + this.tache.nom);
-        });
-    }
-  }
+  
 
   onSettingClick(event: MouseEvent) {
-    this.mouseX = event.clientX;
-    this.mouseY = event.clientY;
-    this.showSetting = true;
     this.cd.detectChanges();
   }
 }

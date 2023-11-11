@@ -2,18 +2,19 @@
     <div class="app-section section-entry">
         <div class="task-content"> <!-- Ajout d'une div pour le contenu de la tâche -->
             <p> {{section?.nom}} </p>
-            <app-section-setting *ngIf="showSetting" [mouseX]="mouseX" [mouseY]="mouseY" [sectionId]="sectionId"></app-section-setting>
+            
         </div>
-        <button (click)="onSettingClick($event)" class="settings-button"></button>
+        <app-section-setting [mouseX]="mouseX" [mouseY]="mouseY" [sectionId]="sectionId"></app-section-setting>
     </div>
     <hr>
-    <!-- <div  #taskContainer> </div> -->
 
     <div *ngFor="let task of tasks">
-        <app-tache [tacheId]="task"></app-tache>
+        <app-tache [tacheId]="task" [sectionId]="sectionId"></app-tache>
     </div>
     <div class="parent-container">
         <button (click)="onPlusClick($event)" class="app-section table-style" *ngIf="id">+</button>
     </div>
-    <p>Créer Section</p>
+    <p style="text-align: center;">
+        Créer Section
+    </p>
 </div>

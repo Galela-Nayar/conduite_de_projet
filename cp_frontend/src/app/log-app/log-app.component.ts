@@ -9,8 +9,8 @@ import { NgForm } from '@angular/forms';
 })
 export class LogAppComponent implements AfterViewInit {
   user = {
-    firstName: "",
-    lastName: "",
+    nom: "",
+    prenom: "",
     email: "",
     password: ""
   };
@@ -54,7 +54,7 @@ export class LogAppComponent implements AfterViewInit {
     });
 
 
-    // Gestion de navivation du formulaire (login signup)
+    // Gestion de navivation du formulaire (login & signup)
     const tabs = this.el.nativeElement.querySelectorAll('.tab a');
 
     tabs.forEach((tab: HTMLElement) => {
