@@ -17,6 +17,7 @@ export class CreateProjectComponent {
     standardSection: true,
     description: "",
     dateButoire: new Date(),
+    etat: 'Démarrage'
   };
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private projectService: ObservableService) {} // Inject Router

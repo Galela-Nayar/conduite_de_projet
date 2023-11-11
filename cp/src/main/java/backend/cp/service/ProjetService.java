@@ -21,7 +21,7 @@ public class ProjetService {
         this.sectionService = sectionService;
     }
 
-    public String createProjet(String nom, String createur, Date date, boolean standardSection, String description, Date dateButtoire) {
+    public String createProjet(String nom, String createur, Date date, boolean standardSection, String description, Date dateButtoire, String etat) {
         Projet projet = new Projet();
         projet.setNom(nom);
         projet.setCreateur(createur);
@@ -32,6 +32,7 @@ public class ProjetService {
         projet.setCollaborateurs(collab);
         projet.setDateButtoire(dateButtoire);
         projet.setDescription(description);
+        projet.setEtat(etat);
         projetRepository.save(projet);
         return projet.getId();
     }
@@ -75,6 +76,12 @@ public class ProjetService {
         System.out.println("removed : " + ok);
         if(ok) this.projetRepository.save(pj);
         return ok;
+    }
+
+    public void updateEtat(String id, String newEtat)
+    {
+        Projet pj = getProject(id);
+        pj.setEtat(newEtat);
     }
 
 }

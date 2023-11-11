@@ -1,14 +1,7 @@
 <div>
-État : {{ etatActuel }}
-<button (click)="afficherMenu()">Modifier</button>
-
-<div *ngIf="menuVisible">
-    <ul>
-    <li (click)="changerEtat('Démarrage')">Démarrage</li>
-    <li (click)="changerEtat('En cours')">En cours</li>
-    <li (click)="changerEtat('En pause')">En pause</li>
-    <li (click)="changerEtat('Terminé')">Terminé</li>
-    </ul>
-</div>
+    État du projet :
+    <select [(ngModel)]="etatActuel" (ngModelChange)="changerEtat()">
+      <option *ngFor="let option of options" [value]="option">{{ option }}</option>
+    </select>
 </div>
   

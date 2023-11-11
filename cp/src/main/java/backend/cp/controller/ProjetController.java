@@ -25,7 +25,7 @@ public class ProjetController {
     @PostMapping("/create")
     public ResponseEntity<String> createProjet(
         @RequestBody ProjetDto projet) {
-            String id =projetService.createProjet(projet.getNom(), projet.getCreateur(), projet.getDate(), projet.isStandardSection(), projet.getDescription(), projet.getDateButoire());
+            String id =projetService.createProjet(projet.getNom(), projet.getCreateur(), projet.getDate(), projet.isStandardSection(), projet.getDescription(), projet.getDateButoire(), projet.getEtat());
         return ResponseEntity.ok(id);
     }
     
@@ -52,6 +52,13 @@ public class ProjetController {
         if(projetService.removeSection(id, sectionId)) return ResponseEntity.ok("ok");
         System.out.println("ctr remove end");
         return ResponseEntity.ok("pas ok, section non retiré du projet");
+    }
+
+    @GetMapping("/updateEtat")
+    public ResponseEntity<String> updateEtat(@RequestParam String id, @RequestParam String newEtat)
+    {
+        projetService.updateEtat(id, newEtat);
+        return ResponseEntity.ok("Etat mis à jour");
     }
 
 }

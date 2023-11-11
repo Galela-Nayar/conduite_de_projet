@@ -6,6 +6,7 @@ interface Project {
     sections: any[];
     taches: any[];
     dateButtoire: Date;
+    etat: String;
   }
 
 export default Project
