@@ -3,6 +3,7 @@
     width: 100%;
     height: auto;
     background-color: rgb(48, 44, 44);
+    color: lightgray;
 }
 
 .container {
@@ -18,6 +19,13 @@
   .header {
     display: flex;
     justify-content: space-between;
+    border: 4px double rgb(31, 27, 27);
+  }
+
+  .header_section {
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 1em;
   }
 
   .section {

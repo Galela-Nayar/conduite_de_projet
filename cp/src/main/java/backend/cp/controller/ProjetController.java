@@ -65,6 +65,20 @@ public class ProjetController {
         return ResponseEntity.ok("ok");
     }
 
+    @GetMapping("/set_date")
+    public ResponseEntity<String> setDate(@RequestParam String id, @RequestParam String day, @RequestParam String month, @RequestParam String year){
+        if(projetService.getProject(id) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("utilisateur not found");
+        projetService.setDate(id, day, month, year);
+        return ResponseEntity.ok("ok");
+    }
+
+    @PostMapping("/set_description")
+    public ResponseEntity<String> setDescription(@RequestParam String id, @RequestBody String description) {
+        if(projetService.getProject(id) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("utilisateur not found");
+        projetService.setDescription(id,description);
+        return ResponseEntity.ok(id);
+    }
+
     @PutMapping("/updateSections")
     public ResponseEntity<String> updateSections(@RequestParam String id, @RequestParam ArrayList<String> sections){
         System.out.println("hooooooooooooo  " + sections);

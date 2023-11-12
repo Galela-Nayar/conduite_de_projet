@@ -5,6 +5,8 @@ import backend.cp.repository.ProjetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -89,6 +91,19 @@ public class ProjetService {
     public void setNom(String id, String param) {
         Projet projet = this.getProject(id);
         projet.setNom(param);
+        projetRepository.save(projet);
+    }
+
+    public void setDate(String id, String day, String month, String year) {
+        Projet projet = this.getProject(id);
+        projet.setDateButtoire(Timestamp.valueOf(LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day)).atStartOfDay()));
+        projetRepository.save(projet);
+    }
+
+    public void setDescription(String id, String description) {
+
+        Projet projet = this.getProject(id);
+        projet.setDescription(description);
         projetRepository.save(projet);
     }
 

@@ -1,10 +1,11 @@
 <div class="parent-container">
     <div class="container">
         <div class="header">
-            <p>Créateur : {{createur.userName}}</p>
+            <p>Créateur : {{createur?.userName}}</p>
             <p>Date de création : {{getFormattedDate(project.dateCreation)}}</p>
         </div>
         <div class="section">
+            <div class="header_section">Nom du projet:</div>
             <div class="section-container">
                 <div class="field-group">
                     <label>{{ fields[0].label }} :</label>
@@ -15,7 +16,50 @@
                 </div>
             </div>
         </div>
+        <div class="section">
+            <div class="header_section">Date buttoire:</div>
+            <div class="section-container">
+              <form [formGroup]="dateForm" (ngSubmit)="saveDate()">
+                <div style="display: flex; align-items: center;">
+                    <mat-form-field>
+                      <input matInput [matDatepicker]="picker" formControlName="datePicker">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                  
+                    <div>
+                      <button *ngIf="!fields[1].saved" 
+                              [disabled]="dateForm.get('datePicker')?.invalid || getFormattedDate(dateForm.get('datePicker')?.value) === getFormattedDate(project.dateButtoire)" 
+                              (click)="saveDate()">Enregistrer</button>
+                  
+                      <div *ngIf="fields[1].saved">
+                        <mat-icon>check_circle</mat-icon>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div *ngIf="dateForm.invalid && dateForm.touched">
+                    Date invalide
+                  </div>
+              </form>
+            </div>
+        </div>
+        <div class="section">
+            <div class="header_section">Description:</div>
+            <div class="section-container">
+              <form [formGroup]="descriptionForm">
+                <textarea formControlName="description"></textarea>
+                <button *ngIf="!fields[2].saved" 
+                        [disabled]="descriptionForm.get('description')?.invalid || descriptionForm.get('description')?.value === project.description" 
+                        (click)="saveDescription()">Enregistrer</button>
+                <div *ngIf="fields[2].saved">
+                  <mat-icon>check_circle</mat-icon>
+                </div>
+              </form>
+            </div>
+          </div>
         <div class="section-last">
+            <div class="header_section">Dernière Section Header</div>
             <div class="section-container">
                 <p>Contenu de la dernière section</p>  
             </div>
