@@ -20,7 +20,12 @@
   .header {
     display: flex;
     justify-content: space-between;
-    border: 4px double rgb(31, 27, 27);
+    border-width: 10px;
+    border: 2px double rgb(31, 27, 27);
+    border-radius: 8px;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
   }
 
   .header_section {

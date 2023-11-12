@@ -97,7 +97,7 @@ export class ProjetParametresComponent {
   }
   getFormattedDate(date: string | Date): string {
     date = new Date(date);
-    return `${date.getDate()} ${this.getFormattedMonth(date)} ${date.getFullYear()}`;
+    return `${date.getDate()}/${this.getFormattedMonth(date)}/${date.getFullYear()}`;
   }
 
   getFormattedDay(date: string | Date): string {

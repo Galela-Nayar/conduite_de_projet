@@ -1,8 +1,20 @@
 <div class="parent-container">
     <div class="container">
-        <div class="header">
-            <p>Créateur : {{createur?.userName}}</p>
-            <p>Date de création : {{getFormattedDate(project.dateCreation)}}</p>
+        <div class="section">
+            
+            
+            <div class="section-container" style="width: flex;">
+                <div class="header" style="width: 100%;">
+                    <p><strong style="font-size: 1.5em;">{{project.nom}}</strong></p>
+                    <p>Créer par : <strong style="font-size: 1.5em;">{{createur?.userName}}</strong></p>
+                    <p>Date de création : <strong style="font-size: 1.5em;">{{getFormattedDate(project.dateCreation)}}</strong></p>
+                </div>
+                <div class="header_section" style="width: 100%;">Description:</div>
+                <div class="section-container" style="width: 100%; 
+                box-sizing: border-box;">
+                    <p style="width: 100%;">{{project.description}}</p>
+                </div>
+            </div>
         </div>
         <div class="section">
             <div class="header_section">Nom du projet:</div>
