@@ -1,32 +1,28 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ObservableService } from 'src/app/observable/observable-projet.service';
+import { ModifySectionComponent } from './modify-section/modify-section.component';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateTaskComponent } from 'src/app/user-home-page/create-task/create-task.component';
 
 @Component({
   selector: 'app-section-setting',
   templateUrl: './section-setting.component.html',
   styleUrls: ['./section-setting.component.css']
 })
-export class SectionSettingComponent {
+export class SectionSettingComponent implements OnInit{
+  @Input() sectionId!: String;
   @Input() mouseX!: number;
   @Input() mouseY!: number;
-  @Input() sectionId!: String;
   contextMenuStyle = {};
   id: string = '';
   projectId: string = '';
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {}
+  constructor(private http: HttpClient, private route: ActivatedRoute, 
+    private observableService: ObservableService, public dialog: MatDialog) {}
 
   ngOnInit() {
-    const x = this.route.snapshot.paramMap.get('x');
-    if(x) this.mouseX =  parseInt(x);
-    const y = this.route.snapshot.paramMap.get('y');
-    if(y) this.mouseY =  parseInt(y);
-    this.contextMenuStyle = {
-      'position': 'absolute',
-      'left': `${this.mouseX}px`,
-      'top': `${this.mouseY}px`
-    };
     const id = this.route.parent ? this.route.parent.snapshot.paramMap.get('id') : null;
     if(id) this.id = id;
     const projectId = this.route.snapshot.paramMap.get('projectId');
@@ -36,16 +32,35 @@ export class SectionSettingComponent {
     
 
   }
+  
   supprimer(){
     this.http.get(`http://localhost:8080/sections/removeSection?id=${this.sectionId}`,{responseType: 'text'}).subscribe((response:String)=>{
       console.log("supprimer section : " + response)
       this.http.get(`http://localhost:8080/projets/removeSection?id=${this.projectId}&sectionId=${this.sectionId}`,{responseType: 'text'}).subscribe((response2: String)=>{
         console.log("supprimer section dans projet: " + response)
+        this.observableService.notifySection();
       })
     })
   }
 
   ajouterTache(){
-    
+    const dialogRef = this.dialog.open(CreateTaskComponent, {
+      data: this.sectionId
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  modifier(){
+    const dialogRef = this.dialog.open(ModifySectionComponent, {
+      data: this.sectionId,
+    });
+  
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('Le dialogue a été fermé');
+    });
   }
 }
+

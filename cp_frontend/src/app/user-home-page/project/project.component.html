@@ -1,25 +1,32 @@
-<div class="container" style="border: 2px solid rgb(63, 63, 63); height: 100%;">
-    <!-- Petit encadré avec texte -->
-    <div class="row" style="border: 2px solid gray;">
-        <div class="col-12">
-            <div class="alert alert-primary" role="alert">
-                <h1 class="text-center">{{ projet?.nom }}</h1>
-            </div>
-            <!-- Ici c'est l'état du projet-->
-            <app-etat></app-etat>
-            {{ projet?.etat }}
-        </div>
-    </div>
 
-    <!-- Colonnes pour chaque section du projet -->
-    <div style="display: flex;">
-        <!-- <div  #sectionContainer> </div> -->
-        <div *ngFor="let section of sections">
-            <app-section [sectionId]="section"></app-section>
-        </div>
-        
-        <app-create-section *ngIf="showCreateSection"></app-create-section>
-        <button (click)="onPlusClick($event)" class="app-section table-style" *ngIf="id">+</button>
-        
+<div class="container" style="border: 2px solid rgb(63, 63, 63); height: 100%">
+  <!-- Petit encadré avec texte -->
+  <div class="row" style="border: 2px solid gray">
+    <div class="col-12">
+      <div class="alert alert-primary" role="alert">
+        <h1 class="text-center">{{ projet?.nom }}</h1>
+      </div>
+      <!-- Ici c'est l'état du projet-->
+      <app-etat></app-etat>
     </div>
+  </div>
+
+  <div
+    cdkDropList
+    cdkDropListOrientation="horizontal"
+    class="section-list"
+    (cdkDropListDropped)="drop($event)"
+  >
+    <div cdkDrag *ngFor="let section of sections">
+      <app-section [sectionId]="section"></app-section>
+    </div>
+    <app-create-section *ngIf="showCreateSection"></app-create-section>
+    <button
+      (click)="onPlusClick($event)"
+      class="app-section table-style"
+      *ngIf="id"
+    >
+      +
+    </button>
+  </div>
 </div>

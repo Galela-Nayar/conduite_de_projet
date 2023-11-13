@@ -1,9 +1,9 @@
-<div class="table-style">
-    <div class="app-section section-entry">
-        <div class="task-content"> <!-- Ajout d'une div pour le contenu de la tâche -->
+<mat-card class="card-custom-background">
+    <mat-card-content>
+        <div class="section-entry">
             <p>{{ tache?.nom }}</p>
-            <app-tache-setting *ngIf="showSetting" [mouseX]="mouseX" [mouseY]="mouseY" [tacheId]="tacheId"></app-tache-setting>
+            <app-tache-setting [tacheId]="tacheId" [sectionId]="sectionId"></app-tache-setting>
         </div>
-        <button (click)="onSettingClick($event)" class="settings-button"></button>
-    </div>
-</div>
+    </mat-card-content>
+</mat-card>
+  

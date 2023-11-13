@@ -1,0 +1,30 @@
+<div *ngIf="section" class="container">
+  <div class="header">
+    <h2 *ngIf="!isEditing">
+      <h3>section: </h3>
+    <button *ngIf="!isEditing" (click)="startEditing()" class="app-section table-style create-button">
+      <mat-icon class="create-icon">create</mat-icon>{{ section.nom }}
+    </button>
+    </h2>
+  </div>
+
+  <div *ngIf="isEditing">
+    <form [formGroup]="sectionForm" (ngSubmit)="saveChanges()">
+      <input formControlName="nom" placeholder="Nouveau nom" />
+      <div class="button-container">
+        <button type="submit">Enregistrer</button>
+        <button type="button" (click)="cancelEditing()">Annuler</button>
+      </div>
+    </form>
+  </div>
+
+
+  <h3>Tâches:</h3>
+  <ul *ngIf="section.taches && section.taches.length > 0">
+    <li *ngFor="let tacheId of section.taches">
+      {{ tacheId }}
+      <mat-icon (click)="supprimer(tacheId)">delete</mat-icon>
+    </li>
+  </ul>
+  <p *ngIf="!section.taches || section.taches.length === 0">Aucune tâche</p>
+</div>

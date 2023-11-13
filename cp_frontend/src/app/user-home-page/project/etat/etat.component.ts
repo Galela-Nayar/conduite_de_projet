@@ -15,39 +15,44 @@ import Project from 'src/interface/Project';
   styleUrls: ['./etat.component.css']
 })
 export class EtatComponent {
-  etatActuel: String = '';
+  etatActuel: string = '';
 
-  options: String[] = ['Démarrage', 'En cours', 'En pause', 'Terminé'];
+  options: string[] = ['Démarrage', 'En_cours', 'En_pause', 'Terminé'];
 
-  id: String = '';
-  projetId: String | null = '';
+  id: string = '';
+  projetId: string = '';
   projet?: Project;
 
-  constructor(private http: HttpClient, private cd: ChangeDetectorRef, private route: ActivatedRoute, private observableService: ObservableService, public dialog: MatDialog) {}
-
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private cd: ChangeDetectorRef,
+    private projectService: ObservableService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     const id = this.route.parent ? this.route.parent.snapshot.paramMap.get('id') : null;
     if(id != null) this.id = id;
-    const projetId = this.route.snapshot.paramMap.get('projectId');
-    if(projetId != null){
-      this.projetId = projetId;
-      this.http.get<Project>(`http://localhost:8080/projets/projet?id=${this.projetId}`).subscribe((projectData: Project)=>{
-          this.projet = projectData;
-          this.etatActuel = this.projet.etat;
-        });
-    }
-  }
+    this.route.paramMap.subscribe((param) => {
+      const projetId = param.get('projectId');
+      console.log(projetId);
+      if (projetId != null) {
+        this.projetId = projetId;
+        this.http
+          .get<Project>(
+            `http://localhost:8080/projets/projet?id=${this.projetId}`).subscribe((projectData: Project) => {
+              this.projet = projectData;
+              this.etatActuel = this.projet.etat;
+              console.log('Etat bien recupéré');});
+      };
+  })}
 
   changerEtat(): void {
     console.log('Nouvel état sélectionné :', this.etatActuel);
-
-    this.http.get('http://localhost:8080/projets/updateEtat?id=${this.projectId}&newEtat=${this.etatActuel}', {responseType: 'text'}).subscribe(
+    this.http.put(`http://localhost:8080/projets/updateEtat?id=${this.projetId}&newEtat=${this.etatActuel}`,{}).subscribe(
       (response) => {
-        console.log('État mis à jour dans la base de données :', response);
-      },
-      (error) => {
-        console.error('Erreur lors de la mise à jour de l\'état dans la base de données', error);
+        this.projectService.notifyProject();
       }
     );
   }

@@ -1,5 +1,6 @@
 package backend.cp.service;
 
+import backend.cp.modele.Projet;
 import backend.cp.modele.Section;
 import backend.cp.repository.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,14 @@ public class SectionService {
         this.sectionRepository = sectionRepository;
     }
 
+
+    public void updateTaches(String tacheId, List<String> taches) {
+        Section section = sectionRepository.findById(tacheId).orElse(null);
+        if (section != null) {
+            section.setTaches(taches);
+            sectionRepository.save(section);
+        }
+    }
     public String createSection(String name) {
         Section section = new Section(name);
         sectionRepository.save(section);
@@ -61,5 +70,11 @@ public class SectionService {
         System.out.println("removed : " + ok);
         if(ok) this.sectionRepository.save(sc);
         return ok;
+    }
+
+    public void updateNom(String id, String nom){
+        Section sc = this.getSection(id);
+        sc.setNom(nom);
+        this.sectionRepository.save(sc);
     }
 }

@@ -45,6 +45,15 @@ public class ProjetService {
         return sections;
     }
 
+
+    public void updateSections(String projetId, List<String> sections) {
+        Projet projet = projetRepository.findById(projetId).orElse(null);
+        if (projet != null) {
+            projet.setSections(sections);
+            projetRepository.save(projet);
+        }
+    }
+
     public List<Projet> getAllProjets() {
         return projetRepository.findAll();
     }
@@ -77,11 +86,21 @@ public class ProjetService {
         if(ok) this.projetRepository.save(pj);
         return ok;
     }
-
+    
     public void updateEtat(String id, String newEtat)
     {
-        Projet pj = getProject(id);
-        pj.setEtat(newEtat);
+        System.out.println("Update de l'etat");
+        Projet projet = this.getProject(id);
+        if (projet != null) {
+            projet.setEtat(newEtat);
+            this.projetRepository.save(projet);
+        }
+    }
+
+    public void setNom(String id, String param) {
+        Projet projet = this.getProject(id);
+        projet.setNom(param);
+        projetRepository.save(projet);
     }
 
 }

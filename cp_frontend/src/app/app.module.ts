@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule, FormGroup } from '@angular/forms';
 import { HomePageComponent } from './home-page/home-page.component';
 import { RegisterComponent } from './home-page/register/register.component';
 import { LogAppComponent } from './log-app/log-app.component';
@@ -29,6 +29,23 @@ import { SectionSettingComponent } from './user-home-page/project/section/sectio
 import { TacheSettingComponent } from './user-home-page/project/section/tache/tache-setting/tache-setting.component';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import { EtatComponent } from './user-home-page/project/etat/etat.component';
+
+
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { ModifySectionComponent } from './user-home-page/project/section/section-setting/modify-section/modify-section.component';
+import {
+  CdkDragDrop,
+  CdkDropList,
+  CdkDrag,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
+
+import { UserSettingComponent } from './user-home-page/user-setting/user-setting.component';
+import { ProjectSettingComponent } from './user-home-page/lateral-user-home-menu/project-setting/project-setting.component';
+import { ProjetParametresComponent } from './user-home-page/projet-parametres/projet-parametres.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +66,10 @@ import { EtatComponent } from './user-home-page/project/etat/etat.component';
     SectionSettingComponent,
     TacheSettingComponent,
     EtatComponent,
+    ModifySectionComponent,
+    UserSettingComponent,
+    ProjectSettingComponent,
+    ProjetParametresComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,9 +84,17 @@ import { EtatComponent } from './user-home-page/project/etat/etat.component';
     MatNativeDateModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    MatCardModule,
+    CdkDropList,
+    CdkDrag,
   ],
-  providers: [{provide:MatDialogRef , useValue:{} },
-    { provide: MAT_DIALOG_DATA, useValue: {} }],
+  providers: [
+    { provide: MatDialogRef, useValue: {} },
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

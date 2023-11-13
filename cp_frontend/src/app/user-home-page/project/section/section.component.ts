@@ -1,66 +1,101 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, Input, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Section from 'src/interface/Section';
-import { BehaviorSubject, Subscription, mergeMap} from 'rxjs';
+import { BehaviorSubject, Subscription, mergeMap } from 'rxjs';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
 import Tache from 'src/interface/Tache';
 import { SectionService } from './section.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateTaskComponent } from '../../create-task/create-task.component';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-section',
   templateUrl: './section.component.html',
-  styleUrls: ['./section.component.css']
+  styleUrls: ['./section.component.css'],
 })
-export class SectionComponent{
+export class SectionComponent {
   id: String | null = '';
   projetId: String | null = '';
-  @Input()
-  sectionId: String = '';
+  @Input() sectionId: String = '';
   section?: Section;
   mouseX: number = 0;
   mouseY: number = 0;
   showCreateTask = false;
   showSetting = false;
   taskSubscription!: Subscription;
-  tasks: any[]=[];
+  tasks: any[] = [];
   private sectionData = new BehaviorSubject<Section | null>(null);
 
-  constructor(private http: HttpClient, private sectionService: SectionService, private cd: ChangeDetectorRef, private route: ActivatedRoute, private observableService: ObservableService, public dialog: MatDialog) {}
-  
-  ngOnInit(){
-    
-    this.id = this.route.parent ? this.route.parent.snapshot.paramMap.get('id') : null;
-    this.projetId = this.route.parent ? this.route.parent.snapshot.paramMap.get('projetId') : null;
+  constructor(
+    private http: HttpClient,
+    private sectionService: SectionService,
+    private cd: ChangeDetectorRef,
+    private route: ActivatedRoute,
+    private observableService: ObservableService,
+    public dialog: MatDialog
+  ) {}
+
+  ngOnInit() {
+    this.id = this.route.parent
+      ? this.route.parent.snapshot.paramMap.get('id')
+      : null;
+    this.projetId = this.route.parent
+      ? this.route.parent.snapshot.paramMap.get('projetId')
+      : null;
     if (this.sectionId) {
       this.sectionService.changeSectionId(this.sectionId);
       this.sectionId = this.sectionId;
-      this.taskSubscription = this.observableService.getObservableTask().subscribe((response)=>{
-        this.http.get<Section>(`http://localhost:8080/sections/section?id=${this.sectionId}`).subscribe((response)=>{
-          this.section = response;  
-          this.tasks=this.section.taches;
-          console.log("lalalala"+this.section.taches)
-        })
-      });
+      this.taskSubscription = this.observableService
+        .getObservableTask()
+        .subscribe((response) => {
+          this.http
+            .get<Section>(
+              `http://localhost:8080/sections/section?id=${this.sectionId}`
+            )
+            .subscribe((response) => {
+              this.section = response;
+              this.tasks = this.section.taches;
+              console.log('lalalala' + this.section.taches);
+            });
+        });
     }
   }
 
   onPlusClick(event: MouseEvent): void {
     const dialogRef = this.dialog.open(CreateTaskComponent, {
-      data: this.sectionId
+      data: this.sectionId,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
     });
   }
-  
+
   onSettingClick(event: MouseEvent) {
     this.mouseX = event.clientX;
     this.mouseY = event.clientY;
     this.showSetting = true;
     this.cd.detectChanges();
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
+    this.http
+      .put(
+        `http://localhost:8080/sections/updateTaches?id=${this.sectionId}&taches=${this.tasks}`,
+        {}
+      )
+      .subscribe((response) => {
+        this.observableService.notifySection();
+      });
   }
 }

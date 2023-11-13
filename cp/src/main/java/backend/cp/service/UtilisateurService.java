@@ -31,6 +31,7 @@ public class UtilisateurService {
         utilisateur.setUserName(username);
         utilisateur.setPassword(password);
         utilisateur.setEmail(email);
+        utilisateur.setBio("");
 
         utilisateurRepository.save(utilisateur);
     }
@@ -71,6 +72,36 @@ public class UtilisateurService {
 
     public void saveUtilisateur(Utilisateur utilisateur) {
         utilisateurRepository.save(utilisateur);
+    }
+
+    public void setUserName(String id, String param) {
+        Utilisateur user = this.getUtilisateur(id);
+        user.setUserName(param);
+        saveUtilisateur(user);
+    }
+
+    public void setNom(String id, String param) {
+        Utilisateur user = this.getUtilisateur(id);
+        user.setNom(param);
+        saveUtilisateur(user);
+    }
+
+    public void setPrenom(String id, String param) {
+        Utilisateur user = this.getUtilisateur(id);
+        user.setPrenom(param);
+        saveUtilisateur(user);
+    }
+
+    public void setEmail(String id, String param) {
+        Utilisateur user = this.getUtilisateur(id);
+        user.setEmail(param);
+        saveUtilisateur(user);
+    }
+
+    public void setBio(String id, String param) {
+        Utilisateur user = this.getUtilisateur(id);
+        user.setBio(param);
+        saveUtilisateur(user);
     }
 }
  

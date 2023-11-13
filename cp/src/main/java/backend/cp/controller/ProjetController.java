@@ -2,11 +2,15 @@ package backend.cp.controller;
 
 import backend.cp.dto.ProjetDto;
 import backend.cp.modele.Projet;
+import backend.cp.modele.Section;
 import backend.cp.service.ProjetService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 
 @CrossOrigin(origins = "http://localhost:4200") // replace with the domain your frontend is running on
@@ -54,11 +58,26 @@ public class ProjetController {
         return ResponseEntity.ok("pas ok, section non retiré du projet");
     }
 
-    @GetMapping("/updateEtat")
+    @PutMapping("/updateEtat")
     public ResponseEntity<String> updateEtat(@RequestParam String id, @RequestParam String newEtat)
     {
+        if(projetService.getProject(id) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("projet not found");
         projetService.updateEtat(id, newEtat);
-        return ResponseEntity.ok("Etat mis à jour");
+        return ResponseEntity.ok("ok");
+    }
+
+    @GetMapping("/set_nom")
+    public ResponseEntity<String> setNom(@RequestParam String id, @RequestParam String param){
+        if(projetService.getProject(id) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("utilisateur not found");
+        projetService.setNom(id, param);
+        return ResponseEntity.ok("ok");
+    }
+
+    @PutMapping("/updateSections")
+    public ResponseEntity<String> updateSections(@RequestParam String id, @RequestParam ArrayList<String> sections){
+        System.out.println("hooooooooooooo  " + sections);
+        projetService.updateSections(id, sections);
+        return ResponseEntity.ok("");
     }
 
 }

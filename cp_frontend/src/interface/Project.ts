@@ -1,12 +1,15 @@
-interface Project {
+export interface Project {
     id: string;
     nom: string;
-    date: Date;
+    dateCreation: Date;
     description: string;
     sections: any[];
     taches: any[];
     dateButtoire: Date;
-    etat: String;
+    etat: string;
+    [key:string]:any;
+    createur: string;
   }
+
 
 export default Project
