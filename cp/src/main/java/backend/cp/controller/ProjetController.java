@@ -2,7 +2,6 @@ package backend.cp.controller;
 
 import backend.cp.dto.ProjetDto;
 import backend.cp.modele.Projet;
-import backend.cp.modele.Section;
 import backend.cp.service.ProjetService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,9 +80,15 @@ public class ProjetController {
 
     @PutMapping("/updateSections")
     public ResponseEntity<String> updateSections(@RequestParam String id, @RequestParam ArrayList<String> sections){
-        System.out.println("hooooooooooooo  " + sections);
         projetService.updateSections(id, sections);
         return ResponseEntity.ok("");
     }
 
+    @GetMapping("/delete")
+    public ResponseEntity<String> delete(@RequestParam String id){
+        System.out.println("delete : " + "start");
+        projetService.deleteProject(id);
+        System.out.println("delete : " + "end");
+        return ResponseEntity.ok("ok");
+    }
 }

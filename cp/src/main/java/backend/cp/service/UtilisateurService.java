@@ -103,5 +103,11 @@ public class UtilisateurService {
         user.setBio(param);
         saveUtilisateur(user);
     }
+
+    public void removeProject(String user_id, String id) {
+        Utilisateur user = this.getUtilisateur(user_id);
+        user.removeProject(id);
+        saveUtilisateur(user);
+    }
 }
  
