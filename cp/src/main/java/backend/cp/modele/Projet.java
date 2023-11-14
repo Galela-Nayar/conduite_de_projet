@@ -35,5 +35,13 @@ public class Projet {
         this.sections.add(section);
     }
 
+    public void addCollaborateur(String nom2) {
+        this.collaborateurs.add(nom2);
+    }
+
+    public void removeCollaborateur(String userId) {
+        this.collaborateurs.remove(userId);
+    }
+
 
 }

@@ -14,11 +14,14 @@ export class ProjetParametresComponent {
   dateForm!: FormGroup;
   descriptionForm!: FormGroup;
   success: boolean = false;
+  addingCollaborator: boolean = false;
+  nouveauCollaborateur: string = '';
 
   id: string | null | undefined = null;
   projectId: string | null = null;
 
   project!: Project;
+  listCollaborateur!: Utilisateur[];
   createur:Utilisateur | null = null;
   fields: { key: string, label: string, value: string, saved: boolean }[] = [];
 
@@ -63,6 +66,12 @@ export class ProjetParametresComponent {
       this.http.get<Utilisateur>(`http://localhost:8080/utilisateurs/user?id=${this.project.createur}`).subscribe((data: Utilisateur) => {
         this.createur = data;
       });
+      this.http.get<Utilisateur[]>(`http://localhost:8080/projets/collaborateurs?id=${this.projectId}`).subscribe((data: Utilisateur[]) => {
+      console.log('collaborateurs : ' + data)  
+      this.listCollaborateur = data;
+      console.log('collaborateurs : ' + this.listCollaborateur[0])  
+
+      })
     });
   }
 
@@ -157,7 +166,37 @@ export class ProjetParametresComponent {
       this.http.get<Utilisateur>(`http://localhost:8080/utilisateurs/user?id=${this.project.createur}`).subscribe((data: Utilisateur) => {
         this.createur = data;
       });
+      this.http.get<Utilisateur[]>(`http://localhost:8080/projets/collaborateurs?id=${this.projectId}`).subscribe((data: Utilisateur[]) => {
+        console.log("update list utilisateur: "  )
+        console.log(data)
+        this.listCollaborateur = data;
+      })
     })
+
+    
     this.cdr.detectChanges();
+  }
+
+  deleteUtilisateur(userId: String):void{
+    console.log('userId : ' + userId)
+    this.http.get(`http://localhost:8080/projets/remove_collaborateur?id=${this.projectId}&userId=${userId}`, {responseType: 'text'}).subscribe((data) =>{
+      if(data.toString().startsWith('ok')){
+      }
+    })
+    this.updateProject();
+  }
+
+  ajoutCollaborateur() {
+    this.addingCollaborator = true;
+  }
+
+  enregistrerCollaborateur(nom:string){
+    console.log('nom : ' + nom)
+    this.http.get(`http://localhost:8080/projets/add_collaborateur?id=${this.projectId}&nom=${nom}`, {responseType: 'text'}).subscribe((data) => {
+      if (data.toString().startsWith('ok')) {
+      }
+      this.updateProject();
+    });
+    this.addingCollaborator = false;
   }
 }

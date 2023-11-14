@@ -2,6 +2,7 @@ package backend.cp.controller;
 
 import backend.cp.dto.ProjetDto;
 import backend.cp.modele.Projet;
+import backend.cp.modele.Utilisateur;
 import backend.cp.service.ProjetService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +90,26 @@ public class ProjetController {
         System.out.println("delete : " + "start");
         projetService.deleteProject(id);
         System.out.println("delete : " + "end");
+        return ResponseEntity.ok("ok");
+    }
+
+    @GetMapping("/collaborateurs")
+    public Utilisateur[] collaborateurs(@RequestParam String id){
+        System.out.println("collaborateurs : " + "start");
+        
+        return projetService.collaborateurs(id);
+    }
+
+    @GetMapping("/add_collaborateur")
+    public ResponseEntity<String> addCollaborateur(@RequestParam String id, @RequestParam String nom){
+        System.out.println(nom);
+        if(projetService.add_collaborateur(id, nom))  return ResponseEntity.ok("ok");
+        else return ResponseEntity.ok("error");
+    }
+
+    @GetMapping("/remove_collaborateur")
+    public ResponseEntity<String> removeCollaborateur(@RequestParam String id, @RequestParam String userId){
+        projetService.removeCollaborateur(id, userId);
         return ResponseEntity.ok("ok");
     }
 }
