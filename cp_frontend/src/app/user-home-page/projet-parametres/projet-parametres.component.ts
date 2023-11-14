@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Project } from 'src/interface/Project';
 import Utilisateur from 'src/interface/Utilisateur';
@@ -15,15 +15,17 @@ export class ProjetParametresComponent {
   descriptionForm!: FormGroup;
   success: boolean = false;
 
+  id: string | null | undefined = null;
   projectId: string | null = null;
 
   project!: Project;
   createur:Utilisateur | null = null;
   fields: { key: string, label: string, value: string, saved: boolean }[] = [];
 
-  constructor(private route: ActivatedRoute, private cdr: ChangeDetectorRef, private http: HttpClient) { }
+  constructor(private route: ActivatedRoute, private router: Router, private cdr: ChangeDetectorRef, private http: HttpClient) { }
 
   ngOnInit(): void {
+    this.id = this.route.parent?.snapshot.paramMap.get('id');
     this.projectId = this.route.snapshot.paramMap.get('projectId');
     console.log("projectId : " + this.projectId)
     this.http.get<Project>(`http://localhost:8080/projets/projet?id=${this.projectId}`).subscribe((data: Project) => {
@@ -95,6 +97,15 @@ export class ProjetParametresComponent {
       }
     });
   }
+
+  closeProject() {
+    this.http.get(`http://localhost:8080/projets/delete?id=${this.projectId}`, {responseType: 'text'}).subscribe((data) =>{
+      if(data.toString().startsWith('ok')){
+        this.router.navigate([`${this.id}/home`])
+      }
+    })
+  }
+
   getFormattedDate(date: string | Date): string {
     date = new Date(date);
     return `${date.getDate()}/${this.getFormattedMonth(date)}/${date.getFullYear()}`;

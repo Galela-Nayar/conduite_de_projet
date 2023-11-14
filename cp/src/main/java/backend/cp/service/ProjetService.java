@@ -16,11 +16,13 @@ public class ProjetService {
 
     private final ProjetRepository projetRepository;
     private final SectionService sectionService;
+    private final UtilisateurService utilisateurService;
 
     @Autowired
-    public ProjetService(ProjetRepository projetRepository, SectionService sectionService) {
+    public ProjetService(ProjetRepository projetRepository, SectionService sectionService, UtilisateurService utilisateurService) {
         this.projetRepository = projetRepository;
         this.sectionService = sectionService;
+        this.utilisateurService = utilisateurService;
     }
 
     public String createProjet(String nom, String createur, Date date, boolean standardSection, String description, Date dateButtoire) {
@@ -105,6 +107,19 @@ public class ProjetService {
         Projet projet = this.getProject(id);
         projet.setDescription(description);
         projetRepository.save(projet);
+    }
+
+    public void deleteProject(String id) {
+        System.out.println("delete service : " + "start");
+        Projet projet = this.getProject(id);
+        for (String section_id : projet.getSections()) {
+            sectionService.removeSection(section_id);
+        }
+        for (String user_id : projet.getCollaborateurs()) {
+            utilisateurService.removeProject(user_id, id);
+        }
+        projetRepository.delete(projet);
+        System.out.println("delete service : " + "start");
     }
 
 }
