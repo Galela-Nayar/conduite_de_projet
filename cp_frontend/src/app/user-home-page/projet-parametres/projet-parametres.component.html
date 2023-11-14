@@ -3,7 +3,6 @@
         <div class="section">            
             <div class="section-container" style="width: flex;">
                 <div class="header_section" style="width: 100%;">Présentation du projet</div>            
-
                 <div class="header" style="width: 100%;">
                     <p><strong style="font-size: 1.5em;">{{project.nom}}</strong></p>
                     <p>Créer par : <strong style="font-size: 1.5em;">{{createur?.userName}}</strong></p>
@@ -11,42 +10,42 @@
                     <p>Prévu pour le : <strong style="font-size: 1.5em;">{{getFormattedDate(project.dateButtoire)}}</strong></p>
                 </div>
                 <div class="section-container" style="width: 100%;box-sizing: border-box;">
-                  <div class="header_section" style="width: 100%;">Description:</div>
-                  <p style="width: 100%;">{{project.description}}</p>
+                    <div class="header_section" style="width: 100%;">Description:</div>
+                    <p style="width: 100%;">{{project.description}}</p>
                 </div>
                 <div class="section-container" style="width: 100%;box-sizing: border-box; ">
-                  <div class="header_section" style="width: 100%;">Collaborateurs:</div>
+                    <div class="header_section" style="width: 100%;">Collaborateurs:</div>
                     <table *ngIf="id == createur?.id" style="width: 50%; background-color: rgb(41, 41, 41);">
-                      <tr style=" background-color: rgb(56, 56, 56);" *ngFor="let collaborateur of listCollaborateur">
-                          <td style="width: 80%; border: 1px solid black;">
-                              {{ collaborateur['userName'] }}
-                          </td>
-                          <td style="width: 20%; border: 1px solid black; text-align: center;">
-                              <button style="background-color: red; color: white;" *ngIf="collaborateur.id != createur?.id" (click)="deleteUtilisateur(collaborateur.id)">X</button>
-                          </td>
-                      </tr>
-                      <tr style=" background-color: rgb(56, 56, 56);" *ngIf="addingCollaborator">
-                        <td style="width: 80%; border: 1px solid black;"><input [(ngModel)]="nouveauCollaborateur" type="text" placeholder="Nom du collaborateur"></td>
-                        <td style="width: 20%; border: 1px solid black; text-align: center;"><button (click)="enregistrerCollaborateur(nouveauCollaborateur)">Enregistrer</button></td>
-                      </tr>
-                  </table>
-                  <table *ngIf="id != createur?.id" style="width: 50%; background-color: rgb(41, 41, 41);">
-                    <tr style=" background-color: rgb(56, 56, 56);" *ngFor="let collaborateur of listCollaborateur">
-                        <td style="width: 80%; border: 1px solid black;">
-                            {{ collaborateur['userName'] }}
-                        </td>
-                    </tr>
-                </table>
-                  <div class="add-collaborator-button" *ngIf="!addingCollaborator && id == createur?.id">
-                    <button (click)="ajoutCollaborateur()">+</button>
-                    <p>Ajouter collaborateur</p>
-                  </div>
+                        <tr style=" background-color: rgb(56, 56, 56);" *ngFor="let collaborateur of listCollaborateur">
+                            <td style="width: 80%; border: 1px solid black;">
+                                {{ collaborateur['userName'] }}
+                            </td>
+                            <td style="width: 20%; border: 1px solid black; text-align: center;">
+                                <button style="background-color: red; color: white;" *ngIf="collaborateur.id != createur?.id" (click)="deleteUtilisateur(collaborateur.id)">X</button>
+                            </td>
+                        </tr>
+                        <tr style=" background-color: rgb(56, 56, 56);" *ngIf="addingCollaborator">
+                            <td style="width: 80%; border: 1px solid black;"><input [(ngModel)]="nouveauCollaborateur" type="text" placeholder="Nom du collaborateur"></td>
+                            <td style="width: 20%; border: 1px solid black; text-align: center;"><button (click)="enregistrerCollaborateur(nouveauCollaborateur)">Enregistrer</button></td>
+                        </tr>
+                    </table>
+                    <table *ngIf="id != createur?.id" style="width: 50%; background-color: rgb(41, 41, 41);">
+                        <tr style=" background-color: rgb(56, 56, 56);" *ngFor="let collaborateur of listCollaborateur">
+                            <td style="width: 80%; border: 1px solid black;">
+                                {{ collaborateur['userName'] }}
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="add-collaborator-button" *ngIf="!addingCollaborator && id == createur?.id">
+                        <button (click)="ajoutCollaborateur()">+</button>
+                        <p>Ajouter collaborateur</p>
+                    </div>
                 </div>
-              </div>
-          </div>
+            </div>
+        </div>
         <div class="section">
             <div class="section-container">
-              <div class="header_section">Nom du projet:</div>
+                <div class="header_section">Nom du projet:</div>
                 <div class="field-group">
                     <label>{{ fields[0].label }} :</label>
                     <p>{{project[fields[0].key]}}</p>
@@ -58,52 +57,88 @@
         </div>
         <div class="section">
             <div class="section-container">
-              <div class="header_section">Date buttoire:</div>
-              <form [formGroup]="dateForm" (ngSubmit)="saveDate()">
-                <div style="display: flex; align-items: center;">
-                    <mat-form-field>
-                      <input matInput [matDatepicker]="picker" formControlName="datePicker">
-                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                      <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                  
-                    <div>
-                      <button *ngIf="!fields[1].saved" 
-                              [disabled]="dateForm.get('datePicker')?.invalid || getFormattedDate(dateForm.get('datePicker')?.value) === getFormattedDate(project.dateButtoire)" 
-                              (click)="saveDate()">Enregistrer</button>
-                  
-                      <div *ngIf="fields[1].saved">
-                        <mat-icon>check_circle</mat-icon>
-                      </div>
+                <div class="header_section">Date buttoire:</div>
+                <form [formGroup]="dateForm" (ngSubmit)="saveDate()">
+                    <div style="display: flex; align-items: center;">
+                        <mat-form-field>
+                            <input matInput [matDatepicker]="picker" formControlName="datePicker">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <div>
+                            <button *ngIf="!fields[1].saved" 
+                                    [disabled]="dateForm.get('datePicker')?.invalid || getFormattedDate(dateForm.get('datePicker')?.value) === getFormattedDate(project.dateButtoire)" 
+                                    (click)="saveDate()">Enregistrer</button>
+                            <div *ngIf="fields[1].saved">
+                              <mat-icon>check_circle</mat-icon>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                  
-                  <div *ngIf="dateForm.invalid && dateForm.touched">
-                    Date invalide
-                  </div>
-              </form>
+                    <div *ngIf="dateForm.invalid && dateForm.touched">
+                        Date invalide
+                    </div>
+                </form>
             </div>
         </div>
         <div class="section">
             <div class="section-container">
-              <div class="header_section">Description:</div>
-              <form [formGroup]="descriptionForm">
-                <textarea formControlName="description"></textarea>
-                <button *ngIf="!fields[2].saved" 
+                <div class="header_section">Description:</div>
+                <form [formGroup]="descriptionForm">
+                    <textarea formControlName="description"></textarea>
+                    <button *ngIf="!fields[2].saved" 
                         [disabled]="descriptionForm.get('description')?.invalid || descriptionForm.get('description')?.value === project.description" 
                         (click)="saveDescription()">Enregistrer</button>
-                <div *ngIf="fields[2].saved">
-                  <mat-icon>check_circle</mat-icon>
-                </div>
-              </form>
+                    <div *ngIf="fields[2].saved">
+                      <mat-icon>check_circle</mat-icon>
+                    </div>
+                </form>
             </div>
-          </div>
+        </div>
+        <div class="section">
+            <div class="section-container">
+                <div class="header_section">Date buttoire:</div>
+                <form [formGroup]="dateForm" (ngSubmit)="saveDate()">
+                    <div style="display: flex; align-items: center;">
+                        <mat-form-field>
+                            <input matInput [matDatepicker]="picker" formControlName="datePicker">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <div>
+                            <button *ngIf="!fields[1].saved" 
+                                    [disabled]="dateForm.get('datePicker')?.invalid || getFormattedDate(dateForm.get('datePicker')?.value) === getFormattedDate(project.dateButtoire)" 
+                                    (click)="saveDate()">Enregistrer</button>
+                            <div *ngIf="fields[1].saved">
+                                <mat-icon>check_circle</mat-icon>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="dateForm.invalid && dateForm.touched">
+                        Date invalide
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-container">
+                <div class="header_section">Description:</div>
+                <form [formGroup]="descriptionForm">
+                    <textarea formControlName="description"></textarea>
+                    <button *ngIf="!fields[2].saved" 
+                    [disabled]="descriptionForm.get('description')?.invalid || descriptionForm.get('description')?.value === project.description" 
+                    (click)="saveDescription()">Enregistrer</button>
+                    <div *ngIf="fields[2].saved">
+                      <mat-icon>check_circle</mat-icon>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="section-last">
             <div class="section-container">
-              <div class="header_section">Clôturer le projet:</div>
+                <div class="header_section">Clôturer le projet:</div>
                 <button class="close-button" (click)="closeProject()">Clôturer</button>
             </div>
         </div>
         <!-- Ajoutez autant de sections que nécessaire -->
-  </div>
+    </div>
 </div>
