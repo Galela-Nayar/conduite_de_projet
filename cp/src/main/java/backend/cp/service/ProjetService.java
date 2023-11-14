@@ -1,6 +1,7 @@
 package backend.cp.service;
 
 import backend.cp.modele.Projet;
+import backend.cp.modele.Utilisateur;
 import backend.cp.repository.ProjetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -120,6 +121,39 @@ public class ProjetService {
         }
         projetRepository.delete(projet);
         System.out.println("delete service : " + "start");
+    }
+
+    public Utilisateur[] collaborateurs(String id) {
+        System.out.println("collaborateurs service : " + "start");
+        Projet projet = this.getProject(id);
+        List<Utilisateur> usersList = new ArrayList<>();
+        for (String user_id : projet.getCollaborateurs()) {
+            Utilisateur user = utilisateurService.getUtilisateur(user_id);
+            usersList.add(user);
+        }
+        Utilisateur[] usersArray = new Utilisateur[usersList.size()];
+        usersArray = usersList.toArray(usersArray);
+        return usersArray;
+    }
+
+    public boolean add_collaborateur(String id, String nom) {
+        if(utilisateurService.existUser(nom) | utilisateurService.existUserName(nom)){
+            System.out.println("utilisateur exist");
+            Projet pj = this.getProject(id);
+            String userId = utilisateurService.getUtilisateurByName(nom).getId();
+            pj.addCollaborateur(userId);
+            utilisateurService.addProjet(userId,id);
+            
+            this.projetRepository.save(pj);
+            return true;
+        } 
+        return false;
+    }
+
+    public void removeCollaborateur(String id, String userId) {
+        Projet pj = this.getProject(id);
+        pj.removeCollaborateur(userId);
+        projetRepository.save(pj);
     }
 
 }
