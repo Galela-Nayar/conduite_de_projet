@@ -77,6 +77,7 @@ export class ProjetParametresComponent {
       if (data.toString().startsWith('ok')) {
         field.saved = true;
       }
+      this.updateProject();
     });
   }
 
@@ -86,6 +87,7 @@ export class ProjetParametresComponent {
       if (data.toString().startsWith('ok')) {
         this.fields[1].saved = true;
       }
+      this.updateProject();
     });
   }
 
@@ -95,7 +97,9 @@ export class ProjetParametresComponent {
       if (data.toString().startsWith('ok')) {
         this.fields[2].saved = true;
       }
+      this.updateProject();
     });
+
   }
 
   closeProject() {
@@ -143,5 +147,17 @@ export class ProjetParametresComponent {
   getFormattedYear(date: string | Date): string {
     date = new Date(date);
     return `${date.getFullYear()}`;
+  }
+
+  updateProject(){
+    this.http.get<Project>(`http://localhost:8080/projets/projet?id=${this.projectId}`).subscribe((data: Project) => {
+      this.project = data;
+
+
+      this.http.get<Utilisateur>(`http://localhost:8080/utilisateurs/user?id=${this.project.createur}`).subscribe((data: Utilisateur) => {
+        this.createur = data;
+      });
+    })
+    this.cdr.detectChanges();
   }
 }

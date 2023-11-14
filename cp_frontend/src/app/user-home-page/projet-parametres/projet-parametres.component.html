@@ -2,12 +2,13 @@
     <div class="container">
         <div class="section">            
             <div class="section-container" style="width: flex;">
-                <div class="header_section" style="width: 100%;">Présentation du projet <p class="inline-p"><strong style="font-size: 1.5em;">{{ project.nom}}</strong></p></div>            
+                <div class="header_section" style="width: 100%;">Présentation du projet</div>            
 
                 <div class="header" style="width: 100%;">
                     <p><strong style="font-size: 1.5em;">{{project.nom}}</strong></p>
                     <p>Créer par : <strong style="font-size: 1.5em;">{{createur?.userName}}</strong></p>
-                    <p>Date de création : <strong style="font-size: 1.5em;">{{getFormattedDate(project.dateCreation)}}</strong></p>
+                    <p>Le : <strong style="font-size: 1.5em;">{{getFormattedDate(project.dateCreation)}}</strong></p>
+                    <p>Prévu pour le : <strong style="font-size: 1.5em;">{{getFormattedDate(project.dateButtoire)}}</strong></p>
                 </div>
                 <div class="section-container" style="width: 100%; 
                 box-sizing: border-box;">
