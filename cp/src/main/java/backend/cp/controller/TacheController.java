@@ -49,4 +49,16 @@ public class TacheController {
         System.out.println("ctr remove end");
         return ResponseEntity.ok("ok");
     }
+
+    @PutMapping("/updateNom")
+    public ResponseEntity<String> updateNom(@RequestParam String id, @RequestParam String nom){
+        tacheService.updateNom(id, nom);
+        return ResponseEntity.ok("");
+    }
+
+    @GetMapping("/swapStatut")
+    public ResponseEntity<String> swapStatut(@RequestParam String id){
+        tacheService.swapStatut(id);
+        return ResponseEntity.ok("ok");
+    }
 }

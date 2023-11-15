@@ -108,4 +108,6 @@ public class UtilisateurController {
         utilisateurService.setBio(id, param);
         return ResponseEntity.ok("ok");
     }
+
+    
 }
