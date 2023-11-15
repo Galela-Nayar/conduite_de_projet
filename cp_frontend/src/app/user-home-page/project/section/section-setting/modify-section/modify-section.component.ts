@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
@@ -14,7 +14,7 @@ export class ModifySectionComponent implements OnInit{
 
 
   section!: Section;
-  @Input() sectionId: string = '';
+  sectionId: string = '';
   isEditing: boolean = false;
   sectionForm: FormGroup;
 

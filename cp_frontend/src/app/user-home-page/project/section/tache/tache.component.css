@@ -8,3 +8,21 @@
     width: 100%;
     box-sizing: border-box; 
   }
+
+  .container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+p {
+    width: 80%;
+}
+
+.settings-and-checkbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 20%;
+}

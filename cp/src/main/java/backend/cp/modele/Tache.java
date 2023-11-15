@@ -20,12 +20,16 @@ public class Tache {
     private List<String> equipeAttitre = new ArrayList<>();
     private int priorite;
     private int ponderation;
-    private String statut;
+    private boolean statutTerminer = false;
     private Date dateLimite;
     private List<String> description = new ArrayList<>();
     private List<Etiquette> etiquettes = new ArrayList<>();
  
     public Tache(String nom) {
         this.nom = nom;
+    }
+
+    public void swapStatut() {
+        this.statutTerminer = !statutTerminer;
     }
 }

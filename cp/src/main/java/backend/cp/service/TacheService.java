@@ -1,6 +1,5 @@
 package backend.cp.service;
 
-import backend.cp.modele.Section;
 import backend.cp.modele.Tache;
 import backend.cp.repository.TacheRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +18,8 @@ public class TacheService {
     }
 
     public String createTache(String nom) {
-        
-        System.out.println("create tache");
         Tache tache = new Tache(nom);
         tacheRepository.save(tache);
-
-        System.out.println(" tache saved");
         return tache.getId();
     }
 
@@ -45,6 +40,18 @@ public class TacheService {
         Tache tache = this.getTache(id);
         System.out.println("service tache : " + tache);
         this.tacheRepository.delete(tache);
+    }
+
+    public void updateNom(String id, String nom){
+        Tache sc = this.getTache(id);
+        sc.setNom(nom);
+        this.tacheRepository.save(sc);
+    }
+
+    public void swapStatut(String id) {
+        Tache user = this.getTache(id);
+        user.swapStatut();
+        this.tacheRepository.save(user);
     }
 
     // Autres méthodes de service pour la gestion des tâches

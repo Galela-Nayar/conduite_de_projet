@@ -1,22 +1,32 @@
-<h2>{{ tache.nom }}</h2>
-<p>Priorité: {{ tache.Priorite }}</p>
-<p>Pondération: {{ tache.Ponderation }}</p>
-<p>Statut: {{ tache.Statut }}</p>
-<p>Date limite: {{ tache.limite }}</p>
+<div *ngIf="tache" class="container">
+    <div class="header">
+      <h2 >
+        <h3>Nom: {{ tache.nom }}</h3>
+        <button *ngIf="!editingNom" (click)="startEditingNom()" class="app-section table-style create-button">
+          <mat-icon class="create-icon">create</mat-icon>
+          {{ tache.nom }}
+        </button>
+      </h2>
+    </div>
+  
+    <div *ngIf="editingNom">
+      <form [formGroup]="sectionForm" (ngSubmit)="saveNomChanges()">
+        <input formControlName="nom" placeholder="Nouveau nom" />
+        <div class="button-container">
+          <button type="submit">Enregistrer</button>
+          <button type="button" (click)="cancelEditing()">Annuler</button>
+        </div>
+      </form>
+    </div>
 
-<div *ngIf="tache.description.length > 0">
-    <h3>Description:</h3>
-    <ul>
-    <li *ngFor="let desc of tache.description">{{ desc }}</li>
-    </ul>
+    <div>
+        Passer le statut de cette tâche à terminé
+        <mat-checkbox [checked]="tache.statutTerminer" (change)="swapStatut()"></mat-checkbox>
+    </div>
+  
 </div>
 
-<div *ngIf="tache.etiquettes.length > 0">
-    <h3>Étiquettes:</h3>
-    <ul>
-    <li *ngFor="let etiquette of tache.etiquettes">
-        {{ etiquette.nom }} ({{ etiquette.couleur }})
-    </li>
-    </ul>
-</div>
+
+
+
   

@@ -47,6 +47,8 @@ import {
 import { UserSettingComponent } from './user-home-page/user-setting/user-setting.component';
 import { ProjectSettingComponent } from './user-home-page/lateral-user-home-menu/project-setting/project-setting.component';
 import { ProjetParametresComponent } from './user-home-page/projet-parametres/projet-parametres.component';
+import { ModifyTaskComponent } from './user-home-page/project/section/tache/tache-setting/modify-task/modify-task.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,6 +72,7 @@ import { ProjetParametresComponent } from './user-home-page/projet-parametres/pr
     UserSettingComponent,
     ProjectSettingComponent,
     ProjetParametresComponent,
+    ModifyTaskComponent
   ],
   imports: [
     BrowserModule,
@@ -90,6 +93,8 @@ import { ProjetParametresComponent } from './user-home-page/projet-parametres/pr
     MatCardModule,
     CdkDropList,
     CdkDrag,
+    MatCheckboxModule,
+    
   ],
   providers: [
     { provide: MatDialogRef, useValue: {} },
