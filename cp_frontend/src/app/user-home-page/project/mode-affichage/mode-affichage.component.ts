@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, Input, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Section from 'src/interface/Section';
 import { BehaviorSubject, Subscription, mergeMap} from 'rxjs';
@@ -10,18 +10,20 @@ import { CreateTaskComponent } from '../../create-task/create-task.component';
 import Project from 'src/interface/Project';
 
 @Component({
-  selector: 'app-etat',
-  templateUrl: './etat.component.html',
-  styleUrls: ['./etat.component.css']
+  selector: 'app-mode-affichage',
+  templateUrl: './mode-affichage.component.html',
+  styleUrls: ['./mode-affichage.component.css']
 })
-export class EtatComponent {
-  etatActuel: string = '';
+export class ModeAffichageComponent {
+  affichageActuel: string = '';
 
-  options: string[] = ['Démarrage', 'En_cours', 'En_pause', 'Terminé'];
+  options: string[] = ['Kanban', 'Scrum'];
 
   id: string = '';
   projetId: string = '';
   projet?: Project;
+
+  @Output() affichageChange: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
     private http: HttpClient,
@@ -43,17 +45,25 @@ export class EtatComponent {
           .get<Project>(
             `http://localhost:8080/projets/projet?id=${this.projetId}`).subscribe((projectData: Project) => {
               this.projet = projectData;
-              this.etatActuel = this.projet.etat;
-              console.log('Etat bien recupéré');});
+              this.affichageActuel = this.projet.modeAffichage;});
       };
   })}
 
-  changerEtat(): void {
-    console.log('Nouvel état sélectionné :', this.etatActuel);
-    this.http.put(`http://localhost:8080/projets/updateEtat?id=${this.projetId}&newEtat=${this.etatActuel}`,{}).subscribe(
-      (response) => {
-        this.projectService.notifyProject();
-      }
-    );
+  //Dans cette fonction on change la valeur de modeAffichage dans la bdd, puis on previent le projet qu'il faut changer l'affichage
+  changerAffichage(): void {
+    console.log('Nouvel état sélectionné :', this.affichageActuel);
+
+    this.http
+      .get(
+        `http://localhost:8080/projets/updateModeAffichage?id=${this.projetId}&newModeAffichage=${this.affichageActuel}`,
+        {responseType: 'text'}).subscribe((data: string) => {
+          if (data.toString().startsWith('ok')) {
+            this.projectService.notifyProject();
+          }
+        });
+
+
+      this.affichageChange.emit(this.affichageActuel);
+
   }
 }

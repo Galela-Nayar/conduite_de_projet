@@ -18,6 +18,7 @@ import {
   CdkDrag,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
+import { CreateEtatComponent } from '../create-etat/create-etat.component';
 
 @Component({
   selector: 'app-project',
@@ -33,7 +34,9 @@ export class ProjectComponent implements OnDestroy {
   showCreateSection = false;
   dataLoad = false;
   sections: any[] = [];
+  etats: any[] = [];
   sectionSubscription!: Subscription;
+  modeAffichage: String = '';
 
   constructor(
     private http: HttpClient,
@@ -66,6 +69,7 @@ export class ProjectComponent implements OnDestroy {
               .subscribe((projectData: Project) => {
                 this.sections = projectData.sections;
                 this.projet = projectData;
+                this.modeAffichage = this.projet.modeAffichage;
                 console.log('hehehehehe');
               });
           });
@@ -74,10 +78,42 @@ export class ProjectComponent implements OnDestroy {
         });
       }
     });
+
+    //On recupere les etats 
+    this.route.paramMap.subscribe((param) => {
+      const projetId = param.get('projectId');
+      console.log(projetId);
+      if (projetId != null) {
+        this.projetId = projetId;
+        this.sectionSubscription = this.observableService
+          .getObservableSection()
+          .subscribe((response) => {
+            this.http.get<string[]>(`http://localhost:8080/projets/getEtatId?id=${this.projetId}`)
+              .subscribe((etats: string[]) => {
+                this.etats = etats;
+              });
+          });
+          this.etats.forEach((etat) => {
+            console.log("etat : ", etat);
+          });
+      }
+    });
   }
 
-  onPlusClick(event: MouseEvent): void {
+  //En affichage Kanban quand on clique sur plus
+  onPlusClickSection(event: MouseEvent): void {
     const dialogRef = this.dialog.open(CreateSectionComponent, {
+      data: this.projetId,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  //En affichage Scrum quand on clique sur plus
+  onPlusClickEtat(event: MouseEvent): void {
+    const dialogRef = this.dialog.open(CreateEtatComponent, {
       data: this.projetId,
     });
 
@@ -96,5 +132,14 @@ export class ProjectComponent implements OnDestroy {
       .subscribe((response) => {
         this.observableService.notifySection();
       });
+  }
+
+  //On appelle cette fonction à chaque fois que le mode d'affichage est changé
+  handleAffichageChange(nouvelAffichage: string): void {   
+    /*Je fais comme ca au lieu de juste recup la valeur dans la bdd, parce que j'ai galéré avec le delire
+    d'asyncronité et tout (en gros le handle se lancais avant que la bdd ai eu le temps de se mettre à jour)
+    mais la du coup ca marche, et malgré tout la valeur est bien mise à jour dans la bdd tkt*/
+    this.modeAffichage = nouvelAffichage;
+    console.log('Le mode d\'affichage est ', this.modeAffichage);
   }
 }

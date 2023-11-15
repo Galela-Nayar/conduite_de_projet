@@ -5,6 +5,10 @@
     <button *ngIf="!isEditing" (click)="startEditing()" class="app-section table-style create-button">
       <mat-icon class="create-icon">create</mat-icon>{{ section.nom }}
     </button>
+    <div class="form-row">
+      <a>Est un état</a>
+      <input type="checkbox" [(ngModel)]="estEtat" (click)="changeEstEtat()">
+    </div>
     </h2>
   </div>
 

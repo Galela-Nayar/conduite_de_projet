@@ -46,3 +46,11 @@
   letter-spacing: 2px;
   font-size: 20px;
 }
+
+.background-etat {
+  background-color: lightblue;
+}
+
+.background-section {
+  background-color: white;
+}

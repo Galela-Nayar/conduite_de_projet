@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 @CrossOrigin(origins = "http://localhost:4200") // replace with the domain your frontend is running on
@@ -29,7 +30,7 @@ public class ProjetController {
     @PostMapping("/create")
     public ResponseEntity<String> createProjet(
         @RequestBody ProjetDto projet) {
-            String id =projetService.createProjet(projet.getNom(), projet.getCreateur(), projet.getDate(), projet.isStandardSection(), projet.getDescription(), projet.getDateButoire(), projet.getEtat());
+            String id =projetService.createProjet(projet.getNom(), projet.getCreateur(), projet.getDate(), projet.isStandardSection(), projet.getDescription(), projet.getDateButoire(), projet.getModeAffichage());
         return ResponseEntity.ok(id);
     }
     
@@ -50,6 +51,20 @@ public class ProjetController {
         return projetService.getProject(id);
     }
 
+    //Renvoi la liste des sections d'un projet, qui sont des etats (Juste l'id)
+    @GetMapping("/getEtatId")
+    public List<String> getEtat(@RequestParam String id)
+    {
+        return projetService.getEtatId(id);
+    }
+
+    //Renvoi la liste des sections d'un projet, qui sont PAS des etats
+    @GetMapping("/getSectionNotEtat")
+    public List<Section> getSectionNotEtat(@RequestParam String id)
+    {
+        return projetService.getSectionNotEtat(id);
+    }
+
     @GetMapping("/removeSection")
     public ResponseEntity<String> removeSection(@RequestParam String id, @RequestParam String sectionId){
         System.out.println("ctr remove start");
@@ -58,11 +73,12 @@ public class ProjetController {
         return ResponseEntity.ok("pas ok, section non retiré du projet");
     }
 
-    @PutMapping("/updateEtat")
-    public ResponseEntity<String> updateEtat(@RequestParam String id, @RequestParam String newEtat)
+    //Ca mets à jour la valeur de "modeAffichage" dans la base de données
+    @GetMapping("/updateModeAffichage")
+    public ResponseEntity<String> updateModeAffichage(@RequestParam String id, @RequestParam String newModeAffichage)
     {
         if(projetService.getProject(id) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("projet not found");
-        projetService.updateEtat(id, newEtat);
+        projetService.updateModeAffichage(id, newModeAffichage);
         return ResponseEntity.ok("ok");
     }
 

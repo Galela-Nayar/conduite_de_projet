@@ -17,6 +17,7 @@ export class ModifySectionComponent implements OnInit{
   @Input() sectionId: string = '';
   isEditing: boolean = false;
   sectionForm: FormGroup;
+  estEtat: boolean = false;
 
 
   constructor(private httpClient: HttpClient, @Inject(MAT_DIALOG_DATA) public data: string, 
@@ -30,6 +31,7 @@ export class ModifySectionComponent implements OnInit{
     this.sectionId = this.data;
     this.httpClient.get<Section>(`http://localhost:8080/sections/section?id=${this.sectionId}`).subscribe((response)=>{
       this.section = response;
+      this.estEtat = this.section.estEtat;
     })
   }
 
@@ -56,20 +58,30 @@ export class ModifySectionComponent implements OnInit{
   }
 
   supprimer(idTask: string): void {
-  this.httpClient.get(`http://localhost:8080/taches/removeTache?id=${idTask}`, { responseType: 'text' }).subscribe((response: string) => {
-    console.log("supprimer tache : " + response)
-    this.httpClient.get(`http://localhost:8080/sections/removeTache?id=${this.sectionId}&tacheId=${idTask}`, { responseType: 'text' }).subscribe((response2: string) => {
-      console.log("supprimer tache dans section: " + response)
-      this.observerService.notifyTask();
-      for (let i = 0; i < this.section.taches.length; i++) {
-        if (this.section.taches[i] === idTask) {
-          this.section.taches.splice(i, 1);
-          break;
+    this.httpClient.get(`http://localhost:8080/taches/removeTache?id=${idTask}`, { responseType: 'text' }).subscribe((response: string) => {
+      console.log("supprimer tache : " + response)
+      this.httpClient.get(`http://localhost:8080/sections/removeTache?id=${this.sectionId}&tacheId=${idTask}`, { responseType: 'text' }).subscribe((response2: string) => {
+        console.log("supprimer tache dans section: " + response)
+        this.observerService.notifyTask();
+        for (let i = 0; i < this.section.taches.length; i++) {
+          if (this.section.taches[i] === idTask) {
+            this.section.taches.splice(i, 1);
+            break;
+          }
         }
-      }
+      });
     });
-  });
-}
+  }
+
+  changeEstEtat() : void
+  {
+    console.log("Etat actuel :", !this.estEtat)
+    this.httpClient.put<string>(`http://localhost:8080/sections/updateEstEtat?id=${this.sectionId}&estEtat=${!this.estEtat}`,{})
+    .subscribe((response) => {
+        this.observerService.notifyTask();
+        this.observerService.notifySection();
+    });
+  }
 
 
 }

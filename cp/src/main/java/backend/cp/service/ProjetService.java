@@ -1,6 +1,7 @@
 package backend.cp.service;
 
 import backend.cp.modele.Projet;
+import backend.cp.modele.Section;
 import backend.cp.repository.ProjetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class ProjetService {
         this.sectionService = sectionService;
     }
 
-    public String createProjet(String nom, String createur, Date date, boolean standardSection, String description, Date dateButtoire, String etat) {
+    public String createProjet(String nom, String createur, Date date, boolean standardSection, String description, Date dateButtoire, String modeAffichage) {
         Projet projet = new Projet();
         projet.setNom(nom);
         projet.setCreateur(createur);
@@ -32,16 +33,16 @@ public class ProjetService {
         projet.setCollaborateurs(collab);
         projet.setDateButtoire(dateButtoire);
         projet.setDescription(description);
-        projet.setEtat(etat);
+        projet.setModeAffichage(modeAffichage);
         projetRepository.save(projet);
         return projet.getId();
     }
 
     private List<String> setSection() {
         ArrayList<String> sections = new ArrayList<>();
-        sections.add(sectionService.createSection("a faire"));
-        sections.add(sectionService.createSection("en cours"));
-        sections.add(sectionService.createSection("terminé"));
+        sections.add(sectionService.createSection("a faire", false));
+        sections.add(sectionService.createSection("en cours", false));
+        sections.add(sectionService.createSection("terminé", false));
         return sections;
     }
 
@@ -63,6 +64,34 @@ public class ProjetService {
             if(project.getId().equals(id)) return project;
         }
         return null;
+    }
+
+    public List<String> getEtatId(String id)
+    {
+        Projet pj = this.getProject(id);
+        List<String> sections = pj.getSections();
+        List<String> etats = new ArrayList<>();
+        for (String section : sections) {
+            if(sectionService.getSection(section).getEstEtat())
+            {
+                etats.add(section);
+            }
+        }
+        return etats;
+    }
+
+    public List<Section> getSectionNotEtat(String id)
+    {
+        Projet pj = this.getProject(id);
+        List<String> sections = pj.getSections();
+        List<Section> sectionsPasEtat = new ArrayList<>();
+        for (String section : sections) {
+            if(!sectionService.getSection(section).getEstEtat())
+            {
+                sectionsPasEtat.add(sectionService.getSection(section));
+            }
+        }
+        return sectionsPasEtat;
     }
 
     public void addSection(String projectId, String sectionId) {
@@ -87,12 +116,11 @@ public class ProjetService {
         return ok;
     }
     
-    public void updateEtat(String id, String newEtat)
+    public void updateModeAffichage(String id, String newModeAffichage)
     {
-        System.out.println("Update de l'etat");
         Projet projet = this.getProject(id);
         if (projet != null) {
-            projet.setEtat(newEtat);
+            projet.setModeAffichage(newModeAffichage);
             this.projetRepository.save(projet);
         }
     }

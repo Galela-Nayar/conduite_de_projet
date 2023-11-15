@@ -14,5 +14,5 @@ public class ProjetDto {
     private boolean standardSection;
     private String description;
     private Date dateButoire;
-    private String etat;
+    private String modeAffichage;
 }
