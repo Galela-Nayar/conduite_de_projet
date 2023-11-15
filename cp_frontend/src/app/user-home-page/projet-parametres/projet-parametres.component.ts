@@ -172,8 +172,6 @@ export class ProjetParametresComponent {
         this.listCollaborateur = data;
       })
     })
-
-    
     this.cdr.detectChanges();
   }
 

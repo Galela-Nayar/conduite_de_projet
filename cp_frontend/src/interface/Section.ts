@@ -1,7 +1,8 @@
-interface Section {
+export interface Section {
     id: string;
     nom: string;
     taches: string[];
+    [key:string]:any;
     
   }
 

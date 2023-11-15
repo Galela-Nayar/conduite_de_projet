@@ -1,6 +1,5 @@
 package backend.cp.service;
 
-import backend.cp.modele.Projet;
 import backend.cp.modele.Section;
 import backend.cp.repository.SectionRepository;
 
@@ -12,7 +11,9 @@ import java.util.List;
 @Service
 public class SectionService {
 
+    @Autowired
     private final SectionRepository sectionRepository;
+    @Autowired
     private final TacheService tacheService;
 
     @Autowired

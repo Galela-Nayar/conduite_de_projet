@@ -1,4 +1,8 @@
 .card-custom-background {
+    font-size: 0.9em;
+    margin: 7px;
+    text-align: left;
+    width: 95%;
     background-color: rgba(128, 128, 128, 0.5); /* Remplacez ceci par la couleur de fond de votre choix */
 }
 .section-entry {

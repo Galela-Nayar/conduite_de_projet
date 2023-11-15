@@ -24,7 +24,8 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class SectionComponent {
   id: String | null = '';
-  projetId: String | null = '';
+  @Input()
+  projetId: String = '';
   @Input() sectionId: String = '';
   section?: Section;
   mouseX: number = 0;
@@ -48,9 +49,6 @@ export class SectionComponent {
     this.id = this.route.parent
       ? this.route.parent.snapshot.paramMap.get('id')
       : null;
-    this.projetId = this.route.parent
-      ? this.route.parent.snapshot.paramMap.get('projetId')
-      : null;
     if (this.sectionId) {
       this.sectionService.changeSectionId(this.sectionId);
       this.sectionId = this.sectionId;
@@ -64,7 +62,6 @@ export class SectionComponent {
             .subscribe((response) => {
               this.section = response;
               this.tasks = this.section.taches;
-              console.log('lalalala' + this.section.taches);
             });
         });
     }
@@ -76,7 +73,6 @@ export class SectionComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
     });
   }
 

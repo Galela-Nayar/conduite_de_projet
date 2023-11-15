@@ -15,8 +15,13 @@ import java.util.List;
 @Service
 public class ProjetService {
 
+    @Autowired
     private final ProjetRepository projetRepository;
+
+    @Autowired
     private final SectionService sectionService;
+
+    @Autowired
     private final UtilisateurService utilisateurService;
 
     @Autowired

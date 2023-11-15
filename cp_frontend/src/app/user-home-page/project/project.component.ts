@@ -53,7 +53,6 @@ export class ProjectComponent implements OnDestroy {
     if (id != null) this.id = id;
     this.route.paramMap.subscribe((param) => {
       const projetId = param.get('projectId');
-      console.log(projetId);
       if (projetId != null) {
         this.projetId = projetId;
         this.sectionSubscription = this.observableService
@@ -66,12 +65,8 @@ export class ProjectComponent implements OnDestroy {
               .subscribe((projectData: Project) => {
                 this.sections = projectData.sections;
                 this.projet = projectData;
-                console.log('hehehehehe');
               });
           });
-        this.sections.forEach((section) => {
-          console.log(section);
-        });
       }
     });
   }
@@ -82,7 +77,6 @@ export class ProjectComponent implements OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
     });
   }
 

@@ -13,7 +13,7 @@ import Tache from 'src/interface/Tache';
 })
 export class TacheComponent {
   id: String | null = '';
-  projetId: String | null = '';
+  @Input() projetId: String = '';
   @Input()
   sectionId: String | null = '';
   @Input()
@@ -39,12 +39,9 @@ export class TacheComponent {
         .subscribe((response) => {
           this.http.get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`).subscribe((response) => {
               this.tache = response;
-              console.log("tache: " + this.tache)
-              console.log(this.tache)
             });
         });
     }
-    console.log("tache: " + this.tache)
   }
 
   swapStatut(){
@@ -53,7 +50,6 @@ export class TacheComponent {
       if(this.tache.statutTerminer) this.tache.statutTerminer = false
       else this.tache.statutTerminer = true
       this.observerService.notifyTask();
-      console.log("tache teerminer swap: " + this.tache.statutTerminer)
       this.cd.detectChanges();
     });
   }

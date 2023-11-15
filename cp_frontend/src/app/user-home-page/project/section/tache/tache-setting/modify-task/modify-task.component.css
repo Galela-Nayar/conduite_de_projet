@@ -1,58 +1,50 @@
-
-:host {
-  color: lightgray;
-    display: block;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #3d3d3d;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  p {
-    margin-bottom: 8px;
-  }
-  
-  /* Container styling */
 .container {
   max-width: 600px;
-  padding: 20px;
+  padding: 0px 20px;
+  padding-bottom: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  background-color: #5f5f5f;
+  background-color: #3d3d3d;
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: rgb(160, 160, 160);
 }
-.header {
-    display: flex;
-    align-items: center;
-  }
-  
-  /* Title styling */
-  h2 {
-    font-size: 1.5em;
-    margin-bottom: 0;
-    color: lightgray;
-  }
-  
-  /* Create icon styling */
-  .create-icon {
-    margin-right: 10px;
-  }
-  
-  /* Create button styling */
-  .create-button {
-    align-self: flex-start; /* Adjust as needed */
-  }
 
-/* Form styling */
+.header {
+  display: flex;
+  align-items: center;
+}
+
+h3 {
+  color: lightgray;
+}
+
+h2 {
+  font-size: 1.2em;
+  margin-bottom: 0;
+}
+
+h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.create-icon {
+  margin-right: 10px;
+}
+
+.create-button {
+  align-self: flex-start;
+  margin: auto;
+  display: block;
+}
+
 .form-group {
   width: 100%;
   margin-bottom: 20px;
 }
 
-/* Input styling */
 input {
   width: 100%;
   padding: 10px;
@@ -61,7 +53,6 @@ input {
   border-radius: 5px;
 }
 
-/* Button styling */
 button {
   padding: 10px 15px;
   margin-right: 10px;
@@ -70,51 +61,65 @@ button {
   cursor: pointer;
 }
 
-/* Save button styling */
 button[type="submit"] {
   background-color: #4caf50;
   color: #fff;
 }
 
-/* Cancel button styling */
-button[type="button"] {
-  background-color: #f44336;
-  color: #fff;
+.up-button {
+  background-color: green !important;
+  color: white !important;
 }
 
-/* Edit button styling */
+button[type="button"], .table-cell-button-style button {
+  background-color: #f44336;
+  color: #fff;
+  margin: auto;
+}
+
 .edit-button {
   background-color: #2196f3;
   color: #fff;
 }
 
-/* Tasks styling */
-h3 {
-  font-size: 1.2em;
-  margin-bottom: 10px;
-  color: lightgray;
+.table-style {
+  width: 70%;
+  background-color: rgb(41, 41, 41);
+  margin: auto;
 }
 
-/* Task list styling */
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.table-row-style {
+  background-color: rgb(56, 56, 56);
 }
 
-/* Task item styling */
-li {
+.table-cell-style {
+  width: 80%;
+  height: 5%;
+  border: 1px solid black;
+}
+
+.up-button, .remove-button {
+  flex: 1;
+  height:39px; /* Adjust as needed */
+  width:39px; /* Adjust as needed */
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  padding: 0px 0px 0px 2px;
 }
 
-/* Delete icon styling */
-mat-icon {
-  cursor: pointer;
-  color: #f44336;
+.table-cell-button-style {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 90%;
+  border: none;
+  height: 1px;
+  background: #d6d6d6; /* Change to desired color */
 }

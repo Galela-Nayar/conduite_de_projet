@@ -35,12 +35,8 @@ public class ProjetController {
     
     @GetMapping("/create-section")
     public ResponseEntity<String> addsection(@RequestParam String projectId, @RequestParam String sectionId) {
-        System.out.println("Enter in create-section");
-        if(projectId.isBlank()) System.out.println("projectId is blank: " + projectId);
-        if(sectionId.isBlank()) System.out.println("sectionId is blank" + sectionId);
 
         projetService.addSection(projectId,sectionId);
-        System.out.println("section added");
         return ResponseEntity.ok("section ajouté");
     }
 
@@ -52,9 +48,7 @@ public class ProjetController {
 
     @GetMapping("/removeSection")
     public ResponseEntity<String> removeSection(@RequestParam String id, @RequestParam String sectionId){
-        System.out.println("ctr remove start");
         if(projetService.removeSection(id, sectionId)) return ResponseEntity.ok("ok");
-        System.out.println("ctr remove end");
         return ResponseEntity.ok("pas ok, section non retiré du projet");
     }
 
@@ -87,22 +81,17 @@ public class ProjetController {
 
     @GetMapping("/delete")
     public ResponseEntity<String> delete(@RequestParam String id){
-        System.out.println("delete : " + "start");
         projetService.deleteProject(id);
-        System.out.println("delete : " + "end");
         return ResponseEntity.ok("ok");
     }
 
     @GetMapping("/collaborateurs")
     public Utilisateur[] collaborateurs(@RequestParam String id){
-        System.out.println("collaborateurs : " + "start");
-        
         return projetService.collaborateurs(id);
     }
 
     @GetMapping("/add_collaborateur")
     public ResponseEntity<String> addCollaborateur(@RequestParam String id, @RequestParam String nom){
-        System.out.println(nom);
         if(projetService.add_collaborateur(id, nom))  return ResponseEntity.ok("ok");
         else return ResponseEntity.ok("error");
     }

@@ -1,6 +1,7 @@
 package backend.cp.controller;
 
 import backend.cp.modele.Tache;
+import backend.cp.modele.Utilisateur;
 import backend.cp.service.TacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +23,7 @@ public class TacheController {
 
     @GetMapping("/create")
     public String createTache(@RequestParam String name) {
-        System.out.println("create tache");
         String reponse = tacheService.createTache(name);
-        
-        System.out.println(reponse);
         return reponse;
     }
 
@@ -37,16 +35,13 @@ public class TacheController {
     @GetMapping("/tache")
     public Tache getTaches(@RequestParam String id) {
         Tache tache = tacheService.getTache(id);
-        System.out.println("tache: " + tache);
         return tache;
     }
 
     @GetMapping("/removeTache")
     public ResponseEntity<String>removeTache(@RequestParam String id){
-        System.out.println("ctr remove start");
         tacheService.removeTache(id);
 
-        System.out.println("ctr remove end");
         return ResponseEntity.ok("ok");
     }
 
@@ -60,5 +55,30 @@ public class TacheController {
     public ResponseEntity<String> swapStatut(@RequestParam String id){
         tacheService.swapStatut(id);
         return ResponseEntity.ok("ok");
+    }
+
+    @GetMapping("/membreAttribue")
+    public Utilisateur[] membreAttribue(@RequestParam String id){
+        return tacheService.membreAttribue(id);
+    }
+
+    @GetMapping("/add_collaborateur")
+    public ResponseEntity<String> addCollaborateur(@RequestParam String id, @RequestParam String userId){
+        tacheService.addCollaborateur(id, userId);
+        return ResponseEntity.ok("ok");
+    }
+
+    @GetMapping("/remove_collaborateur")
+    public ResponseEntity<String> removeCollaborateur(@RequestParam String id, @RequestParam String userId){
+        tacheService.removeCollaborateur(id, userId);
+        return ResponseEntity.ok("ok");
+    }
+
+    @GetMapping("/membreRestant")
+    public Utilisateur[] membreRestant(@RequestParam String id, @RequestParam String projectId){
+        System.out.println("membreRestant start");
+        Utilisateur[] ut = tacheService.membreRestant(id, projectId);
+        System.out.println("membreRestant start, return : " + ut);
+        return ut;
     }
 }
