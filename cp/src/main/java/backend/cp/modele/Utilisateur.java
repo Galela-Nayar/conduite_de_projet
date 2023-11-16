@@ -29,4 +29,9 @@ public class Utilisateur {
     public void addProjet(String id){
         listProjet.add(id);
     }
+
+    public void removeProject(String id2) {
+        listProjet.remove(id2);
+    }
+
 }

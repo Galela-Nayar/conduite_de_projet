@@ -103,5 +103,26 @@ public class UtilisateurService {
         user.setBio(param);
         saveUtilisateur(user);
     }
+
+    public void removeProject(String user_id, String id) {
+        Utilisateur user = this.getUtilisateur(user_id);
+        user.removeProject(id);
+        saveUtilisateur(user);
+    }
+
+    public Utilisateur getUtilisateurByName(String nom) {
+        for (Utilisateur user : getAllUtilisateurs()) {
+            if(user.getEmail().equals(nom) || user.getUserName().equals(nom)){
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public void addProjet(String userId, String id) {
+        Utilisateur user = this.getUtilisateur(userId);
+        user.addProjet(id);
+        this.utilisateurRepository.save(user);
+    }
 }
  

@@ -1,28 +1,125 @@
+.container {
+  max-width: 600px;
+  padding: 0px 20px;
+  padding-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #3d3d3d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: rgb(160, 160, 160);
+}
 
-:host {
-    display: block;
-    padding: 16px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  h2 {
-    color: #333;
-  }
-  
-  p {
-    margin-bottom: 8px;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  li {
-    margin-bottom: 4px;
-  }
-  
-  
+.header {
+  display: flex;
+  align-items: center;
+}
+
+h3 {
+  color: lightgray;
+}
+
+h2 {
+  font-size: 1.2em;
+  margin-bottom: 0;
+}
+
+h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.create-icon {
+  margin-right: 10px;
+}
+
+.create-button {
+  align-self: flex-start;
+  margin: auto;
+  display: block;
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px 15px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[type="submit"] {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.up-button {
+  background-color: green !important;
+  color: white !important;
+}
+
+button[type="button"], .table-cell-button-style button {
+  background-color: #f44336;
+  color: #fff;
+  margin: auto;
+}
+
+.edit-button {
+  background-color: #2196f3;
+  color: #fff;
+}
+
+.table-style {
+  width: 70%;
+  background-color: rgb(41, 41, 41);
+  margin: auto;
+}
+
+.table-row-style {
+  background-color: rgb(56, 56, 56);
+}
+
+.table-cell-style {
+  width: 80%;
+  height: 5%;
+  border: 1px solid black;
+}
+
+.up-button, .remove-button {
+  flex: 1;
+  height:39px; /* Adjust as needed */
+  width:39px; /* Adjust as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 0px 0px 2px;
+}
+
+.table-cell-button-style {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 90%;
+  border: none;
+  height: 1px;
+  background: #d6d6d6; /* Change to desired color */
+}

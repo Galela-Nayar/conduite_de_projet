@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class TacheSettingComponent {
   @Input() tacheId!: String;
   @Input() sectionId: String | null = '';
+  @Input() projetId!: String;
 
   constructor(private http: HttpClient, private sectionService: SectionService, 
     private route: ActivatedRoute, private observableService: ObservableService,
@@ -32,8 +33,9 @@ export class TacheSettingComponent {
   }
 
   modifier(){
+    console.log("projectID data : " + this.projetId)
     const dialogRef = this.dialog.open(ModifyTaskComponent, {
-      data: this.tacheId,
+      data: {data1:this.tacheId,data2:this.projetId},
     });
   
     dialogRef.afterClosed().subscribe(() => {

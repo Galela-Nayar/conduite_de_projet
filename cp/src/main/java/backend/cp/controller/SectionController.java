@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -79,16 +81,16 @@ public class SectionController {
         return ResponseEntity.ok("");
     }
 
+    @PutMapping("/updateTaches")
+    public ResponseEntity<String> updateTaches(@RequestParam String id, @RequestParam ArrayList<String> taches){
+        sectionService.updateTaches(id, taches);
+        return ResponseEntity.ok("");
+    }
+    
     @PutMapping("/updateEstEtat")
     public ResponseEntity<String> updateEstEtat(@RequestParam String id, @RequestParam Boolean estEtat)
     {
         sectionService.updateEstEtat(id, estEtat);
-        return ResponseEntity.ok("");
-    }
-
-    @PutMapping("/updateTaches")
-    public ResponseEntity<String> updateTaches(@RequestParam String id, @RequestParam ArrayList<String> taches){
-        sectionService.updateTaches(id, taches);
         return ResponseEntity.ok("");
     }
 

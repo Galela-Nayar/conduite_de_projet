@@ -1,14 +1,15 @@
 <div *ngIf="section" class="container">
   <div class="header">
-    <h2 *ngIf="!isEditing">
-      <h3>section: </h3>
-    <button *ngIf="!isEditing" (click)="startEditing()" class="app-section table-style create-button">
-      <mat-icon class="create-icon">create</mat-icon>{{ section.nom }}
-    </button>
-    <div class="form-row">
-      <a>Est un état</a>
-      <input type="checkbox" [(ngModel)]="estEtat" (click)="changeEstEtat()">
-    </div>
+    <h2>
+      <h3>Nom: {{ section.nom }}</h3>
+      <button *ngIf="!isEditing" (click)="startEditing()" class="app-section table-style create-button">
+        <mat-icon class="create-icon">create</mat-icon>
+        {{ section.nom }}
+      </button>
+      <div class="form-row">
+        <a>Est un état</a>
+        <input type="checkbox" [(ngModel)]="estEtat" (click)="changeEstEtat()">
+      </div>
     </h2>
   </div>
 

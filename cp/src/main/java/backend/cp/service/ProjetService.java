@@ -2,10 +2,13 @@ package backend.cp.service;
 
 import backend.cp.modele.Projet;
 import backend.cp.modele.Section;
+import backend.cp.modele.Utilisateur;
 import backend.cp.repository.ProjetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,13 +16,20 @@ import java.util.List;
 @Service
 public class ProjetService {
 
+    @Autowired
     private final ProjetRepository projetRepository;
+
+    @Autowired
     private final SectionService sectionService;
 
     @Autowired
-    public ProjetService(ProjetRepository projetRepository, SectionService sectionService) {
+    private final UtilisateurService utilisateurService;
+
+    @Autowired
+    public ProjetService(ProjetRepository projetRepository, SectionService sectionService, UtilisateurService utilisateurService) {
         this.projetRepository = projetRepository;
         this.sectionService = sectionService;
+        this.utilisateurService = utilisateurService;
     }
 
     public String createProjet(String nom, String createur, Date date, boolean standardSection, String description, Date dateButtoire, String modeAffichage) {
@@ -129,6 +139,65 @@ public class ProjetService {
         Projet projet = this.getProject(id);
         projet.setNom(param);
         projetRepository.save(projet);
+    }
+
+    public void setDate(String id, String day, String month, String year) {
+        Projet projet = this.getProject(id);
+        projet.setDateButtoire(Timestamp.valueOf(LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day)).atStartOfDay()));
+        projetRepository.save(projet);
+    }
+
+    public void setDescription(String id, String description) {
+
+        Projet projet = this.getProject(id);
+        projet.setDescription(description);
+        projetRepository.save(projet);
+    }
+
+    public void deleteProject(String id) {
+        System.out.println("delete service : " + "start");
+        Projet projet = this.getProject(id);
+        for (String section_id : projet.getSections()) {
+            sectionService.removeSection(section_id);
+        }
+        for (String user_id : projet.getCollaborateurs()) {
+            utilisateurService.removeProject(user_id, id);
+        }
+        projetRepository.delete(projet);
+        System.out.println("delete service : " + "start");
+    }
+
+    public Utilisateur[] collaborateurs(String id) {
+        System.out.println("collaborateurs service : " + "start");
+        Projet projet = this.getProject(id);
+        List<Utilisateur> usersList = new ArrayList<>();
+        for (String user_id : projet.getCollaborateurs()) {
+            Utilisateur user = utilisateurService.getUtilisateur(user_id);
+            usersList.add(user);
+        }
+        Utilisateur[] usersArray = new Utilisateur[usersList.size()];
+        usersArray = usersList.toArray(usersArray);
+        return usersArray;
+    }
+
+    public boolean add_collaborateur(String id, String nom) {
+        if(utilisateurService.existUser(nom) | utilisateurService.existUserName(nom)){
+            System.out.println("utilisateur exist");
+            Projet pj = this.getProject(id);
+            String userId = utilisateurService.getUtilisateurByName(nom).getId();
+            pj.addCollaborateur(userId);
+            utilisateurService.addProjet(userId,id);
+            
+            this.projetRepository.save(pj);
+            return true;
+        } 
+        return false;
+    }
+
+    public void removeCollaborateur(String id, String userId) {
+        Projet pj = this.getProject(id);
+        pj.removeCollaborateur(userId);
+        projetRepository.save(pj);
     }
 
 }

@@ -106,12 +106,11 @@ mat-icon {
   cursor: pointer;
   color: #f44336;
 }
-
 .form-row {
   display: flex;
   align-items: center;
-  }
-  
-  .form-row a {
+}
+
+.form-row a {
   margin-right: 10px;
-  }
+}

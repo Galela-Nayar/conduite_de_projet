@@ -27,9 +27,11 @@ import { CreateTaskComponent } from './user-home-page/create-task/create-task.co
 import { LogInComponent } from './home-page/log-in/log-in.component';
 import { SectionSettingComponent } from './user-home-page/project/section/section-setting/section-setting.component';
 import { TacheSettingComponent } from './user-home-page/project/section/tache/tache-setting/tache-setting.component';
-import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
-
-
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
@@ -45,6 +47,8 @@ import {
 import { UserSettingComponent } from './user-home-page/user-setting/user-setting.component';
 import { ProjectSettingComponent } from './user-home-page/lateral-user-home-menu/project-setting/project-setting.component';
 import { ProjetParametresComponent } from './user-home-page/projet-parametres/projet-parametres.component';
+import { ModifyTaskComponent } from './user-home-page/project/section/tache/tache-setting/modify-task/modify-task.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ModeAffichageComponent } from './user-home-page/project/mode-affichage/mode-affichage.component';
 import { CreateEtatComponent } from './user-home-page/create-etat/create-etat.component';
 @NgModule({
@@ -70,6 +74,7 @@ import { CreateEtatComponent } from './user-home-page/create-etat/create-etat.co
     UserSettingComponent,
     ProjectSettingComponent,
     ProjetParametresComponent,
+    ModifyTaskComponent,
     ModeAffichageComponent,
     CreateEtatComponent,
   ],
@@ -92,6 +97,8 @@ import { CreateEtatComponent } from './user-home-page/create-etat/create-etat.co
     MatCardModule,
     CdkDropList,
     CdkDrag,
+    MatCheckboxModule,
+    
   ],
   providers: [
     { provide: MatDialogRef, useValue: {} },

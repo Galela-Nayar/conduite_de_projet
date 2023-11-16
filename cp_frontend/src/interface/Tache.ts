@@ -1,10 +1,12 @@
-interface Tache {
+export interface Tache {
     id: string;
     nom: string;
-    Priorite: Int16Array;
-    Ponderation: Int16Array;
-    Statut: string;
+    priorite: Int16Array;
+    ponderation: Int16Array;
+    statutTerminer: boolean;
     limite: Date;
+    membreAttribue: string[];
+    [key:string]:any;
     
   }
 

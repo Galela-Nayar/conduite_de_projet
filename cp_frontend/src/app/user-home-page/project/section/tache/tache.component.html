@@ -1,8 +1,14 @@
 <mat-card class="card-custom-background">
     <mat-card-content>
         <div class="section-entry">
-            <p>{{ tache?.nom }}</p>
-            <app-tache-setting [tacheId]="tacheId" [sectionId]="sectionId"></app-tache-setting>
+            <div class="container">
+                <p>{{ tache.nom }}</p>
+                <div class="settings-and-checkbox">
+                    <app-tache-setting [tacheId]="tacheId" [sectionId]="sectionId" [projetId]="projetId"></app-tache-setting>
+                    <mat-checkbox [checked]="tache.statutTerminer" (change)="swapStatut()">
+                    </mat-checkbox>
+                </div>
+            </div>
         </div>
     </mat-card-content>
 </mat-card>
