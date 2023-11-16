@@ -1,7 +1,15 @@
-<div  class="modal" [ngStyle]="contextMenuStyle" >
-    <div class="modal-content">
-      <input [(ngModel)]="nom" type="text" placeholder="Nom section...">
-      <button (click)="onButtonClick()">creer</button>
-      <button class="close-button" (click)="onNoClick()">X</button>
-    </div>
+<div class="create-section-container">
+  <h1>Créer une section</h1>
+  <div class="form-row">
+    <a>Nom de la section</a>
+    <input [(ngModel)]="nom" type="text" placeholder="Nom section...">
   </div>
+  <div class="form-row">
+    <a>Est un état</a>
+    <input type="checkbox" [(ngModel)]="estEtat">
+  </div>
+  <div class="form-row">
+    <button (click)="onButtonClick()">Créer</button>
+    <button class="close-button" (click)="onNoClick()">X</button>
+  </div>
+</div>

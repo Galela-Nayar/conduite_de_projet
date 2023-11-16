@@ -4,6 +4,7 @@ export interface Section {
     taches: string[];
     [key:string]:any;
     
+    estEtat: boolean;
   }
 
 export default Section

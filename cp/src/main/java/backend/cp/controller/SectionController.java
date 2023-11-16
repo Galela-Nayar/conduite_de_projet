@@ -27,8 +27,9 @@ public class SectionController {
     }
 
     @GetMapping("/create")
-    public ResponseEntity<String> createSection(@RequestParam String name) {
-        return ResponseEntity.ok(sectionService.createSection(name));
+    public ResponseEntity<String> createSection(@RequestParam String name, @RequestParam Boolean estEtat) {
+        System.out.println("etat ? " + estEtat);
+        return ResponseEntity.ok(sectionService.createSection(name, estEtat));
     }
 
     @GetMapping("/add-tache")
@@ -45,6 +46,14 @@ public class SectionController {
     @GetMapping("/all")
     public List<Section> getAllSections() {
         return sectionService.getAllSections();
+    }
+
+
+    //Renvoi le nom de la section à partir de l'id (of course)
+    @GetMapping("/getNom")
+    public String getNom(@RequestParam String sectionId)
+    {
+        return sectionService.getNom(sectionId);
     }
 
     @GetMapping("/removeSection")
@@ -73,6 +82,13 @@ public class SectionController {
     @PutMapping("/updateTaches")
     public ResponseEntity<String> updateTaches(@RequestParam String id, @RequestParam ArrayList<String> taches){
         sectionService.updateTaches(id, taches);
+        return ResponseEntity.ok("");
+    }
+    
+    @PutMapping("/updateEstEtat")
+    public ResponseEntity<String> updateEstEtat(@RequestParam String id, @RequestParam Boolean estEtat)
+    {
+        sectionService.updateEstEtat(id, estEtat);
         return ResponseEntity.ok("");
     }
 

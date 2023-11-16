@@ -1,3 +1,4 @@
+
 <div class="container" style="border: 2px solid rgb(63, 63, 63); height: 100%">
   <!-- Petit encadré avec texte -->
   <div class="row" style="border: 2px solid gray">
@@ -5,25 +6,53 @@
       <div class="alert alert-primary" role="alert">
         <h1 class="text-center">{{ projet?.nom }}</h1>
       </div>
+      <!-- Ici c'est le mode d'affichage du projet-->
+      <app-mode-affichage (affichageChange)="handleAffichageChange($event)"></app-mode-affichage>
     </div>
   </div>
 
-  <div
-    cdkDropList
-    cdkDropListOrientation="horizontal"
-    class="section-list"
-    (cdkDropListDropped)="drop($event)"
-  >
-    <div cdkDrag style="width: 300px;" *ngFor="let section of sections">
-      <app-section [projetId]="projetId" [sectionId]="section"></app-section>
-    </div>
-    <app-create-section *ngIf="showCreateSection"></app-create-section>
-    <button
-      (click)="onPlusClick($event)"
-      class="app-section table-style"
-      *ngIf="id"
+  <!-- Affichage en mode Kanban -->
+  <div *ngIf="modeAffichage === 'Kanban'">
+    <div
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      class="section-list"
+      (cdkDropListDropped)="drop($event)"
     >
-      +
-    </button>
+      <div cdkDrag *ngFor="let section of sections">
+        <app-section [sectionId]="section"></app-section>
+      </div>
+      <app-create-section *ngIf="showCreateSection"></app-create-section>
+      <button
+        (click)="onPlusClickSection($event)"
+        class="app-section table-style"
+        *ngIf="id"
+      >
+        +
+      </button>
+    </div>
+  </div>
+
+
+  <!-- Affichage en mode scrum -->
+  <div *ngIf="modeAffichage === 'Scrum'">
+    <div
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      class="section-list"
+      (cdkDropListDropped)="dropEtat($event)"
+    >
+      <div cdkDrag *ngFor="let etat of etats">
+        <app-section [sectionId]="etat"></app-section>
+      </div>
+      <app-create-etat *ngIf="showCreateSection"></app-create-etat>
+      <button
+        (click)="onPlusClickEtat($event)"
+        class="app-section table-style"
+        *ngIf="id"
+      >
+        +
+      </button>
+    </div>
   </div>
 </div>
