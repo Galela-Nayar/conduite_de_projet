@@ -40,7 +40,7 @@
       cdkDropList
       cdkDropListOrientation="horizontal"
       class="section-list"
-      (cdkDropListDropped)="drop($event)"
+      (cdkDropListDropped)="dropEtat($event)"
     >
       <div cdkDrag *ngFor="let etat of etats">
         <app-section [sectionId]="etat"></app-section>

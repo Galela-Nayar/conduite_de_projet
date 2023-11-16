@@ -134,6 +134,23 @@ export class ProjectComponent implements OnDestroy {
       });
   }
 
+
+  dropEtat(event: CdkDragDrop<string[]>) {
+    const v1 = this.etats[event.previousIndex];
+    const v2 = this.etats[event.currentIndex];
+    let pi: number = this.sections.indexOf(v1);
+    let ci: number = this.sections.indexOf(v2);
+    moveItemInArray(this.sections, pi, ci);
+    this.http
+      .put(
+        `http://localhost:8080/projets/updateSections?id=${this.projetId}&sections=${this.sections}`,
+        {}
+      )
+      .subscribe((response) => {
+        this.observableService.notifySection();
+      });
+  }
+
   //On appelle cette fonction à chaque fois que le mode d'affichage est changé
   handleAffichageChange(nouvelAffichage: string): void {   
     /*Je fais comme ca au lieu de juste recup la valeur dans la bdd, parce que j'ai galéré avec le delire
