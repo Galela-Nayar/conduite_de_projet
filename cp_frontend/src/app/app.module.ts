@@ -51,6 +51,9 @@ import { ModifyTaskComponent } from './user-home-page/project/section/tache/tach
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ModeAffichageComponent } from './user-home-page/project/mode-affichage/mode-affichage.component';
 import { CreateEtatComponent } from './user-home-page/create-etat/create-etat.component';
+import { ListProjetComponent } from './user-home-page/list-projet/list-projet.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,6 +80,7 @@ import { CreateEtatComponent } from './user-home-page/create-etat/create-etat.co
     ModifyTaskComponent,
     ModeAffichageComponent,
     CreateEtatComponent,
+    ListProjetComponent,
   ],
   imports: [
     BrowserModule,
@@ -98,7 +102,7 @@ import { CreateEtatComponent } from './user-home-page/create-etat/create-etat.co
     CdkDropList,
     CdkDrag,
     MatCheckboxModule,
-    
+    MatGridListModule,
   ],
   providers: [
     { provide: MatDialogRef, useValue: {} },
