@@ -3,6 +3,7 @@ package backend.cp.modele;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import ch.qos.logback.core.pattern.color.BoldBlueCompositeConverter;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -16,9 +17,11 @@ public class Section {
     private String id = UUID.randomUUID().toString();
     private String nom;
     private List<String> taches = new ArrayList<>();
+    private Boolean estEtat;
 
-    public Section(String nom){
+    public Section(String nom, Boolean estEtat){
         this.nom = nom;
+        this.estEtat = estEtat;
     }
 
     public void addTache(String tacheId) {

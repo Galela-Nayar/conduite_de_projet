@@ -1,11 +1,13 @@
 package backend.cp.service;
 
+import backend.cp.modele.Projet;
 import backend.cp.modele.Section;
 import backend.cp.repository.SectionRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,8 +32,8 @@ public class SectionService {
             sectionRepository.save(section);
         }
     }
-    public String createSection(String name) {
-        Section section = new Section(name);
+    public String createSection(String name, boolean estEtat) {
+        Section section = new Section(name, estEtat);
         sectionRepository.save(section);
         return section.getId();
     }
@@ -83,5 +85,17 @@ public class SectionService {
         Section sc = this.getSection(id);
         sc.setNom(nom);
         this.sectionRepository.save(sc);
+    }
+
+    public void updateEstEtat(String id, Boolean estEtat){
+        Section sc = this.getSection(id);
+        sc.setEstEtat(estEtat);
+        this.sectionRepository.save(sc);
+    }
+
+    public String getNom(String id)
+    {
+        Section sc = this.getSection(id);
+        return sc.getNom();
     }
 }

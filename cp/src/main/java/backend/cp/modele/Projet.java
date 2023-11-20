@@ -30,6 +30,7 @@ public class Projet {
     private String description; // Description du projet, texte ou référence à des fichiers
     private Date dateButtoire; // Date d'échéance au format souhaité
     private Map<Integer, String> droitUtilisateur = new HashMap<>(); // Gestion des droits des utilisateurs
+    private String modeAffichage; //L'etat du projet (En cours, en pause, terminé ...)
     
     public void addSection(String section) {
         this.sections.add(section);

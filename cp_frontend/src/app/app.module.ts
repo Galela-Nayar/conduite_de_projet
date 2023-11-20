@@ -49,6 +49,8 @@ import { ProjectSettingComponent } from './user-home-page/lateral-user-home-menu
 import { ProjetParametresComponent } from './user-home-page/projet-parametres/projet-parametres.component';
 import { ModifyTaskComponent } from './user-home-page/project/section/tache/tache-setting/modify-task/modify-task.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ModeAffichageComponent } from './user-home-page/project/mode-affichage/mode-affichage.component';
+import { CreateEtatComponent } from './user-home-page/create-etat/create-etat.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -72,7 +74,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     UserSettingComponent,
     ProjectSettingComponent,
     ProjetParametresComponent,
-    ModifyTaskComponent
+    ModifyTaskComponent,
+    ModeAffichageComponent,
+    CreateEtatComponent,
   ],
   imports: [
     BrowserModule,

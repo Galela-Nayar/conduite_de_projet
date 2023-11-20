@@ -1,0 +1,6 @@
+<div>
+    Affichage :
+    <select [(ngModel)]="affichageActuel" (ngModelChange)="changerAffichage()">
+      <option *ngFor="let option of options" [value]="option">{{ option }}</option>
+    </select>
+</div>

@@ -6,8 +6,9 @@ export interface Project {
     sections: any[];
     taches: any[];
     dateButtoire: Date;
-    createur: string;
+    modeAffichage: string;
     [key:string]:any;
+    createur: string;
   }
 
 
