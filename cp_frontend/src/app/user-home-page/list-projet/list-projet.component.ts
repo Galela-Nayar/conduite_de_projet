@@ -27,29 +27,23 @@ export class ListProjetComponent implements OnInit {
     const id = this.route.parent?.snapshot.paramMap.get('id');
     if (id !== null && id != undefined) {
       this.id = id;
-      this.projectSubscription = this.projetService
-        .getObservableProjet()
-        .subscribe((response) => {
-          this.http
-            .get<any[]>(
-              `http://localhost:8080/utilisateurs/projects?id=${this.id}`
-            )
-            .subscribe((projects_id) => {
-              console.log(projects_id);
-              if (projects_id != null) this.projects_id = projects_id;
-              this.projects_id.forEach((project) => {
-                this.http
-                  .get<Project>(
-                    `http://localhost:8080/projets/projet?id=${project}`
-                  )
-                  .subscribe((projectData: Project) => {
-                    if (projectData != null) {
-                      this.projets.push(projectData);
-                    }
-                    console.log(projectData);
-                  });
+      this.http
+        .get<any[]>(`http://localhost:8080/utilisateurs/projects?id=${this.id}`)
+        .subscribe((projects_id) => {
+          console.log(projects_id);
+          if (projects_id != null) this.projects_id = projects_id;
+          this.projects_id.forEach((project) => {
+            this.http
+              .get<Project>(
+                `http://localhost:8080/projets/projet?id=${project}`
+              )
+              .subscribe((projectData: Project) => {
+                if (projectData != null) {
+                  this.projets.push(projectData);
+                }
+                console.log(projectData);
               });
-            });
+          });
         });
     }
   }
