@@ -19,4 +19,13 @@ public class Equipe {
 
     private List<String> colaborateurs; 
 
+    public Equipe() {
+        // Constructeur par défaut nécessaire pour MongoDB
+    }
+
+    public Equipe(String name, List<String> colaborateurs) {
+        this.name = name;
+        this.colaborateurs = colaborateurs;
+    }
+
 }
