@@ -31,7 +31,6 @@ public class TacheController {
 
     @GetMapping("/setDateLimite")
     public String setDateLimite(@RequestParam String tacheId, @RequestParam @DateTimeFormat(pattern = "dd-MM-yyyy") Date dateLimite) {
-        System.out.println("yeyeyyeye");
         String reponse = tacheService.setDateLimite(tacheId, dateLimite);
         return reponse;
     }

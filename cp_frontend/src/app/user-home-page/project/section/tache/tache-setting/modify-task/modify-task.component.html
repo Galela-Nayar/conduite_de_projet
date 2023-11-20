@@ -1,62 +1,87 @@
 <div *ngIf="tache" class="container">
-    <div class="header">
-        <h2>
-            <div style="display: flex; align-items: baseline; margin-bottom: 15px;">
-                <h2>Nom: </h2>
-                <span style="padding-left: 10px; color: white; font-size: 1.7em; font-weight:1800;">{{ tache.nom }}</span>
-            </div>
-            <button *ngIf="!editingNom" (click)="startEditingNom()" class="create-button">
-                <mat-icon class="create-icon">create</mat-icon>
-                {{ tache.nom }}
-            </button>
-        </h2>
-    </div>
-    <div *ngIf="editingNom">
-        <form [formGroup]="sectionForm" (ngSubmit)="saveNomChanges()">
-            <input formControlName="nom" placeholder="Nouveau nom" />
-            <div class="button-container">
-                <button type="submit">Enregistrer</button>
-                <button type="button" (click)="cancelEditing()">Annuler</button>
-            </div>
-        </form>
-    </div>
-    <hr>
-    <div>
-        Passer le statut de cette tâche à terminé
-        <mat-checkbox [checked]="tache.statutTerminer" (change)="swapStatut()"></mat-checkbox>
-    </div>
-    <hr>
+  <div class="header">
+    <h2>
+      <div style="display: flex; align-items: baseline; margin-bottom: 15px">
+        <h2>Nom:</h2>
+        <span
+          style="
+            padding-left: 10px;
+            color: white;
+            font-size: 1.7em;
+            font-weight: 1800;
+          "
+          >{{ tache.nom }}</span
+        >
+      </div>
+      <button
+        *ngIf="!editingNom"
+        (click)="startEditingNom()"
+        class="create-button"
+      >
+        <mat-icon class="create-icon">create</mat-icon>
+        {{ tache.nom }}
+      </button>
+    </h2>
+  </div>
+  <div *ngIf="editingNom">
+    <form [formGroup]="sectionForm" (ngSubmit)="saveNomChanges()">
+      <input formControlName="nom" placeholder="Nouveau nom" />
+      <div class="button-container">
+        <button type="submit">Enregistrer</button>
+        <button type="button" (click)="cancelEditing()">Annuler</button>
+      </div>
+    </form>
+  </div>
+  <hr />
+  <div>
+    Passer le statut de cette tâche à terminé
+    <mat-checkbox
+      [checked]="tache.statutTerminer"
+      (change)="swapStatut()"
+    ></mat-checkbox>
+  </div>
+  <div>
+    <p *ngIf="tache.dateLimite">
+      <mat-form-field>
+        Date de fin:
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="tache.dateLimite"
+          (dateInput)="onDateInputChange()"
+          placeholder="Date limite"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </p>
+  </div>
+  <hr />
 
-    <div>
-      <p>Collaborateurs inclu au projet</p>
-      <table class="table-style">
-        <tr class="table-row-style" *ngFor="let collaborateur of membreAttribue">
-          <td class="table-cell-style">
-            {{ collaborateur['userName'] }}
-          </td>
-          <td class="table-cell-button-style">
-            <button (click)="removeUtilisateur(collaborateur.id)">X</button>
-          </td>
-        </tr>
-      </table>
-        <p>Collaborateurs à inclure au projet</p>
-        <table class="table-style">
-          <tr class="table-row-style" *ngFor="let collaborateur of membreRestant">
-              <td class="table-cell-style">
-                  {{ collaborateur['userName'] }}
-              </td>
-              <td class="table-cell-button-style">
-                <button (click)="addUtilisateur(collaborateur.id)" class="up-button">
-                  <mat-icon>arrow_upward</mat-icon>
-                </button>
-              </td>
-          </tr>
-      </table>
-    </div>
-  
+  <div>
+    <p>Collaborateurs inclu au projet</p>
+    <table class="table-style">
+      <tr class="table-row-style" *ngFor="let collaborateur of membreAttribue">
+        <td class="table-cell-style">
+          {{ collaborateur["userName"] }}
+        </td>
+        <td class="table-cell-button-style">
+          <button (click)="removeUtilisateur(collaborateur.id)">X</button>
+        </td>
+      </tr>
+    </table>
+    <p>Collaborateurs à inclure au projet</p>
+    <table class="table-style">
+      <tr class="table-row-style" *ngFor="let collaborateur of membreRestant">
+        <td class="table-cell-style">
+          {{ collaborateur["userName"] }}
+        </td>
+        <td class="table-cell-button-style">
+          <button (click)="addUtilisateur(collaborateur.id)" class="up-button">
+            <mat-icon>arrow_upward</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>
-
-
-
-
-  
