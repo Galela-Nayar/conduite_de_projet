@@ -32,7 +32,7 @@ export class AgendaComponent implements AfterViewInit {
       headerToolbar: {
         left: 'prev,next today',
         center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay',
+        right: 'dayGridMonth',
       },
       initialDate: new Date(),
       initialView: 'dayGridMonth',
@@ -55,8 +55,18 @@ export class AgendaComponent implements AfterViewInit {
                   start: new Date(projectData.dateCreation),
                   end: new Date(projectData.dateButtoire),
                   allDay: false,
+                  color: 'green',
                 };
                 calendar.addEvent(event);
+                projectData.taches.forEach((tacheData) => {
+                  const event_2 = {
+                    title: 'tache: ' + tacheData.nom,
+                    end: new Date(tacheData.dateLimite),
+                    allDay: false,
+                    color: 'yellow',
+                  };
+                  calendar.addEvent(event_2);
+                });
               }
             });
         });
