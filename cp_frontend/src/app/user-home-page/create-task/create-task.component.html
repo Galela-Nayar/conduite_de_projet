@@ -1,14 +1,10 @@
-<!-- <div  class="modal" >
-    <div class="modal-content">
-      <input [(ngModel)]="nom" type="text" placeholder="Nom tâche...">
-      <button (click)="onButtonClick()">Créer</button>
-      <button class="close-button" (click)="onNoClick()">X</button>
-    </div>
-  </div> -->
-
 <div class="modal">
   <div class="modal-content">
     <input [(ngModel)]="nom" type="text" placeholder="Nom de la tâche..." />
+    <button (click)="onButtonClick()">Créer</button>
+    <button class="close-button" (click)="onNoClick()">X</button>
+  </div>
+  <div>
     <mat-form-field>
       <input
         matInput
@@ -19,7 +15,5 @@
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-    <button (click)="onButtonClick()">Créer</button>
-    <button class="close-button" (click)="onNoClick()">X</button>
   </div>
 </div>
