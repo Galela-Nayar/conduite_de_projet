@@ -41,7 +41,7 @@
     ></mat-checkbox>
   </div>
   <div>
-    <p *ngIf="tache.dateLimite">
+    <p>
       <mat-form-field>
         Date de fin:
         <input
@@ -49,7 +49,7 @@
           [matDatepicker]="picker"
           [(ngModel)]="tache.dateLimite"
           (dateInput)="onDateInputChange()"
-          placeholder="Date limite"
+          placeholder=""
         />
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
