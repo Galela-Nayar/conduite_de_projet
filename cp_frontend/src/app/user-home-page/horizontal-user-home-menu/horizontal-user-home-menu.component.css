@@ -1,63 +1,65 @@
 /* horizontal-user-home-menu.component.css */
+
 :host {
-    display: inline-block;
-    line-height: 0;
-    width: 100%;
-    height: 60px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #333; /* Change this to your preferred color */
-
-    border-bottom: 2px solid;
-    border-image-source: linear-gradient(to right, rgba(122, 243, 9, 0.664),rgba(218, 255, 9, 0.712));
-    border-image-slice: 1;
-  }
-  
-  :host a {
-    display: inline-block;
-    line-height: 0;
-    color: #f2f2f2; /* Change this to your preferred color */
-    text-align: center;
-    padding: 0px;
-    text-decoration: none;
-  }
-  
-  :host a:hover {
-    background-color: #ddd; /* Change this to your preferred color */
-    color: black; /* Change this to your preferred color */
-  }
-
-  .app-horizontal-user-home-menu {
-    border: 2px solid #444; /* Close to the original background color */
-    background: linear-gradient(to bottom, #333, #444); /* Gradient from original background color to border color */
+  display: inline-block;
+  line-height: 0;
+  width: 100%;
+  height: 60px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #333;
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    to right,
+    rgba(122, 243, 9, 0.664),
+    rgba(218, 255, 9, 0.712)
+  );
+  border-image-slice: 1;
 }
 
-/* horizontal-user-home-menu.component.css */
 .horizontal-menu {
-  height: 60px; /* Ajustez cette valeur en fonction de vos besoins */
-  width: 100%; /* Ajustez cette valeur en fonction de vos besoins */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 0 20px; /* Ajustez cette valeur pour définir l'espacement des éléments */
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  color: #f2f2f2;
+  text-decoration: none;
 }
 
 .menu-icon {
-  width: 60px;
-  height: 100%;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
+  margin-right: 20px; /* Ajustez cette valeur pour définir l'espacement des icônes */
 }
 
 .dropdown {
   position: relative;
-  display: inline-block;
-  float: right;
+  display: flex;
+  align-items: center;
+}
+
+.dropbtn {
+  cursor: pointer;
+  height: 40px;
+  margin-left: 20px; /* Ajustez cette valeur pour définir l'espacement du bouton */
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
+  top: 100%;
   right: 0;
   background-color: #f9f9f9;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -68,15 +70,10 @@
   display: block;
 }
 
-.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
 
 .dropdown:hover .dropdown-content {
   display: block;
-}
-
-/* ... le reste de votre CSS ... */
-
-.dropbtn {
-  cursor: pointer;
-  height: 60px; /* Ajoutez cette ligne */
 }

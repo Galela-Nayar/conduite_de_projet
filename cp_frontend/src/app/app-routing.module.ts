@@ -16,6 +16,7 @@ import { TacheSettingComponent } from './user-home-page/project/section/tache/ta
 import { UserSettingComponent } from './user-home-page/user-setting/user-setting.component';
 import { ProjectSettingComponent } from './user-home-page/lateral-user-home-menu/project-setting/project-setting.component';
 import { ProjetParametresComponent } from './user-home-page/projet-parametres/projet-parametres.component';
+import { AgendaComponent } from './user-home-page/agenda/agenda.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,7 @@ const routes: Routes = [
         path: 'parametres-project/:projectId',
         component: ProjetParametresComponent,
       },
+      { path: 'agenda', component: AgendaComponent },
       {
         path: 'project/:projectId',
         component: ProjectComponent,

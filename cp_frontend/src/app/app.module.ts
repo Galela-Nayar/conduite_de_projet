@@ -53,6 +53,7 @@ import { ModeAffichageComponent } from './user-home-page/project/mode-affichage/
 import { CreateEtatComponent } from './user-home-page/create-etat/create-etat.component';
 import { ListProjetComponent } from './user-home-page/list-projet/list-projet.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { AgendaComponent } from './user-home-page/agenda/agenda.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     ModeAffichageComponent,
     CreateEtatComponent,
     ListProjetComponent,
+    AgendaComponent,
   ],
   imports: [
     BrowserModule,
