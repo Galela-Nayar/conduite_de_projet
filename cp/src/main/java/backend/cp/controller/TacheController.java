@@ -4,9 +4,11 @@ import backend.cp.modele.Tache;
 import backend.cp.modele.Utilisateur;
 import backend.cp.service.TacheService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -27,6 +29,12 @@ public class TacheController {
         return reponse;
     }
 
+    @GetMapping("/setDateLimite")
+    public String setDateLimite(@RequestParam String tacheId, @RequestParam @DateTimeFormat(pattern = "dd-MM-yyyy") Date dateLimite) {
+        String reponse = tacheService.setDateLimite(tacheId, dateLimite);
+        return reponse;
+    }
+
     @GetMapping("/all")
     public List<Tache> getAllTaches() {
         return tacheService.getAllTaches();
@@ -37,6 +45,7 @@ public class TacheController {
         Tache tache = tacheService.getTache(id);
         return tache;
     }
+
 
     @GetMapping("/removeTache")
     public ResponseEntity<String>removeTache(@RequestParam String id){
@@ -81,4 +90,6 @@ public class TacheController {
         System.out.println("membreRestant start, return : " + ut);
         return ut;
     }
+
+
 }
