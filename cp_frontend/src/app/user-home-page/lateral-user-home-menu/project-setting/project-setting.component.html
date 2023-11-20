@@ -1,3 +1,13 @@
-<div  class="modal" [ngStyle]="contextMenuStyle" >
+<!-- <div  class="modal" [ngStyle]="contextMenuStyle" >
     <div class="clickable" (click)="navigateToProjectSettings()">Paramètres du projet</div>
-</div>
+</div> -->
+
+<button mat-icon-button [matMenuTriggerFor]="menu">
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="navigateToProjectSettings()">
+    <mat-icon>create</mat-icon>
+    <span>Paramètres du projet</span>
+  </button>
+</mat-menu>

@@ -71,11 +71,4 @@ export class LateralUserHomeMenuComponent implements OnInit, OnDestroy {
     });
     return bl;
   }
-
-  onSettingClick(event: MouseEvent) {
-    this.mouseX = event.clientX;
-    this.mouseY = event.clientY;
-    this.showSetting = true;
-    this.cd.detectChanges();
-  }
 }
