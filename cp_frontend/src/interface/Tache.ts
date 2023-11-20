@@ -4,7 +4,7 @@ export interface Tache {
   priorite: Int16Array;
   ponderation: Int16Array;
   statutTerminer: boolean;
-  limite: Date;
+  dateLimite: Date;
   membreAttribue: string[];
   [key: string]: any;
 }

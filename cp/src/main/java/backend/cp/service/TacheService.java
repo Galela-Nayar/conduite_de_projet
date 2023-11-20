@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,6 +28,13 @@ public class TacheService {
         Tache tache = new Tache(nom);
         tacheRepository.save(tache);
         return tache.getId();
+    }
+
+    public String setDateLimite(String tacheId, Date dateLimite) {
+        Tache t = this.getTache(tacheId);
+        t.setDateLimite(dateLimite);
+        tacheRepository.save(t);
+        return t.toString();
     }
 
     public List<Tache> getAllTaches() {
