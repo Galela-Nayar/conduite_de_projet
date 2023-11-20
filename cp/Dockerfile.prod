@@ -1,0 +1,27 @@
+# Start with a base image containing Java runtime (Here we are using openjdk)
+FROM openjdk:17-jdk-slim as build
+
+
+# Set the current working directory inside the image
+WORKDIR /app
+
+# Copy the pom.xml file
+COPY ./pom.xml ./pom.xml
+
+# Build all dependencies for offline use
+RUN mvn dependency:go-offline -B
+
+# Copy the project source
+COPY ./src ./src
+
+# Package the application
+RUN mvn package -DskipTests
+
+# Use Alpine Linux due to its small size
+FROM openjdk:17-jre-slim
+
+# Copy the jar from the build stage
+COPY --from=build /app/target/*.jar /app.jar
+
+# Run the jar file 
+ENTRYPOINT ["java","-jar","/app.jar"]

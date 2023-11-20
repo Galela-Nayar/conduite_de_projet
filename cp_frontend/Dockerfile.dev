@@ -1,0 +1,24 @@
+# Start with a base image containing Node.js runtime
+FROM node:latest
+
+# Set the current working directory inside the image
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the code
+COPY /tsconfig.app.json /app
+COPY /tsconfig.json /app
+COPY /angular.json /app
+COPY /tsconfig.spec.json /app
+COPY /src /app/src
+
+# Make port 3000 available to the world outside this container
+EXPOSE 4200
+
+# Run the application
+CMD ["npm", "run", "start"]
