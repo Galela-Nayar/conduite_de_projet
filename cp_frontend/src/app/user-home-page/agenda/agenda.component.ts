@@ -51,10 +51,9 @@ export class AgendaComponent implements AfterViewInit {
           this.http
             .get<Project>(`http://localhost:8080/projets/projet?id=${project}`)
             .subscribe((projectData: Project) => {
-              console.log('on essaye');
               if (projectData != null) {
                 const event = {
-                  title: projectData.nom,
+                  title: 'Projet: ' + projectData.nom,
                   start: new Date(projectData.dateCreation), // Date de début de l'événement
                   end: new Date(projectData.dateButtoire), // Date de fin de l'événement (peut être la même que la date de début pour un événement ponctuel)
                   allDay: false, // Définir sur false pour spécifier que l'événement ne dure pas toute la journée

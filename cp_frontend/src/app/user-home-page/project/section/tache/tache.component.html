@@ -3,9 +3,9 @@
     <div class="section-entry">
       <div class="container" *ngIf="tache">
         <p>{{ tache.nom }}</p>
-        <p *ngIf="dateLimite">
-          Date de fin: {{ dateLimite | date : "dd-MM-yyyy" }}
-        </p>
+        <div *ngIf="this.tache.dateLimite">
+          Date de fin: {{ this.tache.dateLimite | date : "dd-MM-yyyy" }}
+        </div>
         <div class="settings-and-checkbox">
           <app-tache-setting
             [tacheId]="tacheId"

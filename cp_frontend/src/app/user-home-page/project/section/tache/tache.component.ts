@@ -44,7 +44,7 @@ export class TacheComponent {
             .get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`)
             .subscribe((response) => {
               this.tache = response;
-              this.dateLimite = this.tache.dateLimite;
+              this.dateLimite = new Date(this.tache.dateLimite);
               // Formater la date selon le modèle "JJ-MM-AA"
               const formattedDate = this.dateLimite.toLocaleDateString(
                 'fr-FR',
