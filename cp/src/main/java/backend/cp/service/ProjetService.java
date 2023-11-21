@@ -50,9 +50,9 @@ public class ProjetService {
 
     private List<String> setSection() {
         ArrayList<String> sections = new ArrayList<>();
-        sections.add(sectionService.createSection("a faire", false));
-        sections.add(sectionService.createSection("en cours", false));
-        sections.add(sectionService.createSection("terminé", false));
+        sections.add(sectionService.createSection("A faire", false));
+        sections.add(sectionService.createSection("En cours", false));
+        sections.add(sectionService.createSection("Terminé", false));
         return sections;
     }
 

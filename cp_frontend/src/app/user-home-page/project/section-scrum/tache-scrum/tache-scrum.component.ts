@@ -1,17 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Subscription, mergeMap } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
 import Tache from 'src/interface/Tache';
-
+import Utilisateur from 'src/interface/Utilisateur';
 
 @Component({
-  selector: 'app-tache',
-  templateUrl: './tache.component.html',
-  styleUrls: ['./tache.component.css']
+  selector: 'app-tache-scrum',
+  templateUrl: './tache-scrum.component.html',
+  styleUrls: ['./tache-scrum.component.css']
 })
-export class TacheComponent {
+export class TacheScrumComponent {
   id: String | null = '';
   @Input() projetId: String = '';
   @Input()
@@ -19,12 +19,12 @@ export class TacheComponent {
   @Input()
   tacheId: string = '';
   tache!: Tache | null | undefined;
+  membreAttribue!: Utilisateur[];
   mouseX: number = 0;
   mouseY: number = 0;
   showSetting = false;
   taskSubscription!: Subscription;
   
-
   constructor(private http: HttpClient, private route: ActivatedRoute,
     private observableService: ObservableService,
      private observerService: ObservableService,
@@ -40,21 +40,10 @@ export class TacheComponent {
           this.http.get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`).subscribe((response) => {
               this.tache = response;
             });
-        });
+      });
+      this.http.get<Utilisateur[]>(`http://localhost:8080/taches/membreAttribue?id=${this.tacheId}`).subscribe((data: Utilisateur[]) => {
+        this.membreAttribue = data;
+      })
     }
-  }
-
-  swapStatut(){
-    this.http.get(`http://localhost:8080/taches/swapStatut?id=${this.tacheId}`, {responseType:"text"}).
-    subscribe((tacheData) => {
-      if(this.tache?.statutTerminer) this.tache.statutTerminer = false;
-      if(this.tache?.statutTerminer == false) this.tache.statutTerminer = true;
-      this.observerService.notifyTask();
-      this.cd.detectChanges();
-    });
-  }
-
-  onSettingClick(event: MouseEvent) {
-    this.cd.detectChanges();
   }
 }

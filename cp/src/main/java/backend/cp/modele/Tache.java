@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,19 +15,29 @@ import java.util.UUID;
 @Document(collection = "tache")
 public class Tache {
     @Id
-    private String id = UUID.randomUUID().toString();
+    private String id;
     private String nom = "";
-    private List<String> membreAttribue = new ArrayList<>();
-    private List<String> equipeAttitre = new ArrayList<>();
+    private List<String> membreAttribue;
+    private List<String> equipeAttitre;
     private int priorite;
     private int ponderation;
-    private boolean statutTerminer = false;
+    private boolean statutTerminer;
     private Date dateLimite;
-    private List<String> description = new ArrayList<>();
-    private List<Etiquette> etiquettes = new ArrayList<>();
+    private Date dateCreation;
+    private List<String> description;
+    private List<Etiquette> etiquettes;
  
     public Tache(String nom) {
+        this.id  = UUID.randomUUID().toString();
         this.nom = nom;
+        this.membreAttribue  = new ArrayList<>();
+        this.equipeAttitre = new ArrayList<>();
+        this.priorite = 0;
+        this.ponderation = 0;
+        this.statutTerminer = false;
+        this.description = new ArrayList<>();
+        this.etiquettes = new ArrayList<>();
+        this.dateCreation = java.sql.Date.valueOf(LocalDate.now());
     }
 
     public void swapStatut() {

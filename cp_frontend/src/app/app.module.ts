@@ -51,6 +51,8 @@ import { ModifyTaskComponent } from './user-home-page/project/section/tache/tach
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ModeAffichageComponent } from './user-home-page/project/mode-affichage/mode-affichage.component';
 import { CreateEtatComponent } from './user-home-page/create-etat/create-etat.component';
+import { SectionScrumComponent } from './user-home-page/project/section-scrum/section-scrum.component';
+import { TacheScrumComponent } from './user-home-page/project/section-scrum/tache-scrum/tache-scrum.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,6 +79,8 @@ import { CreateEtatComponent } from './user-home-page/create-etat/create-etat.co
     ModifyTaskComponent,
     ModeAffichageComponent,
     CreateEtatComponent,
+    SectionScrumComponent,
+    TacheScrumComponent,
   ],
   imports: [
     BrowserModule,

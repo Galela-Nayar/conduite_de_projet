@@ -1,0 +1,31 @@
+<div class="trr" style="margin: 0px; padding: 0px;">
+    <div class="cell">
+        {{ tache?.nom }}
+    </div>
+    <div class="cell">
+        <div *ngIf="membreAttribue == null || membreAttribue == undefined || membreAttribue.length == 0">
+            -
+        </div>
+        <div *ngFor="let membre of membreAttribue">
+            {{ membre.nom }}
+        </div>
+    </div>
+    <div  class="cell" [ngClass]="{'bg-success': tache?.statutTerminer, 'bg-warning': !tache?.statutTerminer}">
+        {{ tache?.statutTerminer ? 'Terminé' : 'En Cours' }}
+    </div>
+    <div class="cell">
+        {{ tache?.priorite }}
+    </div>
+    <div class="cell">
+        {{ tache?.ponderation }}
+    </div>
+    <div class="cell">
+        {{ tache?.dateCreation | date }}
+    </div>
+    <div class="cell">
+        <div *ngIf="tache?.dateLimite == null || tache?.dateLimite == undefined">
+            -
+        </div>
+        {{ tache?.dateLimite | date }}
+    </div>
+</div>
