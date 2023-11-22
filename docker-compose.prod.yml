@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  frontend:
+    container_name: conduite-projet_frontend
+    build:
+      context: frontend
+      dockerfile: Dockerfile.prod
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+  backend:
+    container_name: conduite-projet_backend
+    build: 
+      context: backend
+      dockerfile: Dockerfile.
+    ports:
+      - "3000:80"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/
+      - MONGO_DB=PROJESTDB
+    volumes:
+      - ./backend/src:/app/src
+    depends_on:
+      - mongodb
+
+  mongodb:
+    container_name: conduite-projet-mongo
+    image: mongo
+    environment:
+      - MONGO_INITDB_DATABASE=td7
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
