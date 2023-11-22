@@ -1,17 +1,12 @@
-# Start with a base image containing Java runtime (Here we are using openjdk)
-FROM openjdk:latest
-
-
+# Start with a base image containing Java runtime and Maven
+FROM maven:3.8.4-openjdk-17
 WORKDIR /app
-
-# Make port 8083 available to the world outside this container
-EXPOSE 8083
-
-# The application's jar file
-ARG JAR_FILE=target/*.jar
-
-# Add the application's jar to the container
-ADD ${JAR_FILE} app.jar
-
+COPY ./pom.xml ./pom.xml
+# Resolve all dependencies
+RUN mvn dependency:go-offline -B
+COPY ./src ./src
+RUN mvn clean package -DskipTests
+# Make port 8080 available to the world outside this container
+EXPOSE 8080
 # Run the jar file 
-CMD ["java","-jar","/app.jar"]
+ENTRYPOINT ["java","-jar","target/cp-0.0.1-SNAPSHOT.jar"]
