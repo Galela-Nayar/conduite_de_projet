@@ -1,0 +1,14 @@
+<h2>Mes Projets:</h2>
+<div class="projects-container">
+  <div
+    class="project-card"
+    *ngFor="let projet of projets"
+    [routerLink]="['/', id, 'project', projet.id]"
+  >
+    <img src="\assets\image_projet.jpg" alt="{{ projet.nom }}" />
+    <div class="project-details">
+      <a>{{ projet.nom }}</a>
+      <p>{{ projet.description }}</p>
+    </div>
+  </div>
+</div>

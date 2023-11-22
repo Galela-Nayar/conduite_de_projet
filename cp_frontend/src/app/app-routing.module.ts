@@ -16,41 +16,50 @@ import { TacheSettingComponent } from './user-home-page/project/section/tache/ta
 import { UserSettingComponent } from './user-home-page/user-setting/user-setting.component';
 import { ProjectSettingComponent } from './user-home-page/lateral-user-home-menu/project-setting/project-setting.component';
 import { ProjetParametresComponent } from './user-home-page/projet-parametres/projet-parametres.component';
-
-
-
+import { TacheScrumComponent } from './user-home-page/project/section-scrum/tache-scrum/tache-scrum.component';
+import { AgendaComponent } from './user-home-page/agenda/agenda.component';
 
 const routes: Routes = [
-  { path: '', component: HomePageComponent, 
-    children:[
+  {
+    path: '',
+    component: HomePageComponent,
+    children: [
       { path: 'register', component: RegisterComponent },
-      { path: 'log-in', component: LogInComponent},
-      { path: '', redirectTo:'log-in', pathMatch:'full'}
-    ] },
-  { path: ':id', 
+      { path: 'log-in', component: LogInComponent },
+      { path: '', redirectTo: 'log-in', pathMatch: 'full' },
+    ],
+  },
+  {
+    path: ':id',
     component: UserHomePageComponent,
     children: [
-      { path: 'home', component: UserHomeComponent},
+      { path: 'home', component: UserHomeComponent },
       { path: 'create-project', component: CreateProjectComponent },
       { path: 'user-setting', component: UserSettingComponent },
-      { path: 'parametres-project/:projectId', component: ProjetParametresComponent},
+      { path: 'parametres-project/:projectId', component: ProjetParametresComponent, },
+      { path: 'agenda', component: AgendaComponent },
       { path: 'project/:projectId', component: ProjectComponent,
-        children:[
-          { path: 'create-section/:x/:y', component: CreateSectionComponent},
-          { path: ':sectionId', component: SectionComponent,
+          children: [
+          { path: 'create-section/:x/:y', component: CreateSectionComponent },
+          { path: 'KANBAN/:sectionId', component: SectionComponent,
             children:[
               { path: 'create-tache/:x/:y', component: CreateTaskComponent},
               { path: ':tacheId', component: TacheComponent},
+            ],
+          },
+          { path: 'SCRUM/:sectionId', component: SectionComponent,
+            children:[
+              { path: ':tacheId', component: TacheScrumComponent},
             ]
-          }
-        ] 
+          },
+        ],
       },
-    ]
+    ],
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
