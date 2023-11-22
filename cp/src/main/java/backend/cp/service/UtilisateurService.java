@@ -45,6 +45,12 @@ public class UtilisateurService {
         utilisateurRepository.save(utilisateur);
     }
 
+    public void setLogo(String id, byte[] logo) {
+        Utilisateur user = this.getUtilisateur(id);
+        user.setLogo_utilisateur(logo);
+        saveUtilisateur(user);
+    }
+
     public List<Utilisateur> getAllUtilisateurs() {
         return utilisateurRepository.findAll();
     }

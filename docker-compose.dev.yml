@@ -10,7 +10,7 @@ services:
     ports:
       - "4200:4200"
     volumes:
-      - ./frontend/src:/src
+      - ./cp_frontend:/app
     depends_on:
       - backend
   backend:
@@ -27,7 +27,7 @@ services:
       - MONGO_URI=mongodb://mongodb:27017/
       - MONGO_DB=PROJESTDB
     volumes:
-      - ./backend/src:/src
+      - ./cp/src:/app/src
     depends_on:
       - mongodb
 
