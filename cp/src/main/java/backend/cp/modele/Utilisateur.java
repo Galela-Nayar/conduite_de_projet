@@ -25,6 +25,7 @@ public class Utilisateur {
     private String userName;
     private List<String> listProjet = new ArrayList<>();
     private String bio;
+    private byte[] logo_utilisateur;
 
     public void addProjet(String id){
         listProjet.add(id);

@@ -5,6 +5,9 @@ import backend.cp.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Service
@@ -32,6 +35,12 @@ public class UtilisateurService {
         utilisateur.setPassword(password);
         utilisateur.setEmail(email);
         utilisateur.setBio("");
+        try {
+            byte[] imageBytes = Files.readAllBytes(Paths.get("./src/assets/default-profile-picture-avatar-png-green.png"));
+            utilisateur.setLogo_utilisateur(imageBytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         utilisateurRepository.save(utilisateur);
     }
