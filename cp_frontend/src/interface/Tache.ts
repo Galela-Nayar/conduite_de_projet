@@ -12,4 +12,4 @@ export interface Tache {
     
   }
 
-export default Tache
+export default Tache;

@@ -70,7 +70,6 @@ export class ProjectComponent implements OnDestroy {
                 this.sections = projectData.sections;
                 this.projet = projectData;
                 this.modeAffichage = this.projet.modeAffichage;
-                console.log('hehehehehe');
               });
           });
         this.sections.forEach((section) => {

@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -5,11 +6,10 @@ import { BehaviorSubject, Subscription, mergeMap } from 'rxjs';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
 import Tache from 'src/interface/Tache';
 
-
 @Component({
   selector: 'app-tache',
   templateUrl: './tache.component.html',
-  styleUrls: ['./tache.component.css']
+  styleUrls: ['./tache.component.css'],
 })
 export class TacheComponent {
   id: String | null = '';
@@ -23,22 +23,40 @@ export class TacheComponent {
   mouseY: number = 0;
   showSetting = false;
   taskSubscription!: Subscription;
-  
+  dateLimite!: Date;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute,
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
     private observableService: ObservableService,
-     private observerService: ObservableService,
-    
-     private cd: ChangeDetectorRef) {}
+    private observerService: ObservableService,
 
-  ngOnInit(){
-    console.log("tacheId: " + this.tacheId)
+    private cd: ChangeDetectorRef
+  ) {}
+
+  ngOnInit() {
+    console.log('tacheId: ' + this.tacheId);
     if (this.tacheId) {
       this.taskSubscription = this.observableService
         .getObservableTask()
         .subscribe((response) => {
-          this.http.get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`).subscribe((response) => {
+          this.http
+            .get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`)
+            .subscribe((response) => {
               this.tache = response;
+              this.dateLimite = new Date(this.tache.dateLimite);
+              // Formater la date selon le modèle "JJ-MM-AA"
+              const formattedDate = this.dateLimite.toLocaleDateString(
+                'fr-FR',
+                {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric',
+                }
+              );
+
+              // Mettre à jour la dateLimite avec la date formatée
+              this.dateLimite = new Date(formattedDate);
             });
         });
     }

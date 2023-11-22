@@ -14,8 +14,7 @@ export class UserSettingComponent implements OnInit {
   fields: { key: string, label: string, value: string, saved: boolean }[] = [];
   user!: Utilisateur;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
-
+  constructor(private route: ActivatedRoute, private http: HttpClient) { } 
   ngOnInit(): void {
     this.id = this.route.parent?.snapshot.paramMap.get('id');
     this.http.get<Utilisateur>(`http://localhost:8080/utilisateurs/user?id=${this.id}`).subscribe((data: Utilisateur) => {

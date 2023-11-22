@@ -5,6 +5,7 @@ import backend.cp.modele.Section;
 import backend.cp.modele.Utilisateur;
 import backend.cp.repository.ProjetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -18,18 +19,12 @@ public class ProjetService {
 
     @Autowired
     private final ProjetRepository projetRepository;
+private final ApplicationContext applicationContext;
 
     @Autowired
-    private final SectionService sectionService;
-
-    @Autowired
-    private final UtilisateurService utilisateurService;
-
-    @Autowired
-    public ProjetService(ProjetRepository projetRepository, SectionService sectionService, UtilisateurService utilisateurService) {
+    public ProjetService(ProjetRepository projetRepository, ApplicationContext applicationContext) {
         this.projetRepository = projetRepository;
-        this.sectionService = sectionService;
-        this.utilisateurService = utilisateurService;
+        this.applicationContext = applicationContext;
     }
 
     public String createProjet(String nom, String createur, Date date, boolean standardSection, String description, Date dateButtoire, String modeAffichage) {
@@ -49,6 +44,7 @@ public class ProjetService {
     }
 
     private List<String> setSection() {
+        SectionService sectionService = applicationContext.getBean(SectionService.class);
         ArrayList<String> sections = new ArrayList<>();
         sections.add(sectionService.createSection("A faire", false));
         sections.add(sectionService.createSection("En cours", false));
@@ -78,6 +74,8 @@ public class ProjetService {
 
     public List<String> getEtatId(String id)
     {
+
+        SectionService sectionService = applicationContext.getBean(SectionService.class);
         Projet pj = this.getProject(id);
         List<String> sections = pj.getSections();
         List<String> etats = new ArrayList<>();
@@ -92,6 +90,8 @@ public class ProjetService {
 
     public List<Section> getSectionNotEtat(String id)
     {
+
+        SectionService sectionService = applicationContext.getBean(SectionService.class);
         Projet pj = this.getProject(id);
         List<String> sections = pj.getSections();
         List<Section> sectionsPasEtat = new ArrayList<>();
@@ -155,6 +155,9 @@ public class ProjetService {
     }
 
     public void deleteProject(String id) {
+
+        UtilisateurService utilisateurService = applicationContext.getBean(UtilisateurService.class);
+        SectionService sectionService = applicationContext.getBean(SectionService.class);
         System.out.println("delete service : " + "start");
         Projet projet = this.getProject(id);
         for (String section_id : projet.getSections()) {
@@ -168,6 +171,8 @@ public class ProjetService {
     }
 
     public Utilisateur[] collaborateurs(String id) {
+        UtilisateurService utilisateurService = applicationContext.getBean(UtilisateurService.class);
+        
         System.out.println("collaborateurs service : " + "start");
         Projet projet = this.getProject(id);
         List<Utilisateur> usersList = new ArrayList<>();
@@ -181,6 +186,8 @@ public class ProjetService {
     }
 
     public boolean add_collaborateur(String id, String nom) {
+                UtilisateurService utilisateurService = applicationContext.getBean(UtilisateurService.class);
+
         if(utilisateurService.existUser(nom) | utilisateurService.existUserName(nom)){
             System.out.println("utilisateur exist");
             Projet pj = this.getProject(id);

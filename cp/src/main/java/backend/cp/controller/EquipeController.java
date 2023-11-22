@@ -4,18 +4,38 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import backend.cp.modele.Equipe;
+import backend.cp.repository.EquipeRepository;
 import backend.cp.service.EquipeService;
 
 @RestController
 @RequestMapping("/equipe")
 public class EquipeController {
 
+    @Autowired
+    private EquipeRepository equipeRepository;
+
+    @GetMapping
+    public List<Equipe> getAllEquipes() {
+        return equipeRepository.findAll();
+    }
+
+    @PostMapping
+    public Equipe createEquipe(@RequestBody Equipe equipe) {
+        return equipeRepository.save(equipe);
+    }
+    
+    
+    /* 
     @Autowired
     private EquipeService equipeService;
 
@@ -32,4 +52,5 @@ public class EquipeController {
         equipeService.createEquipe(name, color);
         return ResponseEntity.ok("Entité Equipe créée avec succès.");
     }
+    */
 }
