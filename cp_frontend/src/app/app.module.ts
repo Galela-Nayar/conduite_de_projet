@@ -43,8 +43,6 @@ import {
   CdkDrag,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
-// import { FullCalendarModule } from '@fullcalendar/angular';
-
 import { UserSettingComponent } from './user-home-page/user-setting/user-setting.component';
 import { ProjectSettingComponent } from './user-home-page/lateral-user-home-menu/project-setting/project-setting.component';
 import { ProjetParametresComponent } from './user-home-page/projet-parametres/projet-parametres.component';
@@ -52,6 +50,10 @@ import { ModifyTaskComponent } from './user-home-page/project/section/tache/tach
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ModeAffichageComponent } from './user-home-page/project/mode-affichage/mode-affichage.component';
 import { CreateEtatComponent } from './user-home-page/create-etat/create-etat.component';
+
+import { SectionScrumComponent } from './user-home-page/project/section-scrum/section-scrum.component';
+import { TacheScrumComponent } from './user-home-page/project/section-scrum/tache-scrum/tache-scrum.component';
+
 import { ListProjetComponent } from './user-home-page/list-projet/list-projet.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { AgendaComponent } from './user-home-page/agenda/agenda.component';
@@ -83,6 +85,8 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     ModifyTaskComponent,
     ModeAffichageComponent,
     CreateEtatComponent,
+    SectionScrumComponent,
+    TacheScrumComponent,
     ListProjetComponent,
     AgendaComponent,
   ],

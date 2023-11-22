@@ -18,7 +18,7 @@ export class TacheComponent {
   sectionId: String | null = '';
   @Input()
   tacheId: string = '';
-  tache!: Tache;
+  tache!: Tache | null | undefined;
   mouseX: number = 0;
   mouseY: number = 0;
   showSetting = false;
@@ -62,17 +62,14 @@ export class TacheComponent {
     }
   }
 
-  swapStatut() {
-    this.http
-      .get(`http://localhost:8080/taches/swapStatut?id=${this.tacheId}`, {
-        responseType: 'text',
-      })
-      .subscribe((tacheData) => {
-        if (this.tache.statutTerminer) this.tache.statutTerminer = false;
-        else this.tache.statutTerminer = true;
-        this.observerService.notifyTask();
-        this.cd.detectChanges();
-      });
+  swapStatut(){
+    this.http.get(`http://localhost:8080/taches/swapStatut?id=${this.tacheId}`, {responseType:"text"}).
+    subscribe((tacheData) => {
+      if(this.tache?.statutTerminer) this.tache.statutTerminer = false;
+      if(this.tache?.statutTerminer == false) this.tache.statutTerminer = true;
+      this.observerService.notifyTask();
+      this.cd.detectChanges();
+    });
   }
 
   onSettingClick(event: MouseEvent) {

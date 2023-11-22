@@ -1,26 +1,25 @@
 
-<div class="container" style="border: 2px solid rgb(63, 63, 63); height: 100%">
+<div class="container" style="border: 2px solid rgb(63, 63, 63);">
   <!-- Petit encadré avec texte -->
   <div class="row" style="border: 2px solid gray">
-    <div class="col-12">
-      <div class="alert alert-primary" role="alert">
-        <h1 class="text-center">{{ projet?.nom }}</h1>
+      <div class="col">
+        <div style=" padding-top: 10px; display: flex; justify-content:flex-start; align-items: center; ">
+          <h1 class="text-center" style="padding: 0px 30px 0px 10px;">{{ projet?.nom }}</h1>
+          <app-mode-affichage style=" padding-top: 5px;" (affichageChange)="handleAffichageChange($event)"></app-mode-affichage>
+        </div>
       </div>
-      <!-- Ici c'est le mode d'affichage du projet-->
-      <app-mode-affichage (affichageChange)="handleAffichageChange($event)"></app-mode-affichage>
-    </div>
   </div>
 
   <!-- Affichage en mode Kanban -->
-  <div *ngIf="modeAffichage === 'Kanban'">
-    <div
+  <div style="width: auto;" *ngIf="modeAffichage === 'Kanban'">
+    <div style="width: 100%;"
       cdkDropList
       cdkDropListOrientation="horizontal"
       class="section-list"
       (cdkDropListDropped)="drop($event)"
     >
-      <div cdkDrag *ngFor="let section of sections">
-        <app-section [sectionId]="section"></app-section>
+      <div style="width: 100%;" cdkDrag *ngFor="let section of sections">
+        <app-section style="width: 100%;" [sectionId]="section"></app-section>
       </div>
       <app-create-section *ngIf="showCreateSection"></app-create-section>
       <button
@@ -38,12 +37,12 @@
   <div *ngIf="modeAffichage === 'Scrum'">
     <div
       cdkDropList
-      cdkDropListOrientation="horizontal"
-      class="section-list"
+      cdkDropListOrientation="vertical"
+      class="section-list-col"
       (cdkDropListDropped)="dropEtat($event)"
     >
       <div cdkDrag *ngFor="let etat of etats">
-        <app-section [sectionId]="etat"></app-section>
+        <app-section-scrum [sectionId]="etat"></app-section-scrum>
       </div>
       <app-create-etat *ngIf="showCreateSection"></app-create-etat>
       <button

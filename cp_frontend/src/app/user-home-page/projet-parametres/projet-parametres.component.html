@@ -5,7 +5,7 @@
                 <div class="header_section" style="width: 100%;">Présentation du projet</div>            
                 <div class="header" style="width: 100%;">
                     <p><strong style="font-size: 1.5em;">{{project.nom}}</strong></p>
-                    <p>Créer par : <strong style="font-size: 1.5em;">{{createur?.userName}}</strong></p>
+                    <p>Créer par : <strong style="font-size: 1.5em;">{{createur.userName}}</strong></p>
                     <p>Le : <strong style="font-size: 1.5em;">{{getFormattedDate(project.dateCreation)}}</strong></p>
                     <p>Prévu pour le : <strong style="font-size: 1.5em;">{{getFormattedDate(project.dateButtoire)}}</strong></p>
                 </div>
@@ -15,7 +15,7 @@
                 </div>
                 <div class="section-container" style="width: 100%;box-sizing: border-box; ">
                     <div class="header_section" style="width: 100%;">Collaborateurs:</div>
-                    <table *ngIf="id == createur?.id" style="width: 50%; background-color: rgb(41, 41, 41);">
+                    <table *ngIf="id == createur.id" style="width: 50%; background-color: rgb(41, 41, 41);">
                         <tr style=" background-color: rgb(56, 56, 56);" *ngFor="let collaborateur of listCollaborateur">
                             <td style="width: 80%; border: 1px solid black;">
                                 {{ collaborateur['userName'] }}
@@ -29,14 +29,14 @@
                             <td style="width: 20%; border: 1px solid black; text-align: center;"><button (click)="enregistrerCollaborateur(nouveauCollaborateur)">Enregistrer</button></td>
                         </tr>
                     </table>
-                    <table *ngIf="id != createur?.id" style="width: 50%; background-color: rgb(41, 41, 41);">
+                    <table *ngIf="id != createur.id" style="width: 50%; background-color: rgb(41, 41, 41);">
                         <tr style=" background-color: rgb(56, 56, 56);" *ngFor="let collaborateur of listCollaborateur">
                             <td style="width: 80%; border: 1px solid black;">
                                 {{ collaborateur['userName'] }}
                             </td>
                         </tr>
                     </table>
-                    <div class="add-collaborator-button" *ngIf="!addingCollaborator && id == createur?.id">
+                    <div class="add-collaborator-button" *ngIf="!addingCollaborator && id == createur.id">
                         <button (click)="ajoutCollaborateur()">+</button>
                         <p>Ajouter collaborateur</p>
                     </div>
@@ -67,7 +67,7 @@
                         </mat-form-field>
                         <div>
                             <button *ngIf="!fields[1].saved" 
-                                    [disabled]="dateForm.get('datePicker')?.invalid || getFormattedDate(dateForm.get('datePicker')?.value) === getFormattedDate(project.dateButtoire)" 
+                                    [disabled]="dateForm.get('datePicker').invalid || getFormattedDate(dateForm.get('datePicker').value) === getFormattedDate(project.dateButtoire)" 
                                     (click)="saveDate()">Enregistrer</button>
                             <div *ngIf="fields[1].saved">
                               <mat-icon>check_circle</mat-icon>
@@ -86,7 +86,7 @@
                 <form [formGroup]="descriptionForm">
                     <textarea formControlName="description"></textarea>
                     <button *ngIf="!fields[2].saved" 
-                        [disabled]="descriptionForm.get('description')?.invalid || descriptionForm.get('description')?.value === project.description" 
+                        [disabled]="descriptionForm.get('description').invalid || descriptionForm.get('description').value === project.description" 
                         (click)="saveDescription()">Enregistrer</button>
                     <div *ngIf="fields[2].saved">
                       <mat-icon>check_circle</mat-icon>
@@ -106,7 +106,7 @@
                         </mat-form-field>
                         <div>
                             <button *ngIf="!fields[1].saved" 
-                                    [disabled]="dateForm.get('datePicker')?.invalid || getFormattedDate(dateForm.get('datePicker')?.value) === getFormattedDate(project.dateButtoire)" 
+                                    [disabled]="dateForm.get('datePicker').invalid || getFormattedDate(dateForm.get('datePicker').value) === getFormattedDate(project.dateButtoire)" 
                                     (click)="saveDate()">Enregistrer</button>
                             <div *ngIf="fields[1].saved">
                                 <mat-icon>check_circle</mat-icon>
@@ -125,7 +125,7 @@
                 <form [formGroup]="descriptionForm">
                     <textarea formControlName="description"></textarea>
                     <button *ngIf="!fields[2].saved" 
-                    [disabled]="descriptionForm.get('description')?.invalid || descriptionForm.get('description')?.value === project.description" 
+                    [disabled]="descriptionForm.get('description').invalid || descriptionForm.get('description').value === project.description" 
                     (click)="saveDescription()">Enregistrer</button>
                     <div *ngIf="fields[2].saved">
                       <mat-icon>check_circle</mat-icon>
@@ -141,4 +141,4 @@
         </div>
         <!-- Ajoutez autant de sections que nécessaire -->
     </div>
-</div>
+</div> 

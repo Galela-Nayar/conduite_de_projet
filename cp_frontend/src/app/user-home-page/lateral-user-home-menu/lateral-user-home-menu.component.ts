@@ -18,13 +18,8 @@ export class LateralUserHomeMenuComponent implements OnInit, OnDestroy {
   mouseY: number = 0;
   showSetting = false;
   projectSubscription!: Subscription;
-
-  constructor(
-    private http: HttpClient,
-    private cd: ChangeDetectorRef,
-    private route: ActivatedRoute,
-    private projetService: ObservableService
-  ) {}
+  
+  constructor(private http: HttpClient, private cd: ChangeDetectorRef, private route: ActivatedRoute, private projetService: ObservableService) {}
   ngOnDestroy(): void {
     this.projectSubscription.unsubscribe();
   }
@@ -72,3 +67,4 @@ export class LateralUserHomeMenuComponent implements OnInit, OnDestroy {
     return bl;
   }
 }
+
