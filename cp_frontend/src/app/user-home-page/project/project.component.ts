@@ -37,6 +37,7 @@ export class ProjectComponent implements OnDestroy {
   etats: any[] = [];
   sectionSubscription!: Subscription;
   modeAffichage: String = '';
+  droitUtilisateurActuel: string = '';
 
   constructor(
     private http: HttpClient,
@@ -96,6 +97,12 @@ export class ProjectComponent implements OnDestroy {
             console.log("etat : ", etat);
           });
       }
+    });
+
+    //Les droits de l'utilisateur actuel
+    this.http.get(`http://localhost:8080/projets/droitUtilisateur?idUtilisateur=${this.id}&idProjet=${this.projetId}`, {responseType: 'text'}).subscribe((data: string) => {
+          this.droitUtilisateurActuel = data;
+          console.log("droit dans projet : " + this.droitUtilisateurActuel)
     });
   }
 

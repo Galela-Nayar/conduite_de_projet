@@ -4,7 +4,9 @@
             <p> {{section?.nom}} </p>
             
         </div>
-        <app-section-setting [mouseX]="mouseX" [mouseY]="mouseY" [sectionId]="sectionId"></app-section-setting>
+        <div *ngIf="droitUtilisateurActuel != 'Visiteur'">
+          <app-section-setting [mouseX]="mouseX" [mouseY]="mouseY" [sectionId]="sectionId"></app-section-setting>
+        </div>
     </div>
     <hr>
 
@@ -12,11 +14,13 @@
     <div style="display: block; justify-items: center; align-items: center; width: 100%" cdkDrag *ngFor="let task of tasks">
       <app-tache  [tacheId]="task" [sectionId]="sectionId" [projetId]="projetId"></app-tache>
     </div>
-    <div class="parent-container">
-      <button
-        (click)="onPlusClick($event)"
-        class="app-section table-style"
-        *ngIf="id"
-      >Nouvelle tâche</button>
+    <div *ngIf="droitUtilisateurActuel != 'Visiteur'">
+      <div class="parent-container">
+        <button
+          (click)="onPlusClick($event)"
+          class="app-section table-style"
+          *ngIf="id"
+        >Nouvelle tâche</button>
+      </div>
     </div>
 </div>

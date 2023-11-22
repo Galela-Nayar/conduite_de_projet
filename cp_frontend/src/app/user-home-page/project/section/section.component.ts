@@ -35,6 +35,7 @@ export class SectionComponent {
   taskSubscription!: Subscription;
   tasks: any[] = [];
   private sectionData = new BehaviorSubject<Section | null>(null);
+  droitUtilisateurActuel: string = '';
 
   constructor(
     private http: HttpClient,
@@ -49,6 +50,15 @@ export class SectionComponent {
     this.id = this.route.parent
       ? this.route.parent.snapshot.paramMap.get('id')
       : null;
+
+    this.route.paramMap.subscribe((param) => {
+      const projetId = param.get('projectId');
+      console.log(projetId);
+      if (projetId != null) {
+        this.projetId = projetId;
+      }
+    });
+
     if (this.sectionId) {
       this.sectionService.changeSectionId(this.sectionId);
       this.sectionId = this.sectionId;
@@ -65,6 +75,10 @@ export class SectionComponent {
             });
         });
     }
+    //Les droits de l'utilisateur actuel
+    this.http.get(`http://localhost:8080/projets/droitUtilisateur?idUtilisateur=${this.id}&idProjet=${this.projetId}`, {responseType: 'text'}).subscribe((data: string) => {
+          this.droitUtilisateurActuel = data;
+    });
   }
 
   onPlusClick(event: MouseEvent): void {

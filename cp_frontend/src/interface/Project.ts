@@ -9,6 +9,7 @@ export interface Project {
     modeAffichage: string;
     [key:string]:any;
     createur: string;
+    droitUtilisateur: any[]; //Admin(Peut tout faire), Collaborateur(Peut pas modifier), ou juste visiteur(Pas rien faire)
   }
 
 

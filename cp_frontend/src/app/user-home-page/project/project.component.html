@@ -18,6 +18,7 @@
       cdkDropListOrientation="horizontal"
       class="section-list"
       (cdkDropListDropped)="drop($event)"
+      *ngIf="droitUtilisateurActuel != 'Visiteur'"
     >
       <div cdkDrag *ngFor="let section of sections">
         <app-section [sectionId]="section"></app-section>
@@ -31,6 +32,11 @@
         +
       </button>
     </div>
+    <div *ngIf="droitUtilisateurActuel == 'Visiteur'" class="section-list">
+      <div *ngFor="let section of sections">
+        <app-section [sectionId]="section"></app-section>
+      </div>
+    </div>
   </div>
 
 
@@ -41,6 +47,7 @@
       cdkDropListOrientation="horizontal"
       class="section-list"
       (cdkDropListDropped)="dropEtat($event)"
+      *ngIf="droitUtilisateurActuel != 'Visiteur'"
     >
       <div cdkDrag *ngFor="let etat of etats">
         <app-section [sectionId]="etat"></app-section>
@@ -53,6 +60,11 @@
       >
         +
       </button>
+    </div>
+    <div *ngIf="droitUtilisateurActuel == 'Visiteur'" class="section-list">
+      <div *ngFor="let etat of etats">
+        <app-section [sectionId]="etat"></app-section>
+      </div>
     </div>
   </div>
 </div>

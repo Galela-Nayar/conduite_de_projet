@@ -3,7 +3,7 @@
         <div class="section-entry">
             <div class="container">
                 <p>{{ tache.nom }}</p>
-                <div class="settings-and-checkbox">
+                <div class="settings-and-checkbox" *ngIf="droitUtilisateurActuel != 'Visiteur'">
                     <app-tache-setting [tacheId]="tacheId" [sectionId]="sectionId" [projetId]="projetId"></app-tache-setting>
                     <mat-checkbox [checked]="tache.statutTerminer" (change)="swapStatut()">
                     </mat-checkbox>
