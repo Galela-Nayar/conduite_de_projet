@@ -2,8 +2,8 @@
     <div class="clickable" (click)="navigateToProjectSettings()">Paramètres du projet</div>
 </div> -->
 
-<button mat-icon-button [matMenuTriggerFor]="menu">
-  <mat-icon>more_vert</mat-icon>
+<button mat-icon-button [matMenuTriggerFor]="menu" style="transition: box-shadow 0.3s ease-in-out;">
+  <mat-icon style="color: #f2f2f2;">more_vert</mat-icon>
 </button>
 <mat-menu #menu="matMenu">
   <button mat-menu-item (click)="navigateToProjectSettings()">

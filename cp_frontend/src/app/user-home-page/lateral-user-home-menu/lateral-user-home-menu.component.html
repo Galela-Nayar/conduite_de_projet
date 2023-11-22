@@ -1,16 +1,15 @@
 <!-- lateral-user-home-menu.component.html -->
 <div>
-  <a [routerLink]="['/', id, 'home']">Home</a>
-  <hr />
-  <!-- Barre de séparation -->
+  
   <div *ngIf="projects_id.length > 0">
+    <p style="margin-left: 5px; color: #f2f2f2;">Projet :</p>
+    <hr style="border: none; margin-top: -10px; border-top: 1px solid; width:25%; margin-left: 5px; color: lightgray;">
     <div class="project-entry" *ngFor="let project of projet">
       <div class="task-content">
         <!-- Ajout d'une div pour le contenu de la tâche -->
         <a [routerLink]="['/', id, 'project', project.id]">{{ project.nom }}</a>
       </div>
       <app-project-setting
-        class="settings-button"
         [projectId]="project.id"
       ></app-project-setting>
     </div>
@@ -19,4 +18,5 @@
     <button [routerLink]="['/', id, 'create-project']">+</button>
     <p>Creer un nouveau projet !</p>
   </div>
+  <hr style="border: none; border-top: 2px solid #f2f2f2;">
 </div>

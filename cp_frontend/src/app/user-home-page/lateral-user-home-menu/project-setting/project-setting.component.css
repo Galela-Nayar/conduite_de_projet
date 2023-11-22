@@ -1,1 +1,6 @@
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+button:hover {
+    box-shadow: 0 0 10px gray;
+    background-color: gray;
+  }
