@@ -19,7 +19,7 @@
       (cdkDropListDropped)="drop($event)"
     >
       <div style="width: 100%;" cdkDrag *ngFor="let section of sections">
-        <app-section style="width: 100%;" [sectionId]="section"></app-section>
+        <app-section style="width: 100%;" [sectionId]="section" [projetId]="projetId"></app-section>
       </div>
       <app-create-section *ngIf="showCreateSection"></app-create-section>
       <button
