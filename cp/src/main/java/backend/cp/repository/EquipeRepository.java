@@ -7,4 +7,5 @@ import backend.cp.modele.Equipe;
 
 @Repository
 public interface EquipeRepository extends MongoRepository<Equipe, String> {
+    Equipe findByName(String name);
 }

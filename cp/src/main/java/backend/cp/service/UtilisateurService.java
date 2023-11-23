@@ -124,5 +124,9 @@ public class UtilisateurService {
         user.addProjet(id);
         this.utilisateurRepository.save(user);
     }
+
+    public Utilisateur getUtilisateurByEmail(String email) {
+        return utilisateurRepository.findByEmail(email);
+    }
 }
  
