@@ -17,15 +17,15 @@ public class Equipe {
 
     private String color; 
 
-    private List<String> colaborateurs; 
+    private List<String> collaborateurs; 
 
     public Equipe() {
         // Constructeur par défaut nécessaire pour MongoDB
     }
 
-    public Equipe(String name, List<String> colaborateurs) {
+    public Equipe(String name, List<String> collaborateurs) {
         this.name = name;
-        this.colaborateurs = colaborateurs;
+        this.collaborateurs = collaborateurs;
     }
 
 }

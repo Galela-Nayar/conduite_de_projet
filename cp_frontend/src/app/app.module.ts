@@ -51,6 +51,7 @@ import { ModifyTaskComponent } from './user-home-page/project/section/tache/tach
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ModeAffichageComponent } from './user-home-page/project/mode-affichage/mode-affichage.component';
 import { CreateEtatComponent } from './user-home-page/create-etat/create-etat.component';
+import { EquipeComponent } from './equipe/equipe.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,6 +78,7 @@ import { CreateEtatComponent } from './user-home-page/create-etat/create-etat.co
     ModifyTaskComponent,
     ModeAffichageComponent,
     CreateEtatComponent,
+    EquipeComponent,
   ],
   imports: [
     BrowserModule,

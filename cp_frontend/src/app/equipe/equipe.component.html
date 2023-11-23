@@ -1,0 +1,47 @@
+<div class="fieldset-container">
+
+    <h2>Gestion des Équipes et Collaborateurs</h2>
+  
+    
+    <fieldset>
+      <legend>Gestion des Équipes</legend>
+
+<div>
+  <label for="newEquipeName">Nouvelle équipe:</label>
+  <input type="text" id="newEquipeName" [(ngModel)]="newEquipeName" /> &nbsp;
+  <button (click)="createEquipe()">Créer Équipe</button>
+</div>
+
+
+
+</fieldset>
+
+<fieldset>
+  <legend>Gestion des Collaborateurs</legend>
+<div>
+  <label for="selectedEquipe">Équipe sélectionnée:</label>
+  <select id="selectedEquipe" [(ngModel)]="selectedEquipeId">
+    <option *ngFor="let equipe of equipes" [value]="equipe.id">{{ equipe.name }}</option>
+  </select>
+</div>
+
+<div>
+  <label for="collaborateurEmail">Email du Collaborateur:</label>
+  <input type="text" id="collaborateurEmail" [(ngModel)]="collaborateurEmail" />&nbsp;
+  <button (click)="addCollaborateur()">Ajouter Collaborateur</button>&nbsp;
+  <button (click)="removeCollaborateur()">Supprimer Collaborateur</button>
+</div>
+</fieldset>
+
+<fieldset>
+  <legend>Liste des equipes et Collaborateurs</legend>
+<div *ngFor="let equipe of equipes">
+  {{ equipe.name }}
+  <ul>
+    <li *ngFor="let collaborateur of equipe.collaborateurs">
+      {{ collaborateur }}
+    </li>
+  </ul>
+</div>
+</fieldset>
+</div>

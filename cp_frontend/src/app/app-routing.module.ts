@@ -16,6 +16,7 @@ import { TacheSettingComponent } from './user-home-page/project/section/tache/ta
 import { UserSettingComponent } from './user-home-page/user-setting/user-setting.component';
 import { ProjectSettingComponent } from './user-home-page/lateral-user-home-menu/project-setting/project-setting.component';
 import { ProjetParametresComponent } from './user-home-page/projet-parametres/projet-parametres.component';
+import { EquipeComponent } from './equipe/equipe.component';
 
 
 
@@ -34,6 +35,7 @@ const routes: Routes = [
       { path: 'create-project', component: CreateProjectComponent },
       { path: 'user-setting', component: UserSettingComponent },
       { path: 'parametres-project/:projectId', component: ProjetParametresComponent},
+      { path: 'equipe', component: EquipeComponent },
       { path: 'project/:projectId', component: ProjectComponent,
         children:[
           { path: 'create-section/:x/:y', component: CreateSectionComponent},
