@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
 import Tache from 'src/interface/Tache';
@@ -24,6 +25,7 @@ export class ModifyTaskComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private sanitizer: DomSanitizer,
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
     @Inject(MAT_DIALOG_DATA) public data: any,

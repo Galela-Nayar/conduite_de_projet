@@ -4,12 +4,15 @@ import backend.cp.dto.UtilisateurDto;
 import backend.cp.modele.Utilisateur;
 import backend.cp.service.UtilisateurService;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -186,5 +189,15 @@ public byte[] resizeAndCropImage(MultipartFile file) {
         e.printStackTrace();
     }
     return null;
-}
+    }
+
+    @GetMapping("/img")
+    public ResponseEntity<InputStreamResource> getImage(@RequestParam String id) throws IOException {
+        if(utilisateurService.getUtilisateur(id) == null) return null;
+        Utilisateur user = utilisateurService.getUtilisateur(id);
+        byte[] logo = user.getLogo_utilisateur();
+        return ResponseEntity.ok()
+            .contentType(MediaType.IMAGE_PNG) // Change this if the image format is not JPEG
+            .body(new InputStreamResource(new ByteArrayInputStream(logo)));
+    }
 }

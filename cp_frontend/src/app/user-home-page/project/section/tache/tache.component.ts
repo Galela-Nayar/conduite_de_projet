@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Subscription, mergeMap } from 'rxjs';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
 import Tache from 'src/interface/Tache';
+import Utilisateur from 'src/interface/Utilisateur';
 
 @Component({
   selector: 'app-tache',
@@ -24,6 +25,7 @@ export class TacheComponent {
   showSetting = false;
   taskSubscription!: Subscription;
   dateLimite!: Date;
+  membreAttribue!: any[]
 
   constructor(
     private http: HttpClient,
@@ -54,7 +56,13 @@ export class TacheComponent {
                   year: 'numeric',
                 }
               );
-
+              this.http
+              .get<Utilisateur[]>(
+                `http://localhost:8080/taches/membreAttribue?id=${this.tacheId}`
+              )
+              .subscribe((data: Utilisateur[]) => {
+                this.membreAttribue = data;
+              });
               // Mettre à jour la dateLimite avec la date formatée
               this.dateLimite = new Date(formattedDate);
             });

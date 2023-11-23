@@ -2,9 +2,16 @@
   <mat-card-content>
     <div class="section-entry">
       <div class="container" *ngIf="tache">
-        <p>{{ tache.nom }}</p>
-        <div *ngIf="this.tache.dateLimite">
-          Date de fin: {{ this.tache.dateLimite | date : "dd-MM-yyyy" }}
+        <div class="header">
+          <div *ngFor="let membre of membreAttribue" class="miniature">
+            <img [src]="'http://localhost:8080/utilisateurs/img?id=' + membre['id']" class="miniature" />
+          </div>
+          <div style="display: flex; justify-content: flex-end; text-align: right; width: 100%;" *ngIf="this.tache.dateLimite">
+            Date de fin: {{ this.tache.dateLimite | date : "dd-MM-yyyy" }}
+          </div>
+        </div>
+        <div class="contenu">
+          <p>{{ tache.nom }}</p>
         </div>
         <div class="settings-and-checkbox">
           <app-tache-setting
