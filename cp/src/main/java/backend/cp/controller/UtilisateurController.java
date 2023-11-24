@@ -4,13 +4,26 @@ import backend.cp.dto.UtilisateurDto;
 import backend.cp.modele.Utilisateur;
 import backend.cp.service.UtilisateurService;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.RequestEntity.HeadersBuilder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.imgscalr.Scalr;
+
+import javax.imageio.ImageIO;
+
+import java.awt.AlphaComposite;
+import java.awt.Graphics2D;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
+
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200") // replace with the domain your frontend is running on
@@ -110,5 +123,69 @@ public class UtilisateurController {
     }
    
 
-    
+    @PostMapping("/set_logo")
+    public ResponseEntity<String> setLogo(@RequestParam String id, @RequestParam("file") MultipartFile file) {
+        if(utilisateurService.getUtilisateur(id) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("utilisateur not found");
+        byte[] logo = this.resizeAndCropImage(file);
+        utilisateurService.setLogo(id, logo);
+        return ResponseEntity.ok("Logo updated successfully");
+    }
+
+
+
+public byte[] resizeAndCropImage(MultipartFile file) {
+    try {
+        InputStream inputStream = file.getInputStream();
+        BufferedImage originalImage = ImageIO.read(inputStream);
+        int width = originalImage.getWidth();
+        int height = originalImage.getHeight();
+        int x, y, cropWidth, cropHeight;
+        if(width > height) {
+            x = (width - height) / 2;
+            y = 0;
+            cropWidth = cropHeight = height;
+        } else {
+            x = 0;
+            y = (height - width) / 2;
+            cropWidth = cropHeight = width;
+        }
+        BufferedImage croppedImage = Scalr.crop(originalImage, x, y, cropWidth, cropHeight);
+        BufferedImage resizedImage = Scalr.resize(croppedImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, 100, 100, Scalr.OP_ANTIALIAS);
+        
+        // Create a circular shape
+        Ellipse2D.Double shape = new Ellipse2D.Double(0, 0, resizedImage.getWidth(), resizedImage.getHeight());
+
+        // Prepare output image
+        BufferedImage circularImage = new BufferedImage(resizedImage.getWidth(), resizedImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+        // Prepare graphics for drawing
+        Graphics2D g2d = circularImage.createGraphics();
+
+        // Set transparency of the area outside the circle
+        g2d.setComposite(AlphaComposite.Clear);
+
+        // Fill the entire image with transparency
+        g2d.fillRect(0, 0, resizedImage.getWidth(), resizedImage.getHeight());
+
+        // Change composite rules
+        g2d.setComposite(AlphaComposite.Src);
+
+        // Draw the circular image
+        g2d.setClip(new Area(shape));
+        g2d.drawImage(resizedImage, 0, 0, null);
+
+        g2d.dispose();
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(circularImage, "png", baos);
+        byte[] bytes = baos.toByteArray();
+        originalImage.flush();
+        croppedImage.flush();
+        resizedImage.flush();
+        return bytes;
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    return null;
+}
 }

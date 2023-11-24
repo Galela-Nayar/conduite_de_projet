@@ -13,5 +13,24 @@
           </div>
         </div>
       </div>
+      <div>
+        <div class="section">
+          <div class="section-container">
+            <div class="field-group" style="margin-bottom: 20px;">
+              <label>Logo Actuel :</label>
+              <img style="height: 40px; width: 40px;" [src]="imageSrc">
+            </div>
+            <div class="field-group" >
+              <label>Choisir un nouveau logo </label>
+              <input type="file" accept="image/*" (change)="onFileSelected($event)" *ngIf="!selectedFileName">
+              <div *ngIf="selectedFileName">
+                <span>{{ selectedFileName }}</span>
+                <button (click)="removeSelectedFile()">X</button>
+              </div>
+              <button [disabled]="!selectedFile" (click)="saveLogo()">Enregistrer</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>

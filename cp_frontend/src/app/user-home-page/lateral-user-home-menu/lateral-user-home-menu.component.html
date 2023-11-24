@@ -1,21 +1,31 @@
 <!-- lateral-user-home-menu.component.html -->
 <div>
-    <a [routerLink]="['/', id, 'home']">Home</a>
-    <hr> <!-- Barre de séparation -->
-    <div *ngIf="projects_id.length > 0">
-        <div  class="project-entry"  *ngFor="let project of projet">
-            <div class="task-content"> <!-- Ajout d'une div pour le contenu de la tâche -->
-                <a [routerLink]="['/', id, 'project', project.id]">{{ project.nom }}</a>
-                <app-project-setting *ngIf="showSetting" [mouseX]="mouseX" [mouseY]="mouseY" [projectId]="project.id"></app-project-setting>
-            </div>
-            <button (click)="onSettingClick($event)" class="settings-button"></button>
-        </div>
+  
+  <div *ngIf="projects_id.length > 0">
+    <p style="margin-left: 5px; color: #f2f2f2;">Projet :</p>
+    <hr style="border: none; margin-top: -10px; border-top: 1px solid; width:25%; margin-left: 5px; color: lightgray;">
+    <div class="project-entry" *ngFor="let project of projet">
+      <div class="task-content">
+        <!-- Ajout d'une div pour le contenu de la tâche -->
+        <a [routerLink]="['/', id, 'project', project.id]">{{ project.nom }}</a>
+      </div>
+      <app-project-setting
+        [projectId]="project.id"
+      ></app-project-setting>
     </div>
     <div style="margin-top: 40px;" class="centered">
         <button [routerLink]="['/', id, 'create-project']">+</button>
         <p>Creer un nouveau projet !</p>
     </div>
-    <div>
-        <a [routerLink]="['/', id, 'equipe']">Création equipe</a>
-    </div>
+    
   </div>
+  <div style="margin-top: 40px" class="centered">
+    <button [routerLink]="['/', id, 'create-project']">+</button>
+    <p>Creer un nouveau projet !</p>
+  </div>
+  <hr style="border: none; border-top: 2px solid #f2f2f2;">
+
+  <div>
+    <a [routerLink]="['/', id, 'equipe']">Création equipe</a>
+</div>
+</div>

@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
+import Utilisateur from '../../../interface/Utilisateur';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-horizontal-user-home-menu',
@@ -10,8 +12,10 @@ import { ObservableService } from 'src/app/observable/observable-projet.service'
 })
 export class HorizontalUserHomeMenuComponent {
   id!: string;
+  user!: Utilisateur;
+  imageSrc!: any;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private projetService: ObservableService) {}
+  constructor(private http: HttpClient, private sanitizer: DomSanitizer, private route: ActivatedRoute, private projetService: ObservableService) {}
 
 
   ngOnInit() {
@@ -19,6 +23,12 @@ export class HorizontalUserHomeMenuComponent {
     if (id !== null) {
       this.id = id;
     }
+    this.http.get<Utilisateur>(`http://localhost:8080/utilisateurs/user?id=${this.id}`).subscribe(
+      (data: Utilisateur)=>{
+        this.user = data;
+        let objectURL = 'data:image/jpeg;base64,' + this.user['logo_utilisateur'];
+        this.imageSrc = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+    })
   }
 
 }
