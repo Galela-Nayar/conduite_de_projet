@@ -82,6 +82,12 @@ button[type="button"], .table-cell-button-style button {
   color: #fff;
 }
 
+.miniature{
+  width: 20px;
+  height: 20px;
+  margin: 0px 5px;
+}
+
 .table-style {
   width: 70%;
   background-color: rgb(41, 41, 41);
@@ -93,26 +99,24 @@ button[type="button"], .table-cell-button-style button {
 }
 
 .table-cell-style {
-  width: 80%;
-  height: 5%;
+  width: auto;
+  height: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   border: 1px solid black;
+  flex-direction: row;
 }
 
 .up-button, .remove-button {
-  flex: 1;
-  height:39px; /* Adjust as needed */
-  width:39px; /* Adjust as needed */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0px 0px 0px 2px;
+  width: 100%;
+  height: 100%;
 }
 
 .table-cell-button-style {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  height: 100%;
+  width: 20%;
 }
 
 hr {

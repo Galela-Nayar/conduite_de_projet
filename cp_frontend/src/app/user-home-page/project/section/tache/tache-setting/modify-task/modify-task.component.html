@@ -61,9 +61,10 @@
   <div>
     <p>Collaborateurs inclu au projet</p>
     <table class="table-style">
-      <tr class="table-row-style" *ngFor="let collaborateur of membreAttribue">
+      <tr class="table-row-style" *ngFor="let collaborateur of membreAttribue; let i = index">
         <td class="table-cell-style">
-          {{ collaborateur["userName"] }}
+          <img [src]="'http://localhost:8080/utilisateurs/img?id=' + collaborateur['id']" class="miniature" />
+            <h3>{{ collaborateur["nom"] }} {{ collaborateur["prenom"] }}</h3>
         </td>
         <td class="table-cell-button-style">
           <button (click)="removeUtilisateur(collaborateur.id)">X</button>
@@ -72,9 +73,10 @@
     </table>
     <p>Collaborateurs à inclure au projet</p>
     <table class="table-style">
-      <tr class="table-row-style" *ngFor="let collaborateur of membreRestant">
+      <tr class="table-row-style" *ngFor="let collaborateur of membreRestant; let i = index">
         <td class="table-cell-style">
-          {{ collaborateur["userName"] }}
+          <img [src]="'http://localhost:8080/utilisateurs/img?id=' + collaborateur['id']" class="miniature" />
+            <h3>{{ collaborateur["nom"] }} {{ collaborateur["prenom"] }}</h3>
         </td>
         <td class="table-cell-button-style">
           <button (click)="addUtilisateur(collaborateur.id)" class="up-button">
