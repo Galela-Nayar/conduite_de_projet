@@ -26,6 +26,7 @@ export class TacheComponent {
   taskSubscription!: Subscription;
   dateLimite!: Date;
   membreAttribue!: any[]
+  droitUtilisateurActuel: string = '';
 
   constructor(
     private http: HttpClient,
@@ -68,6 +69,24 @@ export class TacheComponent {
             });
         });
     }
+
+    this.route.paramMap.subscribe((param) => {
+      const projetId = param.get('projectId');
+      console.log(projetId);
+      if (projetId != null) {
+        this.projetId = projetId;
+      }
+    });
+
+    this.id = this.route.parent
+      ? this.route.parent.snapshot.paramMap.get('id')
+      : null;
+
+    //Les droits de l'utilisateur actuel
+    this.http.get(`http://localhost:8080/projets/droitUtilisateur?idUtilisateur=${this.id}&idProjet=${this.projetId}`, {responseType: 'text'}).subscribe((data: string) => {
+          this.droitUtilisateurActuel = data;
+          console.log("droit dans section: " + this.droitUtilisateurActuel)
+    });
   }
 
   swapStatut(){

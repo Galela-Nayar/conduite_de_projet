@@ -36,12 +36,23 @@ public class Projet {
         this.sections.add(section);
     }
 
-    public void addCollaborateur(String nom2) {
+    public void addCollaborateur(String nom2, String droit) {
         this.collaborateurs.add(nom2);
+        this.droitUtilisateur.put(this.collaborateurs.size()-1, droit);
     }
 
     public void removeCollaborateur(String userId) {
+        int index = this.collaborateurs.indexOf(userId);
         this.collaborateurs.remove(userId);
+        this.droitUtilisateur.remove(index);
+        // Mettre à jour les index restants dans droitUtilisateur
+        for (int i = index; i < this.collaborateurs.size(); i++) {
+            if(this.droitUtilisateur.get(i + 1)!=null)
+            {
+                this.droitUtilisateur.put(i, this.droitUtilisateur.get(i + 1));
+            }
+        }
+        this.droitUtilisateur.remove(this.collaborateurs.size());
     }
 
 
