@@ -16,12 +16,16 @@ export class ProjetParametresComponent {
   success: boolean = false;
   addingCollaborator: boolean = false;
   nouveauCollaborateur: string = '';
+  droitNouveauCollaborateur: string = 'Collaborateur';
+  optionsDroit: string[] = ["Admin", "Collaborateur", "Visiteur"];
 
   id: string | null | undefined = null;
   projectId: string | null = null;
 
   project!: Project;
   listCollaborateur!: Utilisateur[];
+  droitUtilisateurs: any[] = [];
+  droitUtilisateurActuel: string = '';
   createur:Utilisateur | null = null;
   fields: { key: string, label: string, value: string, saved: boolean }[] = [];
 
@@ -43,6 +47,9 @@ export class ProjetParametresComponent {
         }
         return null;
       }
+
+      //On recupere les droits des utilisateurs
+      this.droitUtilisateurs = data.droitUtilisateur;
       
       this.dateForm = new FormGroup({
         'datePicker': new FormControl(this.project.dateButtoire, [Validators.required, dateValidator])
@@ -70,9 +77,15 @@ export class ProjetParametresComponent {
       console.log('collaborateurs : ' + data)  
       this.listCollaborateur = data;
       console.log('collaborateurs : ' + this.listCollaborateur[0])  
+      });
 
-      })
+      this.http.get(`http://localhost:8080/projets/droitUtilisateur?idUtilisateur=${this.id}&idProjet=${this.projectId}`, {responseType: 'text'}).subscribe((data: string) => {
+          this.droitUtilisateurActuel = data;
+          console.log("droit : " + this.droitUtilisateurActuel)
+      });
+    
     });
+    
   }
 
   getUserProperty(key: string): any {
@@ -162,6 +175,8 @@ export class ProjetParametresComponent {
     this.http.get<Project>(`http://localhost:8080/projets/projet?id=${this.projectId}`).subscribe((data: Project) => {
       this.project = data;
 
+      //On recupere les droits des utilisateurs
+      this.droitUtilisateurs = data.droitUtilisateur;
 
       this.http.get<Utilisateur>(`http://localhost:8080/utilisateurs/user?id=${this.project.createur}`).subscribe((data: Utilisateur) => {
         this.createur = data;
@@ -172,6 +187,10 @@ export class ProjetParametresComponent {
         this.listCollaborateur = data;
       })
     })
+    this.http.get(`http://localhost:8080/projets/droitUtilisateur?idUtilisateur=${this.id}&idProjet=${this.projectId}`, {responseType: 'text'}).subscribe((data: string) => {
+          this.droitUtilisateurActuel = data;
+          console.log("droit : " + this.droitUtilisateurActuel)
+    });
     this.cdr.detectChanges();
   }
 
@@ -188,13 +207,23 @@ export class ProjetParametresComponent {
     this.addingCollaborator = true;
   }
 
-  enregistrerCollaborateur(nom:string){
+  enregistrerCollaborateur(nom:string, droit:string){
     console.log('nom : ' + nom)
-    this.http.get(`http://localhost:8080/projets/add_collaborateur?id=${this.projectId}&nom=${nom}`, {responseType: 'text'}).subscribe((data) => {
+    this.http.get(`http://localhost:8080/projets/add_collaborateur?id=${this.projectId}&nom=${nom}&droit=${droit}`, {responseType: 'text'}).subscribe((data) => {
       if (data.toString().startsWith('ok')) {
       }
       this.updateProject();
     });
     this.addingCollaborator = false;
+    //console.log("droit : " + this.droitUtilisateurs);
+  }
+
+  changerDroit(i: number, droit:string)
+  {
+    this.http.get(`http://localhost:8080/projets/changerDroits?id=${this.projectId}&droit=${droit}&index=${i}`, {responseType: 'text'}).subscribe((data) => {
+      if (data.toString().startsWith('ok')) {
+      }
+      this.updateProject();
+    });
   }
 }

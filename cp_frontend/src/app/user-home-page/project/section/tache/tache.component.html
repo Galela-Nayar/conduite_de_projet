@@ -13,7 +13,7 @@
         <div class="contenu">
           <p>{{ tache.nom }}</p>
         </div>
-        <div class="settings-and-checkbox">
+        <div class="settings-and-checkbox" *ngIf="droitUtilisateurActuel != 'Visiteur'">
           <app-tache-setting
             [tacheId]="tacheId"
             [sectionId]="sectionId"

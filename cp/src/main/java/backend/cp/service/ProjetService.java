@@ -12,7 +12,9 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProjetService {
@@ -35,6 +37,9 @@ private final ApplicationContext applicationContext;
         projet.setDateCreation(date);
         List<String> collab = new ArrayList<>();
         collab.add(createur);
+        Map<Integer, String> droitUtilisateur = new HashMap<>();
+        droitUtilisateur.put(0, "Admin");
+        projet.setDroitUtilisateur(droitUtilisateur);
         projet.setCollaborateurs(collab);
         projet.setDateButtoire(dateButtoire);
         projet.setDescription(description);
@@ -185,26 +190,55 @@ private final ApplicationContext applicationContext;
         return usersArray;
     }
 
-    public boolean add_collaborateur(String id, String nom) {
+    public boolean add_collaborateur(String id, String nom, String droit) {
                 UtilisateurService utilisateurService = applicationContext.getBean(UtilisateurService.class);
 
         if(utilisateurService.existUser(nom) | utilisateurService.existUserName(nom)){
             System.out.println("utilisateur exist");
             Projet pj = this.getProject(id);
             String userId = utilisateurService.getUtilisateurByName(nom).getId();
-            pj.addCollaborateur(userId);
-            utilisateurService.addProjet(userId,id);
-            
-            this.projetRepository.save(pj);
-            return true;
+            if(!pj.getCollaborateurs().contains(userId))
+            {
+                pj.addCollaborateur(userId, droit);
+                utilisateurService.addProjet(userId,id);
+                this.projetRepository.save(pj);
+                return true;
+            }
+
         } 
         return false;
     }
 
     public void removeCollaborateur(String id, String userId) {
+        UtilisateurService utilisateurService = applicationContext.getBean(UtilisateurService.class);
         Projet pj = this.getProject(id);
         pj.removeCollaborateur(userId);
+        utilisateurService.removeProject(userId, id);
         projetRepository.save(pj);
     }
 
+    public String droitUtilisateur(String idUtilisateur, String idProjet)
+    {
+        
+        Projet projet = this.getProject(idProjet);
+        if(projet != null)
+        {
+            int index = projet.getCollaborateurs().indexOf(idUtilisateur);
+            return projet.getDroitUtilisateur().get(index);
+        }
+
+        return null;
+    }
+
+    public void changerDroits(String id, String droit, int index)
+    {
+        Projet projet = this.getProject(id);
+        if (projet != null) {
+            Map<Integer, String> nouveauxDroits = new HashMap<>();
+            nouveauxDroits = projet.getDroitUtilisateur();
+            nouveauxDroits.replace(index, droit);
+            projet.setDroitUtilisateur(nouveauxDroits);
+            this.projetRepository.save(projet);
+        }
+    }
 }

@@ -8,6 +8,7 @@ import backend.cp.service.ProjetService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -110,8 +111,8 @@ public class ProjetController {
     }
 
     @GetMapping("/add_collaborateur")
-    public ResponseEntity<String> addCollaborateur(@RequestParam String id, @RequestParam String nom){
-        if(projetService.add_collaborateur(id, nom))  return ResponseEntity.ok("ok");
+    public ResponseEntity<String> addCollaborateur(@RequestParam String id, @RequestParam String nom, @RequestParam String droit){
+        if(projetService.add_collaborateur(id, nom, droit))  return ResponseEntity.ok("ok");
         else return ResponseEntity.ok("error");
     }
 
@@ -127,6 +128,20 @@ public class ProjetController {
     {
         if(projetService.getProject(id) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("projet not found");
         projetService.updateModeAffichage(id, newModeAffichage);
+        return ResponseEntity.ok("ok");
+    }
+
+    //Renvoie les droits de l'utilisateur id sur le projet
+    @GetMapping("/droitUtilisateur")
+    public ResponseEntity<String> droitUtilisateur(@RequestParam String idUtilisateur, @RequestParam String idProjet){
+        return ResponseEntity.ok(projetService.droitUtilisateur(idUtilisateur, idProjet));
+    }
+
+    @GetMapping("/changerDroits")
+    public ResponseEntity<String> changerDroit(@RequestParam String id, @RequestParam String droit, @RequestParam int index)
+    {
+        if(projetService.getProject(id) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("projet not found");
+        projetService.changerDroits(id, droit, index);
         return ResponseEntity.ok("ok");
     }
 }
