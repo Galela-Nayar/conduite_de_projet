@@ -30,10 +30,9 @@ export class EquipeService {
   removeCollaborateur(equipeId: string, collaborateurEmail: string): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${equipeId}/removeCollaborateur?collaborateurEmail=${collaborateurEmail}`, {});
   }
-  /*
-  createEquipe(nouvelleEquipe: Equipe): Observable<Equipe> {
-    return this.http.post<Equipe>(this.apiUrl, nouvelleEquipe);
+  
+  deleteEquipe(equipeId: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${equipeId}`);
   }
-  */
   
 }
