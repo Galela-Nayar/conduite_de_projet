@@ -23,6 +23,9 @@
   <select id="selectedEquipe" [(ngModel)]="selectedEquipeId">
     <option *ngFor="let equipe of equipes" [value]="equipe.id">{{ equipe.name }}</option>
   </select>
+  <div>
+    <button (click)="deleteEquipe()">Supprimer Équipe</button>
+  </div>
 </div>
 
 <div>
@@ -30,6 +33,7 @@
   <input type="text" id="collaborateurEmail" [(ngModel)]="collaborateurEmail" />&nbsp;
   <button (click)="addCollaborateur()">Ajouter Collaborateur</button>&nbsp;
   <button (click)="removeCollaborateur()">Supprimer Collaborateur</button>
+  
 </div>
 </fieldset>
 

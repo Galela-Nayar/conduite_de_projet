@@ -84,4 +84,20 @@ export class EquipeComponent implements OnInit {
       );
     }
   }
+
+  deleteEquipe() {
+    if (this.selectedEquipeId) {
+      this.equipeService.deleteEquipe(this.selectedEquipeId).subscribe(
+        (response) => {
+          console.log('Équipe supprimée avec succès', response);
+          this.loadEquipes(); // Mettez à jour la liste des équipes après la suppression réussie
+          this.selectedEquipeId = ''; // Réinitialisez l'équipe sélectionnée
+        },
+        (error) => {
+          console.error('Erreur lors de la suppression de l\'équipe', error);
+        }
+      );
+    }
+  }
+
 }

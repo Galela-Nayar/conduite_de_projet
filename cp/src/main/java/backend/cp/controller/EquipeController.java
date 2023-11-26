@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,6 +53,11 @@ public class EquipeController {
             return equipeRepository.save(equipe);
         }
         return null; // Gérez le cas où l'équipe n'est pas trouvée ou le collaborateur n'est pas présent
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteEquipe(@PathVariable String id) {
+        equipeRepository.deleteById(id);
     }
     
    
