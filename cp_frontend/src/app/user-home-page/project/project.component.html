@@ -45,15 +45,15 @@
       cdkDropList
       cdkDropListOrientation="vertical"
       class="section-list-col"
-      (cdkDropListDropped)="dropEtat($event)"
+      (cdkDropListDropped)="drop($event)"
       *ngIf="droitUtilisateurActuel != 'Visiteur'"
     >
-      <div cdkDrag *ngFor="let etat of etats">
-        <app-section-scrum [sectionId]="etat"></app-section-scrum>
+      <div cdkDrag *ngFor="let section of sections">
+        <app-section-scrum [sectionId]="section"></app-section-scrum>
       </div>
-      <app-create-etat *ngIf="showCreateSection"></app-create-etat>
+      <app-create-section *ngIf="showCreateSection"></app-create-section>
       <button
-        (click)="onPlusClickEtat($event)"
+        (click)="onPlusClickSection($event)"
         class="app-section table-style"
         *ngIf="id"
       >
@@ -61,8 +61,8 @@
       </button>
     </div>
     <div *ngIf="droitUtilisateurActuel == 'Visiteur'" class="section-list-col">
-      <div *ngFor="let etat of etats">
-        <app-section-scrum [sectionId]="etat"></app-section-scrum>
+      <div *ngFor="let section of sections">
+        <app-section-scrum [sectionId]="section"></app-section-scrum>
       </div>
     </div>
   </div>

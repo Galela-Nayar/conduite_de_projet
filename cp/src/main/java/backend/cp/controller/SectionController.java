@@ -27,9 +27,8 @@ public class SectionController {
     }
 
     @GetMapping("/create")
-    public ResponseEntity<String> createSection(@RequestParam String name, @RequestParam Boolean estEtat) {
-        System.out.println("etat ? " + estEtat);
-        return ResponseEntity.ok(sectionService.createSection(name, estEtat));
+    public ResponseEntity<String> createSection(@RequestParam String name) {
+        return ResponseEntity.ok(sectionService.createSection(name));
     }
 
     @GetMapping("/add-tache")
@@ -85,11 +84,5 @@ public class SectionController {
         return ResponseEntity.ok("");
     }
     
-    @PutMapping("/updateEstEtat")
-    public ResponseEntity<String> updateEstEtat(@RequestParam String id, @RequestParam Boolean estEtat)
-    {
-        sectionService.updateEstEtat(id, estEtat);
-        return ResponseEntity.ok("");
-    }
 
 }

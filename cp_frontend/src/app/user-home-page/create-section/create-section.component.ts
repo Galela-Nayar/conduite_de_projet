@@ -13,7 +13,6 @@ export class CreateSectionComponent {
   id: string = '';
   projectId: string = '';
   nom: string = '';
-  estEtat: boolean = false;
   showContextMenu = true;
   contextMenuStyle = {};
   
@@ -33,7 +32,7 @@ export class CreateSectionComponent {
 
 
   onButtonClick() {
-    this.http.get(`http://localhost:8080/sections/create?name=${this.nom}&estEtat=${this.estEtat}`, {responseType: 'text'}).subscribe(
+    this.http.get(`http://localhost:8080/sections/create?name=${this.nom}`, {responseType: 'text'}).subscribe(
       (sectionId: String) => {
         if(sectionId){
           console.log(sectionId);

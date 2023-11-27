@@ -49,7 +49,6 @@ import { ProjetParametresComponent } from './user-home-page/projet-parametres/pr
 import { ModifyTaskComponent } from './user-home-page/project/section/tache/tache-setting/modify-task/modify-task.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ModeAffichageComponent } from './user-home-page/project/mode-affichage/mode-affichage.component';
-import { CreateEtatComponent } from './user-home-page/create-etat/create-etat.component';
 import { EquipeComponent } from './user-home-page/equipe/equipe.component';
 
 import { SectionScrumComponent } from './user-home-page/project/section-scrum/section-scrum.component';
@@ -85,7 +84,6 @@ import { AgendaComponent } from './user-home-page/agenda/agenda.component';
     ProjetParametresComponent,
     ModifyTaskComponent,
     ModeAffichageComponent,
-    CreateEtatComponent,
     EquipeComponent,
     SectionScrumComponent,
     TacheScrumComponent,
