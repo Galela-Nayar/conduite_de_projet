@@ -18,7 +18,6 @@ import {
   CdkDrag,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
-import { CreateEtatComponent } from '../create-etat/create-etat.component';
 
 @Component({
   selector: 'app-project',
@@ -34,7 +33,6 @@ export class ProjectComponent implements OnDestroy {
   showCreateSection = false;
   dataLoad = false;
   sections: any[] = [];
-  etats: any[] = [];
   sectionSubscription!: Subscription;
   modeAffichage: String = '';
   droitUtilisateurActuel: string = '';
@@ -79,26 +77,6 @@ export class ProjectComponent implements OnDestroy {
       }
     });
 
-    //On recupere les etats 
-    this.route.paramMap.subscribe((param) => {
-      const projetId = param.get('projectId');
-      console.log(projetId);
-      if (projetId != null) {
-        this.projetId = projetId;
-        this.sectionSubscription = this.observableService
-          .getObservableSection()
-          .subscribe((response) => {
-            this.http.get<string[]>(`http://localhost:8080/projets/getEtatId?id=${this.projetId}`)
-              .subscribe((etats: string[]) => {
-                this.etats = etats;
-              });
-          });
-          this.etats.forEach((etat) => {
-            console.log("etat : ", etat);
-          });
-      }
-    });
-
     //Les droits de l'utilisateur actuel
     this.http.get(`http://localhost:8080/projets/droitUtilisateur?idUtilisateur=${this.id}&idProjet=${this.projetId}`, {responseType: 'text'}).subscribe((data: string) => {
           this.droitUtilisateurActuel = data;
@@ -106,7 +84,6 @@ export class ProjectComponent implements OnDestroy {
     });
   }
 
-  //En affichage Kanban quand on clique sur plus
   onPlusClickSection(event: MouseEvent): void {
     const dialogRef = this.dialog.open(CreateSectionComponent, {
       data: this.projetId,
@@ -117,16 +94,6 @@ export class ProjectComponent implements OnDestroy {
     });
   }
 
-  //En affichage Scrum quand on clique sur plus
-  onPlusClickEtat(event: MouseEvent): void {
-    const dialogRef = this.dialog.open(CreateEtatComponent, {
-      data: this.projetId,
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-    });
-  }
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.sections, event.previousIndex, event.currentIndex);
@@ -140,22 +107,6 @@ export class ProjectComponent implements OnDestroy {
       });
   }
 
-
-  dropEtat(event: CdkDragDrop<string[]>) {
-    const v1 = this.etats[event.previousIndex];
-    const v2 = this.etats[event.currentIndex];
-    let pi: number = this.sections.indexOf(v1);
-    let ci: number = this.sections.indexOf(v2);
-    moveItemInArray(this.sections, pi, ci);
-    this.http
-      .put(
-        `http://localhost:8080/projets/updateSections?id=${this.projetId}&sections=${this.sections}`,
-        {}
-      )
-      .subscribe((response) => {
-        this.observableService.notifySection();
-      });
-  }
 
   //On appelle cette fonction à chaque fois que le mode d'affichage est changé
   handleAffichageChange(nouvelAffichage: string): void {   

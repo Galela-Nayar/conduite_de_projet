@@ -52,20 +52,6 @@ public class ProjetController {
         return projetService.getProject(id);
     }
 
-    //Renvoi la liste des sections d'un projet, qui sont des etats (Juste l'id)
-    @GetMapping("/getEtatId")
-    public List<String> getEtat(@RequestParam String id)
-    {
-        return projetService.getEtatId(id);
-    }
-
-    //Renvoi la liste des sections d'un projet, qui sont PAS des etats
-    @GetMapping("/getSectionNotEtat")
-    public List<Section> getSectionNotEtat(@RequestParam String id)
-    {
-        return projetService.getSectionNotEtat(id);
-    }
-
     @GetMapping("/removeSection")
     public ResponseEntity<String> removeSection(@RequestParam String id, @RequestParam String sectionId){
         if(projetService.removeSection(id, sectionId)) return ResponseEntity.ok("ok");
