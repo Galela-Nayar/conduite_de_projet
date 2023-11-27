@@ -3,8 +3,10 @@
   border: 1px solid black;
   border-radius: 10px;
   margin: 10px;
-  width: calc(100% - 20px); /* Ajusté pour prendre en compte la marge */
+  width: 350px;
   box-sizing: border-box; 
+  color: lightgray;
+  background-color: rgb(61, 61, 61);
 }
 
 .app-section {
@@ -45,12 +47,4 @@
   content: "\2022 \2022 \2022";
   letter-spacing: 2px;
   font-size: 20px;
-}
-
-.background-etat {
-  background-color: lightblue;
-}
-
-.background-section {
-  background-color: white;
 }

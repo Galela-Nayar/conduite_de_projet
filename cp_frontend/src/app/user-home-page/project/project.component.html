@@ -21,59 +21,61 @@
   </div>
 
   <!-- Affichage en mode Kanban -->
-  <div style="width: auto;" *ngIf="modeAffichage === 'Kanban'">
-    <div style="width: 100%;"
-      cdkDropList
-      cdkDropListOrientation="horizontal"
-      class="section-list"
-      (cdkDropListDropped)="drop($event)"
-      *ngIf="droitUtilisateurActuel != 'Visiteur'"
-    >
-      <div style="width: 100%;" cdkDrag *ngFor="let section of sections">
-        <app-section style="width: 100%;" [sectionId]="section" [projetId]="projetId"></app-section>
+  <div class="background_content">
+    
+      <div *ngIf="modeAffichage === 'Kanban'">
+        <div cdkDropList
+          cdkDropListOrientation="horizontal"
+          class="section-list"
+          (cdkDropListDropped)="drop($event)"
+          *ngIf="droitUtilisateurActuel != 'Visiteur'"
+        >
+          <div cdkDrag *ngFor="let section of sections">
+            <app-section [sectionId]="section" [projetId]="projetId"></app-section>
+          </div>
+          <app-create-section *ngIf="showCreateSection"></app-create-section>
+          <button style="height: 60px; width: 60px; background-color: rgb(61, 61, 61); color:lightgray; font-size: larger; font-weight: 900;"
+            (click)="onPlusClickSection($event)"
+            class="app-section table-style"
+            *ngIf="id"
+          >
+            +
+          </button>
+        </div>
+        <div *ngIf="droitUtilisateurActuel == 'Visiteur'" class="section-list">
+          <div *ngFor="let section of sections">
+            <app-section [sectionId]="section"></app-section>
+          </div>
+        </div>
       </div>
-      <app-create-section *ngIf="showCreateSection"></app-create-section>
-      <button
-        (click)="onPlusClickSection($event)"
-        class="app-section table-style"
-        *ngIf="id"
-      >
-        +
-      </button>
-    </div>
-    <div *ngIf="droitUtilisateurActuel == 'Visiteur'" class="section-list">
-      <div *ngFor="let section of sections">
-        <app-section [sectionId]="section"></app-section>
-      </div>
-    </div>
-  </div>
 
 
-  <!-- Affichage en mode scrum -->
-  <div *ngIf="modeAffichage === 'Scrum'">
-    <div
-      cdkDropList
-      cdkDropListOrientation="vertical"
-      class="section-list-col"
-      (cdkDropListDropped)="dropEtat($event)"
-      *ngIf="droitUtilisateurActuel != 'Visiteur'"
-    >
-      <div cdkDrag *ngFor="let etat of etats">
-        <app-section-scrum [sectionId]="etat"></app-section-scrum>
+      <!-- Affichage en mode scrum -->
+      <div *ngIf="modeAffichage === 'Scrum'">
+        <div
+          cdkDropList
+          cdkDropListOrientation="vertical"
+          class="section-list-col"
+          (cdkDropListDropped)="dropEtat($event)"
+          *ngIf="droitUtilisateurActuel != 'Visiteur'"
+        >
+          <div cdkDrag *ngFor="let etat of etats">
+            <app-section-scrum [sectionId]="etat"></app-section-scrum>
+          </div>
+          <app-create-etat *ngIf="showCreateSection"></app-create-etat>
+          <button
+            (click)="onPlusClickEtat($event)"
+            class="app-section table-style"
+            *ngIf="id"
+          >
+            +
+          </button>
+        </div>
+        <div *ngIf="droitUtilisateurActuel == 'Visiteur'" class="section-list-col">
+          <div *ngFor="let etat of etats">
+            <app-section-scrum [sectionId]="etat"></app-section-scrum>
+          </div>
+        </div>
       </div>
-      <app-create-etat *ngIf="showCreateSection"></app-create-etat>
-      <button
-        (click)="onPlusClickEtat($event)"
-        class="app-section table-style"
-        *ngIf="id"
-      >
-        +
-      </button>
-    </div>
-    <div *ngIf="droitUtilisateurActuel == 'Visiteur'" class="section-list-col">
-      <div *ngFor="let etat of etats">
-        <app-section-scrum [sectionId]="etat"></app-section-scrum>
-      </div>
-    </div>
   </div>
 </div>
