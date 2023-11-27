@@ -14,8 +14,78 @@
 }
 
 .container {
-  height: 100%;
+  height: auto;
   width: auto;
+}
+
+.row{
+  border-bottom: 2px solid rgb(53, 53, 53);
+  border-right: 2px solid rgb(53, 53, 53);
+  width: auto;
+  height:auto;
+  padding: 0px;
+}
+
+.col{
+  padding: 0px;
+  width: auto;
+  height: 80px;
+}
+
+.separator {
+  height: 90%;
+  content: "";
+  border-left: 0.13em solid #2e2e2e;
+}
+
+.header{
+  padding: 0px;
+  margin-top: 15px;
+  width: auto;
+  height: 80px;
+  display: flex; 
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(66, 66, 66);
+}
+
+
+.projet-info{
+  width: auto;
+  height: auto;
+  margin: 0px 10px 0px 10px;
+  justify-content: space-between;
+  display: flex; 
+  flex: 1;
+}
+
+.projet-name{
+  margin-top: 15px;
+  color: rgb(255, 255, 255);
+}
+
+.projet-date{
+  margin-top: 25px;
+  display: flex;
+  color: rgb(216, 216, 216);
+}
+
+
+.selection{
+  width: auto;
+  height: auto;
+  display: flex;
+  flex: 1;
+  justify-content:space-evenly;
+}
+
+.setting{
+  width: auto;
+  height: auto;
+  flex: 1;
+  display: flex;
+  justify-content:end;
+
 }
 
 .section-list {

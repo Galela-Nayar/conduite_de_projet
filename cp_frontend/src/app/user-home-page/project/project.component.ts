@@ -165,4 +165,32 @@ export class ProjectComponent implements OnDestroy {
     this.modeAffichage = nouvelAffichage;
     console.log('Le mode d\'affichage est ', this.modeAffichage);
   }
+
+  getFormattedDate(date: string | Date): string {
+    date = new Date(date);
+    return `${date.getDate()}/${this.getFormattedMonth(date)}/${date.getFullYear()}`;
+  }
+
+  getFormattedMonth(date: string | Date): string {
+    date = new Date(date);
+    
+    const monthDict = {
+      'Jan': 1,
+      'Feb': 2,
+      'Mar': 3,
+      'Apr': 4,
+      'May': 5,
+      'Jun': 6,
+      'Jul': 7,
+      'Aug': 8,
+      'Sep': 9,
+      'Oct': 10,
+      'Nov': 11,
+      'Dec': 12
+    };
+
+    type MonthKey = 'Jan' | 'Feb' | 'Mar' | 'Apr' | 'May' | 'Jun' | 'Jul' | 'Aug' | 'Sep' | 'Oct' | 'Nov' | 'Dec';
+    let month: MonthKey = date.toString().split(' ')[1] as MonthKey;
+    return `${monthDict[month]}`;
+  }
 }
