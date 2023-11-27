@@ -12,8 +12,8 @@
   border-bottom: 2px solid;
   border-image-source: linear-gradient(
     to right,
-    rgba(122, 243, 9, 0.664),
-    rgba(218, 255, 9, 0.712)
+    rgba(19, 110, 5, 0.99),
+    rgba(169, 255, 9, 0.99)
   );
   border-image-slice: 1;
 }

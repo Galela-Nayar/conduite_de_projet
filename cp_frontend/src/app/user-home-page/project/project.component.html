@@ -1,11 +1,21 @@
 
-<div class="container" style="border: 2px solid rgb(63, 63, 63);">
+<div class="container">
   <!-- Petit encadré avec texte -->
-  <div class="row" style="border: 2px solid gray">
+  <div class="row">
       <div class="col">
-        <div style=" padding-top: 10px; display: flex; justify-content:flex-start; align-items: center; ">
-          <h1 class="text-center" style="padding: 0px 30px 0px 10px;">{{ projet?.nom }}</h1>
-          <app-mode-affichage style=" padding-top: 5px;" (affichageChange)="handleAffichageChange($event)"></app-mode-affichage>
+        <div class="header">
+          <div class="projet-info">
+            <h1 class="projet-name">{{ projet.nom }}</h1>
+            <h3 class="projet-date">Pour le : {{getFormattedDate(projet.dateButtoire)}}</h3>
+          </div>
+          <div class="separator"></div>
+          <div class="selection">
+            <app-mode-affichage (affichageChange)="handleAffichageChange($event)"></app-mode-affichage>
+          </div>
+          <div class="separator"></div>
+          <div class="setting">
+            <app-project-setting [projectId]="projet.id" [id]="id"></app-project-setting>
+          </div>
         </div>
       </div>
   </div>

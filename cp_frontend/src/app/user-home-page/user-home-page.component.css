@@ -1,6 +1,7 @@
 .container {
     display: flex;
-    height: 100%; /* Utilise toute la hauteur de la fenêtre de visualisation */
+    flex-direction: column;
+    height: auto; /* Utilise toute la hauteur de la fenêtre de visualisation */
   }
   
   .app-lateral-user-home-menu {
@@ -10,10 +11,7 @@
   }
   
   .right-section {
-    flex-grow: 1;
     display: flex;
-    flex-direction: column;
-    margin-left: 200px; /* décalage à droite de la largeur du menu latéral */
   }
   
   .app-horizontal-user-home-menu {
@@ -25,5 +23,6 @@
     height: 100%;
     flex-grow: 1;
     overflow: auto; /* Ajoute une barre de défilement si le contenu est trop grand */
-    margin-top: 42px; /* décalage vers le bas de la hauteur du menu horizontal */
+    padding-top: 47px; /* décalage vers le bas de la hauteur du menu horizontal */
+    padding-left: 200px;
   }
