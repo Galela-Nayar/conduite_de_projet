@@ -32,8 +32,8 @@ public class SectionService {
             sectionRepository.save(section);
         }
     }
-    public String createSection(String name, boolean estEtat) {
-        Section section = new Section(name, estEtat);
+    public String createSection(String name) {
+        Section section = new Section(name);
         sectionRepository.save(section);
         return section.getId();
     }
@@ -84,12 +84,6 @@ public class SectionService {
     public void updateNom(String id, String nom){
         Section sc = this.getSection(id);
         sc.setNom(nom);
-        this.sectionRepository.save(sc);
-    }
-
-    public void updateEstEtat(String id, Boolean estEtat){
-        Section sc = this.getSection(id);
-        sc.setEstEtat(estEtat);
         this.sectionRepository.save(sc);
     }
 

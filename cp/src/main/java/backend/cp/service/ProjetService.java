@@ -51,9 +51,9 @@ private final ApplicationContext applicationContext;
     private List<String> setSection() {
         SectionService sectionService = applicationContext.getBean(SectionService.class);
         ArrayList<String> sections = new ArrayList<>();
-        sections.add(sectionService.createSection("A faire", false));
-        sections.add(sectionService.createSection("En cours", false));
-        sections.add(sectionService.createSection("Terminé", false));
+        sections.add(sectionService.createSection("A faire"));
+        sections.add(sectionService.createSection("En cours"));
+        sections.add(sectionService.createSection("Terminé"));
         return sections;
     }
 
@@ -77,37 +77,6 @@ private final ApplicationContext applicationContext;
         return null;
     }
 
-    public List<String> getEtatId(String id)
-    {
-
-        SectionService sectionService = applicationContext.getBean(SectionService.class);
-        Projet pj = this.getProject(id);
-        List<String> sections = pj.getSections();
-        List<String> etats = new ArrayList<>();
-        for (String section : sections) {
-            if(sectionService.getSection(section).getEstEtat())
-            {
-                etats.add(section);
-            }
-        }
-        return etats;
-    }
-
-    public List<Section> getSectionNotEtat(String id)
-    {
-
-        SectionService sectionService = applicationContext.getBean(SectionService.class);
-        Projet pj = this.getProject(id);
-        List<String> sections = pj.getSections();
-        List<Section> sectionsPasEtat = new ArrayList<>();
-        for (String section : sections) {
-            if(!sectionService.getSection(section).getEstEtat())
-            {
-                sectionsPasEtat.add(sectionService.getSection(section));
-            }
-        }
-        return sectionsPasEtat;
-    }
 
     public void addSection(String projectId, String sectionId) {
         System.out.println("Enter in addSection");

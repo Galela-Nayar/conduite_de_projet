@@ -3,8 +3,6 @@ export interface Section {
     nom: string;
     taches: string[];
     [key:string]:any;
-    
-    estEtat: boolean;
   }
 
 export default Section
