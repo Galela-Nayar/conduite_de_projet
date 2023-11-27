@@ -12,6 +12,7 @@
   
   .right-section {
     display: flex;
+    z-index: 2;
   }
   
   .app-horizontal-user-home-menu {
@@ -22,7 +23,7 @@
   .router-content {
     height: 100%;
     flex-grow: 1;
-    overflow: auto; /* Ajoute une barre de défilement si le contenu est trop grand */
-    padding-top: 47px; /* décalage vers le bas de la hauteur du menu horizontal */
+    overflow: visible; /* Ajoute une barre de défilement si le contenu est trop grand */
+    padding-top: 46px; /* décalage vers le bas de la hauteur du menu horizontal */
     padding-left: 200px;
   }
