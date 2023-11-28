@@ -60,6 +60,18 @@ public class TacheController {
         return ResponseEntity.ok("");
     }
 
+    @PutMapping("/updatePriorite")
+    public ResponseEntity<String> updatePriorite(@RequestParam String id, @RequestParam Integer priorite){
+        tacheService.updatePriorite(id, priorite);
+        return ResponseEntity.ok("");
+    }
+
+    @PutMapping("/updatePonderation")
+    public ResponseEntity<String> updatePonderation(@RequestParam String id, @RequestParam Integer ponderation){
+        tacheService.updatePonderation(id, ponderation);
+        return ResponseEntity.ok("");
+    }
+
     @GetMapping("/swapStatut")
     public ResponseEntity<String> swapStatut(@RequestParam String id){
         tacheService.swapStatut(id);

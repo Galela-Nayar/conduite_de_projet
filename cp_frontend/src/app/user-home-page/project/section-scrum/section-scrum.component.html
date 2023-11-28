@@ -1,7 +1,12 @@
 <div class="container">
     <div class="table ">
             <div class="table-row">
-                <div class="cell" style="margin-top: -15px;"><strong style="font-size: 1.80em;">{{section?.nom}}</strong></div>
+                <div class="cell" style="margin-top: -15px;" *ngIf="!isEditingNom" (dblclick)="isEditingNom = true">
+                        <strong style="font-size: 1.80em;">{{section?.nom}}</strong>
+                    </div>
+                    <div class="cell" *ngIf="isEditingNom">
+                        <textarea style="text-align: center; outline: none; background-color: rgb(75, 75, 75); border: 2px solid rgb(46, 46, 46); padding: 0px; margin: 0px;" #textareaNom *ngIf="isEditingNom" [(ngModel)]="section.nom" (blur)="updateTaskNom()" (input)="adjustTextareaNom($event)" ></textarea>
+                    </div>
                 <div class="cell">Assignée</div>
                 <div class="cell">Statut</div>
                 <div class="cell">Priorité</div>

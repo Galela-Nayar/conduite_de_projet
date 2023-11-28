@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, Input } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -13,9 +13,9 @@ import { CreateTaskComponent } from '../../create-task/create-task.component';
   templateUrl: './section-scrum.component.html',
   styleUrls: ['./section-scrum.component.css']
 })
-export class SectionScrumComponent {
+export class SectionScrumComponent implements AfterViewChecked{
+  @ViewChild('textareaNom') textareaNom!: ElementRef;
   @Input() id!: String | null;
-  @Input()
   @Input() projetId!: String;
   @Input() sectionId: String;
   section!: Section;
@@ -24,6 +24,7 @@ export class SectionScrumComponent {
   showCreateTask = false;
   showSetting = false;
   taskSubscription!: Subscription;
+  isEditingNom = false;
   tasks!: string[];
   private sectionData = new BehaviorSubject<Section | null>(null);
 
@@ -33,6 +34,7 @@ export class SectionScrumComponent {
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
     private observableService: ObservableService,
+    private observerService: ObservableService,
     public dialog: MatDialog
   ) {}
 
@@ -53,6 +55,44 @@ export class SectionScrumComponent {
             });
         });
     }
+  }
+
+  ngAfterViewChecked() {
+    if (this.textareaNom) {
+      this.adjustTextareaNom({ target: this.textareaNom!.nativeElement });
+      this.textareaNom.nativeElement.focus();
+    }
+  }
+
+  adjustTextareaNom(event?: any) {
+    let target = event ? event.target : this.textareaNom.nativeElement;
+    target.style.height = 'auto';
+    target.style.height = (target.scrollHeight) + 'px';
+}
+
+  updateTaskNom() {
+    this.http.put(`http://localhost:8080/sections/updateNom?id=${this.sectionId}&nom=${this.section.nom}`, {responseType:"text"}).
+    subscribe((tacheData) => {
+      this.updateSection();
+      this.isEditingNom = false;
+      this.observerService.notifyTask();
+      this.cd.detectChanges()
+    })
+  }
+
+  updateSection() {
+    this.taskSubscription = this.observableService
+        .getObservableTask()
+        .subscribe((response) => {
+          this.http
+            .get<Section>(
+              `http://localhost:8080/sections/section?id=${this.sectionId}`
+            )
+            .subscribe((response) => {
+              this.section = response;
+              this.tasks = this.section.taches;
+            });
+        });
   }
   
   onPlusClick(event: MouseEvent): void {

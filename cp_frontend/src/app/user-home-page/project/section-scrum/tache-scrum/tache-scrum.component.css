@@ -29,6 +29,13 @@
   margin: -10px 5px;
 }
 
+textarea {
+  border: none;
+  resize: none;
+  background-color: rgb(82, 82, 82);
+  color: rgb(228, 228, 228);
+}
+
 .nom_utilisateur:first-child{
   display: flex;
   height: 20px; 

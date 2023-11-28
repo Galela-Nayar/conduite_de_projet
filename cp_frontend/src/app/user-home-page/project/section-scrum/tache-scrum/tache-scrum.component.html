@@ -1,6 +1,9 @@
 <div class="trr" style="margin: 0px; padding: 0px;">
-    <div class="cell">
+    <div class="cell" *ngIf="!isEditingNom" (dblclick)="isEditingNom = true">
         {{ tache?.nom }}
+    </div>
+    <div class="cell" *ngIf="isEditingNom">
+        <textarea style="text-align: center;" #textareaNom *ngIf="isEditingNom" [(ngModel)]="tache.nom" (blur)="updateTaskNom()" (input)="adjustTextareaNom($event)" ></textarea>
     </div>
     <div class="cell" style="display: flex; flex-direction: column; position: relative;" >
         <div style="position: absolute; top: 5px; right: 0;">
@@ -28,11 +31,17 @@
         {{ tache.statutTerminer ? 'Terminé' : tache.dateLimite != null ? 'En Cours' : 'Créer'}}
         
     </div>
-    <div class="cell">
+    <div class="cell" *ngIf="!isEditingPriorite" (dblclick)="isEditingPriorite = true">
         {{ tache?.priorite }}
     </div>
-    <div class="cell">
+    <div class="cell" *ngIf="isEditingPriorite">
+        <textarea style="text-align: center;" #textareaPriorite *ngIf="isEditingPriorite" [(ngModel)]="tache.priorite" (blur)="updateTaskPriorite()" (input)="adjustTextareaPriorite($event)"></textarea>
+    </div>
+    <div class="cell" *ngIf="!isEditingPonderation" (dblclick)="isEditingPonderation = true">
         {{ tache?.ponderation }}
+    </div>
+    <div class="cell" *ngIf="isEditingPonderation">
+        <textarea style="text-align: center;" #textareaPonderation *ngIf="isEditingPonderation" [(ngModel)]="tache.ponderation" (blur)="updateTaskPonderation()" (input)="adjustTextareaPonderation($event)"></textarea>
     </div>
     <div class="cell">
         {{ tache?.dateCreation | date }}
