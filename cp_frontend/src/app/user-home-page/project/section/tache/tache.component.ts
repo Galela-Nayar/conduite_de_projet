@@ -1,6 +1,6 @@
 import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, Input } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Subscription, mergeMap } from 'rxjs';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
@@ -12,7 +12,8 @@ import Utilisateur from 'src/interface/Utilisateur';
   templateUrl: './tache.component.html',
   styleUrls: ['./tache.component.css'],
 })
-export class TacheComponent {
+export class TacheComponent  implements AfterViewChecked {
+  @ViewChild('textareaNom') textareaNom!: ElementRef;
   id: String | null = '';
   @Input() projetId: String = '';
   @Input()
@@ -27,6 +28,7 @@ export class TacheComponent {
   dateLimite!: Date;
   membreAttribue!: any[]
   droitUtilisateurActuel: string = '';
+  isEditingNom = false;
 
   constructor(
     private http: HttpClient,
@@ -89,6 +91,29 @@ export class TacheComponent {
     });
   }
 
+  ngAfterViewChecked() {
+    if (this.textareaNom) {
+      this.adjustTextareaNom({ target: this.textareaNom!.nativeElement });
+      this.textareaNom.nativeElement.focus();
+    }
+  }
+
+  adjustTextareaNom(event?: any) {
+    let target = event ? event.target : this.textareaNom.nativeElement;
+    target.style.height = 'auto';
+    target.style.height = (target.scrollHeight) + 'px';
+}
+
+updateTaskNom() {
+  this.http.put(`http://localhost:8080/taches/updateNom?id=${this.tacheId}&nom=${this.tache.nom}`, {responseType:"text"}).
+  subscribe((tacheData) => {
+    this.updateTache();
+    this.isEditingNom = false;
+    this.observerService.notifyTask();
+    this.cd.detectChanges()
+  })
+}
+
   swapStatut(){
     this.http.get(`http://localhost:8080/taches/swapStatut?id=${this.tacheId}`, {responseType:"text"}).
     subscribe((tacheData) => {
@@ -102,4 +127,34 @@ export class TacheComponent {
   onSettingClick(event: MouseEvent) {
     this.cd.detectChanges();
   }
+  updateTache(){
+  this.taskSubscription = this.observableService
+        .getObservableTask()
+        .subscribe((response) => {
+          this.http
+            .get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`)
+            .subscribe((response) => {
+              this.tache = response;
+              this.dateLimite = new Date(this.tache.dateLimite);
+              // Formater la date selon le modèle "JJ-MM-AA"
+              const formattedDate = this.dateLimite.toLocaleDateString(
+                'fr-FR',
+                {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric',
+                }
+              );
+              this.http
+              .get<Utilisateur[]>(
+                `http://localhost:8080/taches/membreAttribue?id=${this.tacheId}`
+              )
+              .subscribe((data: Utilisateur[]) => {
+                this.membreAttribue = data;
+              });
+              // Mettre à jour la dateLimite avec la date formatée
+              this.dateLimite = new Date(formattedDate);
+            });
+        });
+      }
 }

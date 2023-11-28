@@ -10,8 +10,11 @@
             Date de fin: {{ this.tache.dateLimite | date : "dd-MM-yyyy" }}
           </div>
         </div>
-        <div class="contenu">
-          <p>{{ tache.nom }}</p>
+        <div class="contenu" *ngIf="!isEditingNom" (dblclick)="isEditingNom = true">
+            <p>{{ tache.nom }}</p>
+        </div>
+        <div class="contenu" *ngIf="isEditingNom">
+            <textarea style="text-align: center;" #textareaNom *ngIf="isEditingNom" [(ngModel)]="tache.nom" (blur)="updateTaskNom()" (input)="adjustTextareaNom($event)" ></textarea>
         </div>
         <div class="settings-and-checkbox" *ngIf="droitUtilisateurActuel != 'Visiteur'">
           <app-tache-setting
