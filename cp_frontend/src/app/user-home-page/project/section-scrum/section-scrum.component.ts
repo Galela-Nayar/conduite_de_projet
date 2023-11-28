@@ -14,11 +14,11 @@ import { CreateTaskComponent } from '../../create-task/create-task.component';
   styleUrls: ['./section-scrum.component.css']
 })
 export class SectionScrumComponent {
-  id: String | null = '';
+  @Input() id!: String | null;
   @Input()
-  projetId: String = '';
-  @Input() sectionId: String = '';
-  section?: Section;
+  projetId!: String;
+  @Input() sectionId: String;
+  section!: Section;
   mouseX: number = 0;
   mouseY: number = 0;
   showCreateTask = false;
@@ -37,9 +37,7 @@ export class SectionScrumComponent {
   ) {}
 
   ngOnInit() {
-    this.id = this.route.parent
-      ? this.route.parent.snapshot.paramMap.get('id')
-      : null;
+    console.log("projet ID: " + this.id);
     if (this.sectionId) {
       this.sectionService.changeSectionId(this.sectionId);
       this.sectionId = this.sectionId;

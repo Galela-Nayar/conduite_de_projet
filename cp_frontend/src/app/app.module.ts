@@ -57,6 +57,7 @@ import { TacheScrumComponent } from './user-home-page/project/section-scrum/tach
 import { ListProjetComponent } from './user-home-page/list-projet/list-projet.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { AgendaComponent } from './user-home-page/agenda/agenda.component';
+import { DateLimiteCalendrierComponent } from './user-home-page/project/section-scrum/tache-scrum/date-limite-calendrier/date-limite-calendrier.component';
 //import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
@@ -89,6 +90,7 @@ import { AgendaComponent } from './user-home-page/agenda/agenda.component';
     TacheScrumComponent,
     ListProjetComponent,
     AgendaComponent,
+    DateLimiteCalendrierComponent,
   ],
   imports: [
     BrowserModule,

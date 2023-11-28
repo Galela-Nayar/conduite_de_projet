@@ -1,12 +1,16 @@
 
 .container {
+
+  color: white;
   margin: 10px 10px 10px 10px;
   border: 1px;
-  border-color: rgb(100, 100, 100);
+  border-color: rgb(110, 110, 110);
   border-width: 2px;
   border-style:solid;
+  border-radius: 10px;
   padding: 0;
   width:auto;
+  background-color: rgb(65, 65, 65) ;
 }
 
 .table {
@@ -19,11 +23,18 @@
     padding:auto;
     border-style: solid;
     border-width: 1px;
+    border-radius: 5px;
+
+    border-color: gray;
+    background-color: rgb(61, 61, 61) ;
     
 }
 
   .table-row {
     width: auto;
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
 
 }
 
@@ -36,8 +47,15 @@
   width: auto;
   margin: 2px;
   padding:auto;
+
+  border-color: lightgray;
   border-style: solid;
   border-width: 1px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: rgba(128, 128, 128, 0.5) ;
   
 }
 
@@ -51,11 +69,11 @@
 
   
 .cell {
-  
+  flex:1;
   display: table-cell;
-  width: 200px;
-  min-height: 50px;
+  min-height: 40px;
   text-align: center;
   vertical-align: middle;
   overflow: auto;
+  margin-left: -5px;
 }

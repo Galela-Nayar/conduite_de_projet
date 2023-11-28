@@ -5,8 +5,8 @@
       <div class="col">
         <div class="header">
           <div class="projet-info">
-            <h1 class="projet-name">{{ projet.nom }}</h1>
-            <h3 class="projet-date">Pour le : {{getFormattedDate(projet.dateButtoire)}}</h3>
+            <h1 class="projet-name">{{ projet?.nom }}</h1>
+            <h3 class="projet-date">Pour le : {{getFormattedDate(projet?.dateButtoire)}}</h3>
           </div>
           <div class="separator"></div>
           <div class="selection">
@@ -14,7 +14,7 @@
           </div>
           <div class="separator"></div>
           <div class="setting">
-            <app-project-setting [projectId]="projet.id" [id]="id"></app-project-setting>
+            <app-project-setting [projectId]="projet?.id" [id]="id"></app-project-setting>
           </div>
         </div>
       </div>
@@ -44,7 +44,7 @@
         </div>
         <div *ngIf="droitUtilisateurActuel == 'Visiteur'" class="section-list">
           <div *ngFor="let section of sections">
-            <app-section [sectionId]="section"></app-section>
+            <app-section [id]="id" [sectionId]="section"></app-section>
           </div>
         </div>
       </div>
@@ -60,7 +60,7 @@
       *ngIf="droitUtilisateurActuel != 'Visiteur'"
     >
       <div cdkDrag *ngFor="let section of sections">
-        <app-section-scrum [sectionId]="section"></app-section-scrum>
+        <app-section-scrum [id]="id" [sectionId]="section"></app-section-scrum>
       </div>
       <app-create-section *ngIf="showCreateSection"></app-create-section>
       <button
@@ -73,7 +73,7 @@
     </div>
     <div *ngIf="droitUtilisateurActuel == 'Visiteur'" class="section-list-col">
       <div *ngFor="let section of sections">
-        <app-section-scrum [sectionId]="section"></app-section-scrum>
+        <app-section-scrum [id]="id" [sectionId]="section"></app-section-scrum>
       </div>
     </div>
   </div>

@@ -20,7 +20,7 @@
 }
 
 .row{
-  z-index: 1000;
+  z-index: 1;
   position: sticky;
   top: 62px;
   border-bottom: 2px solid rgb(53, 53, 53);

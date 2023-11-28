@@ -55,7 +55,6 @@ export class ProjectComponent implements OnDestroy {
     if (id != null) this.id = id;
     this.route.paramMap.subscribe((param) => {
       const projetId = param.get('projectId');
-      console.log(projetId);
       if (projetId != null) {
         this.projetId = projetId;
         this.sectionSubscription = this.observableService
