@@ -2,16 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import {
   ChangeDetectorRef,
   Component,
+  ElementRef,
   Input,
-  OnDestroy,
   ViewChild,
-  ViewContainerRef,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Section from 'src/interface/Section';
-import { BehaviorSubject, Subscription, mergeMap } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
-import Tache from 'src/interface/Tache';
 import { SectionService } from './section.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateTaskComponent } from '../../create-task/create-task.component';
@@ -23,12 +21,14 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   styleUrls: ['./section.component.css'],
 })
 export class SectionComponent {
+  @ViewChild('textareaNom') textareaNom!: ElementRef;
   id: String | null = '';
   @Input()
   projetId: String = '';
   @Input() sectionId: String = '';
   section?: Section;
   mouseX: number = 0;
+  isEditingNom = false;
   mouseY: number = 0;
   showCreateTask = false;
   showSetting = false;
@@ -43,6 +43,7 @@ export class SectionComponent {
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
     private observableService: ObservableService,
+    private observerService: ObservableService,
     public dialog: MatDialog
   ) {}
 
@@ -79,6 +80,44 @@ export class SectionComponent {
     this.http.get(`http://localhost:8080/projets/droitUtilisateur?idUtilisateur=${this.id}&idProjet=${this.projetId}`, {responseType: 'text'}).subscribe((data: string) => {
           this.droitUtilisateurActuel = data;
     });
+  }
+
+  ngAfterViewChecked() {
+    if (this.textareaNom) {
+      this.adjustTextareaNom({ target: this.textareaNom!.nativeElement });
+      this.textareaNom.nativeElement.focus();
+    }
+  }
+
+  adjustTextareaNom(event?: any) {
+    let target = event ? event.target : this.textareaNom.nativeElement;
+    target.style.height = 'auto';
+    target.style.height = (target.scrollHeight) + 'px';
+}
+
+  updateTaskNom() {
+    this.http.put(`http://localhost:8080/sections/updateNom?id=${this.sectionId}&nom=${this.section.nom}`, {responseType:"text"}).
+    subscribe((tacheData) => {
+      this.updateSection();
+      this.isEditingNom = false;
+      this.observerService.notifyTask();
+      this.cd.detectChanges()
+    })
+  }
+
+  updateSection(){
+    this.taskSubscription = this.observableService
+        .getObservableTask()
+        .subscribe((response) => {
+          this.http
+            .get<Section>(
+              `http://localhost:8080/sections/section?id=${this.sectionId}`
+            )
+            .subscribe((response) => {
+              this.section = response;
+              this.tasks = this.section.taches;
+            });
+        });
   }
 
   onPlusClick(event: MouseEvent): void {

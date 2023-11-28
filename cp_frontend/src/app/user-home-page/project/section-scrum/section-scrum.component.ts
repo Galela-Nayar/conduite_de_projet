@@ -16,7 +16,6 @@ import { CreateTaskComponent } from '../../create-task/create-task.component';
 export class SectionScrumComponent implements AfterViewChecked{
   @ViewChild('textareaNom') textareaNom!: ElementRef;
   @Input() id!: String | null;
-  @Input()
   @Input() projetId!: String;
   @Input() sectionId: String;
   section!: Section;
