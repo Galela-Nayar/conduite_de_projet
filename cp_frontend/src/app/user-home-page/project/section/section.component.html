@@ -14,7 +14,7 @@
 
   <div cdkDropList (cdkDropListDropped)="drop($event)">
     <div style="display: block; justify-items: center; align-items: center; width: 100%" cdkDrag *ngFor="let task of tasks">
-      <app-tache  [tacheId]="task" [sectionId]="sectionId" [projetId]="projetId"></app-tache>
+      <app-tache [id]="id" [tacheId]="task" [sectionId]="sectionId" [projetId]="projetId"></app-tache>
     </div>
     <div *ngIf="droitUtilisateurActuel != 'Visiteur'">
       <div class="parent-container">

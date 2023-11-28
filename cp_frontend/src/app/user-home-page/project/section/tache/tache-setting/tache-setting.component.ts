@@ -23,11 +23,12 @@ export class TacheSettingComponent {
     private route: ActivatedRoute, private observableService: ObservableService,
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<ModifierCollaborateurComponent>,
-       @Inject(MAT_DIALOG_DATA) public data: { projetId: String,id: String, tacheId: String }
+       @Inject(MAT_DIALOG_DATA) public data: { projetId: String,id: String, tacheId: String , sectionId: String}
    ) {
        this.projetId = data.projetId;
        this.id = data.id;
        this.tacheId = data.tacheId;
+       this.sectionId = data.sectionId
    }
 
 
@@ -37,6 +38,7 @@ export class TacheSettingComponent {
       this.http.get(`http://localhost:8080/sections/removeTache?id=${this.sectionId}&tacheId=${this.tacheId}`,{responseType: 'text'}).subscribe((response2: String)=>{
         console.log("supprimer tache dans section: " + response)
         this.observableService.notifyTask();
+        this.dialogRef.close()
       })
     })
   }
@@ -68,7 +70,7 @@ export class TacheSettingComponent {
   
     const dialogRef = this.dialog.open(ModifierCollaborateurComponent, {
       position: { left: `${left}px`, top: `${top}px` },
-      data: { projetId: this.projetId,id: this.id, tacheId: this.tacheId }
+      data: { projetId: this.projetId,id: this.id, tacheId: this.tacheId, sectionId: this.sectionId }
     });
   
     

@@ -22,7 +22,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class SectionComponent {
   @ViewChild('textareaNom') textareaNom!: ElementRef;
-  id: String | null = '';
+  @Input()  id: String | null = '';
   @Input()
   projetId: String = '';
   @Input() sectionId: String = '';

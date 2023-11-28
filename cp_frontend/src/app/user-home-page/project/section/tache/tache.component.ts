@@ -18,7 +18,7 @@ import { DateLimiteCalendrierComponent } from '../../section-scrum/tache-scrum/d
 })
 export class TacheComponent  implements AfterViewChecked {
   @ViewChild('textareaNom') textareaNom!: ElementRef;
-  id: String | null = '';
+  @Input() id: String | null = '';
   @Input() projetId: String = '';
   @Input()
   sectionId: String | null = '';
@@ -44,7 +44,6 @@ export class TacheComponent  implements AfterViewChecked {
     public dialog: MatDialog) {}
 
   ngOnInit() {
-    console.log('tacheId: ' + this.tacheId);
     if (this.tacheId) {
       this.taskSubscription = this.observableService
         .getObservableTask()
@@ -76,17 +75,6 @@ export class TacheComponent  implements AfterViewChecked {
         });
     }
 
-    this.route.paramMap.subscribe((param) => {
-      const projetId = param.get('projectId');
-      console.log(projetId);
-      if (projetId != null) {
-        this.projetId = projetId;
-      }
-    });
-
-    this.id = this.route.parent
-      ? this.route.parent.snapshot.paramMap.get('id')
-      : null;
 
     //Les droits de l'utilisateur actuel
     this.http.get(`http://localhost:8080/projets/droitUtilisateur?idUtilisateur=${this.id}&idProjet=${this.projetId}`, {responseType: 'text'}).subscribe((data: string) => {
@@ -124,7 +112,7 @@ openDialogSetting(event: MouseEvent): void {
 
   const dialogRef = this.dialog.open(TacheSettingComponent, {
     position: { left: `${left}px`, top: `${top}px` },
-    data: { projetId: this.projetId,id: this.id, tacheId: this.tacheId }
+    data: { projetId: this.projetId,id: this.id, tacheId: this.tacheId, sectionId: this.sectionId }
   });
 
   dialogRef.afterClosed().subscribe(result => {
