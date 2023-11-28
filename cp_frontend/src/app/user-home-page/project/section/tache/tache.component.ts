@@ -1,11 +1,15 @@
 import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Subscription, mergeMap } from 'rxjs';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
 import Tache from 'src/interface/Tache';
 import Utilisateur from 'src/interface/Utilisateur';
+import { ModifierCollaborateurComponent } from '../../section-scrum/tache-scrum/modifier-collaborateur/modifier-collaborateur.component';
+import { TacheSettingComponent } from './tache-setting/tache-setting.component';
+import { DateLimiteCalendrierComponent } from '../../section-scrum/tache-scrum/date-limite-calendrier/date-limite-calendrier.component';
 
 @Component({
   selector: 'app-tache',
@@ -36,8 +40,8 @@ export class TacheComponent  implements AfterViewChecked {
     private observableService: ObservableService,
     private observerService: ObservableService,
 
-    private cd: ChangeDetectorRef
-  ) {}
+    private cd: ChangeDetectorRef,
+    public dialog: MatDialog) {}
 
   ngOnInit() {
     console.log('tacheId: ' + this.tacheId);
@@ -104,6 +108,63 @@ export class TacheComponent  implements AfterViewChecked {
     target.style.height = (target.scrollHeight) + 'px';
 }
 
+openDialogSetting(event: MouseEvent): void {
+  const dialogWidth = 300; // Replace with the width of your dialog
+  const dialogHeight = 200; // Replace with the height of your dialog
+  let left = event.clientX;
+  let top = event.clientY;
+
+  if (left + dialogWidth > window.innerWidth) {
+    left = window.innerWidth - dialogWidth;
+  }
+
+  if (top + dialogHeight > window.innerHeight) {
+    top = window.innerHeight - dialogHeight;
+  }
+
+  const dialogRef = this.dialog.open(TacheSettingComponent, {
+    position: { left: `${left}px`, top: `${top}px` },
+    data: { projetId: this.projetId,id: this.id, tacheId: this.tacheId }
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      
+    }
+    this.updateTache();
+    this.cd.detectChanges();
+    this.observerService.notifyTask();
+  });
+}
+
+openDialogDate(event: MouseEvent): void {
+  const dialogWidth = 300; // Replace with the width of your dialog
+  const dialogHeight = 200; // Replace with the height of your dialog
+  let left = event.clientX;
+  let top = event.clientY;
+
+  if (left + dialogWidth > window.innerWidth) {
+    left = window.innerWidth - dialogWidth;
+  }
+
+  if (top + dialogHeight > window.innerHeight) {
+    top = window.innerHeight - dialogHeight;
+  }
+
+  const dialogRef = this.dialog.open(DateLimiteCalendrierComponent, {
+    position: { left: `${left}px`, top: `${top}px` },
+    data: { date: this.tache?.dateLimite || new Date(), tacheId: this.tacheId }
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.updateTache();
+      this.cd.detectChanges();
+      this.observerService.notifyTask();
+    }
+  });
+}
+
 updateTaskNom() {
   this.http.put(`http://localhost:8080/taches/updateNom?id=${this.tacheId}&nom=${this.tache.nom}`, {responseType:"text"}).
   subscribe((tacheData) => {
@@ -126,6 +187,7 @@ updateTaskNom() {
 
   onSettingClick(event: MouseEvent) {
     this.cd.detectChanges();
+    
   }
   updateTache(){
   this.taskSubscription = this.observableService

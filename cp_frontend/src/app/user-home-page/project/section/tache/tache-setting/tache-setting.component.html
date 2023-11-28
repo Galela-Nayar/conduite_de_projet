@@ -1,14 +1,16 @@
-<button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>more_vert</mat-icon>
-</button>
-<mat-menu #menu="matMenu">
+
+<mat-dialog-content>
+    <button mat-menu-item (click)="modifier()">
+        <mat-icon>description</mat-icon>
+        <span>Description</span>
+    </button>
+    <button mat-menu-item (click)="openDialogCollaborateurs($event)">
+        <mat-icon>group</mat-icon>
+        <span>Attribuer collaborateurs</span>
+    </button>
     <button mat-menu-item (click)="supprimer()">
         <mat-icon>delete</mat-icon>
         <span>Supprimer la tache</span>
     </button>
-    <button mat-menu-item (click)="modifier()">
-        <mat-icon>create</mat-icon>
-        <span>Modifier la tache</span>
-    </button>
-</mat-menu>
+</mat-dialog-content>
       

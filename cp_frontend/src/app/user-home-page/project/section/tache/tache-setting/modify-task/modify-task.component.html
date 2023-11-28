@@ -1,27 +1,13 @@
 <div *ngIf="tache" class="container">
   <div class="header">
-    <h2>
-      <div style="display: flex; align-items: baseline; margin-bottom: 15px">
-        <h2>Nom:</h2>
-        <span
-          style="
-            padding-left: 10px;
+    <span style="
             color: white;
             font-size: 1.7em;
             font-weight: 1800;
-          "
-          >{{ tache.nom }}</span
-        >
-      </div>
-      <button
-        *ngIf="!editingNom"
-        (click)="startEditingNom()"
-        class="create-button"
-      >
-        <mat-icon class="create-icon">create</mat-icon>
-        {{ tache.nom }}
-      </button>
-    </h2>
+            text-align: left;
+          ">
+          {{ tache.nom }}
+        </span>
   </div>
   <div *ngIf="editingNom">
     <form [formGroup]="sectionForm" (ngSubmit)="saveNomChanges()">
@@ -55,35 +41,5 @@
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
     </p>
-  </div>
-  <hr />
-
-  <div>
-    <p>Collaborateurs inclu au projet</p>
-    <table class="table-style">
-      <tr class="table-row-style" *ngFor="let collaborateur of membreAttribue; let i = index">
-        <td class="table-cell-style">
-          <img [src]="'http://localhost:8080/utilisateurs/img?id=' + collaborateur['id']" class="miniature" />
-            <h3>{{ collaborateur["nom"] }} {{ collaborateur["prenom"] }}</h3>
-        </td>
-        <td class="table-cell-button-style">
-          <button (click)="removeUtilisateur(collaborateur.id)">X</button>
-        </td>
-      </tr>
-    </table>
-    <p>Collaborateurs à inclure au projet</p>
-    <table class="table-style">
-      <tr class="table-row-style" *ngFor="let collaborateur of membreRestant; let i = index">
-        <td class="table-cell-style">
-          <img [src]="'http://localhost:8080/utilisateurs/img?id=' + collaborateur['id']" class="miniature" />
-            <h3>{{ collaborateur["nom"] }} {{ collaborateur["prenom"] }}</h3>
-        </td>
-        <td class="table-cell-button-style">
-          <button (click)="addUtilisateur(collaborateur.id)" class="up-button">
-            <mat-icon>arrow_upward</mat-icon>
-          </button>
-        </td>
-      </tr>
-    </table>
   </div>
 </div>

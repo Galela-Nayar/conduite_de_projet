@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SectionService } from '../../section.service';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
 import { ModifyTaskComponent } from './modify-task/modify-task.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ModifierCollaborateurComponent } from '../../../section-scrum/tache-scrum/modifier-collaborateur/modifier-collaborateur.component';
 
 
 @Component({
@@ -13,13 +14,21 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./tache-setting.component.css']
 })
 export class TacheSettingComponent {
-  @Input() tacheId!: String;
-  @Input() sectionId: String | null = '';
-  @Input() projetId!: String;
+  id!: String
+  tacheId!: String;
+  sectionId: String | null = '';
+  projetId!: String;
 
   constructor(private http: HttpClient, private sectionService: SectionService, 
     private route: ActivatedRoute, private observableService: ObservableService,
-    public dialog: MatDialog) {}
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<ModifierCollaborateurComponent>,
+       @Inject(MAT_DIALOG_DATA) public data: { projetId: String,id: String, tacheId: String }
+   ) {
+       this.projetId = data.projetId;
+       this.id = data.id;
+       this.tacheId = data.tacheId;
+   }
 
 
   supprimer(){
@@ -41,6 +50,28 @@ export class TacheSettingComponent {
     dialogRef.afterClosed().subscribe(() => {
       console.log('Le dialogue a été fermé');
     });
+  }
+
+  openDialogCollaborateurs(event: MouseEvent): void {
+    const dialogWidth = 300; // Replace with the width of your dialog
+    const dialogHeight = 200; // Replace with the height of your dialog
+    let left = event.clientX;
+    let top = event.clientY;
+  
+    if (left + dialogWidth > window.innerWidth) {
+      left = window.innerWidth - dialogWidth;
+    }
+  
+    if (top + dialogHeight > window.innerHeight) {
+      top = window.innerHeight - dialogHeight;
+    }
+  
+    const dialogRef = this.dialog.open(ModifierCollaborateurComponent, {
+      position: { left: `${left}px`, top: `${top}px` },
+      data: { projetId: this.projetId,id: this.id, tacheId: this.tacheId }
+    });
+  
+    
   }
   
 }

@@ -8,6 +8,7 @@
           </div>
           <div style="display: flex; justify-content: flex-end; text-align: right; width: 100%;" *ngIf="this.tache.dateLimite">
             Prévu le: {{ this.tache.dateLimite | date : "dd-MM-yyyy" }}
+            <mat-icon style="margin-right: 8px; margin-left: 8px; margin-top: -5px; padding-bottom: 10px;" (click)="openDialogDate($event)">calendar_today</mat-icon>
           </div>
         </div>
         <div class="contenu" *ngIf="!isEditingNom" (dblclick)="isEditingNom = true">
@@ -16,12 +17,8 @@
         <div class="contenu" *ngIf="isEditingNom">
             <textarea style="text-align: center;" #textareaNom *ngIf="isEditingNom" [(ngModel)]="tache.nom" (blur)="updateTaskNom()" (input)="adjustTextareaNom($event)" ></textarea>
         </div>
-        <div class="settings-and-checkbox" *ngIf="droitUtilisateurActuel != 'Visiteur'">
-          <app-tache-setting
-            [tacheId]="tacheId"
-            [sectionId]="sectionId"
-            [projetId]="projetId"
-          ></app-tache-setting>
+        <div class="settings-and-checkbox"  *ngIf="droitUtilisateurActuel != 'Visiteur'">
+          <mat-icon (click)="openDialogSetting($event)">edit</mat-icon>
           <mat-checkbox
             [checked]="tache.statutTerminer"
             (change)="swapStatut()"
