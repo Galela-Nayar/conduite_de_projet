@@ -1,31 +1,33 @@
 <div class="trr" style="margin: 0px; padding: 0px;">
     <div class="cell">
-        {{ tache.nom }}
+        {{ tache?.nom }}
     </div>
-    <div class="cell">
-        <div *ngIf="membreAttribue == null || membreAttribue == undefined || membreAttribue.length == 0">
-            -
+    <div class="cell" style="display: flex; flex-direction: column;" >
+        <div style="padding: 0; margin: 0;" *ngFor="let membre of membreAttribue">
+            <div style="display: flex; padding: 0; margin: 0; align-items: center;">
+                <img [src]="'http://localhost:8080/utilisateurs/img?id=' + membre['id']" class="miniature" />
+                <h3 >{{ membre.nom }}</h3>
+            </div>
         </div>
-        <div *ngFor="let membre of membreAttribue">
-            {{ membre.nom }}
-        </div>
     </div>
-    <div  class="cell" [ngClass]="{'bg-success': tache.statutTerminer, 'bg-warning': !tache.statutTerminer}">
-        {{ tache.statutTerminer ? 'Terminé' : 'En Cours' }}
-    </div>
-    <div class="cell">
-        {{ tache.priorite }}
+    
+    <div *ngIf="tache != null && tache != undefined" class="cell" [ngClass]="{'bg-create':(
+        tache?.dateLimite == null && !tache.statutTerminer),
+     'bg-success': tache.statutTerminer,
+      'bg-warning': !tache.statutTerminer  && tache?.dateLimite != null}">
+        {{ tache.statutTerminer ? 'Terminé' : tache.dateLimite != null ? 'En Cours' : 'Créer'}}
     </div>
     <div class="cell">
-        {{ tache.ponderation }}
+        {{ tache?.priorite }}
     </div>
     <div class="cell">
-        {{ tache.dateCreation | date }}
+        {{ tache?.ponderation }}
     </div>
     <div class="cell">
-        <div *ngIf="tache?.dateLimite == null || tache?.dateLimite == undefined">
-            -
-        </div>
-        {{ tache.dateLimite | date }}
+        {{ tache?.dateCreation | date }}
+    </div>
+    <div class="cell">
+        {{ tache?.dateLimite | date }}
+        <mat-icon style="margin-left: 10px;" (click)="openDialog($event)">calendar_today</mat-icon>
     </div>
 </div>

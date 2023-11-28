@@ -7,10 +7,13 @@
   margin: 0px;
 }
 .cell {
-  padding: 15px 0px;
-  margin: auto;
+  height: auto;
+  padding: 15px 17px 15px 17px;
   width: 200px;
   min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   overflow: auto;
   border-right: 1px solid black;
@@ -18,4 +21,23 @@
 
 .cell:last-child {
   border-right: none;
+}
+
+.miniature{
+  width: 20px;
+  height: 20px;
+  margin: 0px 5px;
+}
+
+.bg-success{
+  color: rgb(128, 233, 29);
+}
+
+.bg-warning{
+  color: rgb(233, 128, 29);
+}
+
+
+.bg-create{
+  color: rgb(233, 219, 29);
 }

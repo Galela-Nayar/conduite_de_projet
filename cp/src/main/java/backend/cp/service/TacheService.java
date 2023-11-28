@@ -31,10 +31,11 @@ public class TacheService {
     }
 
     public String setDateLimite(String tacheId, Date dateLimite) {
+        
         Tache t = this.getTache(tacheId);
         t.setDateLimite(dateLimite);
         tacheRepository.save(t);
-        return t.toString();
+        return "ok";
     }
 
     public List<Tache> getAllTaches() {
