@@ -2,20 +2,31 @@
     <div class="cell">
         {{ tache?.nom }}
     </div>
-    <div class="cell" style="display: flex; flex-direction: column;" >
+    <div class="cell" style="display: flex; flex-direction: column; position: relative;" >
+        <div style="position: absolute; top: 5px; right: 0;">
+            <mat-icon (click)="openDialogCollaborateurs($event)">more_vert</mat-icon>
+        </div>
         <div style="padding: 0; margin: 0;" *ngFor="let membre of membreAttribue">
             <div style="display: flex; padding: 0; margin: 0; align-items: center;">
                 <img [src]="'http://localhost:8080/utilisateurs/img?id=' + membre['id']" class="miniature" />
-                <h3 >{{ membre.nom }}</h3>
+                <h3 style="margin: 5px;">{{ membre.nom }}</h3>
             </div>
         </div>
     </div>
     
-    <div *ngIf="tache != null && tache != undefined" class="cell" [ngClass]="{'bg-create':(
+    <div *ngIf="tache != null && tache != undefined" class="cell" style="display: flex; flex-direction: column; position: relative;" [ngClass]="{'bg-create':(
         tache?.dateLimite == null && !tache.statutTerminer),
      'bg-success': tache.statutTerminer,
       'bg-warning': !tache.statutTerminer  && tache?.dateLimite != null}">
+      <div style="position: absolute; top: 5px; right: 5px;">
+        <mat-checkbox
+            [checked]="tache.statutTerminer"
+            (change)="swapStatut()"
+          >
+          </mat-checkbox>
+        </div>
         {{ tache.statutTerminer ? 'Terminé' : tache.dateLimite != null ? 'En Cours' : 'Créer'}}
+        
     </div>
     <div class="cell">
         {{ tache?.priorite }}

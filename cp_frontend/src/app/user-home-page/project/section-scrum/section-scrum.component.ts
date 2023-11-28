@@ -16,7 +16,7 @@ import { CreateTaskComponent } from '../../create-task/create-task.component';
 export class SectionScrumComponent {
   @Input() id!: String | null;
   @Input()
-  projetId!: String;
+  @Input() projetId!: String;
   @Input() sectionId: String;
   section!: Section;
   mouseX: number = 0;
@@ -37,7 +37,6 @@ export class SectionScrumComponent {
   ) {}
 
   ngOnInit() {
-    console.log("projet ID: " + this.id);
     if (this.sectionId) {
       this.sectionService.changeSectionId(this.sectionId);
       this.sectionId = this.sectionId;

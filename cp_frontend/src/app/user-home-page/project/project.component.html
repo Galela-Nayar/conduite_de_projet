@@ -60,7 +60,7 @@
       *ngIf="droitUtilisateurActuel != 'Visiteur'"
     >
       <div cdkDrag *ngFor="let section of sections">
-        <app-section-scrum [id]="id" [sectionId]="section"></app-section-scrum>
+        <app-section-scrum [id]="id" [sectionId]="section" [projetId]="projetId"></app-section-scrum>
       </div>
       <app-create-section *ngIf="showCreateSection"></app-create-section>
       <button
@@ -73,7 +73,7 @@
     </div>
     <div *ngIf="droitUtilisateurActuel == 'Visiteur'" class="section-list-col">
       <div *ngFor="let section of sections">
-        <app-section-scrum [id]="id" [sectionId]="section"></app-section-scrum>
+        <app-section-scrum [id]="id" [sectionId]="section" [projetId]="projetId"></app-section-scrum>
       </div>
     </div>
   </div>
