@@ -95,10 +95,10 @@ export class TacheScrumComponent implements AfterViewChecked {
   }
 
   updateTaskPonderation() {
-    this.http.put(`http://localhost:8080/taches/updatePonderation?id=${this.tacheId}&ponderation=${this.tache.nom}`, {responseType:"text"}).
+    this.http.put(`http://localhost:8080/taches/updatePonderation?id=${this.tacheId}&ponderation=${this.tache.ponderation}`, {responseType:"text"}).
     subscribe((tacheData) => {
       this.updateTache();
-      this.isEditingNom = false;
+      this.isEditingPonderation = false;
       this.observerService.notifyTask();
 
       this.cd.detectChanges();
