@@ -122,5 +122,17 @@ public class TacheService {
         tacheRepository.save(tache);
     }
 
+    public void updatePriorite(String id, Integer priorite) {
+        Tache sc = this.getTache(id);
+        sc.setPriorite(priorite);
+        this.tacheRepository.save(sc);
+    }
+
+    public void updatePonderation(String id, Integer ponderation) {
+        Tache sc = this.getTache(id);
+        sc.setPonderation(ponderation);
+        this.tacheRepository.save(sc);
+    }
+
     // Autres méthodes de service pour la gestion des tâches
 }

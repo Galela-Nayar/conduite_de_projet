@@ -1,6 +1,5 @@
-import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component,ViewChild, ElementRef, Input, AfterViewChecked,  } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -15,7 +14,11 @@ import { ModifierCollaborateurComponent } from './modifier-collaborateur/modifie
   templateUrl: './tache-scrum.component.html',
   styleUrls: ['./tache-scrum.component.css']
 })
-export class TacheScrumComponent {
+export class TacheScrumComponent implements AfterViewChecked {
+  @ViewChild('textareaNom') textareaNom!: ElementRef;
+  @ViewChild('textareaPriorite') textareaPriorite!: ElementRef;
+  @ViewChild('textareaPonderation') textareaPonderation!: ElementRef;
+
   @Input() id!: String | null;
   @Input() projetId!: String;
   @Input()
@@ -28,6 +31,9 @@ export class TacheScrumComponent {
   mouseY: number = 0;
   showSetting = false;
   taskSubscription!: Subscription;
+  isEditingNom = false;
+  isEditingPriorite = false;
+  isEditingPonderation = false;
   
   constructor(private http: HttpClient, private route: ActivatedRoute,
     private observableService: ObservableService,
@@ -51,6 +57,74 @@ export class TacheScrumComponent {
     }
   }
 
+  ngAfterViewChecked() {
+    if (this.textareaNom) {
+      this.adjustTextareaNom({ target: this.textareaNom!.nativeElement });
+      this.textareaNom.nativeElement.focus();
+    }
+    if (this.textareaPriorite) {
+      this.adjustTextareaPriorite({ target: this.textareaPriorite!.nativeElement });
+      this.textareaPriorite.nativeElement.focus();
+    }
+    if (this.textareaPonderation) {
+      this.adjustTextareaPonderation({ target: this.textareaPonderation!.nativeElement });
+      this.textareaPonderation.nativeElement.focus();
+    }
+}
+  updateTaskNom() {
+    this.http.put(`http://localhost:8080/taches/updateNom?id=${this.tacheId}&nom=${this.tache.nom}`, {responseType:"text"}).
+    subscribe((tacheData) => {
+      this.updateTache();
+      this.isEditingNom = false;
+      this.observerService.notifyTask();
+      this.cd.detectChanges()
+    })
+  }
+
+  updateTaskPriorite() {
+    this.http.put(`http://localhost:8080/taches/updatePriorite?id=${this.tacheId}&priorite=${this.tache.priorite}`, {responseType:"text"}).
+    subscribe((tacheData) => {
+      this.updateTache();
+      this.isEditingPriorite = false;
+      this.observerService.notifyTask();
+
+      this.cd.detectChanges();
+
+    })
+    
+  }
+
+  updateTaskPonderation() {
+    this.http.put(`http://localhost:8080/taches/updatePonderation?id=${this.tacheId}&ponderation=${this.tache.nom}`, {responseType:"text"}).
+    subscribe((tacheData) => {
+      this.updateTache();
+      this.isEditingNom = false;
+      this.observerService.notifyTask();
+
+      this.cd.detectChanges();
+
+    })
+    
+  }
+
+  adjustTextareaNom(event?: any) {
+    let target = event ? event.target : this.textareaNom.nativeElement;
+    target.style.height = 'auto';
+    target.style.height = (target.scrollHeight) + 'px';
+}
+
+adjustTextareaPriorite(event?: any) {
+  let target = event ? event.target : this.textareaPriorite.nativeElement;
+  target.style.height = 'auto';
+  target.style.height = (target.scrollHeight) + 'px';
+}
+
+adjustTextareaPonderation(event?: any) {
+  let target = event ? event.target : this.textareaPonderation.nativeElement;
+  target.style.height = 'auto';
+  target.style.height = (target.scrollHeight) + 'px';
+}
+
   openDialog(event: MouseEvent): void {
     const dialogWidth = 300; // Replace with the width of your dialog
     const dialogHeight = 200; // Replace with the height of your dialog
@@ -73,8 +147,8 @@ export class TacheScrumComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.updateTache();
-        this.observerService.notifyTask();
         this.cd.detectChanges();
+        this.observerService.notifyTask();
       }
     });
   }
@@ -113,8 +187,8 @@ export class TacheScrumComponent {
         
       }
       this.updateTache();
-      this.observerService.notifyTask();
       this.cd.detectChanges();
+      this.observerService.notifyTask();
     });
   }
 
@@ -133,3 +207,4 @@ export class TacheScrumComponent {
 
   
 }
+
