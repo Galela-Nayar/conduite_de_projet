@@ -7,6 +7,7 @@ import { ObservableService } from 'src/app/observable/observable-projet.service'
 import Section from 'src/interface/Section';
 import { SectionService } from '../section/section.service';
 import { CreateTaskComponent } from '../../create-task/create-task.component';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-section-scrum',
@@ -118,6 +119,18 @@ editNom(){
     this.mouseY = event.clientY;
     this.showSetting = true;
     this.cd.detectChanges();
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
+    this.http
+      .put(
+        `http://localhost:8080/sections/updateTaches?id=${this.sectionId}&taches=${this.tasks}`,
+        {}
+      )
+      .subscribe((response) => {
+        this.observableService.notifySection();
+      });
   }
 
 }
