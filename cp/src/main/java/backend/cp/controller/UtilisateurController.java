@@ -89,11 +89,11 @@ public class UtilisateurController {
 
     @GetMapping("/set_userName")
     public ResponseEntity<String> setNomUtilisateur(@RequestParam String id, @RequestParam String param){
-
-        System.out.println("ok");
+        if(utilisateurService.existUserName(param) == true){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exist.");
+        }
         if(utilisateurService.getUtilisateur(id) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("utilisateur not found");
         utilisateurService.setUserName(id,param);
-        System.out.println("ok");
         return ResponseEntity.ok("ok");
     }
 
@@ -113,6 +113,9 @@ public class UtilisateurController {
 
     @GetMapping("/set_email")
     public ResponseEntity<String> setEmail(@RequestParam String id, @RequestParam String param){
+        if(utilisateurService.existUser(param) == true){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exist.");
+        }
         if(utilisateurService.getUtilisateur(id) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("utilisateur not found");
         utilisateurService.setEmail(id, param);
         return ResponseEntity.ok("ok");
