@@ -24,6 +24,7 @@ export class UserProfilComponent {
   selectedFileName: string | null = null;
   selectedFile: File | null = null;
   taskSubscription!: Subscription;
+  paramsSubscription!: Subscription
   imageSrc!: any
   isEditingNom = false;
   isEditingPrenom = false;
@@ -44,7 +45,9 @@ export class UserProfilComponent {
     ngOnInit() {
       this.id = this.route.parent?.snapshot.paramMap.get('id');
       this.idUser = this.route.snapshot.paramMap.get('idUser');
-      this.taskSubscription = this.observableService
+      this.paramsSubscription = this.route.paramMap.subscribe(params => {
+        this.idUser = params.get('idUser');
+        this.taskSubscription = this.observableService
       .getObservableTask()
       .subscribe((response) => {
         this.http.get<Utilisateur>(`http://localhost:8080/utilisateurs/user?id=${this.idUser}`).subscribe((data: Utilisateur) => {
@@ -55,6 +58,8 @@ export class UserProfilComponent {
         })
     }
     )
+  }
+      )
   }
 
   ngAfterViewChecked() {

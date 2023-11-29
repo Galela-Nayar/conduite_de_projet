@@ -8,6 +8,7 @@ import Tache from 'src/interface/Tache';
 import Utilisateur from 'src/interface/Utilisateur';
 import { DateLimiteCalendrierComponent } from './date-limite-calendrier/date-limite-calendrier.component';
 import { ModifierCollaborateurComponent } from './modifier-collaborateur/modifier-collaborateur.component';
+import { MiniUserProfilComponent } from 'src/app/user-home-page/mini-user-profil/mini-user-profil.component';
 
 @Component({
   selector: 'app-tache-scrum',
@@ -35,6 +36,10 @@ export class TacheScrumComponent implements AfterViewChecked {
   isEditingPriorite = false;
   isEditingPonderation = false;
   droitUtilisateurActuel: string = '';
+  showMiniUserProfil: boolean = false;
+  selectedMembre: Utilisateur
+  hideTimeout = 1000
+
   
   constructor(private http: HttpClient, private route: ActivatedRoute,
     private observableService: ObservableService,
@@ -143,6 +148,28 @@ editPriorite(){
 
 editPonderation(){
   if(this.droitUtilisateurActuel != 'Visiteur') this.isEditingPonderation = true
+}
+
+
+showMiniUserProfile(membre: any,  event: MouseEvent) {
+  this.hideTimeout = setTimeout(() => {
+    
+    const rect = (event.target as Element).getBoundingClientRect();
+    this.mouseX = rect.left;
+    this.mouseY = rect.bottom;
+    this.selectedMembre = membre;
+    this.showMiniUserProfil = true;
+  }, 700); // adjust the delay as needed
+}
+
+hideMiniUserProfile() {
+  this.hideTimeout = setTimeout(() => {
+    this.showMiniUserProfil = false;
+  }, 150); // adjust the delay as needed
+}
+
+cancelHideMiniUserProfile() {
+  clearTimeout(this.hideTimeout);
 }
 
   openDialog(event: MouseEvent): void {
