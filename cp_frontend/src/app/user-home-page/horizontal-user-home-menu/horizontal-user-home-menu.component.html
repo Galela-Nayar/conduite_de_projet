@@ -7,9 +7,9 @@
     <mat-icon>date_range</mat-icon> Agenda
   </a>
   <div class="dropdown">
-    <img [src]="imageSrc" [routerLink]="['/',id,'user-profil']" class="dropbtn" alt="Menu" />
+    <img [src]="imageSrc" [routerLink]="['/',id,'user-profil', id]" class="dropbtn" alt="Menu" />
     <div class="dropdown-content">
-      <a routerLink="user-profil">Profil</a>
+      <a [routerLink]="['/',id,'user-profil', id]">Profil</a>
       <a routerLink="/">Déconnexion</a>
     </div>
   </div>

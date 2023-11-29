@@ -1,6 +1,6 @@
 <div class="table-style">
     <div class="app-section section-entry">
-        <div class="task-content" *ngIf="!isEditingNom" (dblclick)="isEditingNom = true"> 
+        <div class="task-content" *ngIf="!isEditingNom" (dblclick)="editNom()"> 
           <p> {{section?.nom}} </p>
         </div>
         <div class="cell" *ngIf="isEditingNom">

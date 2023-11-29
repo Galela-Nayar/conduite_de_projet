@@ -11,7 +11,7 @@
             <mat-icon style="margin-right: 8px; margin-left: 8px; margin-top: -5px; padding-bottom: 10px;" (click)="openDialogDate($event)">calendar_today</mat-icon>
           </div>
         </div>
-        <div class="contenu" *ngIf="!isEditingNom" (dblclick)="isEditingNom = true">
+        <div class="contenu" *ngIf="!isEditingNom" (dblclick)="editNom()">
             <p>{{ tache.nom }}</p>
         </div>
         <div class="contenu" *ngIf="isEditingNom">

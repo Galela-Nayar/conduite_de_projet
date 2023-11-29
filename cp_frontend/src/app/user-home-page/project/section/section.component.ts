@@ -95,6 +95,10 @@ export class SectionComponent {
     target.style.height = (target.scrollHeight) + 'px';
 }
 
+editNom(){
+  if(this.droitUtilisateurActuel != 'Visiteur') this.isEditingNom = true
+}
+
   updateTaskNom() {
     this.http.put(`http://localhost:8080/sections/updateNom?id=${this.sectionId}&nom=${this.section.nom}`, {responseType:"text"}).
     subscribe((tacheData) => {

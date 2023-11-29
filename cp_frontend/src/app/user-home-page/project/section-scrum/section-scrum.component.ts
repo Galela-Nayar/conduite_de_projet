@@ -27,6 +27,7 @@ export class SectionScrumComponent implements AfterViewChecked{
   isEditingNom = false;
   tasks!: string[];
   private sectionData = new BehaviorSubject<Section | null>(null);
+  droitUtilisateurActuel: string = '';
 
   constructor(
     private http: HttpClient,
@@ -53,6 +54,10 @@ export class SectionScrumComponent implements AfterViewChecked{
               this.section = response;
               this.tasks = this.section.taches;
             });
+        });
+        //Les droits de l'utilisateur actuel
+        this.http.get(`http://localhost:8080/projets/droitUtilisateur?idUtilisateur=${this.id}&idProjet=${this.projetId}`, {responseType: 'text'}).subscribe((data: string) => {
+              this.droitUtilisateurActuel = data;
         });
     }
   }
@@ -95,6 +100,10 @@ export class SectionScrumComponent implements AfterViewChecked{
         });
   }
   
+editNom(){
+  if(this.droitUtilisateurActuel != 'Visiteur') this.isEditingNom = true
+}
+
   onPlusClick(event: MouseEvent): void {
     const dialogRef = this.dialog.open(CreateTaskComponent, {
       data: this.sectionId,

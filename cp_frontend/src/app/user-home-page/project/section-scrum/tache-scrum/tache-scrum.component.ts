@@ -34,6 +34,7 @@ export class TacheScrumComponent implements AfterViewChecked {
   isEditingNom = false;
   isEditingPriorite = false;
   isEditingPonderation = false;
+  droitUtilisateurActuel: string = '';
   
   constructor(private http: HttpClient, private route: ActivatedRoute,
     private observableService: ObservableService,
@@ -54,6 +55,13 @@ export class TacheScrumComponent implements AfterViewChecked {
       this.http.get<Utilisateur[]>(`http://localhost:8080/taches/membreAttribue?id=${this.tacheId}`).subscribe((data: Utilisateur[]) => {
         this.membreAttribue = data;
       })
+
+
+    //Les droits de l'utilisateur actuel
+    this.http.get(`http://localhost:8080/projets/droitUtilisateur?idUtilisateur=${this.id}&idProjet=${this.projetId}`, {responseType: 'text'}).subscribe((data: string) => {
+      this.droitUtilisateurActuel = data;
+      console.log("droit dans section: " + this.droitUtilisateurActuel)
+});
     }
   }
 
@@ -123,6 +131,18 @@ adjustTextareaPonderation(event?: any) {
   let target = event ? event.target : this.textareaPonderation.nativeElement;
   target.style.height = 'auto';
   target.style.height = (target.scrollHeight) + 'px';
+}
+
+editNom(){
+  if(this.droitUtilisateurActuel != 'Visiteur') this.isEditingNom = true
+}
+
+editPriorite(){
+  if(this.droitUtilisateurActuel != 'Visiteur') this.isEditingPriorite = true
+}
+
+editPonderation(){
+  if(this.droitUtilisateurActuel != 'Visiteur') this.isEditingPonderation = true
 }
 
   openDialog(event: MouseEvent): void {
