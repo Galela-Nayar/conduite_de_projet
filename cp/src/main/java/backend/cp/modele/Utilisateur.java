@@ -24,6 +24,7 @@ public class Utilisateur {
     private String prenom;
     private String userName;
     private List<String> listProjet = new ArrayList<>();
+    private List<String> listAmis = new ArrayList<>();
     private String bio;
     private byte[] logo_utilisateur;
 
@@ -33,6 +34,10 @@ public class Utilisateur {
 
     public void removeProject(String id2) {
         listProjet.remove(id2);
+    }
+
+    public void addAmi(String idAmi) {
+        listAmis.add(idAmi);
     }
 
 }

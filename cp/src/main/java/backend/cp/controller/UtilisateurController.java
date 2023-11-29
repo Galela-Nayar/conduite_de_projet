@@ -86,6 +86,14 @@ public class UtilisateurController {
         return utilisateurService.getUtilisateur(id);
     }
 
+    @GetMapping("/add_ami")
+    public ResponseEntity<String> addAmi(@RequestParam String id,@RequestParam String idAmi){
+        if(utilisateurService.existUserName(idAmi) == false){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Utilisateur didn't exist.");
+        }
+        utilisateurService.addAmi(id,idAmi);
+        return ResponseEntity.ok("ok");
+    }
 
     @GetMapping("/set_userName")
     public ResponseEntity<String> setNomUtilisateur(@RequestParam String id, @RequestParam String param){

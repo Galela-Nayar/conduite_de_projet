@@ -143,5 +143,11 @@ public class UtilisateurService {
     public Utilisateur getUtilisateurByEmail(String email) {
         return utilisateurRepository.findByEmail(email);
     }
+
+    public void addAmi(String id, String idAmi) {
+        Utilisateur user = this.getUtilisateur(id);
+        user.addAmi(idAmi);
+        this.utilisateurRepository.save(user);
+    }
 }
  
