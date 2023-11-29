@@ -3,9 +3,13 @@
     <div class="section-entry">
       <div class="container" *ngIf="tache">
         <div class="header">
-          <div *ngFor="let membre of membreAttribue" class="miniature">
+          <div *ngFor="let membre of membreAttribue" class="miniature" style="position: relative;"  (mouseenter)="showMiniUserProfile(membre, $event)" (mouseleave)="hideMiniUserProfile()">
             <img [src]="'http://localhost:8080/utilisateurs/img?id=' + membre['id']" class="miniature" />
           </div>
+          <app-mini-user-profil [style.top.px]="mouseY" [style.left.px]="mouseX" style="position: fixed; z-index: 1;"
+             *ngIf="showMiniUserProfil" [user]="selectedMembre" [id]="id"
+                       (mouseenter)="cancelHideMiniUserProfile()" 
+                       (mouseleave)="hideMiniUserProfile()"></app-mini-user-profil>
           <div style="display: flex; justify-content: flex-end; text-align: right; width: 100%;" *ngIf="this.tache.dateLimite">
             Prévu le: {{ this.tache.dateLimite | date : "dd-MM-yyyy" }}
             <mat-icon style="margin-right: 8px; margin-left: 8px; margin-top: -5px; padding-bottom: 10px;" (click)="openDialogDate($event)">calendar_today</mat-icon>

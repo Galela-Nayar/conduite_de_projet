@@ -6,13 +6,13 @@
                 <div class="row">
                     <div class="column1-1 separation">
                         <img [src]="imageSrc" class="miniature" />
-                        <label>Nouveau logo:</label>
-                        <input type="file" accept="image/*" (change)="onFileSelected($event)" *ngIf="!selectedFileName">
-                        <div *ngIf="selectedFileName">
+                        <label *ngIf="id == idUser">Nouveau logo:</label>
+                        <input type="file" accept="image/*" (change)="onFileSelected($event)" *ngIf="!selectedFileName && (id == idUser)">
+                        <div *ngIf="selectedFileName && id == idUser">
                             <span>{{ selectedFileName }}</span>
                             <button (click)="removeSelectedFile()">X</button>
                         </div>
-                        <button style="width: 100px;" [disabled]="!selectedFile" (click)="saveLogo()">Enregistrer</button>
+                        <button style="width: 100px;" *ngIf="id == idUser" [disabled]="!selectedFile" (click)="saveLogo()">Enregistrer</button>
                     </div>
                     <div class="column1-2">
                         <div class="row">

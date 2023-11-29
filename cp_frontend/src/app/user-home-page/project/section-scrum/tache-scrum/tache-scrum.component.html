@@ -10,10 +10,15 @@
             <mat-icon *ngIf="droitUtilisateurActuel != 'Visiteur'" (click)="openDialogCollaborateurs($event)">more_vert</mat-icon>
         </div>
         <div style="padding: 0; margin: 0;" *ngFor="let membre of membreAttribue">
-            <div style="display: flex; padding: 0; margin: 0; align-items: center;">
+            <div style="display: flex; padding: 0; margin: 0; align-items: center; position: relative;"  (mouseenter)="showMiniUserProfile(membre, $event)" (mouseleave)="hideMiniUserProfile()">
                 <img [src]="'http://localhost:8080/utilisateurs/img?id=' + membre['id']" class="miniature" />
-                <h3 style="margin: 5px;">{{ membre.nom }}</h3>
+                <h4 style="margin: 5px;">{{ membre.nom }}</h4><h4 style="margin: 5px;">{{ membre.prenom }}</h4>
+
             </div>
+            <app-mini-user-profil [style.top.px]="mouseY" [style.left.px]="mouseX" style="position: fixed; z-index: 1;"
+             *ngIf="showMiniUserProfil" [user]="selectedMembre" [id]="id"
+                       (mouseenter)="cancelHideMiniUserProfile()" 
+                       (mouseleave)="hideMiniUserProfile()"></app-mini-user-profil>
         </div>
     </div>
     
