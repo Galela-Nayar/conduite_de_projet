@@ -210,4 +210,16 @@ private final ApplicationContext applicationContext;
             this.projetRepository.save(projet);
         }
     }
+
+    public void addEtiquette(String idProjet, String idEtiquette)
+    {
+        Projet projet = this.getProject(idProjet);
+        if (projet != null) {
+            if(!projet.getEtiquettes().contains(idEtiquette))
+            {
+                projet.addEtiquette(idEtiquette);
+                this.projetRepository.save(projet);
+            }
+        }
+    }
 }

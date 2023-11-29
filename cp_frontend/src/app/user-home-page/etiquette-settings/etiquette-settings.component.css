@@ -1,0 +1,33 @@
+container {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    background-color: lightgreen;
+  }
+
+.form-row {
+display: flex;
+align-items: center;
+}
+
+.form-row a {
+margin-right: 10px;
+}
+
+.color-palette {
+    display: flex;
+    margin-top: 10px;
+}
+
+.color-box {
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.color-box.selected {
+    border: 2px solid black;
+}

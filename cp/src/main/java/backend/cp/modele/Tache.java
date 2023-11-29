@@ -25,7 +25,7 @@ public class Tache {
     private Date dateLimite;
     private Date dateCreation;
     private List<String> description;
-    private List<Etiquette> etiquettes;
+    private List<String> etiquettes;
  
     public Tache(String nom) {
         this.id  = UUID.randomUUID().toString();
