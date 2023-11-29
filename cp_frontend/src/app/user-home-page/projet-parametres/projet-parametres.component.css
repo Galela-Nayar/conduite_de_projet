@@ -1,14 +1,24 @@
 .parent-container{
-    padding-top: 10px;
     width: 100%;
     height: auto;
     min-height: 100%;
-    background-color: rgb(48, 44, 44);
     color: lightgray;
 }
 
+.background_content {
+  z-index: 1;
+  bottom: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: auto;
+  min-height: calc(100vh - 47px) ;
+  height: auto;
+  overflow: auto;
+  background: radial-gradient(85% 85% at center, rgba(63,94,251,1) 50%, rgba(252,70,107,1) 100%);
+}
+
 .container {
-    width: 80%;
+    width: 95%;
     border-width: 10px;
     border: 4px double rgb(31, 27, 27);
     border-radius: 8px;
