@@ -19,6 +19,7 @@ export class UserProfilComponent {
   @ViewChild('textareaEmail') textareaEmail!: ElementRef;
   @ViewChild('textareaBio') textareaBio!: ElementRef;
   id!: String
+  idUser!: String
   user!: Utilisateur
   selectedFileName: string | null = null;
   selectedFile: File | null = null;
@@ -42,10 +43,11 @@ export class UserProfilComponent {
 
     ngOnInit() {
       this.id = this.route.parent?.snapshot.paramMap.get('id');
+      this.idUser = this.route.snapshot.paramMap.get('idUser');
       this.taskSubscription = this.observableService
       .getObservableTask()
       .subscribe((response) => {
-        this.http.get<Utilisateur>(`http://localhost:8080/utilisateurs/user?id=${this.id}`).subscribe((data: Utilisateur) => {
+        this.http.get<Utilisateur>(`http://localhost:8080/utilisateurs/user?id=${this.idUser}`).subscribe((data: Utilisateur) => {
         this.user = data;
 
         let objectURL = 'data:image/jpeg;base64,' + this.user['logo_utilisateur'];
@@ -79,7 +81,7 @@ export class UserProfilComponent {
   }
 
   updateTaskNom() {
-    this.http.get(`http://localhost:8080/utilisateurs/set_nom?id=${this.id}&param=${this.user.nom}`, {responseType:"text"}).
+    this.http.get(`http://localhost:8080/utilisateurs/set_nom?id=${this.idUser}&param=${this.user.nom}`, {responseType:"text"}).
     subscribe((tacheData) => {
       this.updateUtilisateur();
       this.isEditingNom = false;
@@ -94,9 +96,14 @@ export class UserProfilComponent {
     target.style.height = (target.scrollHeight) + 'px';
 }
 
+editNom(){
+  if(this.id == this.idUser)
+    this.isEditingNom = true
+}
+
 
 updateTaskPrenom() {
-  this.http.get(`http://localhost:8080/utilisateurs/set_prenom?id=${this.id}&param=${this.user.prenom}`, {responseType:"text"}).
+  this.http.get(`http://localhost:8080/utilisateurs/set_prenom?id=${this.idUser}&param=${this.user.prenom}`, {responseType:"text"}).
   subscribe((tacheData) => {
     this.updateUtilisateur();
     this.isEditingPrenom = false;
@@ -111,9 +118,14 @@ adjustTextareaPrenom(event?: any) {
   target.style.height = (target.scrollHeight) + 'px';
 }
 
+editPrenom(){
+  if(this.id == this.idUser)
+    this.isEditingPrenom = true
+}
+
 
 updateTaskUserName() {
-  this.http.get(`http://localhost:8080/utilisateurs/set_userName?id=${this.id}&param=${this.user.userName}`, {responseType:"text"}).
+  this.http.get(`http://localhost:8080/utilisateurs/set_userName?id=${this.idUser}&param=${this.user.userName}`, {responseType:"text"}).
   subscribe((tacheData) => {
     this.updateUtilisateur();
     this.isEditingUserName = false;
@@ -133,8 +145,13 @@ adjustTextareaUserName(event?: any) {
   target.style.height = (target.scrollHeight) + 'px';
 }
 
+editUserName(){
+  if(this.id == this.idUser)
+    this.isEditingUserName = true
+}
+
 updateTaskEmail() {
-  this.http.get(`http://localhost:8080/utilisateurs/set_email?id=${this.id}&param=${this.user.email}`, {responseType:"text"}).
+  this.http.get(`http://localhost:8080/utilisateurs/set_email?id=${this.idUser}&param=${this.user.email}`, {responseType:"text"}).
   subscribe((tacheData) => {
     this.updateUtilisateur();
     this.isEditingEmail = false;
@@ -154,8 +171,13 @@ adjustTextareaEmail(event?: any) {
   target.style.height = (target.scrollHeight) + 'px';
 }
 
+editEmail(){
+  if(this.id == this.idUser)
+    this.isEditingEmail = true
+}
+
 updateTaskBio() {
-  this.http.get(`http://localhost:8080/utilisateurs/set_bio?id=${this.id}&param=${this.user.bio}`, {responseType:"text"}).
+  this.http.get(`http://localhost:8080/utilisateurs/set_bio?id=${this.idUser}&param=${this.user.bio}`, {responseType:"text"}).
   subscribe((tacheData) => {
     this.updateUtilisateur();
     this.isEditingBio = false;
@@ -168,6 +190,11 @@ adjustTextareaBio(event?: any) {
   let target = event ? event.target : this.textareaBio.nativeElement;
   target.style.height = 'auto';
   target.style.height = (target.scrollHeight) + 'px';
+}
+
+editBio(){
+  if(this.id == this.idUser)
+    this.isEditingBio = true
 }
 
   onFileSelected(event: Event) {
@@ -187,7 +214,7 @@ adjustTextareaBio(event?: any) {
     if (this.selectedFile) {
         const formData = new FormData();
         formData.append('file', this.selectedFile);
-        this.http.post(`http://localhost:8080/utilisateurs/set_logo?id=${this.id}`, formData, {responseType: 'text'}).subscribe((data: string) => {
+        this.http.post(`http://localhost:8080/utilisateurs/set_logo?id=${this.idUser}`, formData, {responseType: 'text'}).subscribe((data: string) => {
             console.log(data);
             this.updateUtilisateur()
             this.observerService.notifyTask();
@@ -200,7 +227,7 @@ adjustTextareaBio(event?: any) {
     this.taskSubscription = this.observableService
       .getObservableTask()
       .subscribe((response) => {
-        this.http.get<Utilisateur>(`http://localhost:8080/utilisateurs/user?id=${this.id}`).subscribe((data: Utilisateur) => {
+        this.http.get<Utilisateur>(`http://localhost:8080/utilisateurs/user?id=${this.idUser}`).subscribe((data: Utilisateur) => {
       this.user = data;
 
       let objectURL = 'data:image/jpeg;base64,' + this.user['logo_utilisateur'];

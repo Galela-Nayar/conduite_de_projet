@@ -1,5 +1,5 @@
 <div class="trr" style="margin: 0px; padding: 0px;">
-    <div class="cell" *ngIf="!isEditingNom" (dblclick)="isEditingNom = true">
+    <div class="cell" *ngIf="!isEditingNom" (dblclick)="editNom()">
         {{ tache?.nom }}
     </div>
     <div class="cell" *ngIf="isEditingNom">
@@ -7,7 +7,7 @@
     </div>
     <div class="cell" style="display: flex; flex-direction: column; position: relative;" >
         <div style="position: absolute; top: 5px; right: 0;">
-            <mat-icon (click)="openDialogCollaborateurs($event)">more_vert</mat-icon>
+            <mat-icon *ngIf="droitUtilisateurActuel != 'Visiteur'" (click)="openDialogCollaborateurs($event)">more_vert</mat-icon>
         </div>
         <div style="padding: 0; margin: 0;" *ngFor="let membre of membreAttribue">
             <div style="display: flex; padding: 0; margin: 0; align-items: center;">
@@ -22,7 +22,7 @@
      'bg-success': tache.statutTerminer,
       'bg-warning': !tache.statutTerminer  && tache?.dateLimite != null}">
       <div style="position: absolute; top: 5px; right: 5px;">
-        <mat-checkbox
+        <mat-checkbox *ngIf="droitUtilisateurActuel != 'Visiteur'"
             [checked]="tache.statutTerminer"
             (change)="swapStatut()"
           >
@@ -31,13 +31,13 @@
         {{ tache.statutTerminer ? 'Terminé' : tache.dateLimite != null ? 'En Cours' : 'Créer'}}
         
     </div>
-    <div class="cell" *ngIf="!isEditingPriorite" (dblclick)="isEditingPriorite = true">
+    <div class="cell" *ngIf="!isEditingPriorite" (dblclick)="editPriorite()">
         {{ tache?.priorite }}
     </div>
     <div class="cell" *ngIf="isEditingPriorite">
         <textarea style="text-align: center;" #textareaPriorite *ngIf="isEditingPriorite" [(ngModel)]="tache.priorite" (blur)="updateTaskPriorite()" (input)="adjustTextareaPriorite($event)"></textarea>
     </div>
-    <div class="cell" *ngIf="!isEditingPonderation" (dblclick)="isEditingPonderation = true">
+    <div class="cell" *ngIf="!isEditingPonderation" (dblclick)="editPonderation()">
         {{ tache?.ponderation }}
     </div>
     <div class="cell" *ngIf="isEditingPonderation">
@@ -48,6 +48,6 @@
     </div>
     <div class="cell">
         {{ tache?.dateLimite | date }}
-        <mat-icon style="margin-left: 10px;" (click)="openDialog($event)">calendar_today</mat-icon>
+        <mat-icon *ngIf="droitUtilisateurActuel != 'Visiteur'" style="margin-left: 10px;" (click)="openDialog($event)">calendar_today</mat-icon>
     </div>
 </div>

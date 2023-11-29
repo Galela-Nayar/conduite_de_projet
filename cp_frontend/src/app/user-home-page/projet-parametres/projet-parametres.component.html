@@ -4,14 +4,14 @@
             <div class="section-container" style="width: flex;">
                 <div class="header_section" style="width: 100%;">Présentation du projet</div>            
                 <div class="header" style="width: 100%;">
-                    <p><strong style="font-size: 1.5em;">{{project.nom}}</strong></p>
-                    <p>Créer par : <strong style="font-size: 1.5em;">{{createur.userName}}</strong></p>
-                    <p>Le : <strong style="font-size: 1.5em;">{{getFormattedDate(project.dateCreation)}}</strong></p>
-                    <p>Prévu pour le : <strong style="font-size: 1.5em;">{{getFormattedDate(project.dateButtoire)}}</strong></p>
+                    <p><strong style="font-size: 1.5em;">{{project?.nom}}</strong></p>
+                    <p>Créer par : <strong style="font-size: 1.5em;">{{createur?.userName}}</strong></p>
+                    <p>Le : <strong style="font-size: 1.5em;">{{getFormattedDate(project?.dateCreation)}}</strong></p>
+                    <p>Prévu pour le : <strong style="font-size: 1.5em;">{{getFormattedDate(project?.dateButtoire)}}</strong></p>
                 </div>
                 <div class="section-container" style="width: 100%;box-sizing: border-box;">
                     <div class="header_section" style="width: 100%;">Description:</div>
-                    <p style="width: 100%;">{{project.description}}</p>
+                    <p style="width: 100%;">{{project?.description}}</p>
                 </div>
                 <div class="section-container" style="width: 100%;box-sizing: border-box; ">
                     <div class="header_section" style="width: 100%;">Collaborateurs:</div>

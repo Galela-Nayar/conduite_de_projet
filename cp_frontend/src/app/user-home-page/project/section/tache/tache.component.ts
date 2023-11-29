@@ -163,6 +163,11 @@ updateTaskNom() {
   })
 }
 
+editNom(){
+  if(this.droitUtilisateurActuel != 'Visiteur') this.isEditingNom = true
+  this.isEditingNom = false
+}
+
   swapStatut(){
     this.http.get(`http://localhost:8080/taches/swapStatut?id=${this.tacheId}`, {responseType:"text"}).
     subscribe((tacheData) => {

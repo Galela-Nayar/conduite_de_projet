@@ -33,7 +33,7 @@ const routes: Routes = [
     children: [
       { path: 'home', component: UserHomeComponent },
       { path: 'create-project', component: CreateProjectComponent },
-      { path: 'user-profil', component: UserProfilComponent},
+      { path: 'user-profil/:idUser', component: UserProfilComponent},
       { path: 'parametres-project/:projectId', component: ProjetParametresComponent, },
       { path: 'agenda', component: AgendaComponent },
       { path: 'equipe', component: EquipeComponent },
