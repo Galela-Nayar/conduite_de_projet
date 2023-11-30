@@ -1,5 +1,6 @@
 package backend.cp.service;
 
+import backend.cp.modele.Notification;
 import backend.cp.modele.Utilisateur;
 import backend.cp.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,6 +162,18 @@ public class UtilisateurService {
             user.getListAmis().remove(idAmi);
             this.utilisateurRepository.save(user);
         }
+    }
+
+    public void addNotification(String id, Notification notificationEnfant) {
+        Utilisateur user = this.getUtilisateur(id);
+        user.addNotification(notificationEnfant);
+        this.utilisateurRepository.save(user);
+    }
+
+    public void removeNotification(String id, String notificationId) {
+        Utilisateur user = this.getUtilisateur(id);
+        user.removeNotification(notificationId);
+        this.utilisateurRepository.save(user);
     }
 }
  

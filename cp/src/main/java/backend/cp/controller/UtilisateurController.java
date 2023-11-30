@@ -14,6 +14,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.imgscalr.Scalr;
@@ -36,6 +37,9 @@ public class UtilisateurController {
     private final UtilisateurService utilisateurService;
 
     @Autowired
+    private SimpMessagingTemplate template;
+
+    @Autowired
     public UtilisateurController(UtilisateurService sectionService) {
         this.utilisateurService = sectionService;
     }
@@ -55,13 +59,19 @@ public class UtilisateurController {
 
     @GetMapping("/login")
     public String loginUtilisateur(@RequestParam String email, @RequestParam String password){
+        String userId = "-1";
         if(utilisateurService.existUser(email) == true){
-            return utilisateurService.connectMail(email, password);
+            userId = utilisateurService.connectMail(email, password);
         }
         if(utilisateurService.existUserName(email) == true){
-            return utilisateurService.connectName(email, password);
+            userId = utilisateurService.connectName(email, password);
         }
-        return "-0";
+        if(userId != "-1"){
+            // Send a message to the user to open a WebSocket connection
+            template.convertAndSend("/topic/login/" + userId, "Open WebSocket connection");
+            return userId;
+        }
+        return "Invalid email or password";
     }
 
     @GetMapping("/projects")
