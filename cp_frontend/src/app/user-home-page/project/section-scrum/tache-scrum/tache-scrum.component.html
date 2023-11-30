@@ -16,7 +16,7 @@
 
             </div>
             <app-mini-user-profil [style.top.px]="mouseY" [style.left.px]="mouseX" style="position: fixed; z-index: 1;"
-             *ngIf="showMiniUserProfil" [user]="selectedMembre" [id]="id"
+             *ngIf="showMiniUserProfil" [membre]="selectedMembre" [id]="id"
                        (mouseenter)="cancelHideMiniUserProfile()" 
                        (mouseleave)="hideMiniUserProfile()"></app-mini-user-profil>
         </div>
