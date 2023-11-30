@@ -88,10 +88,19 @@ public class UtilisateurController {
 
     @GetMapping("/add_ami")
     public ResponseEntity<String> addAmi(@RequestParam String id,@RequestParam String idAmi){
-        if(utilisateurService.existUserName(idAmi) == false){
+        if(utilisateurService.existId(idAmi) == false){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Utilisateur didn't exist.");
         }
         utilisateurService.addAmi(id,idAmi);
+        return ResponseEntity.ok("ok");
+    }
+
+    @GetMapping("/suppr_ami")
+    public ResponseEntity<String> supprAmi(@RequestParam String id,@RequestParam String idAmi){
+        if(utilisateurService.existId(idAmi) == false){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Utilisateur didn't exist.");
+        }
+        utilisateurService.supprAmi(id,idAmi);
         return ResponseEntity.ok("ok");
     }
 

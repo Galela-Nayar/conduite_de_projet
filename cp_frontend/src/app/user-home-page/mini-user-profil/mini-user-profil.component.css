@@ -28,3 +28,12 @@
     border: 1px solid rgb(102, 102, 102);
     border-radius: 10px;
 }
+
+
+.spr_ami{
+    outline: none;
+    background-color: rgb(167, 58, 44); 
+    color: white;
+    border: 1px solid rgb(102, 102, 102);
+    border-radius: 10px;
+}

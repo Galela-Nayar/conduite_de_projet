@@ -149,5 +149,18 @@ public class UtilisateurService {
         user.addAmi(idAmi);
         this.utilisateurRepository.save(user);
     }
+
+    public boolean existId(String id) {
+        Utilisateur user = utilisateurRepository.findByid(id);
+        return user != null;
+    }
+
+    public void supprAmi(String id, String idAmi) {
+        Utilisateur user = this.getUtilisateur(id);
+        if(user.getListAmis().contains(idAmi)){
+            user.getListAmis().remove(idAmi);
+            this.utilisateurRepository.save(user);
+        }
+    }
 }
  
