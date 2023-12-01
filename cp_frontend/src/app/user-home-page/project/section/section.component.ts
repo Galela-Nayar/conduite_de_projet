@@ -141,8 +141,9 @@ editNom(){
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
-    this.http
+    if(event.previousContainer === event.container){
+      moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
+      this.http
       .put(
         `http://localhost:8080/sections/updateTaches?id=${this.sectionId}&taches=${this.tasks}`,
         {}
@@ -150,5 +151,10 @@ editNom(){
       .subscribe((response) => {
         this.observableService.notifySection();
       });
+    }
+    else{
+      const movedTaskId = event.previousContainer.data[event.previousIndex];
+    }
+    
   }
 }
