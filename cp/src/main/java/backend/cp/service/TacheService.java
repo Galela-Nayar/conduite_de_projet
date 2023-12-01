@@ -70,9 +70,9 @@ public class TacheService {
         sc.setNom(nom);
         Notification notification = new Notification(id,projectId,sectionId,tacheId,
         utilisateurService.getUtilisateur(id).getUserName() +
-         "à modifié le nom de la tâche " +
+         " à modifié le nom de la tâche " +
         nomPrecedant +
-        "par " +
+        " par " +
         tacheService.getTache(tacheId).getNom() +
         " de la section " +
         sectionService.getSection(sectionId).getNom() +
