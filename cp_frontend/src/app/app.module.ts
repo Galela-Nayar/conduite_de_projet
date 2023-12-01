@@ -40,6 +40,7 @@ import { ModifySectionComponent } from './user-home-page/project/section/section
 import {
   CdkDragDrop,
   CdkDropList,
+  CdkDropListGroup,
   CdkDrag,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
@@ -114,6 +115,7 @@ import { MiniUserProfilComponent } from './user-home-page/mini-user-profil/mini-
     MatIconModule,
     MatCardModule,
     CdkDropList,
+    CdkDropListGroup,
     CdkDrag,
     MatCheckboxModule,
     MatGridListModule,

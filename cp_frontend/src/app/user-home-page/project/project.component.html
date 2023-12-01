@@ -30,9 +30,11 @@
           (cdkDropListDropped)="drop($event)"
           *ngIf="droitUtilisateurActuel != 'Visiteur'"
         >
+        <div cdkDropListGroup class="horizontal-list">
           <div cdkDrag *ngFor="let section of sections">
             <app-section [id]="id" [sectionId]="section" [projetId]="projetId"></app-section>
           </div>
+        </div>
           <app-create-section *ngIf="showCreateSection"></app-create-section>
           <button style="height: 60px; width: 60px; background-color: rgb(61, 61, 61); color:lightgray; font-size: larger; font-weight: 900;"
             (click)="onPlusClickSection($event)"
