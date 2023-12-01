@@ -187,8 +187,8 @@ updateTaskNom() {
 }
 
 editNom(){
-  if(this.droitUtilisateurActuel != 'Visiteur') this.isEditingNom = true
-  this.isEditingNom = false
+  if(this.droitUtilisateurActuel != "Visiteur") this.isEditingNom = true
+  else this.isEditingNom = false
 }
 
   swapStatut(){
