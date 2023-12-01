@@ -13,7 +13,7 @@ import { ObservableService } from 'src/app/observable/observable-projet.service'
 import { SectionService } from './section.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateTaskComponent } from '../../create-task/create-task.component';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-section',
@@ -154,6 +154,12 @@ editNom(){
     }
     else{
       const movedTaskId = event.previousContainer.data[event.previousIndex];
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
     }
     
   }
