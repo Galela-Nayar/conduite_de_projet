@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,17 +26,51 @@ public class TacheService {
         this.tacheRepository = tacheRepository;
     }
 
-    public String createTache(String nom) {
+    public String createTache(String id, String projectId, String sectionId, String nom) {
+        NotificationService notificationService = context.getBean(NotificationService.class);
+        UtilisateurService utilisateurService = context.getBean(UtilisateurService.class);
+        SectionService sectionService = context.getBean(SectionService.class);
+        ProjetService projetService = context.getBean(ProjetService.class);
         Tache tache = new Tache(nom);
         tacheRepository.save(tache);
+        Notification notification = new Notification(id,projectId,sectionId,
+        utilisateurService.getUtilisateur(id).getUserName() +
+         " à créer la tâche " +
+        nom +
+        " dans la section " +
+        sectionService.getSection(sectionId).getNom() +
+        " du projet " +
+        projetService.getProject(projectId).getNom() +
+        "."
+        , new Date());
+        notificationService.sendNotification(notification);
         return tache.getId();
     }
 
-    public String setDateLimite(String tacheId, Date dateLimite) {
-        
+    public String setDateLimite(String id, String projectId, String sectionId, String tacheId, Date dateLimite) {
+        NotificationService notificationService = context.getBean(NotificationService.class);
+        UtilisateurService utilisateurService = context.getBean(UtilisateurService.class);
+        SectionService sectionService = context.getBean(SectionService.class);
+        ProjetService projetService = context.getBean(ProjetService.class);
         Tache t = this.getTache(tacheId);
         t.setDateLimite(dateLimite);
         tacheRepository.save(t);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = formatter.format(t.getDateLimite());
+        Notification notification = new Notification(id,projectId,sectionId,tacheId,
+        utilisateurService.getUtilisateur(id).getUserName() +
+         " à modifié la date limite de la tâche " +
+        t.getNom() +
+        " dans la section " +
+        sectionService.getSection(sectionId).getNom() +
+        " du projet " +
+        projetService.getProject(projectId).getNom() +
+        " à " +
+        formattedDate +
+        "."
+        , new Date());
+        notificationService.sendNotification(notification);
+        
         return "ok";
     }
 
@@ -53,27 +87,17 @@ public class TacheService {
         return null;
     }
 
-    public void removeTache(String id) {
-        Tache tache = this.getTache(id);
-        System.out.println("service tache : " + tache);
-        this.tacheRepository.delete(tache);
-    }
-
-    public void updateNom(String id, String projectId, String sectionId, String tacheId, String nom){
+    public void removeTache(String id, String projectId, String sectionId, String tacheId) {
         NotificationService notificationService = context.getBean(NotificationService.class);
         UtilisateurService utilisateurService = context.getBean(UtilisateurService.class);
         SectionService sectionService = context.getBean(SectionService.class);
         ProjetService projetService = context.getBean(ProjetService.class);
-        TacheService tacheService = context.getBean(TacheService.class);
-        Tache sc = this.getTache(tacheId);
-        String nomPrecedant = sc.getNom();
-        sc.setNom(nom);
-        Notification notification = new Notification(id,projectId,sectionId,tacheId,
+        Tache tache = this.getTache(tacheId);
+        this.tacheRepository.delete(tache);
+        Notification notification = new Notification(id,projectId,sectionId,
         utilisateurService.getUtilisateur(id).getUserName() +
-         " à modifié le nom de la tâche " +
-        nomPrecedant +
-        " par " +
-        tacheService.getTache(tacheId).getNom() +
+         " à supprimé la tâche " +
+        tache.getNom() +
         " de la section " +
         sectionService.getSection(sectionId).getNom() +
         " du projet " +
@@ -81,13 +105,53 @@ public class TacheService {
         "."
         , new Date());
         notificationService.sendNotification(notification);
-        this.tacheRepository.save(sc);
     }
 
-    public void swapStatut(String id) {
-        Tache user = this.getTache(id);
-        user.swapStatut();
-        this.tacheRepository.save(user);
+    public void updateNom(String id, String projectId, String sectionId, String tacheId, String nom){
+        NotificationService notificationService = context.getBean(NotificationService.class);
+        UtilisateurService utilisateurService = context.getBean(UtilisateurService.class);
+        SectionService sectionService = context.getBean(SectionService.class);
+        ProjetService projetService = context.getBean(ProjetService.class);
+        Tache sc = this.getTache(tacheId);
+        String nomPrecedant = sc.getNom();
+        sc.setNom(nom);
+        this.tacheRepository.save(sc);
+        Notification notification = new Notification(id,projectId,sectionId,tacheId,
+        utilisateurService.getUtilisateur(id).getUserName() +
+         " à modifié le nom de la tâche " +
+        nomPrecedant +
+        " par " +
+        sc.getNom() +
+        " de la section " +
+        sectionService.getSection(sectionId).getNom() +
+        " du projet " +
+        projetService.getProject(projectId).getNom() +
+        "."
+        , new Date());
+        notificationService.sendNotification(notification);
+    }
+
+    public void swapStatut(String id, String projectId, String sectionId, String tacheId) {
+        NotificationService notificationService = context.getBean(NotificationService.class);
+        UtilisateurService utilisateurService = context.getBean(UtilisateurService.class);
+        SectionService sectionService = context.getBean(SectionService.class);
+        ProjetService projetService = context.getBean(ProjetService.class);
+        Tache tache = this.getTache(tacheId);
+        tache.swapStatut();
+        this.tacheRepository.save(tache);
+        Notification notification = new Notification(id,projectId,sectionId,tacheId,
+        utilisateurService.getUtilisateur(id).getUserName() +
+         " à passé le statut de la tâche " +
+        tache.getNom() +
+        " dans la section " +
+        sectionService.getSection(sectionId).getNom() +
+        " du projet " +
+        projetService.getProject(projectId).getNom() +
+        " à " +
+        (tache.isStatutTerminer() ? "Terminé" : "En cours" )+
+        "."
+        , new Date());
+        notificationService.sendNotification(notification);
     }
 
     public Utilisateur[] membreAttribue(String id) {
@@ -103,10 +167,31 @@ public class TacheService {
         return usersArray;
     }
 
-    public void addCollaborateur(String id, String userId) {
-        Tache tache = this.getTache(id);
-        tache.getMembreAttribue().add(userId);
+    public void addCollaborateur(String id, String projectId, String sectionId, String tacheId, String collaborateurId) {
+        NotificationService notificationService = context.getBean(NotificationService.class);
+        UtilisateurService utilisateurService = context.getBean(UtilisateurService.class);
+        SectionService sectionService = context.getBean(SectionService.class);
+        ProjetService projetService = context.getBean(ProjetService.class);
+        Tache tache = this.getTache(tacheId);
+        tache.getMembreAttribue().add(id);
         tacheRepository.save(tache);
+        Notification notification = new Notification(id,projectId,sectionId,tacheId,
+        utilisateurService.getUtilisateur(id).getUserName() +
+        (id == collaborateurId ? 
+            " c'est assigné sur la tache " 
+        : 
+            " à assigné " + 
+            utilisateurService.getUtilisateur(collaborateurId).getUserName() +
+            " à la tâche " 
+        )+
+        tache.getNom() +
+        " dans la section " +
+        sectionService.getSection(sectionId).getNom() +
+        " du projet " +
+        projetService.getProject(projectId).getNom() +
+        "."
+        , new Date());
+        notificationService.sendNotification(notification);
     }
 
     public Utilisateur[] membreRestant(String id, String projectId) {
@@ -137,22 +222,88 @@ public class TacheService {
         return usersArray;
     }
 
-    public void removeCollaborateur(String id, String userId) {
-        Tache tache = this.getTache(id);
-        tache.getMembreAttribue().remove(userId);
+    public void removeCollaborateur(String id, String projectId, String sectionId, String tacheId, String collaborateurId) {
+        NotificationService notificationService = context.getBean(NotificationService.class);
+        UtilisateurService utilisateurService = context.getBean(UtilisateurService.class);
+        SectionService sectionService = context.getBean(SectionService.class);
+        ProjetService projetService = context.getBean(ProjetService.class);
+        Tache tache = this.getTache(tacheId);
+        tache.getMembreAttribue().remove(id);
         tacheRepository.save(tache);
+        Notification notification = new Notification(id,projectId,sectionId,tacheId,
+        utilisateurService.getUtilisateur(id).getUserName() +
+        (id == collaborateurId ? 
+            " c'est retiré de la tache " 
+        : 
+            " à retiré " + 
+            utilisateurService.getUtilisateur(collaborateurId).getUserName() +
+            " de la tâche " 
+        )+
+        tache.getNom() +
+        " dans la section " +
+        sectionService.getSection(sectionId).getNom() +
+        " du projet " +
+        projetService.getProject(projectId).getNom() +
+        "."
+        , new Date());
+        notificationService.sendNotification(notification);
     }
 
-    public void updatePriorite(String id, Integer priorite) {
-        Tache sc = this.getTache(id);
-        sc.setPriorite(priorite);
-        this.tacheRepository.save(sc);
+    public void updatePriorite(String id, String projectId, String sectionId, String tacheId, Integer priorite) {
+        NotificationService notificationService = context.getBean(NotificationService.class);
+        UtilisateurService utilisateurService = context.getBean(UtilisateurService.class);
+        SectionService sectionService = context.getBean(SectionService.class);
+        ProjetService projetService = context.getBean(ProjetService.class);
+        Tache tache = this.getTache(tacheId);
+        Integer prioritePrecedente = tache.getPriorite();
+        tache.setPriorite(priorite);
+        this.tacheRepository.save(tache);
+        Notification notification = new Notification(id,projectId,sectionId,tacheId,
+        utilisateurService.getUtilisateur(id).getUserName() +
+        " à changé la priorité de la tâche " +
+        tache.getNom() +
+        " dans la section " +
+        sectionService.getSection(sectionId).getNom() +
+        " du projet " +
+        projetService.getProject(projectId).getNom() +
+        " de " +
+        prioritePrecedente +
+        " à " +
+        priorite +
+        "."
+        , new Date());
+        notificationService.sendNotification(notification);
     }
 
-    public void updatePonderation(String id, Integer ponderation) {
-        Tache sc = this.getTache(id);
+    public void updatePonderation(String id, String projectId, String sectionId, String tacheId, Integer ponderation) {
+        NotificationService notificationService = context.getBean(NotificationService.class);
+        UtilisateurService utilisateurService = context.getBean(UtilisateurService.class);
+        SectionService sectionService = context.getBean(SectionService.class);
+        ProjetService projetService = context.getBean(ProjetService.class);
+        Tache sc = this.getTache(tacheId);
+        Integer ponderationPrecedente = sc.getPonderation();
         sc.setPonderation(ponderation);
         this.tacheRepository.save(sc);
+        Notification notification = new Notification(id,projectId,sectionId,tacheId,
+        utilisateurService.getUtilisateur(id).getUserName() +
+        " à changé la priorité de la tâche " +
+        sc.getNom() +
+        " dans la section " +
+        sectionService.getSection(sectionId).getNom() +
+        " du projet " +
+        projetService.getProject(projectId).getNom() +
+        " de " +
+        ponderationPrecedente +
+        " à " +
+        ponderation +
+        "."
+        , new Date());
+        notificationService.sendNotification(notification);
+    }
+
+    public void removeTacheSimple(String tache_id) {
+        Tache tache = this.getTache(tache_id);
+        this.tacheRepository.delete(tache);
     }
 
     // Autres méthodes de service pour la gestion des tâches

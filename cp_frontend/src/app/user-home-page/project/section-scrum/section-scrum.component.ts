@@ -107,7 +107,7 @@ editNom(){
 
   onPlusClick(event: MouseEvent): void {
     const dialogRef = this.dialog.open(CreateTaskComponent, {
-      data: this.sectionId,
+      data: {id: this.id, projectId: this.projetId, sectionId: this.sectionId}
     });
 
     dialogRef.afterClosed().subscribe((result) => {

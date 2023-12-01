@@ -12,9 +12,9 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./create-task.component.css'],
 })
 export class CreateTaskComponent {
-  id: string = '';
-  projectId: string = '';
-  @Input() sectionId!: String;
+  id!: String;
+  projectId!: String;
+  sectionId!: String;
   nom: string = '';
   @Input() dateLimite!: Date;
 
@@ -23,21 +23,24 @@ export class CreateTaskComponent {
     private route: ActivatedRoute,
     private ObservableService: ObservableService,
     public dialogRef: MatDialogRef<CreateTaskComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: string
-  ) {}
+    @Inject(MAT_DIALOG_DATA) public data: {id: String, projectId: String, sectionId: String}
+  ) {
+    this.id = data.id;
+    this.projectId = data.projectId;
+    this.sectionId = data.sectionId;
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   ngOnInit() {
-    this.sectionId = this.data;
   }
 
   onButtonClick() {
     console.log('create-tache:', this.dateLimite);
     this.http
-      .get(`http://localhost:8080/taches/create?name=${this.nom}`, {
+      .get(`http://localhost:8080/taches/create?id=${this.id}&projectId=${this.projectId}&sectionId=${this.sectionId}&name=${this.nom}`, {
         responseType: 'text',
       })
       .subscribe(
@@ -62,7 +65,7 @@ export class CreateTaskComponent {
                   );
                   this.http
                     .get(
-                      `http://localhost:8080/taches/setDateLimite?tacheId=${tacheId}&dateLimite=${formattedDate}`,
+                      `http://localhost:8080/taches/setDateLimite?id=${this.id}&projectId=${this.projectId}&sectionId=${this.sectionId}&tacheId=${tacheId}&dateLimite=${formattedDate}`,
                       {
                         responseType: 'text',
                       }

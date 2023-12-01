@@ -16,19 +16,14 @@ export class SectionSettingComponent implements OnInit{
   @Input() mouseX!: number;
   @Input() mouseY!: number;
   contextMenuStyle = {};
-  id: string = '';
-  projectId: string = '';
+  @Input() id: String = '';
+  @Input() projectId: String = '';
 
   constructor(private http: HttpClient, private route: ActivatedRoute, 
     private observableService: ObservableService, public dialog: MatDialog) {}
 
   ngOnInit() {
-    const id = this.route.parent ? this.route.parent.snapshot.paramMap.get('id') : null;
-    if(id) this.id = id;
-    const projectId = this.route.snapshot.paramMap.get('projectId');
-    if(projectId) this.projectId = projectId;
-    const sectionId = this.route.snapshot.paramMap.get('sectionId');
-    if(sectionId) this.sectionId = sectionId;
+    
     
 
   }
@@ -45,7 +40,7 @@ export class SectionSettingComponent implements OnInit{
 
   ajouterTache(){
     const dialogRef = this.dialog.open(CreateTaskComponent, {
-      data: this.sectionId
+      data: {id: this.id, projectId: this.projectId, sectionId: this.sectionId}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -55,7 +50,7 @@ export class SectionSettingComponent implements OnInit{
 
   modifier(){
     const dialogRef = this.dialog.open(ModifySectionComponent, {
-      data: this.sectionId,
+      data: {id: this.id, projetId: this.projectId, sectionId: this.sectionId}
     });
   
     dialogRef.afterClosed().subscribe(() => {
