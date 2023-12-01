@@ -100,6 +100,10 @@ export class TacheComponent  implements AfterViewChecked {
     }
   }
 
+  getContrastColor(bgColor) {
+    return `rgb(80, 80, 80)`;
+}
+
 
 showMiniUserProfile(membre: any,  event: MouseEvent) {
   this.hideTimeout = setTimeout(() => {
