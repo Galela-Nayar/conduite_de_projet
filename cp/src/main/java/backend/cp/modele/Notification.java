@@ -17,22 +17,50 @@ public class Notification {
     private String id = UUID.randomUUID().toString();
     private String createurId;
     private String projectId;
-    private Optional<String> sectionId = Optional.empty();
-    private Optional<String> tacheId = Optional.empty();
+    private String sectionId = null;
+    private String tacheId = null;
     private String message;
     private Date createdAt;
-    private Optional<String> parentId = Optional.empty();
-    private Optional<ArrayList<Notification>> notificationsGenerated = Optional.empty();
+    private String parentId = null;
+    private ArrayList<String> notificationsGenerated = null;
 
 
     public Notification(String createurId, String projectId, String sectionId, String tacheId, String message, Date createdAt, String parentId){
         this.createurId = createurId;
         this.projectId = projectId;
-        this.tacheId = Optional.of(tacheId);
-        this.sectionId = Optional.of(sectionId);
+        this.tacheId = tacheId;
+        this.sectionId = sectionId;
         this.message = message;
         this.createdAt = createdAt;
-        this.parentId = Optional.of(parentId);
+        this.parentId = parentId;
+    }
+
+    public Notification(String createurId, String projectId, String sectionId, String tacheId, String message, Date createdAt){
+        this.createurId = createurId;
+        this.projectId = projectId;
+        this.tacheId = tacheId;
+        this.sectionId = sectionId;
+        this.message = message;
+        this.createdAt = createdAt;
+    }
+
+    public Notification(String createurId, String projectId, String sectionId, String message, Date createdAt){
+        this.createurId = createurId;
+        this.projectId = projectId;
+        this.sectionId = sectionId;
+        this.message = message;
+        this.createdAt = createdAt;
+    }
+
+
+    public Notification(String createurId, String projectId, String message, Date createdAt){
+        this.createurId = createurId;
+        this.projectId = projectId;
+        this.message = message;
+        this.createdAt = createdAt;
+    }
+
+    public Notification() {
     }
 
 }

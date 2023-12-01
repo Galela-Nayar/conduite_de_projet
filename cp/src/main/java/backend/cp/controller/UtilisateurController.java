@@ -1,6 +1,7 @@
 package backend.cp.controller;
 
 import backend.cp.dto.UtilisateurDto;
+import backend.cp.modele.Notification;
 import backend.cp.modele.Utilisateur;
 import backend.cp.service.UtilisateurService;
 
@@ -231,4 +232,13 @@ public byte[] resizeAndCropImage(MultipartFile file) {
             .contentType(MediaType.IMAGE_PNG) // Change this if the image format is not JPEG
             .body(new InputStreamResource(new ByteArrayInputStream(logo)));
     }
+
+
+    @GetMapping("/deleteNotification")
+    public ResponseEntity<String> getNotifications(@RequestParam String userId, @RequestParam String notificationId){
+        utilisateurService.deleteNotification(userId, notificationId);
+        return ResponseEntity.ok("notification deleted");
+
+    }
+    
 }

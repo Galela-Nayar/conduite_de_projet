@@ -4,6 +4,7 @@ import backend.cp.modele.Notification;
 import backend.cp.modele.Utilisateur;
 import backend.cp.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -15,10 +16,12 @@ import java.util.List;
 public class UtilisateurService {
 
     private final UtilisateurRepository utilisateurRepository;
+    private final ApplicationContext context;
 
     @Autowired
-    public UtilisateurService(UtilisateurRepository utilisateurRepository) {
+    public UtilisateurService(UtilisateurRepository utilisateurRepository,ApplicationContext context) {
         this.utilisateurRepository = utilisateurRepository;
+        this.context = context;
     }
 
     public void createUtilisateur(
@@ -164,9 +167,9 @@ public class UtilisateurService {
         }
     }
 
-    public void addNotification(String id, Notification notificationEnfant) {
+    public void addNotification(String id, String notificationId) {
         Utilisateur user = this.getUtilisateur(id);
-        user.addNotification(notificationEnfant);
+        user.addNotification(notificationId);
         this.utilisateurRepository.save(user);
     }
 
@@ -174,6 +177,14 @@ public class UtilisateurService {
         Utilisateur user = this.getUtilisateur(id);
         user.removeNotification(notificationId);
         this.utilisateurRepository.save(user);
+    }
+
+    public void deleteNotification(String userId, String notificationId) {
+
+        NotificationService notificationService = context.getBean(NotificationService.class);
+        Utilisateur user = this.getUtilisateur(userId);
+        user.removeNotification(notificationId);
+        notificationService.removeFromParent(notificationId);
     }
 }
  

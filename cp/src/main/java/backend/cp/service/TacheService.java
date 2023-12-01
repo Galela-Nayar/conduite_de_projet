@@ -1,5 +1,6 @@
 package backend.cp.service;
 
+import backend.cp.modele.Notification;
 import backend.cp.modele.Projet;
 import backend.cp.modele.Tache;
 import backend.cp.modele.Utilisateur;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,9 +59,28 @@ public class TacheService {
         this.tacheRepository.delete(tache);
     }
 
-    public void updateNom(String id, String nom){
-        Tache sc = this.getTache(id);
+    public void updateNom(String id, String projectId, String sectionId, String tacheId, String nom){
+        NotificationService notificationService = context.getBean(NotificationService.class);
+        UtilisateurService utilisateurService = context.getBean(UtilisateurService.class);
+        SectionService sectionService = context.getBean(SectionService.class);
+        ProjetService projetService = context.getBean(ProjetService.class);
+        TacheService tacheService = context.getBean(TacheService.class);
+        Tache sc = this.getTache(tacheId);
+        String nomPrecedant = sc.getNom();
         sc.setNom(nom);
+        Notification notification = new Notification(id,projectId,sectionId,tacheId,
+        utilisateurService.getUtilisateur(id).getUserName() +
+         "à modifié le nom de la tâche " +
+        nomPrecedant +
+        "par " +
+        tacheService.getTache(tacheId).getNom() +
+        " de la section " +
+        sectionService.getSection(sectionId).getNom() +
+        " du projet " +
+        projetService.getProject(projectId).getNom() +
+        "."
+        , new Date());
+        notificationService.sendNotification(notification);
         this.tacheRepository.save(sc);
     }
 
