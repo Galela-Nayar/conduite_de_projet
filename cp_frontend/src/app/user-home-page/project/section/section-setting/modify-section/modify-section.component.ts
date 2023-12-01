@@ -11,23 +11,29 @@ import Section from 'src/interface/Section';
   styleUrls: ['./modify-section.component.css']
 })
 export class ModifySectionComponent implements OnInit{
-
-
+  id!: String
+  projectId!: String
   section!: Section;
-  @Input() sectionId: string = '';
+  sectionId!: String;
   isEditing: boolean = false;
   sectionForm: FormGroup;
 
 
-  constructor(private httpClient: HttpClient, @Inject(MAT_DIALOG_DATA) public data: string, 
-  private fb: FormBuilder, private observerService: ObservableService, public dialogRef: MatDialogRef<ModifySectionComponent>) {
+  constructor(private httpClient: HttpClient,  
+  private fb: FormBuilder, 
+  private observerService: ObservableService, 
+  public dialogRef: MatDialogRef<ModifySectionComponent>,
+  @Inject(MAT_DIALOG_DATA) public data: {id: String, projetId: String, sectionId: String}
+  ) {
+      this.projectId = data.projetId;
+      this.id = data.id;
+      this.sectionId = data.sectionId
     this.sectionForm = this.fb.group({
       nom: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
-    this.sectionId = this.data;
     this.httpClient.get<Section>(`http://localhost:8080/sections/section?id=${this.sectionId}`).subscribe((response)=>{
       this.section = response;
     })
@@ -56,7 +62,7 @@ export class ModifySectionComponent implements OnInit{
   }
 
   supprimer(idTask: string): void {
-    this.httpClient.get(`http://localhost:8080/taches/removeTache?id=${idTask}`, { responseType: 'text' }).subscribe((response: string) => {
+    this.httpClient.get(`http://localhost:8080/taches/removeTache?id=${this.id}&projectId=${this.projectId}&sectionId=${this.sectionId}&tacheId=${idTask}`, { responseType: 'text' }).subscribe((response: string) => {
       console.log("supprimer tache : " + response)
       this.httpClient.get(`http://localhost:8080/sections/removeTache?id=${this.sectionId}&tacheId=${idTask}`, { responseType: 'text' }).subscribe((response2: string) => {
         console.log("supprimer tache dans section: " + response)

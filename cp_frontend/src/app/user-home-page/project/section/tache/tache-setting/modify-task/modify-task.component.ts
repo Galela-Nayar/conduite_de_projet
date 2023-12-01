@@ -15,9 +15,11 @@ import Utilisateur from 'src/interface/Utilisateur';
   styleUrls: ['./modify-task.component.css'],
 })
 export class ModifyTaskComponent implements OnInit {
-  projectId!: string | null | undefined;
+  projectId!: String;
+  sectionId!: String
   tache!: Tache;
-  tacheId: string = '';
+  id!: String
+  tacheId!: String;
   editingNom: boolean = false;
   sectionForm!: FormGroup;
   membreAttribue!: Utilisateur[];
@@ -28,16 +30,19 @@ export class ModifyTaskComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    
     private fb: FormBuilder,
     private observerService: ObservableService,
-    public dialogRef: MatDialogRef<ModifyTaskComponent>
-  ) {}
+    public dialogRef: MatDialogRef<ModifyTaskComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: {id: String, projectId: String, sectionId: String, tacheId: String}
+  ) {
+    this.id = data.id;
+    this.sectionId = data.sectionId;
+    this.tacheId = data.tacheId;
+    this.projectId = data.projectId;
+  }
 
   ngOnInit(): void {
-    this.projectId = this.route.snapshot.paramMap.get('projectId');
-    this.tacheId = this.data.data1;
-    this.projectId = this.data.data2;
     this.http
       .get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`)
       .subscribe((tacheData: Tache) => {
@@ -74,7 +79,7 @@ export class ModifyTaskComponent implements OnInit {
       console.log(this.sectionForm.value.nom);
       this.http
         .put<string>(
-          `http://localhost:8080/taches/updateNom?id=${this.tacheId}&nom=${this.sectionForm.value.nom}`,
+          `http://localhost:8080/taches/updateNom?id=${this.id}&projectId=${this.projectId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}&nom=${this.sectionForm.value.nom}`,
           {}
         )
         .subscribe((response) => {
@@ -92,7 +97,7 @@ export class ModifyTaskComponent implements OnInit {
 
   swapStatut() {
     this.http
-      .get(`http://localhost:8080/taches/swapStatut?id=${this.tacheId}`, {
+      .get(`http://localhost:8080/taches/swapStatut?id=${this.id}&projectId=${this.projectId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}`, {
         responseType: 'text',
       })
       .subscribe((tacheData) => {
@@ -106,7 +111,7 @@ export class ModifyTaskComponent implements OnInit {
     console.log('userId : ' + userId);
     this.http
       .get(
-        `http://localhost:8080/taches/remove_collaborateur?id=${this.tacheId}&userId=${userId}`,
+        `http://localhost:8080/taches/remove_collaborateur?id=${this.id}&projectId=${this.projectId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}&collaborateurId=${userId}`,
         { responseType: 'text' }
       )
       .subscribe((data) => {
@@ -132,7 +137,7 @@ export class ModifyTaskComponent implements OnInit {
     console.log('userId : ' + userId);
     this.http
       .get(
-        `http://localhost:8080/taches/add_collaborateur?id=${this.tacheId}&userId=${userId}`,
+        `http://localhost:8080/taches/add_collaborateur?id=${this.id}&projectId=${this.projectId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}&collaborateurId=${userId}`,
         { responseType: 'text' }
       )
       .subscribe((data) => {
@@ -189,7 +194,7 @@ export class ModifyTaskComponent implements OnInit {
     );
     this.http
       .get(
-        `http://localhost:8080/taches/setDateLimite?tacheId=${this.tache.id}&dateLimite=${formattedDate}`,
+        `http://localhost:8080/taches/setDateLimite?id=${this.id}&projectId=${this.projectId}&sectionId=${this.sectionId}&tacheId=${this.tache.id}&dateLimite=${formattedDate}`,
         {
           responseType: 'text',
         }

@@ -109,7 +109,7 @@ export class TacheScrumComponent implements AfterViewChecked {
   }
 
   updateTaskPriorite() {
-    this.http.put(`http://localhost:8080/taches/updatePriorite?id=${this.tacheId}&priorite=${this.tache.priorite}`, {responseType:"text"}).
+    this.http.put(`http://localhost:8080/taches/updatePriorite?id=${this.id}&projectId=${this.projetId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}&priorite=${this.tache.priorite}`, {responseType:"text"}).
     subscribe((tacheData) => {
       this.updateTache();
       this.isEditingPriorite = false;
@@ -122,7 +122,7 @@ export class TacheScrumComponent implements AfterViewChecked {
   }
 
   updateTaskPonderation() {
-    this.http.put(`http://localhost:8080/taches/updatePonderation?id=${this.tacheId}&ponderation=${this.tache.ponderation}`, {responseType:"text"}).
+    this.http.put(`http://localhost:8080/taches/updatePonderation?id=${this.id}&projectId=${this.projetId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}&ponderation=${this.tache.ponderation}`, {responseType:"text"}).
     subscribe((tacheData) => {
       this.updateTache();
       this.isEditingPonderation = false;
@@ -202,7 +202,7 @@ cancelHideMiniUserProfile() {
   
     const dialogRef = this.dialog.open(DateLimiteCalendrierComponent, {
       position: { left: `${left}px`, top: `${top}px` },
-      data: { date: this.tache?.dateLimite || new Date(), tacheId: this.tacheId }
+      data: {id: this.id, projectId: this.projetId, sectionId: this.sectionId, tacheId: this.tacheId,date: this.tache?.dateLimite || new Date()}
     });
   
     dialogRef.afterClosed().subscribe(result => {
@@ -215,7 +215,7 @@ cancelHideMiniUserProfile() {
   }
 
   swapStatut(){
-    this.http.get(`http://localhost:8080/taches/swapStatut?id=${this.tacheId}`, {responseType:"text"}).
+    this.http.get(`http://localhost:8080/taches/swapStatut?id=${this.id}&projectId=${this.projetId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}`, {responseType:"text"}).
     subscribe((tacheData) => {
       if(this.tache?.statutTerminer) this.tache.statutTerminer = false;
       if(this.tache?.statutTerminer == false) this.tache.statutTerminer = true;
@@ -240,7 +240,7 @@ cancelHideMiniUserProfile() {
   
     const dialogRef = this.dialog.open(ModifierCollaborateurComponent, {
       position: { left: `${left}px`, top: `${top}px` },
-      data: { projetId: this.projetId,id: this.id, tacheId: this.tacheId }
+      data: { sectionId: this.sectionId, projetId: this.projetId,id: this.id, tacheId: this.tacheId }
     });
   
     dialogRef.afterClosed().subscribe(result => {

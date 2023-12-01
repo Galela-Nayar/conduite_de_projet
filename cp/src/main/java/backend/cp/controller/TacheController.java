@@ -24,14 +24,14 @@ public class TacheController {
     }
 
     @GetMapping("/create")
-    public String createTache(@RequestParam String name) {
-        String reponse = tacheService.createTache(name);
+    public String createTache(@RequestParam String id, @RequestParam String projectId, @RequestParam String sectionId, @RequestParam String name) {
+        String reponse = tacheService.createTache(id, projectId, sectionId, name);
         return reponse;
     }
 
     @GetMapping("/setDateLimite")
-    public String setDateLimite(@RequestParam String tacheId, @RequestParam @DateTimeFormat(pattern = "dd-MM-yyyy") Date dateLimite) {
-        String reponse = tacheService.setDateLimite(tacheId, dateLimite);
+    public String setDateLimite(@RequestParam String id, @RequestParam String projectId, @RequestParam String sectionId,@RequestParam String tacheId, @RequestParam @DateTimeFormat(pattern = "dd-MM-yyyy") Date dateLimite) {
+        String reponse = tacheService.setDateLimite(id, projectId, sectionId, tacheId, dateLimite);
         return reponse;
     }
 
@@ -48,8 +48,8 @@ public class TacheController {
 
 
     @GetMapping("/removeTache")
-    public ResponseEntity<String>removeTache(@RequestParam String id){
-        tacheService.removeTache(id);
+    public ResponseEntity<String>removeTache(@RequestParam String id, @RequestParam String projectId, @RequestParam String sectionId,@RequestParam String tacheId){
+        tacheService.removeTache(id, projectId, sectionId, tacheId);
 
         return ResponseEntity.ok("ok");
     }
@@ -61,20 +61,20 @@ public class TacheController {
     }
 
     @PutMapping("/updatePriorite")
-    public ResponseEntity<String> updatePriorite(@RequestParam String id, @RequestParam Integer priorite){
-        tacheService.updatePriorite(id, priorite);
+    public ResponseEntity<String> updatePriorite(@RequestParam String id, @RequestParam String projectId, @RequestParam String sectionId, @RequestParam String tacheId, @RequestParam Integer priorite){
+        tacheService.updatePriorite(id, projectId, sectionId, tacheId, priorite);
         return ResponseEntity.ok("");
     }
 
     @PutMapping("/updatePonderation")
-    public ResponseEntity<String> updatePonderation(@RequestParam String id, @RequestParam Integer ponderation){
-        tacheService.updatePonderation(id, ponderation);
+    public ResponseEntity<String> updatePonderation(@RequestParam String id, @RequestParam String projectId, @RequestParam String sectionId, @RequestParam String tacheId, @RequestParam Integer ponderation){
+        tacheService.updatePonderation(id, projectId, sectionId, tacheId, ponderation);
         return ResponseEntity.ok("");
     }
 
     @GetMapping("/swapStatut")
-    public ResponseEntity<String> swapStatut(@RequestParam String id){
-        tacheService.swapStatut(id);
+    public ResponseEntity<String> swapStatut(@RequestParam String id, @RequestParam String projectId, @RequestParam String sectionId, @RequestParam String tacheId){
+        tacheService.swapStatut(id, projectId, sectionId, tacheId);
         return ResponseEntity.ok("ok");
     }
 
@@ -84,14 +84,14 @@ public class TacheController {
     }
 
     @GetMapping("/add_collaborateur")
-    public ResponseEntity<String> addCollaborateur(@RequestParam String id, @RequestParam String userId){
-        tacheService.addCollaborateur(id, userId);
+    public ResponseEntity<String> addCollaborateur(@RequestParam String id, @RequestParam String projectId, @RequestParam String sectionId, @RequestParam String tacheId, @RequestParam String collaborateurId){
+        tacheService.addCollaborateur(id, projectId, sectionId, tacheId, collaborateurId);
         return ResponseEntity.ok("ok");
     }
 
     @GetMapping("/remove_collaborateur")
-    public ResponseEntity<String> removeCollaborateur(@RequestParam String id, @RequestParam String userId){
-        tacheService.removeCollaborateur(id, userId);
+    public ResponseEntity<String> removeCollaborateur(@RequestParam String id, @RequestParam String projectId, @RequestParam String sectionId, @RequestParam String tacheId, @RequestParam String collaborateurId){
+        tacheService.removeCollaborateur(id, projectId, sectionId, tacheId, collaborateurId);
         return ResponseEntity.ok("ok");
     }
 
