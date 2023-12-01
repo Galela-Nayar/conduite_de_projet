@@ -1,0 +1,29 @@
+<div class="container">
+  <h1> Étiquettes </h1>
+  
+  <div class="form-row" *ngFor="let etiquette of listeEtiquette" [style.background-color]="etiquette.color">
+    <a>{{ etiquette.name }}</a>
+    <button class="bouttonSupprimer" (click)="supprimer(etiquette)">x</button>
+  </div>
+  
+  <div class="form-row">
+    <button class="bouttonAjouter" (click)="plus()">{{symbole}}</button>
+  </div>
+  
+  <div *ngIf="isCreating">
+      <label>Nom <input [(ngModel)]="nom" type="text"></label>
+      
+      <!-- Ici, vous pouvez utiliser un label pour une meilleure accessibilité -->
+      
+      <div class="color-palette">
+          <div *ngFor="let color of colors" 
+               (click)="selectColor(color)" 
+               [style.background-color]="color" 
+               [class.selected]="color === couleurActuel" 
+               class="color-box">
+          </div>
+      </div>
+      
+      <button class="bouttonAjouter" (click)="ajouter()">Ajouter</button>
+  </div>
+</div>

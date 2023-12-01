@@ -31,6 +31,7 @@ public class Projet {
     private Date dateButtoire; // Date d'échéance au format souhaité
     private Map<Integer, String> droitUtilisateur = new HashMap<>(); // Gestion des droits des utilisateurs
     private String modeAffichage; //L'etat du projet (En cours, en pause, terminé ...)
+    private List<String> etiquettes = new ArrayList<>(); // Liste des etiquettes
     
     public void addSection(String section) {
         this.sections.add(section);
@@ -53,6 +54,16 @@ public class Projet {
             }
         }
         this.droitUtilisateur.remove(this.collaborateurs.size());
+    }
+
+    public void addEtiquette(String id)
+    {
+        this.etiquettes.add(id);
+    }
+
+    public void removeEtiquette(String id)
+    {
+        this.etiquettes.remove(id);
     }
 
 

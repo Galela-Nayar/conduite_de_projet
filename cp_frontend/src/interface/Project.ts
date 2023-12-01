@@ -1,3 +1,5 @@
+import Etiquette from "./Etiquette";
+
 export interface Project {
     id: string;
     nom: string;
@@ -10,6 +12,7 @@ export interface Project {
     [key:string]:any;
     createur: string;
     droitUtilisateur: any[]; //Admin(Peut tout faire), Collaborateur(Peut pas modifier), ou juste visiteur(Pas rien faire)
+    etiquettes: Etiquette[];
   }
 
 export default Project;

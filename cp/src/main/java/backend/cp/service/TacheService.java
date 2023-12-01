@@ -173,7 +173,7 @@ public class TacheService {
         SectionService sectionService = context.getBean(SectionService.class);
         ProjetService projetService = context.getBean(ProjetService.class);
         Tache tache = this.getTache(tacheId);
-        tache.getMembreAttribue().add(id);
+        tache.getMembreAttribue().add(collaborateurId);
         tacheRepository.save(tache);
         Notification notification = new Notification(id,projectId,sectionId,tacheId,
         utilisateurService.getUtilisateur(id).getUserName() +
@@ -228,7 +228,7 @@ public class TacheService {
         SectionService sectionService = context.getBean(SectionService.class);
         ProjetService projetService = context.getBean(ProjetService.class);
         Tache tache = this.getTache(tacheId);
-        tache.getMembreAttribue().remove(id);
+        tache.getMembreAttribue().remove(collaborateurId);
         tacheRepository.save(tache);
         Notification notification = new Notification(id,projectId,sectionId,tacheId,
         utilisateurService.getUtilisateur(id).getUserName() +
@@ -304,6 +304,23 @@ public class TacheService {
     public void removeTacheSimple(String tache_id) {
         Tache tache = this.getTache(tache_id);
         this.tacheRepository.delete(tache);
+    }
+
+    public void addEtiquette(String idTache, String idEtiquette)
+    {
+        Tache sc = this.getTache(idTache);
+        if(!sc.getEtiquettes().contains(idEtiquette))
+        {
+            sc.getEtiquettes().add(idEtiquette);
+            this.tacheRepository.save(sc);
+        }
+    }
+
+    public void removeEtiquette(String idTache, String idEtiquette)
+    {
+        Tache sc = this.getTache(idTache);
+        sc.getEtiquettes().remove(idEtiquette);
+        this.tacheRepository.save(sc);
     }
 
     // Autres méthodes de service pour la gestion des tâches
