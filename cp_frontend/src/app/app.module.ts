@@ -43,7 +43,6 @@ import {
   CdkDrag,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
-import { UserSettingComponent } from './user-home-page/user-setting/user-setting.component';
 import { ProjectSettingComponent } from './user-home-page/lateral-user-home-menu/project-setting/project-setting.component';
 import { ProjetParametresComponent } from './user-home-page/projet-parametres/projet-parametres.component';
 import { ModifyTaskComponent } from './user-home-page/project/section/tache/tache-setting/modify-task/modify-task.component';
@@ -61,6 +60,8 @@ import { DateLimiteCalendrierComponent } from './user-home-page/project/section-
 import { ModifierCollaborateurComponent } from './user-home-page/project/section-scrum/tache-scrum/modifier-collaborateur/modifier-collaborateur.component';
 import { EtiquetteSettingsComponent } from './user-home-page/etiquette-settings/etiquette-settings.component';
 import { EtiquetteTachesComponent } from './user-home-page/etiquette-settings/etiquette-taches/etiquette-taches.component';
+import { UserProfilComponent } from './user-home-page/user-profil/user-profil.component';
+import { MiniUserProfilComponent } from './user-home-page/mini-user-profil/mini-user-profil.component';
 //import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
@@ -83,7 +84,6 @@ import { EtiquetteTachesComponent } from './user-home-page/etiquette-settings/et
     SectionSettingComponent,
     TacheSettingComponent,
     ModifySectionComponent,
-    UserSettingComponent,
     ProjectSettingComponent,
     ProjetParametresComponent,
     ModifyTaskComponent,
@@ -97,6 +97,8 @@ import { EtiquetteTachesComponent } from './user-home-page/etiquette-settings/et
     ModifierCollaborateurComponent,
     EtiquetteSettingsComponent,
     EtiquetteTachesComponent,
+    UserProfilComponent,
+    MiniUserProfilComponent,
   ],
   imports: [
     BrowserModule,

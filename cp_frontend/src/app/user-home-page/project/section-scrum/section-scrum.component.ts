@@ -7,6 +7,7 @@ import { ObservableService } from 'src/app/observable/observable-projet.service'
 import Section from 'src/interface/Section';
 import { SectionService } from '../section/section.service';
 import { CreateTaskComponent } from '../../create-task/create-task.component';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-section-scrum',
@@ -27,6 +28,7 @@ export class SectionScrumComponent implements AfterViewChecked{
   isEditingNom = false;
   tasks!: string[];
   private sectionData = new BehaviorSubject<Section | null>(null);
+  droitUtilisateurActuel: string = '';
 
   constructor(
     private http: HttpClient,
@@ -53,6 +55,10 @@ export class SectionScrumComponent implements AfterViewChecked{
               this.section = response;
               this.tasks = this.section.taches;
             });
+        });
+        //Les droits de l'utilisateur actuel
+        this.http.get(`http://localhost:8080/projets/droitUtilisateur?idUtilisateur=${this.id}&idProjet=${this.projetId}`, {responseType: 'text'}).subscribe((data: string) => {
+              this.droitUtilisateurActuel = data;
         });
     }
   }
@@ -95,6 +101,10 @@ export class SectionScrumComponent implements AfterViewChecked{
         });
   }
   
+editNom(){
+  if(this.droitUtilisateurActuel != 'Visiteur') this.isEditingNom = true
+}
+
   onPlusClick(event: MouseEvent): void {
     const dialogRef = this.dialog.open(CreateTaskComponent, {
       data: this.sectionId,
@@ -109,6 +119,18 @@ export class SectionScrumComponent implements AfterViewChecked{
     this.mouseY = event.clientY;
     this.showSetting = true;
     this.cd.detectChanges();
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
+    this.http
+      .put(
+        `http://localhost:8080/sections/updateTaches?id=${this.sectionId}&taches=${this.tasks}`,
+        {}
+      )
+      .subscribe((response) => {
+        this.observableService.notifySection();
+      });
   }
 
 }

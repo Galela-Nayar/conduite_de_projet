@@ -1,6 +1,7 @@
 package backend.cp.controller;
 
 import backend.cp.dto.UtilisateurDto;
+import backend.cp.modele.Notification;
 import backend.cp.modele.Utilisateur;
 import backend.cp.service.UtilisateurService;
 
@@ -14,6 +15,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.imgscalr.Scalr;
@@ -36,6 +38,9 @@ public class UtilisateurController {
     private final UtilisateurService utilisateurService;
 
     @Autowired
+    private SimpMessagingTemplate template;
+
+    @Autowired
     public UtilisateurController(UtilisateurService sectionService) {
         this.utilisateurService = sectionService;
     }
@@ -55,13 +60,19 @@ public class UtilisateurController {
 
     @GetMapping("/login")
     public String loginUtilisateur(@RequestParam String email, @RequestParam String password){
+        String userId = "-1";
         if(utilisateurService.existUser(email) == true){
-            return utilisateurService.connectMail(email, password);
+            userId = utilisateurService.connectMail(email, password);
         }
         if(utilisateurService.existUserName(email) == true){
-            return utilisateurService.connectName(email, password);
+            userId = utilisateurService.connectName(email, password);
         }
-        return "-0";
+        if(userId != "-1"){
+            // Send a message to the user to open a WebSocket connection
+            template.convertAndSend("/topic/login/" + userId, "Open WebSocket connection");
+            return userId;
+        }
+        return "Invalid email or password";
     }
 
     @GetMapping("/projects")
@@ -86,14 +97,31 @@ public class UtilisateurController {
         return utilisateurService.getUtilisateur(id);
     }
 
+    @GetMapping("/add_ami")
+    public ResponseEntity<String> addAmi(@RequestParam String id,@RequestParam String idAmi){
+        if(utilisateurService.existId(idAmi) == false){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Utilisateur didn't exist.");
+        }
+        utilisateurService.addAmi(id,idAmi);
+        return ResponseEntity.ok("ok");
+    }
+
+    @GetMapping("/suppr_ami")
+    public ResponseEntity<String> supprAmi(@RequestParam String id,@RequestParam String idAmi){
+        if(utilisateurService.existId(idAmi) == false){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Utilisateur didn't exist.");
+        }
+        utilisateurService.supprAmi(id,idAmi);
+        return ResponseEntity.ok("ok");
+    }
 
     @GetMapping("/set_userName")
     public ResponseEntity<String> setNomUtilisateur(@RequestParam String id, @RequestParam String param){
-
-        System.out.println("ok");
+        if(utilisateurService.existUserName(param) == true){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exist.");
+        }
         if(utilisateurService.getUtilisateur(id) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("utilisateur not found");
         utilisateurService.setUserName(id,param);
-        System.out.println("ok");
         return ResponseEntity.ok("ok");
     }
 
@@ -113,6 +141,9 @@ public class UtilisateurController {
 
     @GetMapping("/set_email")
     public ResponseEntity<String> setEmail(@RequestParam String id, @RequestParam String param){
+        if(utilisateurService.existUser(param) == true){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exist.");
+        }
         if(utilisateurService.getUtilisateur(id) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("utilisateur not found");
         utilisateurService.setEmail(id, param);
         return ResponseEntity.ok("ok");
@@ -201,4 +232,13 @@ public byte[] resizeAndCropImage(MultipartFile file) {
             .contentType(MediaType.IMAGE_PNG) // Change this if the image format is not JPEG
             .body(new InputStreamResource(new ByteArrayInputStream(logo)));
     }
+
+
+    @GetMapping("/deleteNotification")
+    public ResponseEntity<String> getNotifications(@RequestParam String userId, @RequestParam String notificationId){
+        utilisateurService.deleteNotification(userId, notificationId);
+        return ResponseEntity.ok("notification deleted");
+
+    }
+    
 }

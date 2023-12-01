@@ -35,6 +35,9 @@ export class TacheComponent  implements AfterViewChecked {
   droitUtilisateurActuel: string = '';
   isEditingNom = false;
   etiquettes: any[] = [];
+  showMiniUserProfil: boolean = false;
+  selectedMembre: Utilisateur
+  hideTimeout = 1000
 
   constructor(
     private http: HttpClient,
@@ -98,6 +101,28 @@ export class TacheComponent  implements AfterViewChecked {
       this.textareaNom.nativeElement.focus();
     }
   }
+
+
+showMiniUserProfile(membre: any,  event: MouseEvent) {
+  this.hideTimeout = setTimeout(() => {
+    
+    const rect = (event.target as Element).getBoundingClientRect();
+    this.mouseX = rect.left;
+    this.mouseY = rect.bottom;
+    this.selectedMembre = membre;
+    this.showMiniUserProfil = true;
+  }, 700); // adjust the delay as needed
+}
+
+hideMiniUserProfile() {
+  this.hideTimeout = setTimeout(() => {
+    this.showMiniUserProfil = false;
+  }, 150); // adjust the delay as needed
+}
+
+cancelHideMiniUserProfile() {
+  clearTimeout(this.hideTimeout);
+}
 
   adjustTextareaNom(event?: any) {
     let target = event ? event.target : this.textareaNom.nativeElement;
@@ -163,13 +188,18 @@ openDialogDate(event: MouseEvent): void {
 }
 
 updateTaskNom() {
-  this.http.put(`http://localhost:8080/taches/updateNom?id=${this.tacheId}&nom=${this.tache.nom}`, {responseType:"text"}).
+  this.http.put(`http://localhost:8080/taches/updateNom?id=${this.tacheId}&projectId=${this.projetId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}&nom=${this.tache.nom}`, {responseType:"text"}).
   subscribe((tacheData) => {
     this.updateTache();
     this.isEditingNom = false;
     this.observerService.notifyTask();
     this.cd.detectChanges()
   })
+}
+
+editNom(){
+  if(this.droitUtilisateurActuel != 'Visiteur') this.isEditingNom = true
+  this.isEditingNom = false
 }
 
   swapStatut(){

@@ -1,0 +1,90 @@
+<div class="background_content">
+    <div class="container">
+        <div style="display: flex; flex-direction: column;">
+        <div class="row1">
+            <div class="column1">
+                <div class="row">
+                    <div class="column1-1 separation">
+                        <img [src]="imageSrc" class="miniature" />
+                        <label *ngIf="id == idUser">Nouveau logo:</label>
+                        <input type="file" accept="image/*" (change)="onFileSelected($event)" *ngIf="!selectedFileName && (id == idUser)">
+                        <div *ngIf="selectedFileName && id == idUser">
+                            <span>{{ selectedFileName }}</span>
+                            <button (click)="removeSelectedFile()">X</button>
+                        </div>
+                        <button style="width: 100px;" *ngIf="id == idUser" [disabled]="!selectedFile" (click)="saveLogo()">Enregistrer</button>
+                    </div>
+                    <div class="column1-2">
+                        <div class="row">
+                            <h3>
+                                Nom Prénom:
+                            </h3>
+                            <div class="row underline" *ngIf="!isEditingNom" (dblclick)="editNom() ">
+                                <h1>
+                                    {{user?.nom}}
+                                </h1>
+                            </div>
+                            <div class="row" *ngIf="isEditingNom">
+                                <textarea style=" max-width: 100px; max-height: 20px; text-align: center; margin-top: 20px;" #textareaNom *ngIf="isEditingNom" [(ngModel)]="user.nom" (blur)="updateTaskNom()" (input)="adjustTextareaNom($event)" ></textarea>
+                            </div>
+                            <div class="row underline" *ngIf="!isEditingPrenom" (dblclick)="editPrenom()">
+                                <h1>
+                                    {{user?.prenom}}
+                                </h1>
+                            </div>
+                            <div class="row" *ngIf="isEditingPrenom">
+                                <textarea style=" max-width: 100px; max-height: 20px; text-align: center; margin-top: 20px;" #textareaPrenom *ngIf="isEditingPrenom" [(ngModel)]="user.prenom" (blur)="updateTaskPrenom()" (input)="adjustTextareaPrenom($event)" ></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <h3>
+                                Nom d'utilisateur:
+                            </h3>
+                            <div class="row underline" *ngIf="!isEditingUserName" (dblclick)="editUserName()">
+                                <h1 class="row">
+                                    <p class="arrowbase">@</p>{{user?.userName}}
+                                </h1>
+                            </div>
+                            <div class="row" *ngIf="isEditingUserName">
+                                <textarea style=" max-width: 100px; max-height: 20px; text-align: center; margin-top: 20px;" #textareaUserName *ngIf="isEditingUserName" [(ngModel)]="user.userName" (blur)="updateTaskUserName()" (input)="adjustTextareaUserName($event)" ></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <h3>
+                                Adresse mail:
+                            </h3>
+                            <div class="row underline" *ngIf="!isEditingEmail" (dblclick)="editEmail()">
+                                <h1>
+                                    {{user?.email}}
+                                </h1>
+                            </div>
+                            <div class="row" *ngIf="isEditingEmail">
+                                <textarea style=" max-width: 100px; max-height: 20px; text-align: center; margin-top: 20px;" #textareaEmail *ngIf="isEditingEmail" [(ngModel)]="user.email" (blur)="updateTaskEmail()" (input)="adjustTextareaEmail($event)" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column2">
+                <h2>Description:</h2>
+                <div class="description-container" *ngIf="!isEditingBio" (dblclick)="editBio()">
+                    <h2>
+                        {{user?.bio}}
+                    </h2>
+                </div>
+                <div class="row" *ngIf="isEditingBio">
+                    <textarea class="description-container" #textareaBio *ngIf="isEditingBio" [(ngModel)]="user.bio" (blur)="updateTaskBio()" (input)="adjustTextareaBio($event)" ></textarea>
+                </div>
+            </div>
+            <div class="column3">
+                <div class="row">
+                    <div class="column1-1">
+                        tools
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="row2">
+    </div>
+</div>

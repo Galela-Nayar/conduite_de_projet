@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
 import Tache from 'src/interface/Tache';
 import Utilisateur from 'src/interface/Utilisateur';
+import Notification from 'src/interface/Notification';
 import { DateLimiteCalendrierComponent } from './date-limite-calendrier/date-limite-calendrier.component';
 import { ModifierCollaborateurComponent } from './modifier-collaborateur/modifier-collaborateur.component';
 import Etiquette from 'src/interface/Etiquette';
@@ -20,10 +21,10 @@ export class TacheScrumComponent implements AfterViewChecked {
   @ViewChild('textareaPriorite') textareaPriorite!: ElementRef;
   @ViewChild('textareaPonderation') textareaPonderation!: ElementRef;
 
-  @Input() id!: String | null;
+  @Input() id!: String;
   @Input() projetId!: String;
   @Input()
-  sectionId!: String | null;
+  sectionId!: String;
   @Input()
   tacheId!: string;
   tache!: Tache | null | undefined;
@@ -40,6 +41,12 @@ export class TacheScrumComponent implements AfterViewChecked {
   hoveredEtiquetteName = '';
   etiquetteNameLeft = 0;
   etiquetteNameTop = 0;
+  droitUtilisateurActuel: string = '';
+  showMiniUserProfil: boolean = false;
+  selectedMembre: Utilisateur
+  hideTimeout = 1000
+  listNotifications!: Notification[]
+
   
   constructor(private http: HttpClient, private route: ActivatedRoute,
     private observableService: ObservableService,
@@ -55,6 +62,7 @@ export class TacheScrumComponent implements AfterViewChecked {
         .subscribe((response) => {
           this.http.get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`).subscribe((response) => {
               this.tache = response;
+              this.etiquettes = [];
               const listIdEtiquette = this.tache.etiquettes
               for(let id of listIdEtiquette)
               {
@@ -66,6 +74,13 @@ export class TacheScrumComponent implements AfterViewChecked {
       this.http.get<Utilisateur[]>(`http://localhost:8080/taches/membreAttribue?id=${this.tacheId}`).subscribe((data: Utilisateur[]) => {
         this.membreAttribue = data;
       })
+
+
+    //Les droits de l'utilisateur actuel
+    this.http.get(`http://localhost:8080/projets/droitUtilisateur?idUtilisateur=${this.id}&idProjet=${this.projetId}`, {responseType: 'text'}).subscribe((data: string) => {
+      this.droitUtilisateurActuel = data;
+      console.log("droit dans section: " + this.droitUtilisateurActuel)
+});
     }
   }
 
@@ -84,7 +99,7 @@ export class TacheScrumComponent implements AfterViewChecked {
     }
 }
   updateTaskNom() {
-    this.http.put(`http://localhost:8080/taches/updateNom?id=${this.tacheId}&nom=${this.tache.nom}`, {responseType:"text"}).
+    this.http.put(`http://localhost:8080/taches/updateNom?id=${this.id}&projectId=${this.projetId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}&nom=${this.tache.nom}`, {responseType:"text"}).
     subscribe((tacheData) => {
       this.updateTache();
       this.isEditingNom = false;
@@ -135,6 +150,40 @@ adjustTextareaPonderation(event?: any) {
   let target = event ? event.target : this.textareaPonderation.nativeElement;
   target.style.height = 'auto';
   target.style.height = (target.scrollHeight) + 'px';
+}
+
+editNom(){
+  if(this.droitUtilisateurActuel != 'Visiteur') this.isEditingNom = true
+}
+
+editPriorite(){
+  if(this.droitUtilisateurActuel != 'Visiteur') this.isEditingPriorite = true
+}
+
+editPonderation(){
+  if(this.droitUtilisateurActuel != 'Visiteur') this.isEditingPonderation = true
+}
+
+
+showMiniUserProfile(membre: any,  event: MouseEvent) {
+  this.hideTimeout = setTimeout(() => {
+    
+    const rect = (event.target as Element).getBoundingClientRect();
+    this.mouseX = rect.left;
+    this.mouseY = rect.bottom;
+    this.selectedMembre = membre;
+    this.showMiniUserProfil = true;
+  }, 700); // adjust the delay as needed
+}
+
+hideMiniUserProfile() {
+  this.hideTimeout = setTimeout(() => {
+    this.showMiniUserProfil = false;
+  }, 150); // adjust the delay as needed
+}
+
+cancelHideMiniUserProfile() {
+  clearTimeout(this.hideTimeout);
 }
 
   openDialog(event: MouseEvent): void {

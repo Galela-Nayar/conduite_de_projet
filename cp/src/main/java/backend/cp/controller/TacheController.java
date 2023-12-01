@@ -55,8 +55,8 @@ public class TacheController {
     }
 
     @PutMapping("/updateNom")
-    public ResponseEntity<String> updateNom(@RequestParam String id, @RequestParam String nom){
-        tacheService.updateNom(id, nom);
+    public ResponseEntity<String> updateNom(@RequestParam String id, @RequestParam String projectId, @RequestParam String sectionId, @RequestParam String tacheId, @RequestParam String nom){
+        tacheService.updateNom(id, projectId, sectionId, tacheId, nom);
         return ResponseEntity.ok("");
     }
 

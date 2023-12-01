@@ -1,0 +1,35 @@
+<div class="container">
+    <!-- Première ligne -->
+    <div class="row">
+      <!-- Première colonne -->
+      <div class="col">
+        <img [src]="'http://localhost:8080/utilisateurs/img?id=' + membre['id']" class="miniature" />
+      </div>
+      <!-- Deuxième colonne -->
+      <div class="col">
+        <!-- Première ligne -->
+        <div class="row">
+          <p>{{membre.nom}}</p>
+          <p>{{membre.prenom}}</p>
+        </div>
+        <!-- Deuxième ligne -->
+        <div class="row" style="padding: 0; margin: 0;">
+          <p>@{{membre.userName}}</p>
+        </div>
+      </div>
+    </div>
+    <!-- Deuxième ligne -->
+    <div class="row" style="margin: 10px; justify-content: space-between;">
+      <!-- Première colonne -->
+      <div class="col" *ngIf="!isFriend && membre['id'] != id">
+        <button class="ajt_ami" (click)="ajouterAmi()">Ajouter en ami</button>
+      </div>
+      <div class="col" *ngIf="isFriend && membre['id'] != id">
+        <button class="spr_ami" (click)="supprimerAmi()">Supprimer des amis</button>
+      </div>
+      <!-- Deuxième colonne -->
+      <div class="col">
+        <a [routerLink]="['/',id,'user-profil',membre.id]" style="text-decoration: underline; color: lightgray;">Voir le profil</a>
+      </div>
+    </div>
+  </div>

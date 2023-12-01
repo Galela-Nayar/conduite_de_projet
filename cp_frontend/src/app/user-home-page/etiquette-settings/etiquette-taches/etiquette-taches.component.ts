@@ -53,6 +53,7 @@ export class EtiquetteTachesComponent {
             .subscribe((data : Etiquette) => {this.listeEtiquette.push(data)});
           }
           console.log(this.listeEtiquette);
+          this.listeChecked = [];
           for(let i = 0; i < listeId.length; i++)
           {
             if(tacheData.etiquettes.includes(listeId[i]))

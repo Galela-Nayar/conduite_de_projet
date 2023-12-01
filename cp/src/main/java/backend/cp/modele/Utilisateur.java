@@ -23,7 +23,9 @@ public class Utilisateur {
     private String nom;
     private String prenom;
     private String userName;
-    private List<String> listProjet = new ArrayList<>();
+    private ArrayList<String> listProjet = new ArrayList<>();
+    private ArrayList<String> listAmis = new ArrayList<>();
+    private ArrayList<String> notifications = new ArrayList<>();
     private String bio;
     private byte[] logo_utilisateur;
 
@@ -33,6 +35,22 @@ public class Utilisateur {
 
     public void removeProject(String id2) {
         listProjet.remove(id2);
+    }
+
+    public void addAmi(String idAmi) {
+        listAmis.add(idAmi);
+    }
+
+    public void addNotification(String notificationEnfantId) {
+        this.notifications.add(notificationEnfantId);
+    }
+
+    public void removeNotification(String notificationId) {
+        int index = -1;
+        for (int i = 0; i < notifications.size(); i++) {
+            if(notifications.get(i) == notificationId) index = i;
+        }
+        if(index != -1) notifications.remove(index);
     }
 
 }
