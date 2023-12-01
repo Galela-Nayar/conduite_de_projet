@@ -22,10 +22,10 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class SectionComponent {
   @ViewChild('textareaNom') textareaNom!: ElementRef;
-  @Input()  id: String | null = '';
+  @Input() id!: String;
   @Input()
-  projetId: String = '';
-  @Input() sectionId: String = '';
+  projetId: String;
+  @Input() sectionId: String;
   section?: Section;
   mouseX: number = 0;
   isEditingNom = false;
@@ -126,7 +126,7 @@ editNom(){
 
   onPlusClick(event: MouseEvent): void {
     const dialogRef = this.dialog.open(CreateTaskComponent, {
-      data: this.sectionId,
+      data: {id: this.id, projectId: this.projetId, sectionId: this.sectionId}
     });
 
     dialogRef.afterClosed().subscribe((result) => {

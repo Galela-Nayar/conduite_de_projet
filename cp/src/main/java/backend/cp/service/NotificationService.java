@@ -26,7 +26,6 @@ public class NotificationService {
 
     public void sendNotification(Notification notification){
         TacheService tacheService = context.getBean(TacheService.class);
-        SectionService sectionService = context.getBean(SectionService.class);
         ProjetService projetService = context.getBean(ProjetService.class);
         UtilisateurService utilisateurService = context.getBean(UtilisateurService.class);
         
@@ -35,6 +34,7 @@ public class NotificationService {
         if(notification.getTacheId() != null){
             for(Utilisateur membreAttribueId : tacheService.membreAttribue(notification.getTacheId())){
                 if(membreAttribueId.getId() != notification.getCreateurId()){
+                    System.out.println("membre qui recoit la notif : " + membreAttribueId.getId());
                     Notification notificationEnfant = new Notification(notification.getCreateurId(),notification.getProjectId(),notification.getSectionId(),notification.getTacheId(),notification.getMessage(),notification.getCreatedAt(), notification.getId());
                     utilisateurService.addNotification(membreAttribueId.getId(), notificationEnfant.getId());
                     notificationRepository.save(notificationEnfant);
