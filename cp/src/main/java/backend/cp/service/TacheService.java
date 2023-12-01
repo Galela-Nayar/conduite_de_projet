@@ -134,5 +134,22 @@ public class TacheService {
         this.tacheRepository.save(sc);
     }
 
+    public void addEtiquette(String idTache, String idEtiquette)
+    {
+        Tache sc = this.getTache(idTache);
+        if(!sc.getEtiquettes().contains(idEtiquette))
+        {
+            sc.getEtiquettes().add(idEtiquette);
+            this.tacheRepository.save(sc);
+        }
+    }
+
+    public void removeEtiquette(String idTache, String idEtiquette)
+    {
+        Tache sc = this.getTache(idTache);
+        sc.getEtiquettes().remove(idEtiquette);
+        this.tacheRepository.save(sc);
+    }
+
     // Autres méthodes de service pour la gestion des tâches
 }

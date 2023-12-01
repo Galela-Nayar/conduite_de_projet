@@ -1,6 +1,14 @@
 <div class="trr" style="margin: 0px; padding: 0px;">
     <div class="cell" *ngIf="!isEditingNom" (dblclick)="isEditingNom = true">
         {{ tache?.nom }}
+        <div *ngFor="let etiquette of etiquettes" class="couleur">
+                <div class="color-circle" [style.background-color]="etiquette.color" 
+                    (mouseover)="showEtiquetteName($event, etiquette.name)"
+                    (mouseout)="hideEtiquetteName()"></div>
+        </div>
+        <div *ngIf="isEtiquetteNameVisible" class="etiquette-name" [style.left.px]="etiquetteNameLeft" [style.top.px]="etiquetteNameTop">
+            {{ hoveredEtiquetteName }}
+        </div>
     </div>
     <div class="cell" *ngIf="isEditingNom">
         <textarea style="text-align: center;" #textareaNom *ngIf="isEditingNom" [(ngModel)]="tache.nom" (blur)="updateTaskNom()" (input)="adjustTextareaNom($event)" ></textarea>

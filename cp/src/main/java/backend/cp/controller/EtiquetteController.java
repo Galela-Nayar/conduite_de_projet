@@ -32,4 +32,11 @@ public class EtiquetteController {
     public ResponseEntity<String> createEtiquette(@RequestParam String nom, @RequestParam String couleur) {
         return ResponseEntity.ok(etiquetteService.createEtiquette(nom, couleur));
     }
+
+    @GetMapping("/delete")
+    public ResponseEntity<String> deleteEtiquette(@RequestParam String id)
+    {
+        etiquetteService.deleteEtiquette(id);
+        return ResponseEntity.ok("ok");
+    }
 }

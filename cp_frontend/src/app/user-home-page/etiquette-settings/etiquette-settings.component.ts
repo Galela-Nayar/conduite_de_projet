@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
 import Etiquette from 'src/interface/Etiquette';
 import Project from 'src/interface/Project';
+import Section from 'src/interface/Section';
 
 @Component({
   selector: 'app-etiquette-settings',
@@ -13,6 +14,7 @@ import Project from 'src/interface/Project';
 })
 export class EtiquetteSettingsComponent {
   projectId: string = '';
+  project: Project;
 
   nom: string = '';
   isCreating : boolean = false;
@@ -38,6 +40,7 @@ export class EtiquetteSettingsComponent {
         `http://localhost:8080/projets/projet?id=${this.projectId}`
       )
       .subscribe((projectData: Project) => {
+        this.project = projectData;
         const listeId = projectData.etiquettes;
         for(let id of listeId)
         {
@@ -45,7 +48,7 @@ export class EtiquetteSettingsComponent {
           .subscribe((data : Etiquette) => {this.listeEtiquette.push(data)});
         }
         console.log(this.listeEtiquette);
-      });
+    });
   }
 
   updateWindow()
@@ -56,6 +59,7 @@ export class EtiquetteSettingsComponent {
         `http://localhost:8080/projets/projet?id=${this.projectId}`
       )
       .subscribe((projectData: Project) => {
+        this.project = projectData;
         const listeId = projectData.etiquettes;
         for(let id of listeId)
         {
@@ -108,5 +112,48 @@ export class EtiquetteSettingsComponent {
       }
     );
     this.plus();
+  }
+
+  supprimer(etiquette : Etiquette)
+  {
+    this.http.get(`http://localhost:8080/projets/removeEtiquette?idProjet=${this.projectId}&idEtiquette=${etiquette.id}`, {responseType: 'text'}).subscribe(
+      (response: String) => {
+      const sections = this.project.sections;
+          let taches = [];
+          let vraiSections = [];
+          for(let section of sections)
+          {
+            this.http
+            .get<Section>(
+              `http://localhost:8080/sections/section?id=${section}`
+            )
+            .subscribe((response) => {
+              vraiSections.push(response);
+              let tachesSection = response.taches;
+              for(let tache of tachesSection)
+              {
+                taches.push(tache);
+              }
+              for(let tacheId of taches)
+              {
+                this.http
+                    .get(`http://localhost:8080/taches/remove_etiquette?idTache=${tacheId}&idEtiquette=${etiquette.id}`, {
+                      responseType: 'text',
+                    })
+                    .subscribe((response: String) => {
+                });
+              }
+            });
+          }
+        this.http.get(`http://localhost:8080/etiquettes/delete?id=${etiquette.id}`, {responseType: 'text'}).subscribe(
+          (response: String) => {
+            this.observableService.notifyProject();
+            this.observableService.notifyTask();
+            this.updateWindow();
+          }
+        );
+      }
+    );
+
   }
 }

@@ -8,6 +8,7 @@ import Tache from 'src/interface/Tache';
 import Utilisateur from 'src/interface/Utilisateur';
 import { DateLimiteCalendrierComponent } from './date-limite-calendrier/date-limite-calendrier.component';
 import { ModifierCollaborateurComponent } from './modifier-collaborateur/modifier-collaborateur.component';
+import Etiquette from 'src/interface/Etiquette';
 
 @Component({
   selector: 'app-tache-scrum',
@@ -34,6 +35,11 @@ export class TacheScrumComponent implements AfterViewChecked {
   isEditingNom = false;
   isEditingPriorite = false;
   isEditingPonderation = false;
+  etiquettes: any[] = [];
+  isEtiquetteNameVisible = false;
+  hoveredEtiquetteName = '';
+  etiquetteNameLeft = 0;
+  etiquetteNameTop = 0;
   
   constructor(private http: HttpClient, private route: ActivatedRoute,
     private observableService: ObservableService,
@@ -49,6 +55,12 @@ export class TacheScrumComponent implements AfterViewChecked {
         .subscribe((response) => {
           this.http.get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`).subscribe((response) => {
               this.tache = response;
+              const listIdEtiquette = this.tache.etiquettes
+              for(let id of listIdEtiquette)
+              {
+                this.http.get<Etiquette>(`http://localhost:8080/etiquettes/getById?id=${id}`)
+                .subscribe((data : Etiquette) => {this.etiquettes.push(data)});
+              }
             });
       });
       this.http.get<Utilisateur[]>(`http://localhost:8080/taches/membreAttribue?id=${this.tacheId}`).subscribe((data: Utilisateur[]) => {
@@ -203,6 +215,18 @@ adjustTextareaPonderation(event?: any) {
       this.http.get<Utilisateur[]>(`http://localhost:8080/taches/membreAttribue?id=${this.tacheId}`).subscribe((data: Utilisateur[]) => {
         this.membreAttribue = data;
       })
+  }
+
+  showEtiquetteName(event: MouseEvent, name: string): void {
+    this.isEtiquetteNameVisible = true;
+    this.hoveredEtiquetteName = name;
+    this.etiquetteNameLeft = event.clientX-10;
+    this.etiquetteNameTop = event.clientY+10;
+  }
+
+  hideEtiquetteName(): void {
+    this.isEtiquetteNameVisible = false;
+    this.hoveredEtiquetteName = '';
   }
 
   

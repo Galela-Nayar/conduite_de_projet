@@ -103,5 +103,17 @@ public class TacheController {
         return ut;
     }
 
+    @GetMapping("/add_etiquette")
+    public ResponseEntity<String> addEtiquette(@RequestParam String idTache, @RequestParam String idEtiquette){
+        tacheService.addEtiquette(idTache, idEtiquette);
+        return ResponseEntity.ok("ok");
+    }
+
+    @GetMapping("/remove_etiquette")
+    public ResponseEntity<String> removeEtiquette(@RequestParam String idTache, @RequestParam String idEtiquette){
+        tacheService.removeEtiquette(idTache, idEtiquette);
+        return ResponseEntity.ok("ok");
+    }
+
 
 }

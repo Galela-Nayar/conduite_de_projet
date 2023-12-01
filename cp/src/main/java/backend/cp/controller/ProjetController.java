@@ -138,4 +138,12 @@ public class ProjetController {
         projetService.addEtiquette(idProjet, idEtiquette);
         return ResponseEntity.ok("ok");
     }
+
+    @GetMapping("/removeEtiquette")
+    public ResponseEntity<String> removeEtiquette(@RequestParam String idProjet, @RequestParam String idEtiquette)
+    {
+        if(projetService.getProject(idProjet) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("projet not found");
+        projetService.removeEtiquette(idProjet, idEtiquette);
+        return ResponseEntity.ok("ok");
+    }
 }

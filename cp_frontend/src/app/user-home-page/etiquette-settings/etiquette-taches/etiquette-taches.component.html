@@ -1,0 +1,16 @@
+<div *ngIf="tache" class="container">
+    <div class="header">
+        <span style="color: white;font-size: 1.7em;font-weight: 1800;text-align: center;">
+            Etiquettes
+        </span>
+    </div>
+    <div>
+        <div class="form-row" *ngFor="let etiquette of listeEtiquette; let i = index">
+            <label style="background-color: {{ etiquette.color }}">
+                <input type="checkbox" [(ngModel)]="listeChecked[i]" (change)="changerEtiquette(etiquette.id, $event)">
+                <a>{{ etiquette.name }}</a>
+            </label>
+        </div>
+    </div>
+</div>
+  

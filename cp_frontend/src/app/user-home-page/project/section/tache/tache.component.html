@@ -13,6 +13,9 @@
         </div>
         <div class="contenu" *ngIf="!isEditingNom" (dblclick)="isEditingNom = true">
             <p>{{ tache.nom }}</p>
+            <div *ngFor="let etiquette of etiquettes" class="couleur">
+              <div [style.background-color]="etiquette.color">{{ etiquette.name }}</div>
+            </div>
         </div>
         <div class="contenu" *ngIf="isEditingNom">
             <textarea style="text-align: center;" #textareaNom *ngIf="isEditingNom" [(ngModel)]="tache.nom" (blur)="updateTaskNom()" (input)="adjustTextareaNom($event)" ></textarea>

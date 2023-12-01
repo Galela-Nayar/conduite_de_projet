@@ -35,7 +35,7 @@ export class ProjectSettingComponent {
     this.router.navigate(['/', this.id, 'parametres-project', this.projectId]);
   }
 
-  showLabelSettings()
+  showEtiquetteSettings()
   {
     const dialogRef = this.dialog.open(EtiquetteSettingsComponent, {
       data: this.projectId

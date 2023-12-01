@@ -61,5 +61,10 @@ public class Projet {
         this.etiquettes.add(id);
     }
 
+    public void removeEtiquette(String id)
+    {
+        this.etiquettes.remove(id);
+    }
+
 
 }

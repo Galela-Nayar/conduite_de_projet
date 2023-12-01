@@ -60,6 +60,7 @@ import { AgendaComponent } from './user-home-page/agenda/agenda.component';
 import { DateLimiteCalendrierComponent } from './user-home-page/project/section-scrum/tache-scrum/date-limite-calendrier/date-limite-calendrier.component';
 import { ModifierCollaborateurComponent } from './user-home-page/project/section-scrum/tache-scrum/modifier-collaborateur/modifier-collaborateur.component';
 import { EtiquetteSettingsComponent } from './user-home-page/etiquette-settings/etiquette-settings.component';
+import { EtiquetteTachesComponent } from './user-home-page/etiquette-settings/etiquette-taches/etiquette-taches.component';
 //import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
@@ -95,6 +96,7 @@ import { EtiquetteSettingsComponent } from './user-home-page/etiquette-settings/
     DateLimiteCalendrierComponent,
     ModifierCollaborateurComponent,
     EtiquetteSettingsComponent,
+    EtiquetteTachesComponent,
   ],
   imports: [
     BrowserModule,

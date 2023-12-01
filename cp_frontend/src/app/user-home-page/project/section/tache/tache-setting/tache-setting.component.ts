@@ -6,6 +6,7 @@ import { ObservableService } from 'src/app/observable/observable-projet.service'
 import { ModifyTaskComponent } from './modify-task/modify-task.component';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ModifierCollaborateurComponent } from '../../../section-scrum/tache-scrum/modifier-collaborateur/modifier-collaborateur.component';
+import { EtiquetteTachesComponent } from 'src/app/user-home-page/etiquette-settings/etiquette-taches/etiquette-taches.component';
 
 
 @Component({
@@ -72,8 +73,17 @@ export class TacheSettingComponent {
       position: { left: `${left}px`, top: `${top}px` },
       data: { projetId: this.projetId,id: this.id, tacheId: this.tacheId, sectionId: this.sectionId }
     });
+  }
+
+  openDialogEtiquette(event: MouseEvent): void {
+    console.log("projectID data : " + this.projetId)
+    const dialogRef = this.dialog.open(EtiquetteTachesComponent, {
+      data: {data1:this.tacheId,data2:this.projetId},
+    });
   
-    
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('Le dialogue a été fermé');
+    });
   }
   
 }

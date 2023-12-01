@@ -57,3 +57,11 @@ p {
     align-items: center;
     width: 100%;
 }
+
+.couleur {
+    margin-right: 5px;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 5px;
+    color: black;
+}

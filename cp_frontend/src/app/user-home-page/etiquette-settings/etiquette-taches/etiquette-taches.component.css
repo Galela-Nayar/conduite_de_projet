@@ -3,7 +3,6 @@
     border: 1px solid black;
     border-radius: 10px;
     margin: 10px;
-    width: 350px;
     box-sizing: border-box; 
     color: lightgray;
     background-color: rgb(61, 61, 61);
@@ -23,35 +22,9 @@
     font-weight: bold;
 }
 
-.color-palette {
-    display: flex;
-    margin-top: 10px;
-}
-
-.color-box {
-    width: 30px;
-    height: 30px;
-    margin-right: 5px;
-    cursor: pointer;
-}
-
-.color-box.selected {
-    border: 2px solid black;
-}
-
-.bouttonSupprimer {
-    background-color: black;
-    color: white;
-    cursor: pointer;
-    margin-left: auto;
-}
-
-.bouttonAjouter {
-    background-color: black;
-    color: white;
-    cursor: pointer;
-}
-
-h1 {
+.header {
     text-align: center;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }

@@ -222,4 +222,13 @@ private final ApplicationContext applicationContext;
             }
         }
     }
+
+    public void removeEtiquette(String idProjet, String idEtiquette)
+    {
+        Projet projet = this.getProject(idProjet);
+        if (projet != null) {
+            projet.removeEtiquette(idEtiquette);
+            this.projetRepository.save(projet);
+        }
+    }
 }
