@@ -12,7 +12,7 @@
     </div>
     <hr>
 
-  <div cdkDropList (cdkDropListDropped)="drop($event)">
+  <div cdkDropList [cdkDropListData]="tasks" (cdkDropListDropped)="drop($event)">
     <div style="display: block; justify-items: center; align-items: center; width: 100%" cdkDrag *ngFor="let task of tasks">
       <app-tache [id]="id" [tacheId]="task" [sectionId]="sectionId" [projetId]="projetId"></app-tache>
     </div>

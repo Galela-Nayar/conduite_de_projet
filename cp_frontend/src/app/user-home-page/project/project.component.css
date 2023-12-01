@@ -103,6 +103,15 @@
   background: radial-gradient(55% 70% at center, rgba(63,94,251,0.9) 50%, rgba(252,70,107,0.8) 100%);  
 }
 
+.horizontal-list {
+  display: flex;
+  flex-direction: row;
+}
+
+.horizontal-list > div{
+  margin-right: 10px;
+}
+
 
 
 .section-list {

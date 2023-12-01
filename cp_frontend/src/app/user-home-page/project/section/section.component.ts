@@ -13,7 +13,11 @@ import { ObservableService } from 'src/app/observable/observable-projet.service'
 import { SectionService } from './section.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateTaskComponent } from '../../create-task/create-task.component';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-section',
@@ -22,7 +26,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class SectionComponent {
   @ViewChild('textareaNom') textareaNom!: ElementRef;
-  @Input() id!: String;
+  @Input() id: String | null = '';
   @Input()
   projetId: String;
   @Input() sectionId: String;
@@ -77,9 +81,14 @@ export class SectionComponent {
         });
     }
     //Les droits de l'utilisateur actuel
-    this.http.get(`http://localhost:8080/projets/droitUtilisateur?idUtilisateur=${this.id}&idProjet=${this.projetId}`, {responseType: 'text'}).subscribe((data: string) => {
-          this.droitUtilisateurActuel = data;
-    });
+    this.http
+      .get(
+        `http://localhost:8080/projets/droitUtilisateur?idUtilisateur=${this.id}&idProjet=${this.projetId}`,
+        { responseType: 'text' }
+      )
+      .subscribe((data: string) => {
+        this.droitUtilisateurActuel = data;
+      });
   }
 
   ngAfterViewChecked() {
@@ -92,45 +101,52 @@ export class SectionComponent {
   adjustTextareaNom(event?: any) {
     let target = event ? event.target : this.textareaNom.nativeElement;
     target.style.height = 'auto';
-    target.style.height = (target.scrollHeight) + 'px';
-}
-
-editNom(){
-  if(this.droitUtilisateurActuel != 'Visiteur') this.isEditingNom = true
-}
-
-  updateTaskNom() {
-    this.http.put(`http://localhost:8080/sections/updateNom?id=${this.sectionId}&nom=${this.section.nom}`, {responseType:"text"}).
-    subscribe((tacheData) => {
-      this.updateSection();
-      this.isEditingNom = false;
-      this.observerService.notifyTask();
-      this.cd.detectChanges()
-    })
+    target.style.height = target.scrollHeight + 'px';
   }
 
-  updateSection(){
+  editNom() {
+    if (this.droitUtilisateurActuel != 'Visiteur') this.isEditingNom = true;
+  }
+
+  updateTaskNom() {
+    this.http
+      .put(
+        `http://localhost:8080/sections/updateNom?id=${this.sectionId}&nom=${this.section.nom}`,
+        { responseType: 'text' }
+      )
+      .subscribe((tacheData) => {
+        this.updateSection();
+        this.isEditingNom = false;
+        this.observerService.notifyTask();
+        this.cd.detectChanges();
+      });
+  }
+
+  updateSection() {
     this.taskSubscription = this.observableService
-        .getObservableTask()
-        .subscribe((response) => {
-          this.http
-            .get<Section>(
-              `http://localhost:8080/sections/section?id=${this.sectionId}`
-            )
-            .subscribe((response) => {
-              this.section = response;
-              this.tasks = this.section.taches;
-            });
-        });
+      .getObservableTask()
+      .subscribe((response) => {
+        this.http
+          .get<Section>(
+            `http://localhost:8080/sections/section?id=${this.sectionId}`
+          )
+          .subscribe((response) => {
+            this.section = response;
+            this.tasks = this.section.taches;
+          });
+      });
   }
 
   onPlusClick(event: MouseEvent): void {
     const dialogRef = this.dialog.open(CreateTaskComponent, {
-      data: {id: this.id, projectId: this.projetId, sectionId: this.sectionId}
+      data: {
+        id: this.id,
+        projectId: this.projetId,
+        sectionId: this.sectionId,
+      },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-    });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   onSettingClick(event: MouseEvent) {
@@ -141,14 +157,56 @@ editNom(){
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
+    if (event.previousContainer === event.container) {
+      moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
+      this.http
+        .put(
+          `http://localhost:8080/sections/updateTaches?id=${this.sectionId}&taches=${this.tasks}`,
+          {}
+        )
+        .subscribe((response) => {
+          this.observableService.notifySection();
+        });
+    } else {
+      const movedTaskId = event.previousContainer.data[event.previousIndex];
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+      this.moveTaskbetweenSection(movedTaskId);
+    }
+  }
+
+  moveTaskbetweenSection(taskId: string) {
     this.http
-      .put(
-        `http://localhost:8080/sections/updateTaches?id=${this.sectionId}&taches=${this.tasks}`,
-        {}
+      .get(
+        `http://localhost:8080/sections/searchSectionofTask?idTache=${taskId}`,
+        { responseType: 'text' }
       )
-      .subscribe((response) => {
-        this.observableService.notifySection();
+      .subscribe((response: String) => {
+        if (response != 'pas trouvé') {
+          this.http
+            .get(
+              `http://localhost:8080/sections/removeTache?id=${response}&tacheId=${taskId}`,
+              { responseType: 'text' }
+            )
+            .subscribe((response2: String) => {
+              console.log('supprimer tache dans section: ' + response2);
+
+              this.http
+                .get(
+                  `http://localhost:8080/sections/add-tache?sectionId=${this.sectionId}&tacheId=${taskId}`,
+                  { responseType: 'text' }
+                )
+                .subscribe((response) => {});
+
+              this.observableService.notifyTask();
+            });
+        } else {
+          console.log("probleme d'idTache", response);
+        }
       });
   }
 }
