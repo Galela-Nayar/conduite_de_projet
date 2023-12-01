@@ -92,4 +92,14 @@ public class SectionService {
         Section sc = this.getSection(id);
         return sc.getNom();
     }
+
+    public String searchSectionofTask(String idTache){
+        List<Section> sections = getAllSections();
+        for (Section section : sections) {
+            for (String id : section.getTaches()) {
+                if(id.equals(idTache)) return section.getId();
+            }
+        }
+        return "pas trouvé";
+    }
 }

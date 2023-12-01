@@ -83,6 +83,11 @@ public class SectionController {
         sectionService.updateTaches(id, taches);
         return ResponseEntity.ok("");
     }
+
+    @GetMapping("/searchSectionofTask")
+    public ResponseEntity<String> searchSectionofTask(@RequestParam String idTache){
+        return ResponseEntity.ok(sectionService.searchSectionofTask(idTache));
+    }
     
 
 }
