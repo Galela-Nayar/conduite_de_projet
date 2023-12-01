@@ -6,11 +6,26 @@
   <a [routerLink]="['/', id, 'agenda']" class="menu-item">
     <mat-icon>date_range</mat-icon> Agenda
   </a>
-  <div class="dropdown">
-    <img [src]="imageSrc" [routerLink]="['/',id,'user-profil', id]" class="dropbtn" alt="Menu" />
-    <div class="dropdown-content">
-      <a [routerLink]="['/',id,'user-profil', id]">Profil</a>
-      <a routerLink="/">Déconnexion</a>
+
+
+  <div class="dropdowns-container">
+    <div class="dropdown message">
+      <div class="nombre_notif">{{notifications?.length}}</div>
+      <mat-icon class="dropbtn" >forum</mat-icon>
+      <div class="dropdown-content my-dropdown">
+        <div class="entry" *ngFor="let notification of notifications">
+          <p class="dropdown-entry">{{notification['message']}}</p>
+          <mat-icon (click)="deleteNotification(notification['id'])" style="color: gray; width: 10%;">close</mat-icon>
+        </div>
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <img [src]="imageSrc" [routerLink]="['/',id,'user-profil', id]" class="dropbtn" alt="Menu" />
+      <div class="dropdown-content">
+        <a [routerLink]="['/',id,'user-profil', id]">Profil</a>
+        <a routerLink="/">Déconnexion</a>
+      </div>
     </div>
   </div>
 </div>

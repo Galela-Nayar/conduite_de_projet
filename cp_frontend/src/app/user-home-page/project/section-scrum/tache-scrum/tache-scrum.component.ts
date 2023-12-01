@@ -6,9 +6,9 @@ import { Subscription } from 'rxjs';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
 import Tache from 'src/interface/Tache';
 import Utilisateur from 'src/interface/Utilisateur';
+import Notification from 'src/interface/Notification';
 import { DateLimiteCalendrierComponent } from './date-limite-calendrier/date-limite-calendrier.component';
 import { ModifierCollaborateurComponent } from './modifier-collaborateur/modifier-collaborateur.component';
-import { MiniUserProfilComponent } from 'src/app/user-home-page/mini-user-profil/mini-user-profil.component';
 
 @Component({
   selector: 'app-tache-scrum',
@@ -20,10 +20,10 @@ export class TacheScrumComponent implements AfterViewChecked {
   @ViewChild('textareaPriorite') textareaPriorite!: ElementRef;
   @ViewChild('textareaPonderation') textareaPonderation!: ElementRef;
 
-  @Input() id!: String | null;
+  @Input() id!: String;
   @Input() projetId!: String;
   @Input()
-  sectionId!: String | null;
+  sectionId!: String;
   @Input()
   tacheId!: string;
   tache!: Tache | null | undefined;
@@ -39,6 +39,7 @@ export class TacheScrumComponent implements AfterViewChecked {
   showMiniUserProfil: boolean = false;
   selectedMembre: Utilisateur
   hideTimeout = 1000
+  listNotifications!: Notification[]
 
   
   constructor(private http: HttpClient, private route: ActivatedRoute,
@@ -85,7 +86,7 @@ export class TacheScrumComponent implements AfterViewChecked {
     }
 }
   updateTaskNom() {
-    this.http.put(`http://localhost:8080/taches/updateNom?id=${this.tacheId}&nom=${this.tache.nom}`, {responseType:"text"}).
+    this.http.put(`http://localhost:8080/taches/updateNom?id=${this.id}&projectId=${this.projetId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}&nom=${this.tache.nom}`, {responseType:"text"}).
     subscribe((tacheData) => {
       this.updateTache();
       this.isEditingNom = false;

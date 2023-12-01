@@ -179,7 +179,7 @@ openDialogDate(event: MouseEvent): void {
 }
 
 updateTaskNom() {
-  this.http.put(`http://localhost:8080/taches/updateNom?id=${this.tacheId}&nom=${this.tache.nom}`, {responseType:"text"}).
+  this.http.put(`http://localhost:8080/taches/updateNom?id=${this.tacheId}&projectId=${this.projetId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}&nom=${this.tache.nom}`, {responseType:"text"}).
   subscribe((tacheData) => {
     this.updateTache();
     this.isEditingNom = false;

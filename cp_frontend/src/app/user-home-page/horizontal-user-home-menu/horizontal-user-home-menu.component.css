@@ -18,12 +18,65 @@
   border-image-slice: 1;
 }
 
+.nombre_notif{
+  position: relative;
+  display: flex;
+  bottom: 18px;
+  left:85%;
+  color: red;
+}
+
+.entry{
+  display: flex; 
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #000; /* adjust color as needed */
+  background-color: #333;
+  color: rgb(214, 214, 214)
+}
+
+.entry:last-child{
+  border-bottom: none;
+}
+
+.my-dropdown {
+  display: flex;
+  position: relative;
+  max-height: 5em;
+  max-height: 200px; /* Adjust this value to control the maximum height of the dropdown */
+  overflow-y: auto; /* This will add a scrollbar if the content exceeds the max-height */
+  width: 300px; /* Adjust this value to control the width of the dropdown */
+  border: 2px double rgb(32, 32, 32);
+  margin-top: -18px;
+  padding-top: 0px;
+}
+
+.dropdown-entry {
+  /* Ajoutez vos styles ici. Par exemple : */
+  margin: 0;
+  padding: 0.5em;
+  font-size: 0.8em;
+  line-height: 1.2;
+  width: 90%;
+}
+
+.message{
+  margin-top: 15px;
+  margin-left: 40px;
+}
+
 .horizontal-menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  padding: 0 20px; /* Ajustez cette valeur pour définir l'espacement des éléments */
+  padding: 0 20px; 
+  flex-direction: row; 
+}
+
+.dropdowns-container {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .menu-item {
@@ -50,6 +103,7 @@
   cursor: pointer;
   height: 40px;
   margin-left: 20px; /* Ajustez cette valeur pour définir l'espacement du bouton */
+  color: lightgray;
 }
 
 .dropdown-content {
