@@ -16,13 +16,17 @@
     <div style="display: block; justify-items: center; align-items: center; width: 100%" cdkDrag *ngFor="let task of tasks">
       <app-tache [id]="id" [tacheId]="task" [sectionId]="sectionId" [projetId]="projetId"></app-tache>
     </div>
-    <div *ngIf="droitUtilisateurActuel != 'Visiteur'">
-      <div class="parent-container">
-        <button
-          (click)="onPlusClick($event)"
-          class="app-section table-style"
-          *ngIf="id"
-        >Nouvelle tâche</button>
-      </div>
+    <div *ngIf="!tasks || tasks.length === 0" style="display: block; justify-items: center; align-items: center; width: 100%">
+      <div style="height: 10px;"></div>
     </div>
+  </div>
+  <div  *ngIf="droitUtilisateurActuel != 'Visiteur'">
+    <div style="display: flex-end;" class="parent-container">
+      <button
+        (click)="onPlusClick($event)"
+        class="app-section table-style"
+        *ngIf="id"
+      >Nouvelle tâche</button>
+    </div>
+  </div>
 </div>

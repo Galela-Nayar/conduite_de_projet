@@ -54,6 +54,9 @@
           [projetId]="projetId"
         ></app-tache-scrum>
       </div>
+      <div *ngIf="!tasks || tasks.length === 0" style="display: block; justify-items: center; align-items: center; width: 100%">
+        <div style="height: 10px;"></div>
+      </div>
     </div>
   </div>
 </div>
