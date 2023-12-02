@@ -13,6 +13,25 @@
   background-color: rgb(65, 65, 65) ;
 }
 
+.table-style {
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: 10px;
+  margin-right: 15px;
+  width: 250px;
+  box-sizing: border-box; 
+  color: lightgray;
+  background-color: rgb(61, 61, 61);
+}
+
+.app-section {
+  display: inline-block;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box; 
+}
+
 .table {
     display: flex;
     flex-direction: column;
