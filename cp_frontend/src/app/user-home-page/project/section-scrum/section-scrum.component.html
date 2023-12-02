@@ -58,5 +58,14 @@
         <div style="height: 10px;"></div>
       </div>
     </div>
+    <div  *ngIf="droitUtilisateurActuel != 'Visiteur'">
+      <div style="display: flex; align-items: center; justify-content: center; width: 100%;">
+        <button
+          (click)="onPlusClick($event)"
+          class="app-section table-style"
+          *ngIf="id"
+        >Nouvelle tâche</button>
+      </div>
+    </div>
   </div>
 </div>
