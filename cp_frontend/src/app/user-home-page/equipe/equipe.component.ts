@@ -13,20 +13,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./equipe.component.css']
 })
 export class EquipeComponent implements OnInit {
-  equipes: any[] = [];
+  equipes!: any[];
   newEquipeName: string = '';
   selectedEquipeId: string = '';
   collaborateurEmail: string = '';
   dialog: any;
   projetId: any;
-  id: any;
-  tacheId: any;
-  sectionId: any;
-  liste1: Utilisateur[];
-  emails: string[];
-  liste2: Utilisateur[];
-  utilisateurService: any;
-  noms: string[];
+  id!: String;
+  tacheId!: String;
+  sectionId!: String;
+  liste1!: Utilisateur[];
+  emails!: string[];
+  liste2!: Utilisateur[];
+  utilisateurService!: any;
+  noms!: string[];
 
 
   constructor(private equipeService: EquipeService, private http: HttpClient, private router: Router  ) {}
@@ -35,7 +35,7 @@ export class EquipeComponent implements OnInit {
     this.loadEquipes();
     this.http.get<Utilisateur[]>(`http://localhost:8080/utilisateurs/liste`).subscribe((data: Utilisateur[]) => {
         this.liste1 = data;
-        console.log(this.liste1);
+        console.log("liste1 : " + this.liste1);
         // Extraire les e-mails et les stocker dans la variable 'emails'
         this.emails = this.liste1.map(utilisateur => utilisateur.email);
     })

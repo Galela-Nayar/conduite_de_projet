@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ProjectSettingComponent {
   @Input() projectId!: string;
   contextMenuStyle = {};
-  @Input() id: string = '';
+  @Input() id!: string;
 
   constructor(
     private router: Router,

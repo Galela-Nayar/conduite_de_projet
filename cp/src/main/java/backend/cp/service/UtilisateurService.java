@@ -56,6 +56,7 @@ public class UtilisateurService {
 
     private UtilisateurDto convertToDto(Utilisateur utilisateur) {
         UtilisateurDto utilisateurDto = new UtilisateurDto();
+        utilisateurDto.setId(utilisateur.getId());
         utilisateurDto.setNom(utilisateur.getNom());
         utilisateurDto.setPrenom(utilisateur.getPrenom());
         utilisateurDto.setUsername(utilisateur.getUserName());
