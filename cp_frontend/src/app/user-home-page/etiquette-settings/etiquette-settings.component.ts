@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { ThemePalette } from '@angular/material/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
@@ -19,9 +21,11 @@ export class EtiquetteSettingsComponent {
   nom: string = '';
   isCreating : boolean = false;
   symbole : string = '+';
-  colors: string[] = ['Blue', 'Red', 'Green', 'Orange', 'Aqua', 'Yellow', 'Pink', 'Purple'];
-  couleurActuel: string = 'Blue';
   listeEtiquette: any[] = [];
+  public disabled = false;
+  public color: ThemePalette = 'primary';
+  public touchUi = false;
+  colorCtr: FormControl = new FormControl(null);
 
   constructor(
     private router: Router,
@@ -83,15 +87,12 @@ export class EtiquetteSettingsComponent {
     }
   }
 
-  selectColor(color: string) {
-    this.couleurActuel = color;
-    console.log(this.couleurActuel);
-  }
-
   ajouter()
   {
-
-    this.http.get(`http://localhost:8080/etiquettes/create?nom=${this.nom}&couleur=${this.couleurActuel}`, {responseType: 'text'}).subscribe(
+    let ajouterCouleur = this.colorCtr.value.hex;
+    console.log(`http://localhost:8080/etiquettes/create?nom=${this.nom}&couleur=${ajouterCouleur}`);
+    
+    this.http.get(`http://localhost:8080/etiquettes/create?nom=${this.nom}&couleur=${ajouterCouleur}`, {responseType: 'text'}).subscribe(
       (etiquetteId: String) => {
         if(etiquetteId){
           this.http.get(`http://localhost:8080/projets/addEtiquette?idProjet=${this.projectId}&idEtiquette=${etiquetteId}`, {responseType: 'text'}).subscribe(

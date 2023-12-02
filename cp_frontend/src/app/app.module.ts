@@ -63,6 +63,7 @@ import { EtiquetteSettingsComponent } from './user-home-page/etiquette-settings/
 import { EtiquetteTachesComponent } from './user-home-page/etiquette-settings/etiquette-taches/etiquette-taches.component';
 import { UserProfilComponent } from './user-home-page/user-profil/user-profil.component';
 import { MiniUserProfilComponent } from './user-home-page/mini-user-profil/mini-user-profil.component';
+import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } from '@angular-material-components/color-picker';
 //import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
@@ -123,11 +124,13 @@ import { MiniUserProfilComponent } from './user-home-page/mini-user-profil/mini-
     CdkDrag,
     MatCheckboxModule,
     MatGridListModule,
+    NgxMatColorPickerModule,
     //FullCalendarModule,
   ],
   providers: [
     { provide: MatDialogRef, useValue: {} },
     { provide: MAT_DIALOG_DATA, useValue: {} },
+    { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS },
   ],
   bootstrap: [AppComponent],
 })

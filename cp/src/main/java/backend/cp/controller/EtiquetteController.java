@@ -28,7 +28,9 @@ public class EtiquetteController {
 
     @GetMapping("/create")
     public ResponseEntity<String> createEtiquette(@RequestParam String nom, @RequestParam String couleur) {
-        return ResponseEntity.ok(etiquetteService.createEtiquette(nom, couleur));
+        String couleurCor = "#" + couleur;
+        System.out.println("couleur : " + couleurCor);
+        return ResponseEntity.ok(etiquetteService.createEtiquette(nom, couleurCor));
     }
 
     @GetMapping("/delete")
