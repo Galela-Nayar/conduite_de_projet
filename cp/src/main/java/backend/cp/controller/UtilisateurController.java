@@ -40,6 +40,18 @@ public class UtilisateurController {
         this.utilisateurService = sectionService;
     }
 
+    @GetMapping("/liste")
+    public ResponseEntity<List<UtilisateurDto>> getListeUtilisateurs() {
+        List<UtilisateurDto> utilisateurs = utilisateurService.getListeUtilisateurs();
+        return new ResponseEntity<>(utilisateurs, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> supprimerUtilisateur(@PathVariable String id) {
+        utilisateurService.supprimerUtilisateur(id);
+        return new ResponseEntity<>("Utilisateur supprimé avec succès", HttpStatus.OK);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<String> createUtilisateur(@RequestBody UtilisateurDto utilisateurDto) {
         System.out.println(utilisateurDto.getNom() +"     "+ utilisateurDto.getPrenom()+"     "+ utilisateurDto.getUsername()+"     "+ utilisateurDto.getEmail()+"     "+ utilisateurDto.getPassword());

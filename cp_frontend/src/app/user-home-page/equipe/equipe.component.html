@@ -29,9 +29,15 @@
 </div>
 
 <div>
-  <label for="collaborateurEmail">Email du Collaborateur:</label>
-  <input type="text" id="collaborateurEmail" [(ngModel)]="collaborateurEmail" />&nbsp;
-  <button (click)="addCollaborateur()">Ajouter Collaborateur</button>&nbsp;
+  <label for="collaborateurEmail">Email sélectionné:</label>
+<select id="collaborateurEmail" [(ngModel)]="collaborateurEmail">
+ <option *ngFor="let email of emails" [value]="email">{{ email }}</option>
+</select>
+
+
+ <!-- <button (click)="addCollaborateur()">Ajouter Collaborateur</button>&nbsp; -->
+<button (click)="addCollaborateur()">Ajouter Collaborateur</button>&nbsp; 
+
   <button (click)="removeCollaborateur()">Supprimer Collaborateur</button>
   
 </div>
@@ -48,4 +54,48 @@
   </ul>
 </div>
 </fieldset>
+<!--
+<fieldset>
+  <legend>Liste des utilisateurs dejà Ajouter </legend>
+
+  <div class="scrollable-list" style="display: flex; flex-direction: column; align-items: center;">
+      <div *ngFor="let membre of liste1" style="display: flex; align-items: center;">
+          <img [src]="'http://localhost:8080/utilisateurs/img?id=' + membre['id']" class="miniature" />
+          <h3 style="margin: 5px;">{{"Nom: " +membre.nom+" "+" " + "Email: "+ membre.email}}</h3>
+         <mat-icon (click)="removeCollaborateur ">cancel</mat-icon> 
+      </div>
+  </div>
+  <hr>
+</fieldset>
+-->
+
+<fieldset>
+  <legend>Liste des utilisateurs à Ajouter </legend>
+  <div class="scrollable-list" style="display: flex; flex-direction: column; align-items: center;">
+      <div *ngFor="let membre of liste1" style="display: flex; align-items: center;">
+          <img [src]="'http://localhost:8080/utilisateurs/img?id='+ membre['id']" class="miniature" />
+          <h3 style="margin: 5px;">{{"Nom: " +membre.nom + " " + " e-mail: "+ membre.email}}</h3>
+          <mat-icon (click)="addCollaborateur()">arrow_upward</mat-icon> 
+      </div>
+  </div>
+</fieldset>
+
+<button mat-menu-item (click)="navigateEquipeToTache()">
+  <mat-icon class="mat-icon-white">group</mat-icon>
+  <span>Attribuer equipe à tache</span>
+</button>
+
+
+<!--
+<fieldset >
+  <legend>Collaborateurs du Projet</legend>
+
+<mat-dialog-content>
+  <button mat-menu-item (click)="openDialogCollaborateurs($event)">
+    <mat-icon>group</mat-icon>
+    <span>Attribuer collaborateurs</span>
+</button>
+</mat-dialog-content>
+</fieldset>
+-->
 </div>

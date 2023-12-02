@@ -1,7 +1,11 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EquipeService } from './equipe.service';
 import { Equipe } from './equipe.model';
-
+import { ModifierCollaborateurComponent } from '../project/section-scrum/tache-scrum/modifier-collaborateur/modifier-collaborateur.component';
+import Utilisateur from 'src/interface/Utilisateur';
+import { HttpClient } from '@angular/common/http';
+import { EquipeTacheComponent } from './equipe-tache/equipe-tache.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-equipe',
@@ -9,18 +13,33 @@ import { Equipe } from './equipe.model';
   styleUrls: ['./equipe.component.css']
 })
 export class EquipeComponent implements OnInit {
-  /*equipes:Equipe[]=[];
-  name: string = '';
-*/
   equipes: any[] = [];
   newEquipeName: string = '';
   selectedEquipeId: string = '';
   collaborateurEmail: string = '';
+  dialog: any;
+  projetId: any;
+  id: any;
+  tacheId: any;
+  sectionId: any;
+  liste1: Utilisateur[];
+  emails: string[];
+  liste2: Utilisateur[];
+  utilisateurService: any;
+  noms: string[];
 
-  constructor(private equipeService: EquipeService) {}
+
+  constructor(private equipeService: EquipeService, private http: HttpClient, private router: Router  ) {}
 
   ngOnInit() {
     this.loadEquipes();
+    this.http.get<Utilisateur[]>(`http://localhost:8080/utilisateurs/liste`).subscribe((data: Utilisateur[]) => {
+        this.liste1 = data;
+        console.log(this.liste1);
+        // Extraire les e-mails et les stocker dans la variable 'emails'
+        this.emails = this.liste1.map(utilisateur => utilisateur.email);
+    })
+   
   }
 
   loadEquipes() {
@@ -61,7 +80,8 @@ export class EquipeComponent implements OnInit {
         (response) => {
           console.log('Collaborateur ajouté avec succès', response);
           this.loadEquipes(); // Mettez à jour la liste des équipes après l'ajout du collaborateur
-          this.collaborateurEmail = ''; // Réinitialisez le champ de l'email du collaborateur
+          this.collaborateurEmail = ''; // Réinitialisez le champ de l'email du collaborateur      
+        
         },
         (error) => {
           console.error('Erreur lors de l\'ajout du collaborateur', error);
@@ -69,6 +89,8 @@ export class EquipeComponent implements OnInit {
       );
     }
   }
+
+
 
   removeCollaborateur() {
     if (this.selectedEquipeId && this.collaborateurEmail) {
@@ -99,5 +121,11 @@ export class EquipeComponent implements OnInit {
       );
     }
   }
+
+     
+  navigateEquipeToTache() {
+    this.router.navigate([`/${this.id}/equipe-tache`]);
+  }
+
 
 }

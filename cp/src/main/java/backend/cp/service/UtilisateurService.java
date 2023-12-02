@@ -1,5 +1,6 @@
 package backend.cp.service;
 
+import backend.cp.dto.UtilisateurDto;
 import backend.cp.modele.Utilisateur;
 import backend.cp.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UtilisateurService {
@@ -43,6 +45,25 @@ public class UtilisateurService {
         }
 
         utilisateurRepository.save(utilisateur);
+    }
+
+    public List<UtilisateurDto> getListeUtilisateurs() {
+        List<Utilisateur> utilisateurs = utilisateurRepository.findAll();
+        return utilisateurs.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    private UtilisateurDto convertToDto(Utilisateur utilisateur) {
+        UtilisateurDto utilisateurDto = new UtilisateurDto();
+        utilisateurDto.setNom(utilisateur.getNom());
+        utilisateurDto.setPrenom(utilisateur.getPrenom());
+        utilisateurDto.setUsername(utilisateur.getUserName());
+        utilisateurDto.setPassword(utilisateur.getPassword());
+        utilisateurDto.setEmail(utilisateur.getEmail());
+        utilisateurDto.setListeProjet(utilisateur.getListProjet());
+        utilisateurDto.setBio(utilisateur.getBio());
+        return utilisateurDto;
     }
 
     public void setLogo(String id, byte[] logo) {
@@ -143,5 +164,10 @@ public class UtilisateurService {
     public Utilisateur getUtilisateurByEmail(String email) {
         return utilisateurRepository.findByEmail(email);
     }
+
+    public void supprimerUtilisateur(String id) {
+    utilisateurRepository.deleteById(id);
+}
+
 }
  

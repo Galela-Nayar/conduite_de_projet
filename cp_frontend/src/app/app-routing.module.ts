@@ -19,6 +19,7 @@ import { ProjetParametresComponent } from './user-home-page/projet-parametres/pr
 import { EquipeComponent } from './user-home-page/equipe/equipe.component';
 import { TacheScrumComponent } from './user-home-page/project/section-scrum/tache-scrum/tache-scrum.component';
 import { AgendaComponent } from './user-home-page/agenda/agenda.component';
+import { EquipeTacheComponent } from './user-home-page/equipe/equipe-tache/equipe-tache.component';
 
 const routes: Routes = [
   {
@@ -39,7 +40,8 @@ const routes: Routes = [
       { path: 'user-setting', component: UserSettingComponent },
       { path: 'parametres-project/:projectId', component: ProjetParametresComponent, },
       { path: 'agenda', component: AgendaComponent },
-      { path: 'equipe', component: EquipeComponent },
+      { path: 'equipe', component: EquipeComponent},
+      { path: 'equipe-tache', component: EquipeTacheComponent },
       { path: 'project/:projectId', component: ProjectComponent,
           children: [
           { path: 'create-section/:x/:y', component: CreateSectionComponent },

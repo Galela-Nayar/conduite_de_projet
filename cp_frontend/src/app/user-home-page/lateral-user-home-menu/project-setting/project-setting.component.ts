@@ -29,4 +29,8 @@ export class ProjectSettingComponent {
     console.log('id: ' + this.id + '\nprojectId: ' + this.projectId);
     this.router.navigate(['/', this.id, 'parametres-project', this.projectId]);
   }
+
+  navigateToEquipeGestion() {
+    this.router.navigate(['/', this.id, 'equipe']);
+  }
 }

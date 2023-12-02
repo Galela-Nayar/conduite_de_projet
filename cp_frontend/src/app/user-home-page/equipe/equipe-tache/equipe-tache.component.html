@@ -1,0 +1,11 @@
+
+<fieldset>
+    <legend>Attribution Equipe à une tache</legend>
+<div>
+    <label for="selectedEquipe">Équipe sélectionnée:</label>
+    <select id="selectedEquipe" [(ngModel)]="selectedEquipeId">
+      <option *ngFor="let equipe of equipes" [value]="equipe.id">{{ equipe.name }}</option>
+    </select>
+</div>
+
+</fieldset>
