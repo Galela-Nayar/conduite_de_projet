@@ -15,12 +15,64 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  overflow: auto;
   border-right: 1px solid black;
 }
 
 .cell:last-child {
   border-right: none;
+}
+
+.couleur {
+  width: 90%;
+  display: flex;
+  flex-wrap: wrap;
+  cursor: pointer;
+  color: black;
+  padding-top: 4px;
+}
+
+.container {
+  width: 232px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-left: 0px;
+  justify-content: flex-start;
+  align-items: start;
+  justify-content: start;
+  text-align: start;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  padding: 4px 0px 2px 2px;
+}
+
+.contenu {
+  width: 95%;
+  text-align: start;
+}
+
+.etiquette {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-bottom: 4px;
+  padding-right: 4px;
+}
+
+.couleur > div {
+  display: inline-flex;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .miniature{
@@ -32,8 +84,21 @@
 textarea {
   border: none;
   resize: none;
+  outline: none;
+  display:flex;
+  text-align: start;
+  margin-left: 8px;
+  font-size: 13px;
+  width: 95%;
   background-color: rgb(82, 82, 82);
   color: rgb(228, 228, 228);
+}
+
+.settings-and-checkbox {
+  width: 10%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
 
 .nom_utilisateur:first-child{
