@@ -9,12 +9,16 @@ import { ObservableService } from 'src/app/observable/observable-projet.service'
 import Commentaire from 'src/interface/Commentaire';
 import Tache from 'src/interface/Tache';
 import Utilisateur from 'src/interface/Utilisateur';
+import { Directive, HostListener, ElementRef } from '@angular/core';
+
+
 
 @Component({
   selector: 'app-modify-task',
   templateUrl: './modify-task.component.html',
   styleUrls: ['./modify-task.component.css'],
 })
+
 export class ModifyTaskComponent implements OnInit {
   projectId!: String;
   sectionId!: String
@@ -31,10 +35,14 @@ export class ModifyTaskComponent implements OnInit {
   mouseX: number = 0;
   mouseY: number = 0;
   hideTimeout: number;
+  comment: String = "";
+  @HostListener('input', ['$event.target'])
+  onInput(textArea: HTMLTextAreaElement): void {
+    this.adjust(textArea);
+  }
 
   constructor(
-    private route: ActivatedRoute,
-    private sanitizer: DomSanitizer,
+    public element: ElementRef,
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
     
@@ -50,6 +58,7 @@ export class ModifyTaskComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    setTimeout(() => this.adjust(), 0);
     this.http
       .get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`)
       .subscribe((tacheData: Tache) => {
@@ -84,6 +93,48 @@ export class ModifyTaskComponent implements OnInit {
           });
       });
   }
+
+  adjust(textArea?: HTMLTextAreaElement): void {
+    if(textArea){
+      textArea = textArea || this.element.nativeElement.getElementsByTagName('textarea')[0];
+      textArea.style.overflow = 'hidden';
+      textArea.style.height = 'auto';
+      textArea.style.height = textArea.scrollHeight + 'px';
+    }
+  }
+
+  envoyer(){
+    console.log("comment : " + this.comment)
+    let commentaire: Commentaire ={
+    id:  this.generateUUID(),
+    createurId:  this.id,
+    createdAt:  new Date(),
+    tacheId:  this.tacheId,
+    message:  this.comment + "\nÀ " + new Date().getHours() + ":" + new Date().getMinutes() + "."
+    }
+    this.http.post(`http://localhost:8080/commentaires/add_commentaire`,commentaire, { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).subscribe(
+      response => {
+        this.comment = ""
+      }
+    )
+  }
+
+  generateUUID() { // Public Domain/MIT
+    let d = new Date().getTime();//Timestamp
+    let d2 = (performance && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        let r = Math.random() * 16;//random number between 0 and 16
+        if(d > 0){//Use timestamp until depleted
+            r = (d + r)%16 | 0;
+            d = Math.floor(d/16);
+        } else {//Use microseconds since page-load if supported
+            r = (d2 + r)%16 | 0;
+            d2 = Math.floor(d2/16);
+        }
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+}
+  
 
   showMiniUserProfile(membre: any,  event: MouseEvent) {
     this.hideTimeout = setTimeout(() => {
