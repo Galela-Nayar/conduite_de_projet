@@ -9,8 +9,8 @@
             </div>
           </div>
           <div class="date-limite" *ngIf="this.tache.dateLimite">
-            Prévu le: {{ this.tache.dateLimite | date : "dd-MM-yyyy" }}
-            <mat-icon style="margin-right: 8px; margin-left: 8px; margin-top: 5px; padding-bottom: 10px;" (click)="openDialogDate($event)">calendar_today</mat-icon>
+            <span style="margin: 0px; padding-top: 8px;">{{ this.tache.dateLimite | date : "dd-MM-yyyy" }}</span>
+            <mat-icon style="font-size: 18px; padding: 6px 3px 0px 3px; " (click)="openDialogDate($event)">calendar_today</mat-icon>
           </div>
         </div>
         <div class="contenu" *ngIf="!isEditingNom" (dblclick)="editNom()">
@@ -29,8 +29,8 @@
         <div class="contenu" *ngIf="isEditingNom">
             <textarea style="text-align: center;" #textareaNom *ngIf="isEditingNom" [(ngModel)]="tache.nom" (blur)="updateTaskNom()" (input)="adjustTextareaNom($event)" ></textarea>
         </div>
-        <div class="settings-and-checkbox"  *ngIf="droitUtilisateurActuel != 'Visiteur'">
-          <mat-icon (click)="openDialogSetting($event)">edit</mat-icon>
+        <div class="settings-and-checkbox" style="justify-content: center; align-items: center; text-align: center;"  *ngIf="droitUtilisateurActuel != 'Visiteur'">
+          <mat-icon style="font-size: 18px; padding: 6px 3px 0px 3px; " matRipple (click)="openDialogSetting($event)">edit</mat-icon>
           <mat-checkbox
             [checked]="tache.statutTerminer"
             (change)="swapStatut()"

@@ -24,6 +24,8 @@ import {
   templateUrl: './section.component.html',
   styleUrls: ['./section.component.css'],
 })
+
+
 export class SectionComponent {
   @ViewChild('textareaNom') textareaNom!: ElementRef;
   @Input() id: String | null = '';
