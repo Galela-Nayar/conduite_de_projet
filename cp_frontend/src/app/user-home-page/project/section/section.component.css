@@ -9,6 +9,11 @@
   background-color: rgb(61, 61, 61);
 }
 
+p:hover{
+
+  cursor: pointer;
+}
+
 .nvtache{
   background-color: rgb(99, 99, 99); 
   border: none;
@@ -17,6 +22,7 @@
 .nvtache:hover{
   background-color: rgb(114, 114, 114);
   color: white;
+  cursor: pointer;
 }
 
 .app-section {
