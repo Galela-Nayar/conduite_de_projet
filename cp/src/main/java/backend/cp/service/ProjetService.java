@@ -1,7 +1,6 @@
 package backend.cp.service;
 
 import backend.cp.modele.Projet;
-import backend.cp.modele.Section;
 import backend.cp.modele.Utilisateur;
 import backend.cp.repository.ProjetRepository;
 import org.springframework.beans.factory.annotation.Autowired;

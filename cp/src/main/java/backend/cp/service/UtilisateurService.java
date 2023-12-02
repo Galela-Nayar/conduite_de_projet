@@ -1,6 +1,5 @@
 package backend.cp.service;
 
-import backend.cp.modele.Notification;
 import backend.cp.modele.Utilisateur;
 import backend.cp.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;

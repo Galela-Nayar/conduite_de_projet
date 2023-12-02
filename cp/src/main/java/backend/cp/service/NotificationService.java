@@ -1,6 +1,5 @@
 package backend.cp.service;
 
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -87,6 +86,7 @@ public class NotificationService {
                 notificationsArray.add(notification.get());
             }
         }
+        if(notificationsArray.size() == 0) return null;
         Notification[] notifications = new Notification[notificationsArray.size()];
         notifications = notificationsArray.toArray(notifications);
         return notifications;

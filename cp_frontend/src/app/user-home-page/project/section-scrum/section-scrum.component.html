@@ -7,7 +7,7 @@
         *ngIf="!isEditingNom"
         (dblclick)="editNom()"
       >
-        <strong style="font-size: 1.8em">{{ section?.nom }}</strong>
+        <strong style="cursor: pointer; font-size: 1.8em">{{ section?.nom }}</strong>
       </div>
       <div class="cell" *ngIf="isEditingNom">
         <textarea
@@ -62,7 +62,8 @@
       <div style="display: flex; align-items: center; justify-content: center; width: 100%;">
         <button
           (click)="onPlusClick($event)"
-          class="app-section table-style"
+          style="border: none;"
+          class="app-section table-style nvl_tache"
           *ngIf="id"
         >Nouvelle tâche</button>
       </div>

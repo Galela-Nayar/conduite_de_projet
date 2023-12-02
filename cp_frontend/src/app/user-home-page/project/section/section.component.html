@@ -1,10 +1,10 @@
 <div class="table-style">
     <div class="app-section section-entry">
-        <div class="task-content" *ngIf="!isEditingNom" (dblclick)="editNom()"> 
-          <p> {{section?.nom}} </p>
+        <div class="task-content" *ngIf="!isEditingNom" > 
+          <p style="width: max-content;" (dblclick)="editNom()"> {{section?.nom}} </p>
         </div>
-        <div class="cell" *ngIf="isEditingNom">
-            <textarea style="text-align: center; outline: none; background-color: rgb(75, 75, 75); border: 2px solid rgb(46, 46, 46); padding: 0px; margin: 0px;" #textareaNom *ngIf="isEditingNom" [(ngModel)]="section.nom" (blur)="updateTaskNom()" (input)="adjustTextareaNom($event)" ></textarea>
+        <div class="cell" style=" padding-top: 15px;" *ngIf="isEditingNom">
+            <textarea style="color: lightgray; font-size: 15px; resize: none; text-align: left; outline: none; background-color: rgb(75, 75, 75); border: 2px solid rgb(46, 46, 46); padding: -10px 0px 0px 0px; margin: 0px 0px 0px 0px;" #textareaNom *ngIf="isEditingNom" [(ngModel)]="section.nom" (blur)="updateTaskNom()" (input)="adjustTextareaNom($event)" ></textarea>
         </div>  
         <div *ngIf="droitUtilisateurActuel != 'Visiteur'">
           <app-section-setting [mouseX]="mouseX" [mouseY]="mouseY" [id]="id" [projectId]="projetId" [sectionId]="sectionId"></app-section-setting>
@@ -22,9 +22,9 @@
   </div>
   <div  *ngIf="droitUtilisateurActuel != 'Visiteur'">
     <div style="display: flex-end;" >
-      <button
+      <button 
         (click)="onPlusClick($event)"
-        class="app-section table-style"
+        class="app-section table-style nvtache"
         *ngIf="id"
       >Nouvelle tâche</button>
     </div>

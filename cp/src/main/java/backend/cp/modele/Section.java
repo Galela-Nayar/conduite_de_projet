@@ -2,8 +2,6 @@ package backend.cp.modele;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import ch.qos.logback.core.pattern.color.BoldBlueCompositeConverter;
 import lombok.Data;
 
 import java.util.ArrayList;

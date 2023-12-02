@@ -1,7 +1,6 @@
 package backend.cp.controller;
 
 import backend.cp.dto.UtilisateurDto;
-import backend.cp.modele.Notification;
 import backend.cp.modele.Utilisateur;
 import backend.cp.service.UtilisateurService;
 

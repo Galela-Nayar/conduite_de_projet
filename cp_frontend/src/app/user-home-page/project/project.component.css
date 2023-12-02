@@ -93,6 +93,50 @@
 
 }
 
+.nvsectkban:hover{
+  background-color: rgb(88, 88, 88);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.nvsectscrum:hover{
+  background-color: rgb(88, 88, 88);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+h1{
+  cursor: pointer;
+}
+
+.nvsectscrum{
+  height: 30px;
+  width: 60px;
+  background-color: rgb(61, 61, 61);
+  color: lightgray;
+  font-size:  30px;
+  font-weight: 400;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.nvsectkban{
+  height: 60px;
+  width: 30px;
+  font-size:  30px;
+  background-color: rgb(61, 61, 61);
+  color: lightgray;
+  font-weight: 400;
+  justify-content: center;
+  align-items: center;
+}
+
 .background_content {
   z-index: 1;
   bottom: 0;
@@ -112,14 +156,17 @@
   margin-right: 10px;
 }
 
-
+.button-container {
+  display: flex;
+  justify-content: center;
+}
 
 .section-list {
   width: 100%;
   min-width: max-content;
   min-height: 60px;
-  display: flex;
   flex-direction: row;
+  display: flex;
 }
 
 .section-list-col {

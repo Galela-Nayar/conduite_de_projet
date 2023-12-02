@@ -2,13 +2,10 @@ package backend.cp.service;
 
 import backend.cp.modele.Etiquette;
 import backend.cp.repository.EtiquetteRepository;
-import reactor.util.function.Tuple2;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EtiquetteService {

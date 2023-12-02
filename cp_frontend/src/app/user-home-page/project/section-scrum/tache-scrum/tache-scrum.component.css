@@ -81,6 +81,20 @@
   margin: -10px 5px;
 }
 
+.mat-icon:hover{
+  background-color: #94949434; /* Or any color you prefer */
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 
+              0px 2px 2px 0px rgb(0 0 0 / 14%), 
+              0px 1px 5px 0px rgb(0 0 0 / 12%); /* Shadow effect */
+  border-radius: 50%;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mat-icon{
+  font-size: 18px; 
+
+}
+
 textarea {
   border: none;
   resize: none;
@@ -97,8 +111,9 @@ textarea {
 .settings-and-checkbox {
   width: 10%;
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .nom_utilisateur:first-child{
