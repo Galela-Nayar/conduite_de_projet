@@ -44,6 +44,7 @@
     color: white;
     cursor: pointer;
     margin-left: auto;
+    margin-right: 10px;
 }
 
 .bouttonAjouter {
@@ -55,3 +56,8 @@
 h1 {
     text-align: center;
 }
+
+.label-container {
+    height: 200px;
+    overflow-y: auto;
+  }
