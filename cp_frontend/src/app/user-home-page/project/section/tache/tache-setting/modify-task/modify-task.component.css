@@ -1,18 +1,30 @@
 .container {
+  max-height: 400px;
   max-width: 600px;
   padding: 0px 20px;
   padding-bottom: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   background-color: #3d3d3d;
-  display: flex;
   flex-direction: column;
   color: rgb(160, 160, 160);
+  overflow: auto;
+}
+
+
+.miniature{
+  width: 20px;
+  height: 20px;
+  margin: 0px 5px;
 }
 
 .header {
   display: flex;
-  align-items: start;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 20px;
 }
 
 h3 {
@@ -123,6 +135,7 @@ hr {
   margin-bottom: 20px;
   width: 90%;
   border: none;
-  height: 1px;
-  background: #d6d6d6; /* Change to desired color */
+  height: 2px;
+  color: #adadad;
+  background-color: #757575; /* Change to desired color */
 }
