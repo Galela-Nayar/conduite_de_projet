@@ -47,6 +47,7 @@ export class TacheScrumComponent implements AfterViewChecked {
   selectedMembre: Utilisateur
   hideTimeout = 1000
   listNotifications!: Notification[]
+  etiquetteNom = true;
 
   
   constructor(private http: HttpClient, private route: ActivatedRoute,

@@ -107,6 +107,10 @@
   cursor: pointer;
 }
 
+h1{
+  cursor: pointer;
+}
+
 .nvsectscrum{
   height: 30px;
   width: 60px;

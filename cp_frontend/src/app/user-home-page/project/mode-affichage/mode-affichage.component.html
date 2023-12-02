@@ -1,6 +1,10 @@
 <div style="color: rgb(238, 238, 238);">
     Affichage :
-    <select style="color: rgb(214, 214, 214); border-radius: 10%; background-color: rgb(66, 66, 66); border-color: rgb(46, 46, 46); border-style: solid;" [(ngModel)]="affichageActuel" (ngModelChange)="changerAffichage()">
-      <option *ngFor="let option of options" [value]="option">{{ option }}</option>
+    <select  style="cursor: pointer; color: rgb(214, 214, 214); border-radius: 10%; background-color: rgb(66, 66, 66); border-color: rgb(46, 46, 46); border-style: solid;" [(ngModel)]="affichageActuel" (ngModelChange)="changerAffichage()">
+      <option style="cursor: pointer;" *ngFor="let option of options" [value]="option">
+        <p style="cursor: pointer;">
+          {{ option }}
+        </p>
+      </option>
     </select>
 </div>

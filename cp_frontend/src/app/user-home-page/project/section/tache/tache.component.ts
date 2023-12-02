@@ -36,6 +36,7 @@ export class TacheComponent  implements AfterViewChecked {
   showMiniUserProfil: boolean = false;
   selectedMembre: Utilisateur
   hideTimeout = 1000
+  etiquetteNom = false
 
   constructor(
     private http: HttpClient,
