@@ -54,7 +54,8 @@ export class HorizontalUserHomeMenuComponent {
                     `http://localhost:8080/notifications/notifications?userId=${this.id}`
                   )
                   .subscribe((data: Notification[]) => {
-                    this.notifications = data;
+                    if(data != null)
+                      this.notifications = data;
                   });
               });
           });
@@ -83,6 +84,7 @@ export class HorizontalUserHomeMenuComponent {
             `http://localhost:8080/notifications/notifications?userId=${this.id}`
           )
           .subscribe((data: Notification[]) => {
+            if(data != null)
             this.notifications = data;
           });
       });
