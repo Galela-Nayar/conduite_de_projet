@@ -6,6 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
+import Commentaire from 'src/interface/Commentaire';
 import Tache from 'src/interface/Tache';
 import Utilisateur from 'src/interface/Utilisateur';
 
@@ -24,6 +25,12 @@ export class ModifyTaskComponent implements OnInit {
   sectionForm!: FormGroup;
   membreAttribue!: Utilisateur[];
   membreRestant!: Utilisateur[];
+  commentaires!: Commentaire[];
+  showMiniUserProfil: boolean = false;
+  selectedMembre: Utilisateur
+  mouseX: number = 0;
+  mouseY: number = 0;
+  hideTimeout: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -66,7 +73,43 @@ export class ModifyTaskComponent implements OnInit {
           .subscribe((data: Utilisateur[]) => {
             this.membreRestant = data;
           });
+          this.http
+          .get<Commentaire[]>(
+            `http://localhost:8080/taches/commentaires?id=${this.tacheId}`
+          )
+          .subscribe((data: Commentaire[]) => {
+            this.commentaires = data;
+            console.log("commentaires : " + this.commentaires + this.commentaires[0].message)
+            console.log( this.commentaires)
+          });
       });
+  }
+
+  showMiniUserProfile(membre: any,  event: MouseEvent) {
+    this.hideTimeout = setTimeout(() => {
+      
+      const rect = (event.target as Element).getBoundingClientRect();
+      this.mouseX = rect.left;
+      this.mouseY = rect.bottom;
+      this.http
+          .get<Utilisateur>(
+            `http://localhost:8080/utilisateurs/user?id=${membre}`
+          )
+          .subscribe((data: Utilisateur) => {
+            this.selectedMembre = data;
+          });
+      this.showMiniUserProfil = true;
+    }, 700); // adjust the delay as needed
+  }
+  
+  hideMiniUserProfile() {
+    this.hideTimeout = setTimeout(() => {
+      this.showMiniUserProfil = false;
+    }, 150); // adjust the delay as needed
+  }
+  
+  cancelHideMiniUserProfile() {
+    clearTimeout(this.hideTimeout);
   }
 
   startEditingNom(): void {
@@ -179,6 +222,14 @@ export class ModifyTaskComponent implements OnInit {
           )
           .subscribe((data: Utilisateur[]) => {
             this.membreRestant = data;
+          });
+          this.http
+          .get<Commentaire[]>(
+            `http://localhost:8080/taches/commentaires?id=${this.tacheId}`
+          )
+          .subscribe((data: Commentaire[]) => {
+            this.commentaires = data;
+            console.log("commentaires : " + this.commentaires)
           });
         this.cdr.detectChanges();
 

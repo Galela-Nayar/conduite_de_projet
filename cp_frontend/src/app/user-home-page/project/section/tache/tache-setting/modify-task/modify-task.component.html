@@ -4,7 +4,7 @@
             color: white;
             font-size: 1.7em;
             font-weight: 1800;
-            text-align: left;
+            text-align: center;
           ">
           {{ tache.nom }}
         </span>
@@ -26,7 +26,7 @@
       (change)="swapStatut()"
     ></mat-checkbox>
   </div>
-  <div>
+  <div style="justify-content: center; display: flex;">
     <p>
       <mat-form-field>
         Date de fin:
@@ -41,5 +41,19 @@
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
     </p>
+  </div>
+  <hr />
+  Commentaires :
+  <div class="commentaire">
+    <div style="display: flex; flex-direction: row;" *ngFor="let commentaire of commentaires">
+      <div style="display: flex; position: relative; width: 10%; align-items: center;" (mouseenter)="showMiniUserProfile(commentaire.createurId, $event)" (mouseleave)="hideMiniUserProfile()">
+        <img class="miniature "    [src]="'http://localhost:8080/utilisateurs/img?id=' + commentaire['createurId']">
+      </div>
+       <p style="display: flex; width: 90%;">{{ commentaire['message'] }}</p>
+    </div>
+    <app-mini-user-profil [style.top.px]="mouseY" [style.left.px]="mouseX" style="position: fixed; z-index: 1;"
+               *ngIf="showMiniUserProfil" [membre]="selectedMembre" [id]="id"
+                         (mouseenter)="cancelHideMiniUserProfile()" 
+                         (mouseleave)="hideMiniUserProfile()"></app-mini-user-profil>
   </div>
 </div>
