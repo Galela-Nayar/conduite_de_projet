@@ -10,6 +10,7 @@ import Notification from 'src/interface/Notification';
 import { DateLimiteCalendrierComponent } from './date-limite-calendrier/date-limite-calendrier.component';
 import { ModifierCollaborateurComponent } from './modifier-collaborateur/modifier-collaborateur.component';
 import Etiquette from 'src/interface/Etiquette';
+import { TacheSettingComponent } from '../../section/tache/tache-setting/tache-setting.component';
 
 @Component({
   selector: 'app-tache-scrum',
@@ -155,6 +156,68 @@ adjustTextareaPonderation(event?: any) {
 editNom(){
   if(this.droitUtilisateurActuel != 'Visiteur') this.isEditingNom = true
 }
+
+getContrastColor(bgColor) {
+  return `rgb(80, 80, 80)`;
+}
+
+openDialogSetting(event: MouseEvent): void {
+  const dialogWidth = 300; // Replace with the width of your dialog
+  const dialogHeight = 200; // Replace with the height of your dialog
+  let left = event.clientX;
+  let top = event.clientY;
+
+  if (left + dialogWidth > window.innerWidth) {
+    left = window.innerWidth - dialogWidth;
+  }
+
+  if (top + dialogHeight > window.innerHeight) {
+    top = window.innerHeight - dialogHeight;
+  }
+
+  const dialogRef = this.dialog.open(TacheSettingComponent, {
+    position: { left: `${left}px`, top: `${top}px` },
+    data: { projetId: this.projetId,id: this.id, tacheId: this.tacheId, sectionId: this.sectionId }
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      
+    }
+    this.updateTache();
+    this.cd.detectChanges();
+    this.observerService.notifyTask();
+  });
+}
+
+openDialogDate(event: MouseEvent): void {
+  const dialogWidth = 300; // Replace with the width of your dialog
+  const dialogHeight = 200; // Replace with the height of your dialog
+  let left = event.clientX;
+  let top = event.clientY;
+
+  if (left + dialogWidth > window.innerWidth) {
+    left = window.innerWidth - dialogWidth;
+  }
+
+  if (top + dialogHeight > window.innerHeight) {
+    top = window.innerHeight - dialogHeight;
+  }
+
+  const dialogRef = this.dialog.open(DateLimiteCalendrierComponent, {
+    position: { left: `${left}px`, top: `${top}px` },
+    data: {id: this.id, projectId: this.projetId, sectionId: this.sectionId, tacheId: this.tacheId, date: this.tache?.dateLimite || new Date()}
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.updateTache();
+      this.cd.detectChanges();
+      this.observerService.notifyTask();
+    }
+  });
+}
+
 
 editPriorite(){
   if(this.droitUtilisateurActuel != 'Visiteur') this.isEditingPriorite = true
