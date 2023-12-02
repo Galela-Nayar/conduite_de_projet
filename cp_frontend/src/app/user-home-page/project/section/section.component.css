@@ -9,6 +9,16 @@
   background-color: rgb(61, 61, 61);
 }
 
+.nvtache{
+  background-color: rgb(99, 99, 99); 
+  border: none;
+}
+
+.nvtache:hover{
+  background-color: rgb(114, 114, 114);
+  color: white;
+}
+
 .app-section {
   display: inline-block;
   padding-left: 10px;

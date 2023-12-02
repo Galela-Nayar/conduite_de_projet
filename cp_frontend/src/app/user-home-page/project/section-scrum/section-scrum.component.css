@@ -25,6 +25,11 @@
   background-color: rgb(61, 61, 61);
 }
 
+.nvl_tache:hover{
+  background-color: rgb(85, 85, 85);
+  color: white;
+}
+
 .app-section {
   display: inline-block;
   padding-left: 10px;
