@@ -1,0 +1,30 @@
+.container {
+    display: inline-block;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 10px;
+    box-sizing: border-box; 
+    color: lightgray;
+    background-color: rgb(61, 61, 61);
+    padding: 10px;
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.form-row a {
+    margin-right: 10px;
+    margin-left: 5px;
+    color: black;
+    font-weight: bold;
+}
+
+.header {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}

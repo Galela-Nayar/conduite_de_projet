@@ -9,6 +9,8 @@ import Utilisateur from 'src/interface/Utilisateur';
 import Notification from 'src/interface/Notification';
 import { DateLimiteCalendrierComponent } from './date-limite-calendrier/date-limite-calendrier.component';
 import { ModifierCollaborateurComponent } from './modifier-collaborateur/modifier-collaborateur.component';
+import Etiquette from 'src/interface/Etiquette';
+import { TacheSettingComponent } from '../../section/tache/tache-setting/tache-setting.component';
 
 @Component({
   selector: 'app-tache-scrum',
@@ -35,11 +37,17 @@ export class TacheScrumComponent implements AfterViewChecked {
   isEditingNom = false;
   isEditingPriorite = false;
   isEditingPonderation = false;
+  etiquettes: any[] = [];
+  isEtiquetteNameVisible = false;
+  hoveredEtiquetteName = '';
+  etiquetteNameLeft = 0;
+  etiquetteNameTop = 0;
   droitUtilisateurActuel: string = '';
   showMiniUserProfil: boolean = false;
   selectedMembre: Utilisateur
   hideTimeout = 1000
   listNotifications!: Notification[]
+  etiquetteNom = true;
 
   
   constructor(private http: HttpClient, private route: ActivatedRoute,
@@ -56,6 +64,13 @@ export class TacheScrumComponent implements AfterViewChecked {
         .subscribe((response) => {
           this.http.get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`).subscribe((response) => {
               this.tache = response;
+              this.etiquettes = [];
+              const listIdEtiquette = this.tache.etiquettes
+              for(let id of listIdEtiquette)
+              {
+                this.http.get<Etiquette>(`http://localhost:8080/etiquettes/getById?id=${id}`)
+                .subscribe((data : Etiquette) => {this.etiquettes.push(data)});
+              }
             });
       });
       this.http.get<Utilisateur[]>(`http://localhost:8080/taches/membreAttribue?id=${this.tacheId}`).subscribe((data: Utilisateur[]) => {
@@ -142,6 +157,68 @@ adjustTextareaPonderation(event?: any) {
 editNom(){
   if(this.droitUtilisateurActuel != 'Visiteur') this.isEditingNom = true
 }
+
+getContrastColor(bgColor) {
+  return `rgb(80, 80, 80)`;
+}
+
+openDialogSetting(event: MouseEvent): void {
+  const dialogWidth = 300; // Replace with the width of your dialog
+  const dialogHeight = 200; // Replace with the height of your dialog
+  let left = event.clientX;
+  let top = event.clientY;
+
+  if (left + dialogWidth > window.innerWidth) {
+    left = window.innerWidth - dialogWidth;
+  }
+
+  if (top + dialogHeight > window.innerHeight) {
+    top = window.innerHeight - dialogHeight;
+  }
+
+  const dialogRef = this.dialog.open(TacheSettingComponent, {
+    position: { left: `${left}px`, top: `${top}px` },
+    data: { projetId: this.projetId,id: this.id, tacheId: this.tacheId, sectionId: this.sectionId }
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      
+    }
+    this.updateTache();
+    this.cd.detectChanges();
+    this.observerService.notifyTask();
+  });
+}
+
+openDialogDate(event: MouseEvent): void {
+  const dialogWidth = 300; // Replace with the width of your dialog
+  const dialogHeight = 200; // Replace with the height of your dialog
+  let left = event.clientX;
+  let top = event.clientY;
+
+  if (left + dialogWidth > window.innerWidth) {
+    left = window.innerWidth - dialogWidth;
+  }
+
+  if (top + dialogHeight > window.innerHeight) {
+    top = window.innerHeight - dialogHeight;
+  }
+
+  const dialogRef = this.dialog.open(DateLimiteCalendrierComponent, {
+    position: { left: `${left}px`, top: `${top}px` },
+    data: {id: this.id, projectId: this.projetId, sectionId: this.sectionId, tacheId: this.tacheId, date: this.tache?.dateLimite || new Date()}
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.updateTache();
+      this.cd.detectChanges();
+      this.observerService.notifyTask();
+    }
+  });
+}
+
 
 editPriorite(){
   if(this.droitUtilisateurActuel != 'Visiteur') this.isEditingPriorite = true
@@ -251,6 +328,18 @@ cancelHideMiniUserProfile() {
       this.http.get<Utilisateur[]>(`http://localhost:8080/taches/membreAttribue?id=${this.tacheId}`).subscribe((data: Utilisateur[]) => {
         this.membreAttribue = data;
       })
+  }
+
+  showEtiquetteName(event: MouseEvent, name: string): void {
+    this.isEtiquetteNameVisible = true;
+    this.hoveredEtiquetteName = name;
+    this.etiquetteNameLeft = event.clientX-10;
+    this.etiquetteNameTop = event.clientY+10;
+  }
+
+  hideEtiquetteName(): void {
+    this.isEtiquetteNameVisible = false;
+    this.hoveredEtiquetteName = '';
   }
 
   

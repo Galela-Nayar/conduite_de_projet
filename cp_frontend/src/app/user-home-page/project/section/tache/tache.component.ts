@@ -8,6 +8,7 @@ import Tache from 'src/interface/Tache';
 import Utilisateur from 'src/interface/Utilisateur';
 import { TacheSettingComponent } from './tache-setting/tache-setting.component';
 import { DateLimiteCalendrierComponent } from '../../section-scrum/tache-scrum/date-limite-calendrier/date-limite-calendrier.component';
+import Etiquette from 'src/interface/Etiquette';
 
 @Component({
   selector: 'app-tache',
@@ -31,9 +32,11 @@ export class TacheComponent  implements AfterViewChecked {
   membreAttribue!: any[]
   droitUtilisateurActuel: string = '';
   isEditingNom = false;
+  etiquettes: any[] = [];
   showMiniUserProfil: boolean = false;
   selectedMembre: Utilisateur
   hideTimeout = 1000
+  etiquetteNom = false
 
   constructor(
     private http: HttpClient,
@@ -52,7 +55,14 @@ export class TacheComponent  implements AfterViewChecked {
           this.http
             .get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`)
             .subscribe((response) => {
+              this.etiquettes = [];
               this.tache = response;
+              const listIdEtiquette = this.tache.etiquettes
+              for(let id of listIdEtiquette)
+              {
+                this.http.get<Etiquette>(`http://localhost:8080/etiquettes/getById?id=${id}`)
+                .subscribe((data : Etiquette) => {this.etiquettes.push(data)});
+              }
               this.dateLimite = new Date(this.tache.dateLimite);
               // Formater la date selon le modèle "JJ-MM-AA"
               const formattedDate = this.dateLimite.toLocaleDateString(
@@ -90,6 +100,10 @@ export class TacheComponent  implements AfterViewChecked {
       this.textareaNom.nativeElement.focus();
     }
   }
+
+  getContrastColor(bgColor) {
+    return `rgb(80, 80, 80)`;
+}
 
 
 showMiniUserProfile(membre: any,  event: MouseEvent) {
@@ -206,7 +220,7 @@ editNom(){
     
   }
   updateTache(){
-  this.taskSubscription = this.observableService
+    this.taskSubscription = this.observableService
         .getObservableTask()
         .subscribe((response) => {
           this.http

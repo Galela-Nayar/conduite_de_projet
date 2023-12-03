@@ -59,6 +59,7 @@ export class ModeAffichageComponent {
         {responseType: 'text'}).subscribe((data: string) => {
           if (data.toString().startsWith('ok')) {
             this.projectService.notifyProject();
+            this.projectService.notifyTask();
           }
         });
 

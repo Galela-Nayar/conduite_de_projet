@@ -1,7 +1,6 @@
 package backend.cp.controller;
 
 import backend.cp.dto.UtilisateurDto;
-import backend.cp.modele.Notification;
 import backend.cp.modele.Utilisateur;
 import backend.cp.service.UtilisateurService;
 
@@ -77,7 +76,9 @@ public class UtilisateurController {
 
     @GetMapping("/projects")
     public List<String> projects(@RequestParam String id){
+        if(id != null)
         return utilisateurService.getUtilisateur(id).getListProjet();
+        return null;
     }
 
     @GetMapping("/add-projet")

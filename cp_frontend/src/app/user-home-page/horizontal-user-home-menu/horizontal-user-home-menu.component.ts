@@ -10,21 +10,24 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-horizontal-user-home-menu',
   templateUrl: './horizontal-user-home-menu.component.html',
-  styleUrls: ['./horizontal-user-home-menu.component.css']
+  styleUrls: ['./horizontal-user-home-menu.component.css'],
 })
 export class HorizontalUserHomeMenuComponent {
   id!: string;
   user!: Utilisateur;
   imageSrc!: any;
-  notifications!: Notification[]
+  notifications!: Notification[];
   notificationSubscription!: Subscription;
 
-  constructor(private http: HttpClient, private sanitizer: DomSanitizer, private route: ActivatedRoute,
+  constructor(
+    private http: HttpClient,
+    private sanitizer: DomSanitizer,
+    private route: ActivatedRoute,
     private observableService: ObservableService,
     private observerService: ObservableService,
 
-    private cd: ChangeDetectorRef,) {}
-
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -32,44 +35,58 @@ export class HorizontalUserHomeMenuComponent {
       this.id = id;
     }
     this.notificationSubscription = this.observableService
-        .getObservableTask()
-        .subscribe((response) => {
-          this.http.get<Utilisateur>(`http://localhost:8080/utilisateurs/user?id=${this.id}`).subscribe(
-            (data: Utilisateur)=>{
-              this.user = data;
-              let objectURL = 'data:image/jpeg;base64,' + this.user['logo_utilisateur'];
-              this.imageSrc = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-              this.notificationSubscription = this.observableService
+      .getObservableTask()
+      .subscribe((response) => {
+        this.http
+          .get<Utilisateur>(
+            `http://localhost:8080/utilisateurs/user?id=${this.id}`
+          )
+          .subscribe((data: Utilisateur) => {
+            this.user = data;
+            let objectURL =
+              'data:image/jpeg;base64,' + this.user['logo_utilisateur'];
+            this.imageSrc = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+            this.notificationSubscription = this.observableService
               .getObservableTask()
               .subscribe((response) => {
-                this.http.get<Notification[]>(`http://localhost:8080/notifications/notifications?userId=${this.id}`).subscribe(
-                (data: Notification[])=>{
-                  this.notifications = data
-                })
-              })
-          })
-        
-    })
+                this.http
+                  .get<Notification[]>(
+                    `http://localhost:8080/notifications/notifications?userId=${this.id}`
+                  )
+                  .subscribe((data: Notification[]) => {
+                    if(data != null)
+                      this.notifications = data;
+                  });
+              });
+          });
+      });
   }
 
-  deleteNotification(notifId: String){
-    this.http.get(`http://localhost:8080/utilisateurs/deleteNotification?userId=${this.id}&notificationId=${notifId}`, {responseType: 'text'}).subscribe(
-      (data: String)=>{
+  deleteNotification(notifId: String) {
+    this.http
+      .get(
+        `http://localhost:8080/utilisateurs/deleteNotification?userId=${this.id}&notificationId=${notifId}`,
+        { responseType: 'text' }
+      )
+      .subscribe((data: String) => {
         this.updateNotification();
         this.observerService.notifyTask();
-        this.cd.detectChanges()
-    })
+        this.cd.detectChanges();
+      });
   }
 
-  updateNotification(){
+  updateNotification() {
     this.notificationSubscription = this.observableService
-    .getObservableTask()
-    .subscribe((response) => {
-      this.http.get<Notification[]>(`http://localhost:8080/notifications/notifications?userId=${this.id}`).subscribe(
-      (data: Notification[])=>{
-        this.notifications = data
-      })
-    })
+      .getObservableTask()
+      .subscribe((response) => {
+        this.http
+          .get<Notification[]>(
+            `http://localhost:8080/notifications/notifications?userId=${this.id}`
+          )
+          .subscribe((data: Notification[]) => {
+            if(data != null)
+            this.notifications = data;
+          });
+      });
   }
-
 }

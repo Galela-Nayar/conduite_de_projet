@@ -1,5 +1,6 @@
 package backend.cp.service;
 
+import backend.cp.modele.Commentaire;
 import backend.cp.modele.Notification;
 import backend.cp.modele.Projet;
 import backend.cp.modele.Tache;
@@ -10,6 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,8 +33,25 @@ public class TacheService {
         UtilisateurService utilisateurService = context.getBean(UtilisateurService.class);
         SectionService sectionService = context.getBean(SectionService.class);
         ProjetService projetService = context.getBean(ProjetService.class);
+        CommentaireService commentaireService = context.getBean(CommentaireService.class);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = formatter.format(new Date());
         Tache tache = new Tache(nom);
+        
+        Commentaire comentaire = new Commentaire(id, new Date(), 
+        utilisateurService.getUtilisateur(id).getUserName() +
+         " à créer la tâche le " +
+        formattedDate +
+         " à " +
+        LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + "."
+        , tache.getId());
+
+        commentaireService.save(comentaire);
+
+        tache.addCommentaire(comentaire.getId());
+
         tacheRepository.save(tache);
+
         Notification notification = new Notification(id,projectId,sectionId,
         utilisateurService.getUtilisateur(id).getUserName() +
          " à créer la tâche " +
@@ -44,6 +63,8 @@ public class TacheService {
         "."
         , new Date());
         notificationService.sendNotification(notification);
+        
+
         return tache.getId();
     }
 
@@ -173,7 +194,7 @@ public class TacheService {
         SectionService sectionService = context.getBean(SectionService.class);
         ProjetService projetService = context.getBean(ProjetService.class);
         Tache tache = this.getTache(tacheId);
-        tache.getMembreAttribue().add(id);
+        tache.getMembreAttribue().add(collaborateurId);
         tacheRepository.save(tache);
         Notification notification = new Notification(id,projectId,sectionId,tacheId,
         utilisateurService.getUtilisateur(id).getUserName() +
@@ -228,7 +249,7 @@ public class TacheService {
         SectionService sectionService = context.getBean(SectionService.class);
         ProjetService projetService = context.getBean(ProjetService.class);
         Tache tache = this.getTache(tacheId);
-        tache.getMembreAttribue().remove(id);
+        tache.getMembreAttribue().remove(collaborateurId);
         tacheRepository.save(tache);
         Notification notification = new Notification(id,projectId,sectionId,tacheId,
         utilisateurService.getUtilisateur(id).getUserName() +
@@ -304,6 +325,36 @@ public class TacheService {
     public void removeTacheSimple(String tache_id) {
         Tache tache = this.getTache(tache_id);
         this.tacheRepository.delete(tache);
+    }
+
+    public void addEtiquette(String idTache, String idEtiquette)
+    {
+        Tache sc = this.getTache(idTache);
+        if(!sc.getEtiquettes().contains(idEtiquette))
+        {
+            sc.getEtiquettes().add(idEtiquette);
+            this.tacheRepository.save(sc);
+        }
+    }
+
+    public void removeEtiquette(String idTache, String idEtiquette)
+    {
+        Tache sc = this.getTache(idTache);
+        sc.getEtiquettes().remove(idEtiquette);
+        this.tacheRepository.save(sc);
+    }
+
+    public Commentaire[] commentaires(String id) {
+        CommentaireService commentaireService = context.getBean(CommentaireService.class);
+        Tache tache = getTache(id);
+        List<Commentaire> commentaires = new ArrayList<>();
+        for (String commentaireId : tache.getCommentaires()) {
+                commentaires.add(commentaireService.commentaire(commentaireId));
+        }
+        System.out.println("Commentaires : \n" + commentaires);
+        Commentaire[] commentairesArray = new Commentaire[commentaires.size()];
+        commentairesArray = commentaires.toArray(commentairesArray);
+        return commentairesArray;
     }
 
     // Autres méthodes de service pour la gestion des tâches

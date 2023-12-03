@@ -1,24 +1,72 @@
 <div class="container">
-    <div class="table ">
-            <div class="table-row">
-                <div class="cell" style="margin-top: -15px;" *ngIf="!isEditingNom" (dblclick)="editNom()">
-                        <strong style="font-size: 1.80em;">{{section?.nom}}</strong>
-                    </div>
-                    <div class="cell" *ngIf="isEditingNom">
-                        <textarea style="text-align: center; outline: none; background-color: rgb(75, 75, 75); border: 2px solid rgb(46, 46, 46); padding: 0px; margin: 0px;" #textareaNom *ngIf="isEditingNom" [(ngModel)]="section.nom" (blur)="updateTaskNom()" (input)="adjustTextareaNom($event)" ></textarea>
-                    </div>
-                <div class="cell">Assignée</div>
-                <div class="cell">Statut</div>
-                <div class="cell">Priorité</div>
-                <div class="cell">Estimation</div>
-                <div class="cell">Date de Création</div>
-                <div class="cell">Date limite</div>
-            </div>
+  <div class="table">
+    <div class="table-row">
+      <div
+        class="cell"
+        style="margin-top: -15px"
+        *ngIf="!isEditingNom"
+        (dblclick)="editNom()"
+      >
+        <strong style="cursor: pointer; font-size: 1.8em">{{ section?.nom }}</strong>
+      </div>
+      <div class="cell" *ngIf="isEditingNom">
+        <textarea
+          style="
+            text-align: center;
+            outline: none;
+            background-color: rgb(75, 75, 75);
+            border: 2px solid rgb(46, 46, 46);
+            padding: 0px;
+            margin: 0px;
+          "
+          #textareaNom
+          *ngIf="isEditingNom"
+          [(ngModel)]="section.nom"
+          (blur)="updateTaskNom()"
+          (input)="adjustTextareaNom($event)"
+        ></textarea>
+      </div>
+      <div class="cell">Assignée</div>
+      <div class="cell">Statut</div>
+      <div class="cell">Priorité</div>
+      <div class="cell">Estimation</div>
+      <div class="cell">Date de Création</div>
+      <div class="cell">Date limite</div>
     </div>
-    <div class="table2 ">
-        <div cdkDropList (cdkDropListDropped)="drop($event)">
-            <div style="margin: 0px; padding: 0px;" class="table-row2" cdkDrag *ngFor="let tache of tasks">
-                    <app-tache-scrum style="margin: 0px; padding: 0px;" [id]="id" [tacheId]="tache" [sectionId]="sectionId" [projetId]="projetId"></app-tache-scrum>
-            </div>
-        </div>
-</div> 
+  </div>
+  <div class="table2">
+    <div
+      cdkDropList
+      [cdkDropListData]="tasks"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <div
+        style="margin: 0px; padding: 0px"
+        class="table-row2"
+        cdkDrag
+        *ngFor="let tache of tasks"
+      >
+        <app-tache-scrum
+          style="margin: 0px; padding: 0px"
+          [id]="id"
+          [tacheId]="tache"
+          [sectionId]="sectionId"
+          [projetId]="projetId"
+        ></app-tache-scrum>
+      </div>
+      <div *ngIf="!tasks || tasks.length === 0" style="display: block; justify-items: center; align-items: center; width: 100%">
+        <div style="height: 10px;"></div>
+      </div>
+    </div>
+    <div  *ngIf="droitUtilisateurActuel != 'Visiteur'">
+      <div style="display: flex; align-items: center; justify-content: center; width: 100%;">
+        <button
+          (click)="onPlusClick($event)"
+          style="border: none;"
+          class="app-section table-style nvl_tache"
+          *ngIf="id"
+        >Nouvelle tâche</button>
+      </div>
+    </div>
+  </div>
+</div>

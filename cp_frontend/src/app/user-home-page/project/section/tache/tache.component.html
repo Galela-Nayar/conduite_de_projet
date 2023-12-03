@@ -2,27 +2,41 @@
   <mat-card-content>
     <div class="section-entry">
       <div class="container" *ngIf="tache">
-        <div class="header">
-          <div *ngFor="let membre of membreAttribue" class="miniature" style="position: relative;"  (mouseenter)="showMiniUserProfile(membre, $event)" (mouseleave)="hideMiniUserProfile()">
-            <img [src]="'http://localhost:8080/utilisateurs/img?id=' + membre['id']" class="miniature" />
+        <div matRipple class="header">
+          <div matRipple class="couleur">
+            <div matRipple *ngFor="let etiquette of etiquettes" class="etiquette">
+                <div matRipple style="height: 14px; min-width: 30px; font-size: 10px; border-radius: 15px; margin: 2px; padding: 2px 2px 2px 2px;" 
+                [style.color]="getContrastColor(etiquette.color)" 
+                [style.background-color]="etiquette.color"(click)="etiquetteNom = !etiquetteNom">
+                  <p matRipple style="margin: 0 2px;" *ngIf="etiquetteNom">
+                    {{ etiquette.name }}
+                  </p>
+                </div>
+            </div>
           </div>
-          <app-mini-user-profil [style.top.px]="mouseY" [style.left.px]="mouseX" style="position: fixed; z-index: 1;"
-             *ngIf="showMiniUserProfil" [membre]="selectedMembre" [id]="id"
-                       (mouseenter)="cancelHideMiniUserProfile()" 
-                       (mouseleave)="hideMiniUserProfile()"></app-mini-user-profil>
-          <div style="display: flex; justify-content: flex-end; text-align: right; width: 100%;" *ngIf="this.tache.dateLimite">
-            Prévu le: {{ this.tache.dateLimite | date : "dd-MM-yyyy" }}
-            <mat-icon style="margin-right: 8px; margin-left: 8px; margin-top: -5px; padding-bottom: 10px;" (click)="openDialogDate($event)">calendar_today</mat-icon>
+          <div class="date-limite" *ngIf="this.tache.dateLimite">
+            <span style="margin: 0px; padding-top: 8px;">{{ this.tache.dateLimite | date : "dd-MM-yyyy" }}</span>
+            <mat-icon style="font-size: 18px; padding: 6px 3px 0px 3px; " (click)="openDialogDate($event)">calendar_today</mat-icon>
           </div>
         </div>
         <div class="contenu" *ngIf="!isEditingNom" (dblclick)="editNom()">
             <p>{{ tache.nom }}</p>
+            <div class="header">
+              <div *ngFor="let membre of membreAttribue" class="miniature " style="position: relative;"  (mouseenter)="showMiniUserProfile(membre, $event)" (mouseleave)="hideMiniUserProfile()">
+                <img [src]="'http://localhost:8080/utilisateurs/img?id=' + membre['id']" class="miniature" />
+              </div>
+            </div>
+            <app-mini-user-profil [style.top.px]="mouseY" [style.left.px]="mouseX" style="position: fixed; z-index: 1;"
+               *ngIf="showMiniUserProfil" [membre]="selectedMembre" [id]="id"
+                         (mouseenter)="cancelHideMiniUserProfile()" 
+                         (mouseleave)="hideMiniUserProfile()"></app-mini-user-profil>
+            
         </div>
         <div class="contenu" *ngIf="isEditingNom">
             <textarea style="text-align: center;" #textareaNom *ngIf="isEditingNom" [(ngModel)]="tache.nom" (blur)="updateTaskNom()" (input)="adjustTextareaNom($event)" ></textarea>
         </div>
-        <div class="settings-and-checkbox"  *ngIf="droitUtilisateurActuel != 'Visiteur'">
-          <mat-icon (click)="openDialogSetting($event)">edit</mat-icon>
+        <div class="settings-and-checkbox" style="justify-content: center; align-items: center; text-align: center;"  *ngIf="droitUtilisateurActuel != 'Visiteur'">
+          <mat-icon style="font-size: 18px; padding: 6px 3px 0px 3px; " matRipple (click)="openDialogSetting($event)">edit</mat-icon>
           <mat-checkbox
             [checked]="tache.statutTerminer"
             (change)="swapStatut()"

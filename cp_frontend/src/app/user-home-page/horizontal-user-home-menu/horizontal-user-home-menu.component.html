@@ -13,9 +13,14 @@
       <div class="nombre_notif">{{notifications?.length}}</div>
       <mat-icon class="dropbtn" >forum</mat-icon>
       <div class="dropdown-content my-dropdown">
-        <div class="entry" *ngFor="let notification of notifications">
-          <p class="dropdown-entry">{{notification['message']}}</p>
-          <mat-icon (click)="deleteNotification(notification['id'])" style="color: gray; width: 10%;">close</mat-icon>
+        <div class="entry" *ngIf="notifications == undefined || notifications == null || notifications.length == 0">
+          <p class="dropdown-entry" >Nothing to display</p>
+        </div>
+        <div *ngIf="notifications != undefined && notifications != null && notifications.length != 0">
+          <div class="entry" *ngFor="let notification of notifications">
+            <p class="dropdown-entry">{{notification['message']}}</p>
+            <mat-icon (click)="deleteNotification(notification['id'])" style="color: gray; width: 10%;">close</mat-icon>
+          </div>
         </div>
       </div>
     </div>
