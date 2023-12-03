@@ -3,6 +3,7 @@
     border: 1px solid black;
     border-radius: 10px;
     margin: 10px;
+    width: 350px;
     box-sizing: border-box; 
     color: lightgray;
     background-color: rgb(61, 61, 61);
@@ -22,9 +23,41 @@
     font-weight: bold;
 }
 
-.header {
-    text-align: center;
+.color-palette {
     display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+    margin-top: 10px;
 }
+
+.color-box {
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.color-box.selected {
+    border: 2px solid black;
+}
+
+.bouttonSupprimer {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.bouttonAjouter {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+h1 {
+    text-align: center;
+}
+
+.label-container {
+    height: 200px;
+    overflow-y: auto;
+  }

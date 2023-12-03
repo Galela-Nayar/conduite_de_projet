@@ -39,4 +39,10 @@ public class EtiquetteController {
         etiquetteService.deleteEtiquette(id);
         return ResponseEntity.ok("ok");
     }
+
+    @GetMapping("/update")
+    public ResponseEntity<String> updateEtiquette(@RequestParam String id)
+    {
+        return ResponseEntity.ok("ok");
+    }
 }

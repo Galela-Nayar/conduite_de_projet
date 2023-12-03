@@ -27,6 +27,10 @@ export class EtiquetteSettingsComponent {
   public touchUi = false;
   colorCtr: FormControl = new FormControl(null);
 
+  isEditingEtiquette: boolean[] = [];
+  isEditing: boolean = false;
+
+
   constructor(
     private router: Router,
     private http: HttpClient,
@@ -39,6 +43,8 @@ export class EtiquetteSettingsComponent {
 
   ngOnInit() {
     this.projectId = this.data;
+    this.listeEtiquette = [];
+    this.isEditingEtiquette = [];
     this.http
       .get<Project>(
         `http://localhost:8080/projets/projet?id=${this.projectId}`
@@ -50,6 +56,7 @@ export class EtiquetteSettingsComponent {
         {
           this.http.get<Etiquette>(`http://localhost:8080/etiquettes/getById?id=${id}`)
           .subscribe((data : Etiquette) => {this.listeEtiquette.push(data)});
+          this.isEditingEtiquette.push(false);
         }
         console.log(this.listeEtiquette);
     });
@@ -58,6 +65,8 @@ export class EtiquetteSettingsComponent {
   updateWindow()
   {
     this.listeEtiquette = [];
+    this.isEditingEtiquette = [];
+    this.nom = "";
     this.http
       .get<Project>(
         `http://localhost:8080/projets/projet?id=${this.projectId}`
@@ -69,6 +78,7 @@ export class EtiquetteSettingsComponent {
         {
           this.http.get<Etiquette>(`http://localhost:8080/etiquettes/getById?id=${id}`)
           .subscribe((data : Etiquette) => {this.listeEtiquette.push(data)});
+          this.isEditingEtiquette.push(false);
         }
         console.log(this.listeEtiquette);
       });
@@ -114,6 +124,25 @@ export class EtiquetteSettingsComponent {
     );
     this.plus();
   }
+
+  editer(i: number)
+  {
+    this.isEditingEtiquette[i] = true;
+    this.isEditing = true;
+  }
+
+  annulerEdition(i: number)
+  {
+    this.isEditingEtiquette[i] = false;
+    this.isEditing = false;
+  }
+
+  updateEtiquette()
+  {
+
+  }
+
+
 
   supprimer(etiquette : Etiquette)
   {

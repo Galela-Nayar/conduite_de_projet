@@ -1,5 +1,6 @@
 package backend.cp.controller;
 
+import backend.cp.modele.Commentaire;
 import backend.cp.modele.Tache;
 import backend.cp.modele.Utilisateur;
 import backend.cp.service.TacheService;
@@ -27,6 +28,11 @@ public class TacheController {
     public String createTache(@RequestParam String id, @RequestParam String projectId, @RequestParam String sectionId, @RequestParam String name) {
         String reponse = tacheService.createTache(id, projectId, sectionId, name);
         return reponse;
+    }
+
+        @GetMapping("/commentaires")
+    public Commentaire[] commentaires(@RequestParam String id){
+        return tacheService.commentaires(id);
     }
 
     @GetMapping("/setDateLimite")

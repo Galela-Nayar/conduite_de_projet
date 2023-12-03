@@ -2,17 +2,34 @@
   <h1> Étiquettes </h1>
   
   <div class="label-container">
-    <div class="form-row" *ngFor="let etiquette of listeEtiquette" [style.background-color]="etiquette.color">
+    <div class="form-row" *ngFor="let etiquette of listeEtiquette; let i = index" [style.background-color]="etiquette.color">
       <a>{{ etiquette.name }}</a>
-      <button class="bouttonSupprimer" (click)="supprimer(etiquette)">x</button>
+      <mat-icon style="font-size: 18px; padding: 6px 3px 0px 3px; " matRipple (click)="editer(i)" *ngIf="!isEditing">edit</mat-icon>
+      <button *ngIf="!isEditing" class="bouttonSupprimer" (click)="supprimer(etiquette)">x</button>
+      
+      <!--Menu d'edition de l'etiquette-->
+      <div *ngIf="isEditingEtiquette[i]">
+        <label>Nom <input [(ngModel)]="nom" type="text"></label>
+        <mat-card class="zone zone-picker">
+          <mat-form-field>
+              <input matInput [ngxMatColorPicker]="picker" [formControl]="colorCtr" [disabled]="disabled">
+              <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
+              <ngx-mat-color-picker #picker [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
+          </mat-form-field>
+
+          <button class="bouttonAjouter" (click)="updateEtiquette()">Editer</button>
+          <button class="bouttonAjouter" (click)="annulerEdition(i)">Annuler</button>
+        </mat-card>
+      </div>
+
     </div>
   </div>
   
-  <div class="form-row">
+  <div class="form-row" *ngIf="!isEditing">
     <button class="bouttonAjouter" (click)="plus()">{{symbole}}</button>
   </div>
   
-  <div *ngIf="isCreating">
+  <div *ngIf="isCreating && ! isEditing">
       <label>Nom <input [(ngModel)]="nom" type="text"></label>
 
       <mat-card class="zone zone-picker">
