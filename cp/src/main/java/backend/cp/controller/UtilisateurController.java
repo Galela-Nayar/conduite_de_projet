@@ -150,6 +150,13 @@ public class UtilisateurController {
         return ResponseEntity.ok("ok");
     }
 
+    @GetMapping("/set_password")
+    public ResponseEntity<String> setPassword(@RequestParam String id, @RequestParam String param){
+        if(utilisateurService.getUtilisateur(id) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("utilisateur not found");
+        utilisateurService.setPassword(id, param);
+        return ResponseEntity.ok("ok");
+    }
+
     @GetMapping("/set_bio")
     public ResponseEntity<String> setBio(@RequestParam String id, @RequestParam String param){
         if(utilisateurService.getUtilisateur(id) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("utilisateur not found");

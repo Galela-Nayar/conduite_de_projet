@@ -116,6 +116,12 @@ public class UtilisateurService {
         saveUtilisateur(user);
     }
 
+    public void setPassword(String id, String param) {
+        Utilisateur user = this.getUtilisateur(id);
+        user.setPassword(param);
+        saveUtilisateur(user);
+    }
+
     public void setBio(String id, String param) {
         Utilisateur user = this.getUtilisateur(id);
         user.setBio(param);

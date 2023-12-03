@@ -64,6 +64,7 @@ import { EtiquetteTachesComponent } from './user-home-page/etiquette-settings/et
 import { UserProfilComponent } from './user-home-page/user-profil/user-profil.component';
 import { MiniUserProfilComponent } from './user-home-page/mini-user-profil/mini-user-profil.component';
 import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } from '@angular-material-components/color-picker';
+import { PasswordChangeDialogComponent } from './user-home-page/user-profil/password-change-dialog/password-change-dialog.component';
 //import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
@@ -101,6 +102,7 @@ import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } fro
     EtiquetteTachesComponent,
     UserProfilComponent,
     MiniUserProfilComponent,
+    PasswordChangeDialogComponent,
   ],
   imports: [
     BrowserModule,
