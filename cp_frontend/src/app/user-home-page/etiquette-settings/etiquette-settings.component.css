@@ -53,6 +53,12 @@
     cursor: pointer;
 }
 
+.bouttonAnnuler {
+    background-color: red;
+    color: white;
+    cursor: pointer;
+}
+
 h1 {
     text-align: center;
 }

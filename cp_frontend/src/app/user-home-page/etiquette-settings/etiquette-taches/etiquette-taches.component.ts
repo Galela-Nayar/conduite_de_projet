@@ -51,12 +51,13 @@ export class EtiquetteTachesComponent {
     this.http
       .get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`)
       .subscribe((tacheData: Tache) => {
-        this.tache = tacheData;
         this.http
         .get<Project>(
           `http://localhost:8080/projets/projet?id=${this.projectId}`
         )
         .subscribe((projectData: Project) => {
+          this.tache = tacheData;
+          this.project = projectData;
           const listeId = projectData.etiquettes;
           for(let id of listeId)
           {
@@ -112,19 +113,37 @@ export class EtiquetteTachesComponent {
   {
     this.listeEtiquette = [];
     this.http
-      .get<Project>(
-        `http://localhost:8080/projets/projet?id=${this.projectId}`
-      )
-      .subscribe((projectData: Project) => {
-        this.project = projectData;
-        const listeId = projectData.etiquettes;
-        for(let id of listeId)
-        {
-          this.http.get<Etiquette>(`http://localhost:8080/etiquettes/getById?id=${id}`)
-          .subscribe((data : Etiquette) => {this.listeEtiquette.push(data)});
-        }
-        console.log(this.listeEtiquette);
+      .get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`)
+      .subscribe((tacheData: Tache) => {
+        this.http
+        .get<Project>(
+          `http://localhost:8080/projets/projet?id=${this.projectId}`
+        )
+        .subscribe((projectData: Project) => {
+          this.tache = tacheData;
+          this.project = projectData;
+          const listeId = projectData.etiquettes;
+          for(let id of listeId)
+          {
+            this.http.get<Etiquette>(`http://localhost:8080/etiquettes/getById?id=${id}`)
+            .subscribe((data : Etiquette) => {this.listeEtiquette.push(data)});
+          }
+          console.log(this.listeEtiquette);
+          this.listeChecked = [];
+          for(let i = 0; i < listeId.length; i++)
+          {
+            if(tacheData.etiquettes.includes(listeId[i]))
+            {
+              this.listeChecked.push(true);
+            }
+            else
+            {
+              this.listeChecked.push(false);
+            }
+          }
+          console.log("check : " + this.listeChecked);
       });
+    });
   }
 
   plus()

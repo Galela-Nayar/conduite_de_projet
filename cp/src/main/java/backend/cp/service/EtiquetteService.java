@@ -31,13 +31,11 @@ public class EtiquetteService {
         return etiq.getId();
     }
 
-    public Etiquette updateEtiquette(String id, Etiquette updatedEtiquette) {
-        if (etiquetteRepository.existsById(id)) {
-            updatedEtiquette.setId(id);
-            return etiquetteRepository.save(updatedEtiquette);
-        } else {
-            throw new IllegalArgumentException("Etiquette with ID " + id + " does not exist.");
-        }
+    public void updateEtiquette(String id, String nom, String couleur) {
+        Etiquette etiq = getEtiquette(id);
+        etiq.setName(nom);
+        etiq.setColor(couleur);
+        etiquetteRepository.save(etiq);
     }
 
     public void deleteEtiquette(String id) {

@@ -41,8 +41,10 @@ public class EtiquetteController {
     }
 
     @GetMapping("/update")
-    public ResponseEntity<String> updateEtiquette(@RequestParam String id)
+    public ResponseEntity<String> updateEtiquette(@RequestParam String id, @RequestParam String nom, @RequestParam String couleur)
     {
+        String couleurCor = "#" + couleur;
+        etiquetteService.updateEtiquette(id, nom, couleurCor);
         return ResponseEntity.ok("ok");
     }
 }

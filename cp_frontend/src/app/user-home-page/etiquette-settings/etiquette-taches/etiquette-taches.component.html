@@ -6,7 +6,6 @@
             <div class="form-row" *ngFor="let etiquette of listeEtiquette; let i = index" style="background-color: {{ etiquette.color }}">
                 <input type="checkbox" [(ngModel)]="listeChecked[i]" (change)="changerEtiquette(etiquette.id, $event)">
                 <a>{{ etiquette.name }}</a>
-                <button (click)="editer(etiquette)">x</button>
                 <button class="bouttonSupprimer" (click)="supprimer(etiquette)">x</button>
             </div>
         </div>

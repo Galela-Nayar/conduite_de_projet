@@ -4,12 +4,12 @@
   <div class="label-container">
     <div class="form-row" *ngFor="let etiquette of listeEtiquette; let i = index" [style.background-color]="etiquette.color">
       <a>{{ etiquette.name }}</a>
-      <mat-icon style="font-size: 18px; padding: 6px 3px 0px 3px; " matRipple (click)="editer(i)" *ngIf="!isEditing">edit</mat-icon>
+      <mat-icon style="font-size: 18px; padding: 6px 3px 0px 3px; " matRipple (click)="editer(i, etiquette.name)" *ngIf="!isEditing">edit</mat-icon>
       <button *ngIf="!isEditing" class="bouttonSupprimer" (click)="supprimer(etiquette)">x</button>
       
       <!--Menu d'edition de l'etiquette-->
       <div *ngIf="isEditingEtiquette[i]">
-        <label>Nom <input [(ngModel)]="nom" type="text"></label>
+        <label>Nom <input [(ngModel)]="nomEdit" type="text"></label>
         <mat-card class="zone zone-picker">
           <mat-form-field>
               <input matInput [ngxMatColorPicker]="picker" [formControl]="colorCtr" [disabled]="disabled">
@@ -17,8 +17,8 @@
               <ngx-mat-color-picker #picker [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
           </mat-form-field>
 
-          <button class="bouttonAjouter" (click)="updateEtiquette()">Editer</button>
-          <button class="bouttonAjouter" (click)="annulerEdition(i)">Annuler</button>
+          <button class="bouttonAjouter" (click)="updateEtiquette(etiquette, i)">Editer</button>
+          <button class="bouttonAnnuler" (click)="annulerEdition(i)">Annuler</button>
         </mat-card>
       </div>
 

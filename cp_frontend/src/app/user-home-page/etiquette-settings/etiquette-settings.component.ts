@@ -29,6 +29,7 @@ export class EtiquetteSettingsComponent {
 
   isEditingEtiquette: boolean[] = [];
   isEditing: boolean = false;
+  nomEdit: string = "";
 
 
   constructor(
@@ -100,7 +101,6 @@ export class EtiquetteSettingsComponent {
   ajouter()
   {
     let ajouterCouleur = this.colorCtr.value.hex;
-    console.log(`http://localhost:8080/etiquettes/create?nom=${this.nom}&couleur=${ajouterCouleur}`);
     
     this.http.get(`http://localhost:8080/etiquettes/create?nom=${this.nom}&couleur=${ajouterCouleur}`, {responseType: 'text'}).subscribe(
       (etiquetteId: String) => {
@@ -125,8 +125,9 @@ export class EtiquetteSettingsComponent {
     this.plus();
   }
 
-  editer(i: number)
+  editer(i: number, name:string)
   {
+    this.nomEdit = name;
     this.isEditingEtiquette[i] = true;
     this.isEditing = true;
   }
@@ -137,9 +138,23 @@ export class EtiquetteSettingsComponent {
     this.isEditing = false;
   }
 
-  updateEtiquette()
+  updateEtiquette(etiquette: Etiquette, i: number)
   {
-
+    let ajouterCouleur = this.colorCtr.value.hex;
+    
+    this.http.get(`http://localhost:8080/etiquettes/update?id=${etiquette.id}&nom=${this.nomEdit}&couleur=${ajouterCouleur}`, {responseType: 'text'}).subscribe(
+      (response: String) => {
+        console.log("cest good")
+        this.observableService.notifyProject();
+        this.observableService.notifyTask();
+        this.isEditingEtiquette[i] = false;
+        this.isEditing = false;
+        this.updateWindow();
+      },
+      (error) => {
+        console.error('Erreur lors de l update de l etiquette', error);
+      }
+    );
   }
 
 
