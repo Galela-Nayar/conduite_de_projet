@@ -5,24 +5,29 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-log-app',
   templateUrl: './log-app.component.html',
-  styleUrls: ['./log-app.component.scss']
+  styleUrls: ['./log-app.component.scss'],
 })
 export class LogAppComponent implements AfterViewInit {
   user = {
-    nom: "",
-    prenom: "",
-    email: "",
-    password: ""
+    nom: '',
+    prenom: '',
+    email: '',
+    password: '',
   };
 
   email!: string;
   password!: string;
   // Gestion de input du formulaire
-  constructor(private http: HttpClient, private el: ElementRef, private renderer: Renderer2) { }
+  constructor(
+    private http: HttpClient,
+    private el: ElementRef,
+    private renderer: Renderer2
+  ) {}
 
   ngAfterViewInit() {
-
-    const formElements = document.querySelectorAll('.form input, .form textarea');
+    const formElements = document.querySelectorAll(
+      '.form input, .form textarea'
+    );
 
     formElements.forEach((element: Element) => {
       const inputElement = element as HTMLInputElement;
@@ -53,7 +58,6 @@ export class LogAppComponent implements AfterViewInit {
       }
     });
 
-
     // Gestion de navivation du formulaire (login & signup)
     const tabs = this.el.nativeElement.querySelectorAll('.tab a');
 
@@ -66,7 +70,9 @@ export class LogAppComponent implements AfterViewInit {
 
         const parentElementParent = parentElement.parentElement;
         if (parentElementParent) {
-          Array.from(parentElementParent.children as HTMLCollectionOf<HTMLElement>).forEach((child: HTMLElement) => {
+          Array.from(
+            parentElementParent.children as HTMLCollectionOf<HTMLElement>
+          ).forEach((child: HTMLElement) => {
             if (child !== parentElement) {
               child.classList.remove('active');
             }
@@ -74,7 +80,8 @@ export class LogAppComponent implements AfterViewInit {
         }
 
         const target = tab.getAttribute('href');
-        const tabContents = this.el.nativeElement.querySelectorAll('.tab-content > div');
+        const tabContents =
+          this.el.nativeElement.querySelectorAll('.tab-content > div');
 
         tabContents.forEach((tabContent: HTMLElement) => {
           if ('#' + tabContent.id !== target) {
@@ -85,7 +92,6 @@ export class LogAppComponent implements AfterViewInit {
         });
       });
     });
-
   }
 
   onSubmitForm(form: NgForm) {
@@ -94,14 +100,16 @@ export class LogAppComponent implements AfterViewInit {
 
     const headers = { 'Content-Type': 'application/json' };
 
-    this.http.post('http://localhost:8080/utilisateurs/create', this.user).subscribe(
-      (response) => {
-        console.log('Utilisateur créé avec succès', response);
-      },
-      (error) => {
-        console.error("Erreur lors de la création de l'utilisateur", error);
-      }
-    );
+    this.http
+      .post('http://localhost:8080/utilisateurs/create', this.user)
+      .subscribe(
+        (response) => {
+          console.log('Utilisateur créé avec succès', response);
+        },
+        (error) => {
+          console.error("Erreur lors de la création de l'utilisateur", error);
+        }
+      );
   }
 
   onSubmit(form: NgForm) {
@@ -110,29 +118,31 @@ export class LogAppComponent implements AfterViewInit {
     console.log(form.value); // Affichage du contenu du formulaire sur la console
     const headers = { 'Content-Type': 'application/json' };
 
-    this.http.get(`http://localhost:8080/utilisateurs/login?email=${this.email}&password=${this.password}`).subscribe(
-      (response) => {
+    this.http
+      .get(
+        `http://localhost:8080/utilisateurs/login?email=${this.email}&password=${this.password}`
+      )
+      .subscribe((response) => {
         if (response.valueOf() == 1) {
-          document.body.innerHTML = "";
-          const test_connexion_utilisateur = document.createElement("h1");
-          test_connexion_utilisateur.textContent = "wéééééé il existe et peut se connecté"
+          document.body.innerHTML = '';
+          const test_connexion_utilisateur = document.createElement('h1');
+          test_connexion_utilisateur.textContent =
+            'wéééééé il existe et peut se connecté';
           document.body.appendChild(test_connexion_utilisateur);
-        }
-        else if (response.valueOf() == 2) {
-          document.body.innerHTML = "";
-          const test_connexion_utilisateur = document.createElement("h1");
-          test_connexion_utilisateur.textContent = "existe mais mdp ou emaail incorrect"
+        } else if (response.valueOf() == 2) {
+          document.body.innerHTML = '';
+          const test_connexion_utilisateur = document.createElement('h1');
+          test_connexion_utilisateur.textContent =
+            'existe mais mdp ou emaail incorrect';
           document.body.appendChild(test_connexion_utilisateur);
-          console.log("existe mais mdp ou emaail incorrect");
-        }
-        else {
-          document.body.innerHTML = "";
-          const test_connexion_utilisateur = document.createElement("h1");
-          test_connexion_utilisateur.textContent = "l'ulisateur n'existe pas"
+          console.log('existe mais mdp ou emaail incorrect');
+        } else {
+          document.body.innerHTML = '';
+          const test_connexion_utilisateur = document.createElement('h1');
+          test_connexion_utilisateur.textContent = "l'ulisateur n'existe pas";
           document.body.appendChild(test_connexion_utilisateur);
           console.log("l'ulisateur n'existe pas");
         }
-      },
-    );
+      });
   }
 }
