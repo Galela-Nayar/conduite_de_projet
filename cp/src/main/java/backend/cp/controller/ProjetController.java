@@ -1,14 +1,19 @@
 package backend.cp.controller;
 
 import backend.cp.dto.ProjetDto;
+import backend.cp.modele.Equipe;
 import backend.cp.modele.Projet;
 import backend.cp.modele.Section;
+import backend.cp.modele.Tache;
 import backend.cp.modele.Utilisateur;
+import backend.cp.repository.ProjetRepository;
+import backend.cp.repository.TacheRepository;
 import backend.cp.service.ProjetService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +32,12 @@ public class ProjetController {
 
     @Autowired
     private ProjetService projetService;
+
+    @Autowired
+    private ProjetRepository projetRepository;
+
+    @Autowired
+    private TacheRepository tacheRepository;
 
     public ProjetController(ProjetService projetService) {
         this.projetService = projetService;
@@ -130,4 +141,14 @@ public class ProjetController {
         projetService.changerDroits(id, droit, index);
         return ResponseEntity.ok("ok");
     }
+
+    @GetMapping("/project-names")
+    public List<Projet> gatAllProjects() {
+        return projetRepository.findAll();
+    }
+
+    @GetMapping("/project/{id}/taches")
+    public List<Tache> getProjectTaches(@PathVariable String id) {
+    return tacheRepository.findByProjectId(id);
+}
 }

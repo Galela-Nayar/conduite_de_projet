@@ -2,12 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Equipe } from './equipe.model';
+import Project from 'src/interface/Project';
+import Tache from 'src/interface/Tache';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EquipeService {
   private apiUrl = 'http://localhost:8080/equipe';
+  private apiUrlProjet = 'http://localhost:8080/projets';
+
 
   constructor(private http: HttpClient) {}
 
@@ -18,6 +22,16 @@ export class EquipeService {
   getAllEquipes(): Observable<any> {
     return this.http.get<any>(this.apiUrl);
   }
+
+  // Projet
+  getProjets(): Observable<Project[]> {
+    return this.http.get<Project[]>(this.apiUrlProjet);
+  }
+
+  getAllProjets(): Observable<any> {
+    return this.http.get<any>(this.apiUrlProjet);
+  }
+
 
   createEquipe(equipe: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, equipe);
@@ -35,4 +49,19 @@ export class EquipeService {
     return this.http.delete<any>(`${this.apiUrl}/${equipeId}`);
   }
   
+
+
+  getAllProjectNames(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrlProjet}/project-names`);
+  }
+
+  getProjectTaches(id: string): Observable<Tache[]> {
+    return this.http.get<Tache[]>(`${this.apiUrl}/project/${id}/taches`);
+  }
+
+  assignTacheToEquipe(tacheId: string, equipeId: string): Observable<any> {
+    return this.http.put(`${this.apiUrlProjet}/tache/${tacheId}/equipe`, { equipeId });
+  }
+
+
 }

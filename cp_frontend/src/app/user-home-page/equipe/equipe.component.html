@@ -43,6 +43,38 @@
 </div>
 </fieldset>
 
+
+<!-- Projet et taches  -->
+<fieldset>
+  <legend>Attrubution équipe à une tache</legend>
+  <label for="onProjectSelected">Nom Projet</label>
+<select (change)="onProjectSelected($event)">
+    <option *ngFor="let nom of projectNames" [value]="nom">
+    {{nom}}
+  </option>
+</select>
+
+<label for="selectedProjectTaches">Liste Taches</label>
+<select *ngIf="selectedProjectTaches">
+  <option *ngFor="let tache of selectedProjectTaches" [value]="tache.id">
+    {{tache.nom}}
+  </option>
+</select>
+<!--  ----   -->
+<label for="onEquipeSelected">Choix d'équipe</label>
+<select (change)="onEquipeSelected(selectedTacheId, $event)">
+  <option *ngFor="let equipe of equipes" [value]="equipe.id">
+    {{equipe.name}}
+  </option>
+</select>
+<br>
+<button mat-menu-item (click)="onEquipeSelected(selectedTacheId, $event)">
+  <mat-icon class="mat-icon-white">group</mat-icon>
+  <span>Attribuer la tâche à l'équipee</span>
+</button>
+</fieldset>
+
+
 <fieldset>
   <legend>Liste des equipes et Collaborateurs</legend>
 <div *ngFor="let equipe of equipes">
@@ -80,11 +112,13 @@
   </div>
 </fieldset>
 
+<!-- Navigation -->
+<!-- 
 <button mat-menu-item (click)="navigateEquipeToTache()">
   <mat-icon class="mat-icon-white">group</mat-icon>
   <span>Attribuer equipe à tache</span>
 </button>
-
+-->
 
 <!--
 <fieldset >

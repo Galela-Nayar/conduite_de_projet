@@ -6,6 +6,7 @@ import Utilisateur from 'src/interface/Utilisateur';
 import { HttpClient } from '@angular/common/http';
 import { EquipeTacheComponent } from './equipe-tache/equipe-tache.component';
 import { Router } from '@angular/router';
+import Tache from 'src/interface/Tache';
 
 @Component({
   selector: 'app-equipe',
@@ -14,8 +15,13 @@ import { Router } from '@angular/router';
 })
 export class EquipeComponent implements OnInit {
   equipes!: any[];
+  projets!: any[];
+
   newEquipeName: string = '';
   selectedEquipeId: string = '';
+  selectedProjetId: string = '';
+  selectedTacheId: string; 
+
   collaborateurEmail: string = '';
   dialog: any;
   projetId: any;
@@ -27,6 +33,8 @@ export class EquipeComponent implements OnInit {
   liste2!: Utilisateur[];
   utilisateurService!: any;
   noms!: string[];
+  projectNames: string[];
+  selectedProjectTaches: Tache[];
 
 
   constructor(private equipeService: EquipeService, private http: HttpClient, private router: Router  ) {}
@@ -52,6 +60,25 @@ export class EquipeComponent implements OnInit {
       }
     );
   }
+
+  onProjectSelected(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    const projectId = selectElement.value;
+    this.equipeService.getProjectTaches(projectId).subscribe(taches => {
+        this.selectedProjectTaches = taches;
+    });
+}
+
+onEquipeSelected(tacheId: string, event: Event) {
+  const selectElement = event.target as HTMLSelectElement;
+  const equipeId = selectElement.value;
+  this.equipeService.assignTacheToEquipe(tacheId, equipeId).subscribe(() => {
+    console.log('La tâche a été assignée avec succès à l\'équipe');
+    // handle success
+    this.loadEquipes();
+  });
+}
+
 
   createEquipe() {
     if (this.newEquipeName) {
