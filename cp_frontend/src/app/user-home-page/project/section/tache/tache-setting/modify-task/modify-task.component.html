@@ -1,6 +1,7 @@
 <div *ngIf="tache" class="container">
   <div class="header">
-    <span style="
+    <span (click)="editingNom = true" style="
+            cursor: pointer;
             color: white;
             font-size: 1.7em;
             font-weight: 1800;
@@ -9,12 +10,55 @@
           {{ tache.nom }}
         </span>
   </div>
-  <div *ngIf="editingNom">
-    <form [formGroup]="sectionForm" (ngSubmit)="saveNomChanges()">
+  <div class="edditNameContainer" *ngIf="editingNom">
+    <form class="edditName" [formGroup]="sectionForm" (ngSubmit)="saveNomChanges()">
       <input formControlName="nom" placeholder="Nouveau nom" />
       <div class="button-container">
         <button type="submit">Enregistrer</button>
         <button type="button" (click)="cancelEditing()">Annuler</button>
+      </div>
+    </form>
+  </div>
+  <hr>
+  <div class="header">
+    Priorite :
+    <span (click)="editingPriorite = true" style="
+            cursor: pointer;
+            color: white;
+            font-size: 1.7em;
+            font-weight: 1800;
+            text-align: center;
+          ">
+          {{ tache.priorite }}
+        </span>
+  </div>
+  <div class="edditNameContainer" *ngIf="editingPriorite">
+    <form class="edditName" [formGroup]="prioriteForm" (ngSubmit)="savePrioriteChanges()">
+      <input formControlName="priorite" placeholder="Nouveau chiffre" />
+      <div class="button-container">
+        <button type="submit">Enregistrer</button>
+        <button type="button" (click)="cancelEditingPriorite()">Annuler</button>
+      </div>
+    </form>
+  </div>
+  <hr>
+  <div class="header">Pondération :
+    <span (click)="editingPonderation = true" style="
+            cursor: pointer;
+            color: white;
+            font-size: 1.7em;
+            font-weight: 1800;
+            text-align: center;
+          ">
+          {{ tache.ponderation }}
+        </span>
+  </div>
+  <div class="edditNameContainer" *ngIf="editingPonderation">
+    <form class="edditName" [formGroup]="ponderationForm" (ngSubmit)="savePonderationChanges()">
+      <input formControlName="ponderation" placeholder="Nouveau chiffre" />
+      <div class="button-container">
+        <button type="submit">Enregistrer</button>
+        <button type="button" (click)="cancelEditingPonderation()">Annuler</button>
       </div>
     </form>
   </div>

@@ -52,21 +52,18 @@ h3 {
 }
 
 .form-group {
-  width: 100%;
-  margin-bottom: 20px;
 }
 
 input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
+  min-height: 20px;
+  width: 250px;
   border: 1px solid #ddd;
   border-radius: 5px;
+  padding: 5px;
 }
 
 button {
   padding: 10px 15px;
-  margin-right: 10px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -85,7 +82,6 @@ button[type="submit"] {
 button[type="button"], .table-cell-button-style button {
   background-color: #f44336;
   color: #fff;
-  margin: auto;
 }
 
 .edit-button {
@@ -97,6 +93,21 @@ button[type="button"], .table-cell-button-style button {
   width: 20px;
   height: 20px;
   margin: 0px 5px;
+}
+
+.editName{
+  position: relative;
+  height: auto;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.edditNameContainer{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
 .table-style {
@@ -128,6 +139,12 @@ button[type="button"], .table-cell-button-style button {
 .table-cell-button-style {
   height: 100%;
   width: 20%;
+}
+
+.button-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 hr {

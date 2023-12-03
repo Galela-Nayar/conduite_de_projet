@@ -26,7 +26,11 @@ export class ModifyTaskComponent implements OnInit {
   id!: String
   tacheId!: String;
   editingNom: boolean = false;
+  editingPriorite: boolean = false;
+  editingPonderation: boolean = false;
   sectionForm!: FormGroup;
+  prioriteForm!: FormGroup;
+  ponderationForm!: FormGroup;
   membreAttribue!: Utilisateur[];
   membreRestant!: Utilisateur[];
   commentaires!: Commentaire[];
@@ -63,9 +67,15 @@ export class ModifyTaskComponent implements OnInit {
       .get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`)
       .subscribe((tacheData: Tache) => {
         this.tache = tacheData;
-        console.log('tache teerminer : ' + this.tache.statutTerminer);
+        console.log('tache terminer : ' + this.tache.statutTerminer);
         this.sectionForm = this.fb.group({
-          nom: ['', Validators.required],
+          nom: ['', Validators.required]
+        })
+        this.prioriteForm = this.fb.group({
+          priorite: ['', Validators.required]
+        })
+        this.ponderationForm = this.fb.group({
+          ponderation: ['', Validators.required]
         });
 
         this.http
@@ -115,6 +125,9 @@ export class ModifyTaskComponent implements OnInit {
     this.http.post(`http://localhost:8080/commentaires/add_commentaire`,commentaire, { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).subscribe(
       response => {
         this.comment = ""
+        this.observerService.notifyTask();
+        this.updateProject()
+
       }
     )
   }
@@ -178,7 +191,7 @@ export class ModifyTaskComponent implements OnInit {
         )
         .subscribe((response) => {
           this.tache.nom = this.sectionForm.value.nom;
-          this.observerService.notifyTask();
+          this.updateProject()
           this.cancelEditing();
         });
       this.cancelEditing();
@@ -187,6 +200,58 @@ export class ModifyTaskComponent implements OnInit {
 
   cancelEditing(): void {
     this.editingNom = false;
+  }
+
+  startEditingPriorite(): void {
+    this.editingPriorite = true;
+    this.prioriteForm.patchValue({ priorite: this.tache.priorite });
+  }
+
+  savePrioriteChanges(): void {
+    if (this.prioriteForm.valid) {
+      console.log(this.prioriteForm.value.priorite);
+      this.http
+        .put<string>(
+          `http://localhost:8080/taches/updatePriorite?id=${this.id}&projectId=${this.projectId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}&priorite=${this.prioriteForm.value.priorite}`,
+          {}
+        )
+        .subscribe((response) => {
+          this.tache.priorite = this.prioriteForm.value.priorite;
+          this.updateProject()
+          this.cancelEditingPriorite();
+        });
+      this.cancelEditingPriorite();
+    }
+  }
+
+  cancelEditingPriorite(): void {
+    this.editingPriorite = false;
+  }
+
+  startEditingPonderation(): void {
+    this.editingPonderation = true;
+    this.ponderationForm.patchValue({ ponderation: this.tache.ponderation });
+  }
+
+  savePonderationChanges(): void {
+    if (this.ponderationForm.valid) {
+      console.log(this.ponderationForm.value.ponderation);
+      this.http
+        .put<string>(
+          `http://localhost:8080/taches/updatePonderation?id=${this.id}&projectId=${this.projectId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}&ponderation=${this.ponderationForm.value.ponderation}`,
+          {}
+        )
+        .subscribe((response) => {
+          this.tache.ponderation = this.ponderationForm.value.ponderation;
+          this.updateProject()
+          this.cancelEditingPonderation();
+        });
+      this.cancelEditingPonderation();
+    }
+  }
+
+  cancelEditingPonderation(): void {
+    this.editingPonderation = false;
   }
 
   swapStatut() {
