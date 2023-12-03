@@ -2,8 +2,11 @@ package backend.cp.service;
 
 import backend.cp.modele.Projet;
 import backend.cp.modele.Section;
+import backend.cp.modele.Tache;
 import backend.cp.modele.Utilisateur;
 import backend.cp.repository.ProjetRepository;
+import backend.cp.repository.TacheRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -209,5 +212,22 @@ private final ApplicationContext applicationContext;
             projet.setDroitUtilisateur(nouveauxDroits);
             this.projetRepository.save(projet);
         }
+    }
+
+    public Tache[] getProjectTaches(String id) {
+        SectionService sectionService = applicationContext.getBean(SectionService.class);
+        TacheService tacheService = applicationContext.getBean(TacheService.class);
+        Projet projet = projetRepository.findById(id).get();
+        List<String> sectionsId = projet.getSections();
+        List<Tache> taches = new ArrayList<Tache>();
+        for (String sectionId : sectionsId) {
+            Section section = sectionService.getSection(sectionId);
+            for (String tacheId : section.getTaches()) {
+                taches.add(tacheService.getTache(tacheId));
+            }
+        }
+        Tache[] tachesArray = new Tache[taches.size()];
+        tachesArray = taches.toArray(tachesArray);
+        return tachesArray;
     }
 }

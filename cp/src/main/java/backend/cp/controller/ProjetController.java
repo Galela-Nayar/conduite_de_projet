@@ -1,27 +1,19 @@
 package backend.cp.controller;
 
 import backend.cp.dto.ProjetDto;
-import backend.cp.modele.Equipe;
 import backend.cp.modele.Projet;
-import backend.cp.modele.Section;
 import backend.cp.modele.Tache;
 import backend.cp.modele.Utilisateur;
-import backend.cp.repository.ProjetRepository;
-import backend.cp.repository.TacheRepository;
 import backend.cp.service.ProjetService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 
 @CrossOrigin(origins = "http://localhost:4200") // replace with the domain your frontend is running on
@@ -32,12 +24,6 @@ public class ProjetController {
 
     @Autowired
     private ProjetService projetService;
-
-    @Autowired
-    private ProjetRepository projetRepository;
-
-    @Autowired
-    private TacheRepository tacheRepository;
 
     public ProjetController(ProjetService projetService) {
         this.projetService = projetService;
@@ -143,12 +129,12 @@ public class ProjetController {
     }
 
     @GetMapping("/project-names")
-    public List<Projet> gatAllProjects() {
-        return projetRepository.findAll();
+    public List<Projet> getAllProjects() {
+        return projetService.getAllProjets();
     }
 
     @GetMapping("/project/{id}/taches")
-    public List<Tache> getProjectTaches(@PathVariable String id) {
-    return tacheRepository.findByProjectId(id);
+    public Tache[] getProjectTaches(@PathVariable String id) {
+    return projetService.getProjectTaches(id);
 }
 }
