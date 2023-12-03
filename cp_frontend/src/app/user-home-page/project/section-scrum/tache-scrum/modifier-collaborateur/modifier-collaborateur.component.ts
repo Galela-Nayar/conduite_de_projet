@@ -17,6 +17,7 @@ export class ModifierCollaborateurComponent {
   tacheId!: String
   id!: String
   projetId!: String
+  sectionId!: String
   tache!: Tache
   liste1: Utilisateur[]
   liste2: Utilisateur[]
@@ -30,8 +31,9 @@ export class ModifierCollaborateurComponent {
      private cd: ChangeDetectorRef,
      public dialog: MatDialog,
      public dialogRef: MatDialogRef<ModifierCollaborateurComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: { projetId: String,id: String, tacheId: String }
+        @Inject(MAT_DIALOG_DATA) public data: {sectionId: String, projetId: String,id: String, tacheId: String }
     ) {
+        this.sectionId = data.sectionId
         this.projetId = data.projetId;
         this.id = data.id;
         this.tacheId = data.tacheId;
@@ -57,7 +59,7 @@ export class ModifierCollaborateurComponent {
 
   removeFromList1(membre: Utilisateur) {
     
-    this.http.get(`http://localhost:8080/taches/remove_collaborateur?id=${this.tacheId}&userId=${membre.id}`, {responseType:'text'}).subscribe((data: String) => {
+    this.http.get(`http://localhost:8080/taches/remove_collaborateur?id=${this.id}&projectId=${this.projetId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}&collaborateurId=${membre.id}`, {responseType:'text'}).subscribe((data: String) => {
     
       const index = this.liste1.indexOf(membre);
       if (index > -1) {
@@ -72,7 +74,7 @@ export class ModifierCollaborateurComponent {
 }
 
 addToList1(membre: Utilisateur) {
-  this.http.get(`http://localhost:8080/taches/add_collaborateur?id=${this.tacheId}&userId=${membre.id}`, {responseType:'text'}).subscribe((data: String) => {
+  this.http.get(`http://localhost:8080/taches/add_collaborateur?id=${this.id}&projectId=${this.projetId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}&collaborateurId=${membre.id}`, {responseType:'text'}).subscribe((data: String) => {
     
     const index = this.liste2.indexOf(membre);
     if (index > -1) {

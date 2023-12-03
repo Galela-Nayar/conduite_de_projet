@@ -1,11 +1,13 @@
 <div class="create-section-container">
-  <h1>Créer une section</h1>
+  <div style="text-align: center;">
+    <button class="close-button" (click)="onNoClick()">X</button>
+    <h1>Créer une section</h1>
+  </div>
   <div class="form-row">
     <a>Nom de la section</a>
     <input [(ngModel)]="nom" type="text" placeholder="Nom section...">
   </div>
   <div class="form-row">
     <button (click)="onButtonClick()">Créer</button>
-    <button class="close-button" (click)="onNoClick()">X</button>
   </div>
 </div>

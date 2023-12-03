@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 import {
   CdkDragDrop,
   CdkDropList,
+  CdkDropListGroup,
   CdkDrag,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';

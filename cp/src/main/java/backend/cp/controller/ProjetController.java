@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-
 @CrossOrigin(origins = "http://localhost:4200") // replace with the domain your frontend is running on
 @RestController
 @RequestMapping("/projets")

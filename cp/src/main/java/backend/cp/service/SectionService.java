@@ -1,13 +1,10 @@
 package backend.cp.service;
-
-import backend.cp.modele.Projet;
 import backend.cp.modele.Section;
 import backend.cp.repository.SectionRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -66,7 +63,7 @@ public class SectionService {
     public void removeSection(String id) {
         Section section = this.getSection(id);
         for (String tache_id : section.getTaches()) {
-            this.tacheService.removeTache(tache_id);
+            this.tacheService.removeTacheSimple(tache_id);
         }
         System.out.println("service section : " + section);
         this.sectionRepository.delete(section);
@@ -91,5 +88,15 @@ public class SectionService {
     {
         Section sc = this.getSection(id);
         return sc.getNom();
+    }
+
+    public String searchSectionofTask(String idTache){
+        List<Section> sections = getAllSections();
+        for (Section section : sections) {
+            for (String id : section.getTaches()) {
+                if(id.equals(idTache)) return section.getId();
+            }
+        }
+        return "pas trouvé";
     }
 }

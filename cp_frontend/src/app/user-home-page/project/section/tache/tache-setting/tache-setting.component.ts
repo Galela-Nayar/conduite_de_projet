@@ -6,6 +6,7 @@ import { ObservableService } from 'src/app/observable/observable-projet.service'
 import { ModifyTaskComponent } from './modify-task/modify-task.component';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ModifierCollaborateurComponent } from '../../../section-scrum/tache-scrum/modifier-collaborateur/modifier-collaborateur.component';
+import { EtiquetteTachesComponent } from 'src/app/user-home-page/etiquette-settings/etiquette-taches/etiquette-taches.component';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class TacheSettingComponent {
 
 
   supprimer(){
-    this.http.get(`http://localhost:8080/taches/removeTache?id=${this.tacheId}`,{responseType: 'text'}).subscribe((response:String)=>{
+    this.http.get(`http://localhost:8080/taches/removeTache?id=${this.id}&projectId=${this.projetId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}`,{responseType: 'text'}).subscribe((response:String)=>{
       console.log("supprimer tache : " + response)
       this.http.get(`http://localhost:8080/sections/removeTache?id=${this.sectionId}&tacheId=${this.tacheId}`,{responseType: 'text'}).subscribe((response2: String)=>{
         console.log("supprimer tache dans section: " + response)
@@ -46,7 +47,7 @@ export class TacheSettingComponent {
   modifier(){
     console.log("projectID data : " + this.projetId)
     const dialogRef = this.dialog.open(ModifyTaskComponent, {
-      data: {data1:this.tacheId,data2:this.projetId},
+      data: {id: this.id, projectId: this.projetId, sectionId: this.sectionId, tacheId: this.tacheId}
     });
   
     dialogRef.afterClosed().subscribe(() => {
@@ -70,10 +71,19 @@ export class TacheSettingComponent {
   
     const dialogRef = this.dialog.open(ModifierCollaborateurComponent, {
       position: { left: `${left}px`, top: `${top}px` },
-      data: { projetId: this.projetId,id: this.id, tacheId: this.tacheId, sectionId: this.sectionId }
+      data: {  sectionId: this.sectionId , projetId: this.projetId,id: this.id, tacheId: this.tacheId}
+    });
+  }
+
+  openDialogEtiquette(event: MouseEvent): void {
+    console.log("projectID data : " + this.projetId)
+    const dialogRef = this.dialog.open(EtiquetteTachesComponent, {
+      data: {data1:this.tacheId,data2:this.projetId},
     });
   
-    
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('Le dialogue a été fermé');
+    });
   }
   
 }

@@ -4,7 +4,7 @@
             color: white;
             font-size: 1.7em;
             font-weight: 1800;
-            text-align: left;
+            text-align: center;
           ">
           {{ tache.nom }}
         </span>
@@ -18,7 +18,7 @@
       </div>
     </form>
   </div>
-  <hr />
+  <hr>
   <div>
     Passer le statut de cette tâche à terminé
     <mat-checkbox
@@ -26,7 +26,7 @@
       (change)="swapStatut()"
     ></mat-checkbox>
   </div>
-  <div>
+  <div style="justify-content: center; display: flex;">
     <p>
       <mat-form-field>
         Date de fin:
@@ -41,5 +41,23 @@
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
     </p>
+  </div>
+  <hr />
+  Commentaires :
+  <div style=" display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+    <textarea autoresize [(ngModel)]="comment" type="text" style="display: flex; flex-grow: 1; white-space: pre-wrap; outline:2px solid gray; border-radius: 10px; resize: none; background-color: rgb(82, 82, 82); flex-grow: 1; margin-right: 10px; border-color: rgb(51, 51, 51); color: lightgray;" placeholder="Ajouter un commentaire..."></textarea>
+    <button (disabled)="comment.length == 0" (click)="envoyer()" style="height: 38px;">Envoyer</button>
+  </div>
+  <div class="commentaire">
+    <div style="display: flex; flex-direction: row;" *ngFor="let commentaire of commentaires">
+      <div style="display: flex; position: relative; width: 10%; align-items: center;" (mouseenter)="showMiniUserProfile(commentaire.createurId, $event)" (mouseleave)="hideMiniUserProfile()">
+        <img class="miniature "    [src]="'http://localhost:8080/utilisateurs/img?id=' + commentaire['createurId']">
+      </div>
+       <p style="display: flex; width: 90%;">{{ commentaire['message'] }}</p>
+    </div>
+    <app-mini-user-profil [style.top.px]="mouseY" [style.left.px]="mouseX" style="position: fixed; z-index: 1;"
+               *ngIf="showMiniUserProfil" [membre]="selectedMembre" [id]="id"
+                         (mouseenter)="cancelHideMiniUserProfile()" 
+                         (mouseleave)="hideMiniUserProfile()"></app-mini-user-profil>
   </div>
 </div>

@@ -11,14 +11,11 @@ import { SectionComponent } from './user-home-page/project/section/section.compo
 import { TacheComponent } from './user-home-page/project/section/tache/tache.component';
 import { CreateTaskComponent } from './user-home-page/create-task/create-task.component';
 import { LogInComponent } from './home-page/log-in/log-in.component';
-import { SectionSettingComponent } from './user-home-page/project/section/section-setting/section-setting.component';
-import { TacheSettingComponent } from './user-home-page/project/section/tache/tache-setting/tache-setting.component';
-import { UserSettingComponent } from './user-home-page/user-setting/user-setting.component';
-import { ProjectSettingComponent } from './user-home-page/lateral-user-home-menu/project-setting/project-setting.component';
 import { ProjetParametresComponent } from './user-home-page/projet-parametres/projet-parametres.component';
 import { EquipeComponent } from './user-home-page/equipe/equipe.component';
 import { TacheScrumComponent } from './user-home-page/project/section-scrum/tache-scrum/tache-scrum.component';
 import { AgendaComponent } from './user-home-page/agenda/agenda.component';
+import { UserProfilComponent } from './user-home-page/user-profil/user-profil.component';
 import { EquipeTacheComponent } from './user-home-page/equipe/equipe-tache/equipe-tache.component';
 
 const routes: Routes = [
@@ -37,7 +34,7 @@ const routes: Routes = [
     children: [
       { path: 'home', component: UserHomeComponent },
       { path: 'create-project', component: CreateProjectComponent },
-      { path: 'user-setting', component: UserSettingComponent },
+      { path: 'user-profil/:idUser', component: UserProfilComponent},
       { path: 'parametres-project/:projectId', component: ProjetParametresComponent, },
       { path: 'agenda', component: AgendaComponent },
       { path: 'equipe', component: EquipeComponent},

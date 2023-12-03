@@ -25,7 +25,8 @@ public class Tache {
     private Date dateLimite;
     private Date dateCreation;
     private List<String> description;
-    private List<Etiquette> etiquettes;
+    private List<String> etiquettes;
+    private List<String> commentaires;
  
     public Tache(String nom) {
         this.id  = UUID.randomUUID().toString();
@@ -37,10 +38,15 @@ public class Tache {
         this.statutTerminer = false;
         this.description = new ArrayList<>();
         this.etiquettes = new ArrayList<>();
+        this.commentaires = new ArrayList<>();
         this.dateCreation = java.sql.Date.valueOf(LocalDate.now());
     }
 
     public void swapStatut() {
         this.statutTerminer = !statutTerminer;
+    }
+
+    public void addCommentaire(String commentaireId) {
+        commentaires.add(commentaireId);
     }
 }

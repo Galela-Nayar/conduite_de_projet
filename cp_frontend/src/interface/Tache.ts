@@ -9,7 +9,7 @@ export interface Tache {
     membreAttribue: string[];
     dateCreation: Date;
     [key:string]:any;
-    
+    etiquettes: any[];
   }
 
 export default Tache;

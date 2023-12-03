@@ -1,15 +1,14 @@
-import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Subscription, mergeMap } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ObservableService } from 'src/app/observable/observable-projet.service';
 import Tache from 'src/interface/Tache';
 import Utilisateur from 'src/interface/Utilisateur';
-import { ModifierCollaborateurComponent } from '../../section-scrum/tache-scrum/modifier-collaborateur/modifier-collaborateur.component';
 import { TacheSettingComponent } from './tache-setting/tache-setting.component';
 import { DateLimiteCalendrierComponent } from '../../section-scrum/tache-scrum/date-limite-calendrier/date-limite-calendrier.component';
+import Etiquette from 'src/interface/Etiquette';
 
 @Component({
   selector: 'app-tache',
@@ -33,6 +32,11 @@ export class TacheComponent  implements AfterViewChecked {
   membreAttribue!: any[]
   droitUtilisateurActuel: string = '';
   isEditingNom = false;
+  etiquettes: any[] = [];
+  showMiniUserProfil: boolean = false;
+  selectedMembre: Utilisateur
+  hideTimeout = 1000
+  etiquetteNom = false
 
   constructor(
     private http: HttpClient,
@@ -51,7 +55,14 @@ export class TacheComponent  implements AfterViewChecked {
           this.http
             .get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`)
             .subscribe((response) => {
+              this.etiquettes = [];
               this.tache = response;
+              const listIdEtiquette = this.tache.etiquettes
+              for(let id of listIdEtiquette)
+              {
+                this.http.get<Etiquette>(`http://localhost:8080/etiquettes/getById?id=${id}`)
+                .subscribe((data : Etiquette) => {this.etiquettes.push(data)});
+              }
               this.dateLimite = new Date(this.tache.dateLimite);
               // Formater la date selon le modèle "JJ-MM-AA"
               const formattedDate = this.dateLimite.toLocaleDateString(
@@ -89,6 +100,32 @@ export class TacheComponent  implements AfterViewChecked {
       this.textareaNom.nativeElement.focus();
     }
   }
+
+  getContrastColor(bgColor) {
+    return `rgb(80, 80, 80)`;
+}
+
+
+showMiniUserProfile(membre: any,  event: MouseEvent) {
+  this.hideTimeout = setTimeout(() => {
+    
+    const rect = (event.target as Element).getBoundingClientRect();
+    this.mouseX = rect.left;
+    this.mouseY = rect.bottom;
+    this.selectedMembre = membre;
+    this.showMiniUserProfil = true;
+  }, 700); // adjust the delay as needed
+}
+
+hideMiniUserProfile() {
+  this.hideTimeout = setTimeout(() => {
+    this.showMiniUserProfil = false;
+  }, 150); // adjust the delay as needed
+}
+
+cancelHideMiniUserProfile() {
+  clearTimeout(this.hideTimeout);
+}
 
   adjustTextareaNom(event?: any) {
     let target = event ? event.target : this.textareaNom.nativeElement;
@@ -141,7 +178,7 @@ openDialogDate(event: MouseEvent): void {
 
   const dialogRef = this.dialog.open(DateLimiteCalendrierComponent, {
     position: { left: `${left}px`, top: `${top}px` },
-    data: { date: this.tache?.dateLimite || new Date(), tacheId: this.tacheId }
+    data: {id: this.id, projectId: this.projetId, sectionId: this.sectionId, tacheId: this.tacheId, date: this.tache?.dateLimite || new Date()}
   });
 
   dialogRef.afterClosed().subscribe(result => {
@@ -154,7 +191,7 @@ openDialogDate(event: MouseEvent): void {
 }
 
 updateTaskNom() {
-  this.http.put(`http://localhost:8080/taches/updateNom?id=${this.tacheId}&nom=${this.tache.nom}`, {responseType:"text"}).
+  this.http.put(`http://localhost:8080/taches/updateNom?id=${this.id}&projectId=${this.projetId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}&nom=${this.tache.nom}`, {responseType:"text"}).
   subscribe((tacheData) => {
     this.updateTache();
     this.isEditingNom = false;
@@ -163,8 +200,13 @@ updateTaskNom() {
   })
 }
 
+editNom(){
+  if(this.droitUtilisateurActuel != "Visiteur") this.isEditingNom = true
+  else this.isEditingNom = false
+}
+
   swapStatut(){
-    this.http.get(`http://localhost:8080/taches/swapStatut?id=${this.tacheId}`, {responseType:"text"}).
+    this.http.get(`http://localhost:8080/taches/swapStatut?id=${this.id}&projectId=${this.projetId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}`, {responseType:"text"}).
     subscribe((tacheData) => {
       if(this.tache?.statutTerminer) this.tache.statutTerminer = false;
       if(this.tache?.statutTerminer == false) this.tache.statutTerminer = true;
@@ -178,7 +220,7 @@ updateTaskNom() {
     
   }
   updateTache(){
-  this.taskSubscription = this.observableService
+    this.taskSubscription = this.observableService
         .getObservableTask()
         .subscribe((response) => {
           this.http

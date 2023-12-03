@@ -9,15 +9,21 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./date-limite-calendrier.component.css']
 })
 export class DateLimiteCalendrierComponent {
-  @Input()tacheId!: String
+  tacheId!: String
   selectedDate: Date;
+  id!: String
+  sectionId!: String
+  projectId!: String
 
   constructor(private http: HttpClient,
     public dialogRef: MatDialogRef<DateLimiteCalendrierComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {date: Date, tacheId: String}
+    @Inject(MAT_DIALOG_DATA) public data: {id: String, projectId: String, sectionId: String, tacheId: String, date: Date}
   ) {
-    this.selectedDate = data.date;
+    this.id = data.id;
+    this.sectionId = data.sectionId;
     this.tacheId = data.tacheId;
+    this.projectId = data.projectId;
+    this.selectedDate = data.date;
   }
 
   save(): void {
@@ -28,7 +34,7 @@ export class DateLimiteCalendrierComponent {
   updateDate() {
     // Convert the date to the format your backend expects
   
-    this.http.get(`http://localhost:8080/taches/setDateLimite?tacheId=${this.tacheId}&dateLimite=${formatDate(this.selectedDate, 'dd-MM-yyyy', 'en-US')}`, {responseType: 'text',})
+    this.http.get(`http://localhost:8080/taches/setDateLimite?id=${this.id}&projectId=${this.projectId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}&&dateLimite=${formatDate(this.selectedDate, 'dd-MM-yyyy', 'en-US')}`, {responseType: 'text',})
       .subscribe((response) => {
         // Handle response
       });

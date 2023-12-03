@@ -5,7 +5,6 @@ import backend.cp.modele.Section;
 import backend.cp.modele.Tache;
 import backend.cp.modele.Utilisateur;
 import backend.cp.repository.ProjetRepository;
-import backend.cp.repository.TacheRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -210,6 +209,27 @@ private final ApplicationContext applicationContext;
             nouveauxDroits = projet.getDroitUtilisateur();
             nouveauxDroits.replace(index, droit);
             projet.setDroitUtilisateur(nouveauxDroits);
+            this.projetRepository.save(projet);
+        }
+    }
+
+    public void addEtiquette(String idProjet, String idEtiquette)
+    {
+        Projet projet = this.getProject(idProjet);
+        if (projet != null) {
+            if(!projet.getEtiquettes().contains(idEtiquette))
+            {
+                projet.addEtiquette(idEtiquette);
+                this.projetRepository.save(projet);
+            }
+        }
+    }
+
+    public void removeEtiquette(String idProjet, String idEtiquette)
+    {
+        Projet projet = this.getProject(idProjet);
+        if (projet != null) {
+            projet.removeEtiquette(idEtiquette);
             this.projetRepository.save(projet);
         }
     }

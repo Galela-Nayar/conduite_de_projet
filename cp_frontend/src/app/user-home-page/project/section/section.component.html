@@ -1,28 +1,32 @@
 <div class="table-style">
     <div class="app-section section-entry">
-        <div class="task-content" *ngIf="!isEditingNom" (dblclick)="isEditingNom = true"> 
-          <p> {{section?.nom}} </p>
+        <div class="task-content" *ngIf="!isEditingNom" > 
+          <p style="width: max-content;" (dblclick)="editNom()"> {{section?.nom}} </p>
         </div>
-        <div class="cell" *ngIf="isEditingNom">
-            <textarea style="text-align: center; outline: none; background-color: rgb(75, 75, 75); border: 2px solid rgb(46, 46, 46); padding: 0px; margin: 0px;" #textareaNom *ngIf="isEditingNom" [(ngModel)]="section.nom" (blur)="updateTaskNom()" (input)="adjustTextareaNom($event)" ></textarea>
+        <div class="cell" style=" padding-top: 15px;" *ngIf="isEditingNom">
+            <textarea style="color: lightgray; font-size: 15px; resize: none; text-align: left; outline: none; background-color: rgb(75, 75, 75); border: 2px solid rgb(46, 46, 46); padding: -10px 0px 0px 0px; margin: 0px 0px 0px 0px;" #textareaNom *ngIf="isEditingNom" [(ngModel)]="section.nom" (blur)="updateTaskNom()" (input)="adjustTextareaNom($event)" ></textarea>
         </div>  
         <div *ngIf="droitUtilisateurActuel != 'Visiteur'">
-          <app-section-setting [mouseX]="mouseX" [mouseY]="mouseY" [sectionId]="sectionId"></app-section-setting>
+          <app-section-setting [mouseX]="mouseX" [mouseY]="mouseY" [id]="id" [projectId]="projetId" [sectionId]="sectionId"></app-section-setting>
         </div>
     </div>
     <hr>
 
-  <div cdkDropList (cdkDropListDropped)="drop($event)">
+  <div cdkDropList [cdkDropListData]="tasks" (cdkDropListDropped)="drop($event)">
     <div style="display: block; justify-items: center; align-items: center; width: 100%" cdkDrag *ngFor="let task of tasks">
       <app-tache [id]="id" [tacheId]="task" [sectionId]="sectionId" [projetId]="projetId"></app-tache>
     </div>
-    <div *ngIf="droitUtilisateurActuel != 'Visiteur'">
-      <div class="parent-container">
-        <button
-          (click)="onPlusClick($event)"
-          class="app-section table-style"
-          *ngIf="id"
-        >Nouvelle tâche</button>
-      </div>
+    <div *ngIf="!tasks || tasks.length === 0" style="display: block; justify-items: center; align-items: center; width: 100%">
+      <div style="height: 10px;"></div>
     </div>
+  </div>
+  <div  *ngIf="droitUtilisateurActuel != 'Visiteur'">
+    <div style="display: flex-end;" >
+      <button 
+        (click)="onPlusClick($event)"
+        class="app-section table-style nvtache"
+        *ngIf="id"
+      >Nouvelle tâche</button>
+    </div>
+  </div>
 </div>

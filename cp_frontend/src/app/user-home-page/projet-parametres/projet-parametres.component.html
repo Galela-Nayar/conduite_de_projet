@@ -1,53 +1,77 @@
-<div class="parent-container">
+<div class="parent-container background_content">
     <div class="container">
         <div class="section">            
             <div class="section-container" style="width: flex;">
                 <div class="header_section" style="width: 100%;">Présentation du projet</div>            
                 <div class="header" style="width: 100%;">
-                    <p><strong style="font-size: 1.5em;">{{project.nom}}</strong></p>
-                    <p>Créer par : <strong style="font-size: 1.5em;">{{createur.userName}}</strong></p>
-                    <p>Le : <strong style="font-size: 1.5em;">{{getFormattedDate(project.dateCreation)}}</strong></p>
-                    <p>Prévu pour le : <strong style="font-size: 1.5em;">{{getFormattedDate(project.dateButtoire)}}</strong></p>
+                    <p><strong style="font-size: 1.5em;">{{project?.nom}}</strong></p>
+                    <p>Créer par : <strong style="font-size: 1.5em;">{{createur?.userName}}</strong></p>
+                    <p>Le : <strong style="font-size: 1.5em;">{{getFormattedDate(project?.dateCreation)}}</strong></p>
+                    <p>Prévu pour le : <strong style="font-size: 1.5em;">{{getFormattedDate(project?.dateButtoire)}}</strong></p>
                 </div>
                 <div class="section-container" style="width: 100%;box-sizing: border-box;">
                     <div class="header_section" style="width: 100%;">Description:</div>
-                    <p style="width: 100%;">{{project.description}}</p>
+                    <p style="width: 100%;">{{project?.description}}</p>
                 </div>
                 <div class="section-container" style="width: 100%;box-sizing: border-box; ">
                     <div class="header_section" style="width: 100%;">Collaborateurs:</div>
                     <table *ngIf="droitUtilisateurActuel == 'Admin'" style="width: 50%; background-color: rgb(41, 41, 41);">
-                        <tr style=" background-color: rgb(56, 56, 56);" *ngFor="let collaborateur of listCollaborateur; let i = index">
-                            <td style="width: 80%; border: 1px solid black;">
+                        <tr style="display: flex; width: 98%; background-color: rgb(41, 41, 41);">
+                            <td style="width: 78%;">
+                                Nom d'utilisateur(Droit d'utilisation)
+                            </td>
+                            <!-- Ici On modifie les droits de l'utilisateur -->
+                            <td style="width: 20%; ">
+                                Modifier Droits
+                            </td>
+                            <td style="width: 3%;"><span></span>
+                            </td>
+                        </tr>
+                        <tr style="display: flex; width: 98%; background-color: rgb(56, 56, 56);" *ngFor="let collaborateur of listCollaborateur; let i = index">
+                            <td style="width: 76%; border: 1px solid black;">
                                 {{ collaborateur['userName'] }} ({{ droitUtilisateurs[i] }})
                             </td>
                             <!-- Ici On modifie les droits de l'utilisateur -->
-                            <td style="width: 80%; border: 1px solid black;" *ngIf="collaborateur.id != createur?.id">
-                                <select [(ngModel)]="droitUtilisateurs[i]" (ngModelChange)="changerDroit(i, droitUtilisateurs[i])"> <!-- Recupere le droit pour l'afficher -->
-                                <option *ngFor="let option of optionsDroit" [value]="option">{{ option }}</option>
-                                </select>
+                            <td style="width: 20%; border: 1px solid black;">
+                                <div  *ngIf="collaborateur.id != createur?.id">
+                                    <select [(ngModel)]="droitUtilisateurs[i]" (ngModelChange)="changerDroit(i, droitUtilisateurs[i])"> <!-- Recupere le droit pour l'afficher -->
+                                    <option *ngFor="let option of optionsDroit" [value]="option">{{ option }}</option>
+                                    </select>
+                                </div>
                             </td>
-                            <td style="width: 20%; border: 1px solid black; text-align: center;">
+                            <td style="width: 3%; border: 1px solid black; text-align: center;">
                                 <button style="background-color: red; color: white;" *ngIf="collaborateur.id != createur?.id" (click)="deleteUtilisateur(collaborateur.id)">X</button>
                             </td>
                         </tr>
-                        <tr style=" background-color: rgb(56, 56, 56);" *ngIf="addingCollaborator">          
-                            <td style="width: 80%; border: 1px solid black;"><input [(ngModel)]="nouveauCollaborateur" type="text" placeholder="Nom du collaborateur"></td>
-                            <!-- Ici on choisit le droit du nouveau utilisateur qu'on ajoute au projet-->
-                            <td style="width: 80%; border: 1px solid black;">
-                                <select [(ngModel)]="droitNouveauCollaborateur">
-                                <option *ngFor="let option of optionsDroit" [value]="option">{{ option }}</option>
-                                </select>
-                            </td>
-                            <td style="width: 20%; border: 1px solid black; text-align: center;"><button (click)="enregistrerCollaborateur(nouveauCollaborateur, droitNouveauCollaborateur)">Enregistrer</button></td>
-                        </tr>
                     </table>
                     <table *ngIf="droitUtilisateurActuel != 'Admin'" style="width: 50%; background-color: rgb(41, 41, 41);">
-                        <tr style=" background-color: rgb(56, 56, 56);" *ngFor="let collaborateur of listCollaborateur; let i = index">
-                            <td style="width: 80%; border: 1px solid black;">
+                        <tr style="display: flex; width: auto; background-color: rgb(41, 41, 41);">
+                            <td style="width: 100%;">
+                                Nom d'utilisateur(Droit d'utilisation)
+                            </td>
+                        </tr>
+                        <tr style="width: 98%; display: flex; background-color: rgb(56, 56, 56);" *ngFor="let collaborateur of listCollaborateur; let i = index">
+                            <td style="width: 100%; display: flex; border: 1px solid black;">
                                 {{ collaborateur['userName'] }} ({{ droitUtilisateurs[i] }})
                             </td>
                         </tr>
                     </table>
+                    <div *ngIf="droitUtilisateurActuel == 'Admin' && addingCollaborator" style="display: flex; flex-direction: column; width: 100%;align-items: center; justify-items: center;">
+                        <table  style="width: 50%; background-color: rgb(41, 41, 41);">
+                            <tr style="display: flex; width: 98%; background-color: rgb(41, 41, 41);" >          
+                                <td style="width: 76%; border: 1px solid black;"><input [(ngModel)]="nouveauCollaborateur" type="text" placeholder="Nom du collaborateur"></td>
+                                <!-- Ici on choisit le droit du nouveau utilisateur qu'on ajoute au projet-->
+                                <td style="width: 20%; border: 1px solid black;">
+                                    <select [(ngModel)]="droitNouveauCollaborateur">
+                                    <option *ngFor="let option of optionsDroit" [value]="option">{{ option }}</option>
+                                    </select>
+                                </td>
+                                <td style="width: 3%; border: 1px solid black; text-align: center;">
+                                    <mat-icon class="green-icon" (click)="enregistrerCollaborateur(nouveauCollaborateur, droitNouveauCollaborateur)">check</mat-icon>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                     <div class="add-collaborator-button" *ngIf="!addingCollaborator && droitUtilisateurActuel == 'Admin'">
                         <button (click)="ajoutCollaborateur()">+</button>
                         <p>Ajouter collaborateur</p>

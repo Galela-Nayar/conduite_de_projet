@@ -1,9 +1,9 @@
 <!-- lateral-user-home-menu.component.html -->
 <div>
 
-  <div *ngIf="projects_id.length > 0">
-    <p style="margin-left: 5px; color: #f2f2f2;">Projet :</p>
-    <hr style="border: none; margin-top: -10px; border-top: 1px solid; width:25%; margin-left: 5px; color: lightgray;">
+  <p style="margin-left: 5px; color: #f2f2f2;">Projet :</p>
+  <hr style="border: none; margin-top: -10px; border-top: 1px solid; width:25%; margin-left: 5px; color: lightgray;">
+  <div class="listProjet" *ngIf="projects_id.length > 0">
     <div class="project-entry" *ngFor="let project of projet">
       <div class="task-content">
         <!-- Ajout d'une div pour le contenu de la tâche -->

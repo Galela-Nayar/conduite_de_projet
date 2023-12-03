@@ -6,6 +6,7 @@ export interface Utilisateur {
     userName: string;
     email: string;
     listProjet: any[];
+    listAmis: any[];
     logo: any[];
     [key:string]:any;
   }

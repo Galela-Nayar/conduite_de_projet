@@ -4,6 +4,7 @@ import backend.cp.dto.UtilisateurDto;
 import backend.cp.modele.Utilisateur;
 import backend.cp.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -16,10 +17,12 @@ import java.util.stream.Collectors;
 public class UtilisateurService {
 
     private final UtilisateurRepository utilisateurRepository;
+    private final ApplicationContext context;
 
     @Autowired
-    public UtilisateurService(UtilisateurRepository utilisateurRepository) {
+    public UtilisateurService(UtilisateurRepository utilisateurRepository,ApplicationContext context) {
         this.utilisateurRepository = utilisateurRepository;
+        this.context = context;
     }
 
     public void createUtilisateur(
@@ -164,6 +167,45 @@ public class UtilisateurService {
 
     public Utilisateur getUtilisateurByEmail(String email) {
         return utilisateurRepository.findByEmail(email);
+    }
+
+    public void addAmi(String id, String idAmi) {
+        Utilisateur user = this.getUtilisateur(id);
+        user.addAmi(idAmi);
+        this.utilisateurRepository.save(user);
+    }
+
+    public boolean existId(String id) {
+        Utilisateur user = utilisateurRepository.findByid(id);
+        return user != null;
+    }
+
+    public void supprAmi(String id, String idAmi) {
+        Utilisateur user = this.getUtilisateur(id);
+        if(user.getListAmis().contains(idAmi)){
+            user.getListAmis().remove(idAmi);
+            this.utilisateurRepository.save(user);
+        }
+    }
+
+    public void addNotification(String id, String notificationId) {
+        Utilisateur user = this.getUtilisateur(id);
+        user.addNotification(notificationId);
+        this.utilisateurRepository.save(user);
+    }
+
+    public void removeNotification(String id, String notificationId) {
+        Utilisateur user = this.getUtilisateur(id);
+        user.removeNotification(notificationId);
+        this.utilisateurRepository.save(user);
+    }
+
+    public void deleteNotification(String userId, String notificationId) {
+
+        NotificationService notificationService = context.getBean(NotificationService.class);
+        Utilisateur user = this.getUtilisateur(userId);
+        user.removeNotification(notificationId);
+        notificationService.removeFromParent(notificationId);
     }
 
     public void supprimerUtilisateur(String id) {

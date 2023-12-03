@@ -40,10 +40,10 @@ import { ModifySectionComponent } from './user-home-page/project/section/section
 import {
   CdkDragDrop,
   CdkDropList,
+  CdkDropListGroup,
   CdkDrag,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
-import { UserSettingComponent } from './user-home-page/user-setting/user-setting.component';
 import { ProjectSettingComponent } from './user-home-page/lateral-user-home-menu/project-setting/project-setting.component';
 import { ProjetParametresComponent } from './user-home-page/projet-parametres/projet-parametres.component';
 import { ModifyTaskComponent } from './user-home-page/project/section/tache/tache-setting/modify-task/modify-task.component';
@@ -59,6 +59,11 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { AgendaComponent } from './user-home-page/agenda/agenda.component';
 import { DateLimiteCalendrierComponent } from './user-home-page/project/section-scrum/tache-scrum/date-limite-calendrier/date-limite-calendrier.component';
 import { ModifierCollaborateurComponent } from './user-home-page/project/section-scrum/tache-scrum/modifier-collaborateur/modifier-collaborateur.component';
+import { EtiquetteSettingsComponent } from './user-home-page/etiquette-settings/etiquette-settings.component';
+import { EtiquetteTachesComponent } from './user-home-page/etiquette-settings/etiquette-taches/etiquette-taches.component';
+import { UserProfilComponent } from './user-home-page/user-profil/user-profil.component';
+import { MiniUserProfilComponent } from './user-home-page/mini-user-profil/mini-user-profil.component';
+import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } from '@angular-material-components/color-picker';
 import { EquipeTacheComponent } from './user-home-page/equipe/equipe-tache/equipe-tache.component';
 //import { FullCalendarModule } from '@fullcalendar/angular';
 
@@ -82,7 +87,6 @@ import { EquipeTacheComponent } from './user-home-page/equipe/equipe-tache/equip
     SectionSettingComponent,
     TacheSettingComponent,
     ModifySectionComponent,
-    UserSettingComponent,
     ProjectSettingComponent,
     ProjetParametresComponent,
     ModifyTaskComponent,
@@ -94,6 +98,10 @@ import { EquipeTacheComponent } from './user-home-page/equipe/equipe-tache/equip
     AgendaComponent,
     DateLimiteCalendrierComponent,
     ModifierCollaborateurComponent,
+    EtiquetteSettingsComponent,
+    EtiquetteTachesComponent,
+    UserProfilComponent,
+    MiniUserProfilComponent,
     EquipeTacheComponent,
   ],
   imports: [
@@ -114,14 +122,17 @@ import { EquipeTacheComponent } from './user-home-page/equipe/equipe-tache/equip
     MatIconModule,
     MatCardModule,
     CdkDropList,
+    CdkDropListGroup,
     CdkDrag,
     MatCheckboxModule,
     MatGridListModule,
+    NgxMatColorPickerModule,
     //FullCalendarModule,
   ],
   providers: [
     { provide: MatDialogRef, useValue: {} },
     { provide: MAT_DIALOG_DATA, useValue: {} },
+    { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS },
   ],
   bootstrap: [AppComponent],
 })

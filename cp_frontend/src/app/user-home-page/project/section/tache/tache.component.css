@@ -33,7 +33,6 @@
     width: 100%;
     grid-row: 2;
     grid-column: 1;
-    overflow: auto;
 }
 
 
@@ -44,7 +43,8 @@
   }
 
 p {
-    width: 80%;
+    width: 100%;
+    cursor: pointer;
 }
 
 .settings-and-checkbox {
@@ -56,4 +56,51 @@ p {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+}
+
+.couleur {
+    flex-basis: 70%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: 5px;
+    color: black;
+}
+
+.etiquette {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.mat-icon, img{
+
+    cursor: pointer;
+}
+
+.mat-icon:hover{
+    background-color: #94949434; /* Or any color you prefer */
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 
+                0px 2px 2px 0px rgb(0 0 0 / 14%), 
+                0px 1px 5px 0px rgb(0 0 0 / 12%); /* Shadow effect */
+    border-radius: 50%;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.couleur > div {
+    display: inline-flex;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.date-limite {
+    text-align: center;
+    flex: 3 1 auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    font-size: 13px;
 }
