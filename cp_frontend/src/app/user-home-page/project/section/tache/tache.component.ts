@@ -90,7 +90,6 @@ export class TacheComponent  implements AfterViewChecked {
     //Les droits de l'utilisateur actuel
     this.http.get(`http://localhost:8080/projets/droitUtilisateur?idUtilisateur=${this.id}&idProjet=${this.projetId}`, {responseType: 'text'}).subscribe((data: string) => {
           this.droitUtilisateurActuel = data;
-          console.log("droit dans section: " + this.droitUtilisateurActuel)
     });
   }
 

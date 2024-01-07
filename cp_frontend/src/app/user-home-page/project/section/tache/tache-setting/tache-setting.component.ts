@@ -35,9 +35,7 @@ export class TacheSettingComponent {
 
   supprimer(){
     this.http.get(`http://localhost:8080/taches/removeTache?id=${this.id}&projectId=${this.projetId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}`,{responseType: 'text'}).subscribe((response:String)=>{
-      console.log("supprimer tache : " + response)
       this.http.get(`http://localhost:8080/sections/removeTache?id=${this.sectionId}&tacheId=${this.tacheId}`,{responseType: 'text'}).subscribe((response2: String)=>{
-        console.log("supprimer tache dans section: " + response)
         this.observableService.notifyTask();
         this.dialogRef.close()
       })
@@ -45,13 +43,11 @@ export class TacheSettingComponent {
   }
 
   modifier(){
-    console.log("projectID data : " + this.projetId)
     const dialogRef = this.dialog.open(ModifyTaskComponent, {
       data: {id: this.id, projectId: this.projetId, sectionId: this.sectionId, tacheId: this.tacheId}
     });
   
     dialogRef.afterClosed().subscribe(() => {
-      console.log('Le dialogue a été fermé');
     });
   }
 
@@ -76,13 +72,11 @@ export class TacheSettingComponent {
   }
 
   openDialogEtiquette(event: MouseEvent): void {
-    console.log("projectID data : " + this.projetId)
     const dialogRef = this.dialog.open(EtiquetteTachesComponent, {
       data: {data1:this.tacheId,data2:this.projetId},
     });
   
     dialogRef.afterClosed().subscribe(() => {
-      console.log('Le dialogue a été fermé');
     });
   }
   

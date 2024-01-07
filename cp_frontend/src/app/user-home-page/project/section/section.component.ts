@@ -60,7 +60,6 @@ export class SectionComponent {
 
     this.route.paramMap.subscribe((param) => {
       const projetId = param.get('projectId');
-      console.log(projetId);
       if (projetId != null) {
         this.projetId = projetId;
       }
@@ -195,7 +194,6 @@ export class SectionComponent {
               { responseType: 'text' }
             )
             .subscribe((response2: String) => {
-              console.log('supprimer tache dans section: ' + response2);
 
               this.http
                 .get(
@@ -207,7 +205,6 @@ export class SectionComponent {
               this.observableService.notifyTask();
             });
         } else {
-          console.log("probleme d'idTache", response);
         }
       });
   }

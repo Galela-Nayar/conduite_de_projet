@@ -67,7 +67,6 @@ export class ModifyTaskComponent implements OnInit {
       this.http.get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`)
       .subscribe((tacheData: Tache) => {
         this.tache = tacheData;
-        console.log('tache teerminer : ' + this.tache.statutTerminer);
         this.sectionForm = this.fb.group({
           nom: ['', Validators.required],
         });
@@ -90,8 +89,6 @@ export class ModifyTaskComponent implements OnInit {
           this.http.get<Commentaire[]>( `http://localhost:8080/taches/commentaires?id=${this.tacheId}`)
           .subscribe((data: Commentaire[]) => {
             this.commentaires = data;
-            console.log("commentaires : " + this.commentaires + this.commentaires[0].message)
-            console.log( this.commentaires)
           });
         });
       });
@@ -104,7 +101,6 @@ export class ModifyTaskComponent implements OnInit {
       this.http.get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`)
       .subscribe((tacheData: Tache) => {
         this.tache = tacheData;
-        console.log('tache teerminer : ' + this.tache.statutTerminer);
         this.sectionForm = this.fb.group({
           nom: ['', Validators.required],
         });
@@ -127,8 +123,6 @@ export class ModifyTaskComponent implements OnInit {
           this.http.get<Commentaire[]>( `http://localhost:8080/taches/commentaires?id=${this.tacheId}`)
           .subscribe((data: Commentaire[]) => {
             this.commentaires = data;
-            console.log("commentaires : " + this.commentaires + this.commentaires[0].message)
-            console.log( this.commentaires)
           });
         });
       });
@@ -145,7 +139,6 @@ export class ModifyTaskComponent implements OnInit {
   }
 
   envoyer(){
-    console.log("comment : " + this.comment)
     let date = new Date();
     let formattedDate = date.toLocaleDateString('en-GB');
 
@@ -217,7 +210,6 @@ export class ModifyTaskComponent implements OnInit {
 
   saveNomChanges(): void {
     if (this.sectionForm.valid) {
-      console.log(this.sectionForm.value.nom);
       this.http
         .put<string>(
           `http://localhost:8080/taches/updateNom?id=${this.id}&projectId=${this.projectId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}&nom=${this.sectionForm.value.nom}`,
@@ -244,12 +236,10 @@ export class ModifyTaskComponent implements OnInit {
       .subscribe((tacheData) => {
         this.tache.statutTerminer = !this.tache.statutTerminer;
         this.observerService.notifyTask();
-        console.log('tache teerminer swap: ' + this.tache.statutTerminer);
       });
   }
 
   removeUtilisateur(userId: String): void {
-    console.log('userId : ' + userId);
     this.http
       .get(
         `http://localhost:8080/taches/remove_collaborateur?id=${this.id}&projectId=${this.projectId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}&collaborateurId=${userId}`,
@@ -275,7 +265,6 @@ export class ModifyTaskComponent implements OnInit {
   }
 
   addUtilisateur(userId: String): void {
-    console.log('userId : ' + userId);
     this.http
       .get(
         `http://localhost:8080/taches/add_collaborateur?id=${this.id}&projectId=${this.projectId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}&collaborateurId=${userId}`,
@@ -327,7 +316,6 @@ export class ModifyTaskComponent implements OnInit {
           )
           .subscribe((data: Commentaire[]) => {
             this.commentaires = data;
-            console.log("commentaires : " + this.commentaires)
           });
         this.cdr.detectChanges();
 
@@ -349,8 +337,6 @@ export class ModifyTaskComponent implements OnInit {
         }
       )
       .subscribe((response2) => {
-        console.log('loloololo2');
-        console.log('tache added');
         this.observerService.notifyTask();
       });
   }
