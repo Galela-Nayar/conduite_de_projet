@@ -10,6 +10,7 @@ import Commentaire from 'src/interface/Commentaire';
 import Tache from 'src/interface/Tache';
 import Utilisateur from 'src/interface/Utilisateur';
 import { Directive, HostListener, ElementRef } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 
 
@@ -36,6 +37,7 @@ export class ModifyTaskComponent implements OnInit {
   mouseY: number = 0;
   hideTimeout: number;
   comment: String = "";
+  taskSubscription!: Subscription;
   @HostListener('input', ['$event.target'])
   onInput(textArea: HTMLTextAreaElement): void {
     this.adjust(textArea);
@@ -45,6 +47,7 @@ export class ModifyTaskComponent implements OnInit {
     public element: ElementRef,
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
+    private observableService: ObservableService,
     
     private fb: FormBuilder,
     private observerService: ObservableService,
@@ -59,39 +62,77 @@ export class ModifyTaskComponent implements OnInit {
 
   ngOnInit(): void {
     setTimeout(() => this.adjust(), 0);
-    this.http
-      .get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`)
+    this.taskSubscription = this.observableService
+    .getObservableTask().subscribe((response) => {
+      this.http.get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`)
       .subscribe((tacheData: Tache) => {
         this.tache = tacheData;
         console.log('tache teerminer : ' + this.tache.statutTerminer);
         this.sectionForm = this.fb.group({
           nom: ['', Validators.required],
         });
-
-        this.http
-          .get<Utilisateur[]>(
-            `http://localhost:8080/taches/membreAttribue?id=${this.tacheId}`
-          )
+        this.taskSubscription = this.observableService
+        .getObservableTask().subscribe((response) => {
+          this.http.get<Utilisateur[]>(`http://localhost:8080/taches/membreAttribue?id=${this.tacheId}`)
           .subscribe((data: Utilisateur[]) => {
             this.membreAttribue = data;
           });
-        this.http
-          .get<Utilisateur[]>(
-            `http://localhost:8080/taches/membreRestant?id=${this.tacheId}&projectId=${this.projectId}`
-          )
+        });
+        this.taskSubscription = this.observableService
+        .getObservableTask().subscribe((response) => {
+          this.http.get<Utilisateur[]>(`http://localhost:8080/taches/membreRestant?id=${this.tacheId}&projectId=${this.projectId}`)
           .subscribe((data: Utilisateur[]) => {
             this.membreRestant = data;
           });
-          this.http
-          .get<Commentaire[]>(
-            `http://localhost:8080/taches/commentaires?id=${this.tacheId}`
-          )
+        });
+        this.taskSubscription = this.observableService
+        .getObservableTask().subscribe((response) => {
+          this.http.get<Commentaire[]>( `http://localhost:8080/taches/commentaires?id=${this.tacheId}`)
           .subscribe((data: Commentaire[]) => {
             this.commentaires = data;
             console.log("commentaires : " + this.commentaires + this.commentaires[0].message)
             console.log( this.commentaires)
           });
+        });
       });
+    });
+  }
+
+  updateTache(){
+    this.taskSubscription = this.observableService
+    .getObservableTask().subscribe((response) => {
+      this.http.get<Tache>(`http://localhost:8080/taches/tache?id=${this.tacheId}`)
+      .subscribe((tacheData: Tache) => {
+        this.tache = tacheData;
+        console.log('tache teerminer : ' + this.tache.statutTerminer);
+        this.sectionForm = this.fb.group({
+          nom: ['', Validators.required],
+        });
+        this.taskSubscription = this.observableService
+        .getObservableTask().subscribe((response) => {
+          this.http.get<Utilisateur[]>(`http://localhost:8080/taches/membreAttribue?id=${this.tacheId}`)
+          .subscribe((data: Utilisateur[]) => {
+            this.membreAttribue = data;
+          });
+        });
+        this.taskSubscription = this.observableService
+        .getObservableTask().subscribe((response) => {
+          this.http.get<Utilisateur[]>(`http://localhost:8080/taches/membreRestant?id=${this.tacheId}&projectId=${this.projectId}`)
+          .subscribe((data: Utilisateur[]) => {
+            this.membreRestant = data;
+          });
+        });
+        this.taskSubscription = this.observableService
+        .getObservableTask().subscribe((response) => {
+          this.http.get<Commentaire[]>( `http://localhost:8080/taches/commentaires?id=${this.tacheId}`)
+          .subscribe((data: Commentaire[]) => {
+            this.commentaires = data;
+            console.log("commentaires : " + this.commentaires + this.commentaires[0].message)
+            console.log( this.commentaires)
+          });
+        });
+      });
+    });
   }
 
   adjust(textArea?: HTMLTextAreaElement): void {
@@ -105,18 +146,24 @@ export class ModifyTaskComponent implements OnInit {
 
   envoyer(){
     console.log("comment : " + this.comment)
+    let date = new Date();
+    let formattedDate = date.toLocaleDateString('en-GB');
+
     let commentaire: Commentaire ={
     id:  this.generateUUID(),
     createurId:  this.id,
     createdAt:  new Date(),
     tacheId:  this.tacheId,
-    message:  this.comment + "\nÀ " + new Date().getHours() + ":" + new Date().getMinutes() + "."
+    message:  this.comment + ", le " + formattedDate + " à " + new Date().getHours() + ":" + new Date().getMinutes() + "."
     }
     this.http.post(`http://localhost:8080/commentaires/add_commentaire`,commentaire, { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).subscribe(
       response => {
         this.comment = ""
       }
     )
+    this.updateTache();
+    this.cdr.detectChanges();
+    this.observerService.notifyTask();
   }
 
   generateUUID() { // Public Domain/MIT

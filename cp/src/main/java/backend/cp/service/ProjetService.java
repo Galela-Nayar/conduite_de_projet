@@ -50,6 +50,7 @@ private final ApplicationContext applicationContext;
     private List<String> setSection() {
         SectionService sectionService = applicationContext.getBean(SectionService.class);
         ArrayList<String> sections = new ArrayList<>();
+        sections.add(sectionService.createSection("BackLogs"));
         sections.add(sectionService.createSection("A faire"));
         sections.add(sectionService.createSection("En cours"));
         sections.add(sectionService.createSection("Terminé"));

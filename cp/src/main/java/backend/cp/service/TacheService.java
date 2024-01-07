@@ -72,12 +72,29 @@ public class TacheService {
         NotificationService notificationService = context.getBean(NotificationService.class);
         UtilisateurService utilisateurService = context.getBean(UtilisateurService.class);
         SectionService sectionService = context.getBean(SectionService.class);
+        CommentaireService commentaireService = context.getBean(CommentaireService.class);
         ProjetService projetService = context.getBean(ProjetService.class);
         Tache t = this.getTache(tacheId);
         t.setDateLimite(dateLimite);
-        tacheRepository.save(t);
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         String formattedDate = formatter.format(t.getDateLimite());
+        String date = formatter.format(new Date());
+
+        Commentaire comentaire = new Commentaire(id, new Date(), 
+        utilisateurService.getUtilisateur(id).getUserName() +
+         " à modifié la date limite de la tâche au " +
+        formattedDate + 
+        ", le " +
+        date +
+         " à " +
+        LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + "."
+        , t.getId());
+
+        commentaireService.save(comentaire);
+
+        t.addCommentaire(comentaire.getId());
+
+        tacheRepository.save(t);
         Notification notification = new Notification(id,projectId,sectionId,tacheId,
         utilisateurService.getUtilisateur(id).getUserName() +
          " à modifié la date limite de la tâche " +
@@ -133,16 +150,34 @@ public class TacheService {
         UtilisateurService utilisateurService = context.getBean(UtilisateurService.class);
         SectionService sectionService = context.getBean(SectionService.class);
         ProjetService projetService = context.getBean(ProjetService.class);
-        Tache sc = this.getTache(tacheId);
-        String nomPrecedant = sc.getNom();
-        sc.setNom(nom);
-        this.tacheRepository.save(sc);
+        Tache tache = this.getTache(tacheId);
+        String nomPrecedant = tache.getNom();
+        tache.setNom(nom);
+
+        CommentaireService commentaireService = context.getBean(CommentaireService.class);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = formatter.format(new Date());
+
+        Commentaire comentaire = new Commentaire(id, new Date(), 
+        utilisateurService.getUtilisateur(id).getUserName() +
+         " à modifé le nom de la tache de " + nomPrecedant + " à " +
+        tache.getNom() +
+        ", le " +
+        formattedDate +
+         " à " +
+        LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + "."
+        , tache.getId());
+
+        commentaireService.save(comentaire);
+        tache.addCommentaire(comentaire.getId());
+
+        this.tacheRepository.save(tache);
         Notification notification = new Notification(id,projectId,sectionId,tacheId,
         utilisateurService.getUtilisateur(id).getUserName() +
          " à modifié le nom de la tâche " +
         nomPrecedant +
         " par " +
-        sc.getNom() +
+        tache.getNom() +
         " de la section " +
         sectionService.getSection(sectionId).getNom() +
         " du projet " +
@@ -159,6 +194,25 @@ public class TacheService {
         ProjetService projetService = context.getBean(ProjetService.class);
         Tache tache = this.getTache(tacheId);
         tache.swapStatut();
+
+        CommentaireService commentaireService = context.getBean(CommentaireService.class);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = formatter.format(new Date());
+
+        Commentaire comentaire = new Commentaire(id, new Date(), 
+        utilisateurService.getUtilisateur(id).getUserName() +
+         " à passé le statut à " +
+        tache.isStatutTerminer() + 
+        ", le " +
+        formattedDate +
+         " à " +
+        LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + "."
+        , tache.getId());
+
+        commentaireService.save(comentaire);
+
+        tache.addCommentaire(comentaire.getId());
+
         this.tacheRepository.save(tache);
         Notification notification = new Notification(id,projectId,sectionId,tacheId,
         utilisateurService.getUtilisateur(id).getUserName() +
@@ -195,6 +249,24 @@ public class TacheService {
         ProjetService projetService = context.getBean(ProjetService.class);
         Tache tache = this.getTache(tacheId);
         tache.getMembreAttribue().add(collaborateurId);
+
+        CommentaireService commentaireService = context.getBean(CommentaireService.class);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = formatter.format(new Date());
+
+        Commentaire comentaire = new Commentaire(id, new Date(), 
+        utilisateurService.getUtilisateur(id).getUserName() +
+         " à ajouté à la tache " + 
+        utilisateurService.getUtilisateur(collaborateurId).getUserName() +
+        ", le " +
+        formattedDate +
+         " à " +
+        LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + "."
+        , tache.getId());
+
+        commentaireService.save(comentaire);
+        tache.addCommentaire(comentaire.getId());
+
         tacheRepository.save(tache);
         Notification notification = new Notification(id,projectId,sectionId,tacheId,
         utilisateurService.getUtilisateur(id).getUserName() +
@@ -250,6 +322,24 @@ public class TacheService {
         ProjetService projetService = context.getBean(ProjetService.class);
         Tache tache = this.getTache(tacheId);
         tache.getMembreAttribue().remove(collaborateurId);
+
+        CommentaireService commentaireService = context.getBean(CommentaireService.class);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = formatter.format(new Date());
+
+        Commentaire comentaire = new Commentaire(id, new Date(), 
+        utilisateurService.getUtilisateur(id).getUserName() +
+         " à retiré de la tache " + 
+        utilisateurService.getUtilisateur(collaborateurId).getUserName() +
+        ", le " +
+        formattedDate +
+         " à " +
+        LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + "."
+        , tache.getId());
+
+        commentaireService.save(comentaire);
+        tache.addCommentaire(comentaire.getId());
+        
         tacheRepository.save(tache);
         Notification notification = new Notification(id,projectId,sectionId,tacheId,
         utilisateurService.getUtilisateur(id).getUserName() +
@@ -278,6 +368,24 @@ public class TacheService {
         Tache tache = this.getTache(tacheId);
         Integer prioritePrecedente = tache.getPriorite();
         tache.setPriorite(priorite);
+
+        CommentaireService commentaireService = context.getBean(CommentaireService.class);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = formatter.format(new Date());
+
+        Commentaire comentaire = new Commentaire(id, new Date(), 
+        utilisateurService.getUtilisateur(id).getUserName() +
+         " à changé la priorité de " + prioritePrecedente + " à " + 
+        tache.getPonderation() +
+        ", le " +
+        formattedDate +
+         " à " +
+        LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + "."
+        , tache.getId());
+
+        commentaireService.save(comentaire);
+        tache.addCommentaire(comentaire.getId());
+        
         this.tacheRepository.save(tache);
         Notification notification = new Notification(id,projectId,sectionId,tacheId,
         utilisateurService.getUtilisateur(id).getUserName() +
@@ -301,14 +409,32 @@ public class TacheService {
         UtilisateurService utilisateurService = context.getBean(UtilisateurService.class);
         SectionService sectionService = context.getBean(SectionService.class);
         ProjetService projetService = context.getBean(ProjetService.class);
-        Tache sc = this.getTache(tacheId);
-        Integer ponderationPrecedente = sc.getPonderation();
-        sc.setPonderation(ponderation);
-        this.tacheRepository.save(sc);
+        Tache tache = this.getTache(tacheId);
+        Integer ponderationPrecedente = tache.getPonderation();
+        tache.setPonderation(ponderation);
+
+        CommentaireService commentaireService = context.getBean(CommentaireService.class);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = formatter.format(new Date());
+
+        Commentaire comentaire = new Commentaire(id, new Date(), 
+        utilisateurService.getUtilisateur(id).getUserName() +
+         " à changé la pondération de " + ponderationPrecedente + " à " + 
+        tache.getPonderation() +
+        ", le " +
+        formattedDate +
+         " à " +
+        LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + "."
+        , tache.getId());
+
+        commentaireService.save(comentaire);
+        tache.addCommentaire(comentaire.getId());
+
+        this.tacheRepository.save(tache);
         Notification notification = new Notification(id,projectId,sectionId,tacheId,
         utilisateurService.getUtilisateur(id).getUserName() +
-        " à changé la priorité de la tâche " +
-        sc.getNom() +
+        " à changé la pondération de la tâche " +
+        tache.getNom() +
         " dans la section " +
         sectionService.getSection(sectionId).getNom() +
         " du projet " +
