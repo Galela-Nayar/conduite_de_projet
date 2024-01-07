@@ -46,8 +46,10 @@ export class LogInComponent {
           document.body.appendChild(test_connexion_utilisateur);
           console.log('existe mais mdp ou email incorrect');
         } else {
-          this.userService.setId(response.valueOf());
-          this.router.navigate([response.valueOf() + '/home']);
+          if(response.valueOf() != "Invalid email or password"){
+            this.userService.setId(response.valueOf());
+            this.router.navigate([response.valueOf() + '/home']);
+          }
         }
       });
   }
