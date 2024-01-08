@@ -141,7 +141,7 @@
                 >
                   <h2>
                     <!-- ... autres éléments ... -->
-                    <button (click)="openPasswordChangeDialog()">
+                    <button *ngIf="id == idUser" (click)="openPasswordChangeDialog()">
                       Changer le mot de passe
                     </button>
                   </h2>

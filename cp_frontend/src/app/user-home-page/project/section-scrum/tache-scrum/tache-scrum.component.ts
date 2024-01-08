@@ -73,14 +73,20 @@ export class TacheScrumComponent implements AfterViewChecked {
               }
             });
       });
-      this.http.get<Utilisateur[]>(`http://localhost:8080/taches/membreAttribue?id=${this.tacheId}`).subscribe((data: Utilisateur[]) => {
+      this.taskSubscription = this.observableService
+        .getObservableTask()
+        .subscribe((response) => {this.http.get<Utilisateur[]>(`http://localhost:8080/taches/membreAttribue?id=${this.tacheId}`).subscribe((data: Utilisateur[]) => {
         this.membreAttribue = data;
+        })
       })
 
 
     //Les droits de l'utilisateur actuel
-    this.http.get(`http://localhost:8080/projets/droitUtilisateur?idUtilisateur=${this.id}&idProjet=${this.projetId}`, {responseType: 'text'}).subscribe((data: string) => {
+    this.taskSubscription = this.observableService
+        .getObservableTask()
+        .subscribe((response) => {this.http.get(`http://localhost:8080/projets/droitUtilisateur?idUtilisateur=${this.id}&idProjet=${this.projetId}`, {responseType: 'text'}).subscribe((data: string) => {
       this.droitUtilisateurActuel = data;
+    })
 });
     }
   }
@@ -103,22 +109,22 @@ export class TacheScrumComponent implements AfterViewChecked {
     this.http.put(`http://localhost:8080/taches/updateNom?id=${this.id}&projectId=${this.projetId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}&nom=${this.tache.nom}`, {responseType:"text"}).
     subscribe((tacheData) => {
       this.updateTache();
-      this.isEditingNom = false;
       this.observerService.notifyTask();
       this.cd.detectChanges()
     })
+    this.isEditingNom = false;
   }
 
   updateTaskPriorite() {
     this.http.put(`http://localhost:8080/taches/updatePriorite?id=${this.id}&projectId=${this.projetId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}&priorite=${this.tache.priorite}`, {responseType:"text"}).
     subscribe((tacheData) => {
       this.updateTache();
-      this.isEditingPriorite = false;
       this.observerService.notifyTask();
 
       this.cd.detectChanges();
 
     })
+    this.isEditingPriorite = false;
     
   }
 
@@ -126,12 +132,12 @@ export class TacheScrumComponent implements AfterViewChecked {
     this.http.put(`http://localhost:8080/taches/updatePonderation?id=${this.id}&projectId=${this.projetId}&sectionId=${this.sectionId}&tacheId=${this.tacheId}&ponderation=${this.tache.ponderation}`, {responseType:"text"}).
     subscribe((tacheData) => {
       this.updateTache();
-      this.isEditingPonderation = false;
       this.observerService.notifyTask();
 
       this.cd.detectChanges();
 
     })
+    this.isEditingPonderation = false;
     
   }
 

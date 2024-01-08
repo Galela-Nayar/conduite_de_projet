@@ -132,45 +132,6 @@
                     </form>
                 </div>
             </div>
-            <div class="section">
-                <div class="section-container">
-                    <div class="header_section">Date buttoire:</div>
-                    <form [formGroup]="dateForm" (ngSubmit)="saveDate()">
-                        <div style="display: flex; align-items: center;">
-                            <mat-form-field>
-                                <input matInput [matDatepicker]="picker" formControlName="datePicker">
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-datepicker #picker></mat-datepicker>
-                            </mat-form-field>
-                            <div>
-                                <button *ngIf="!fields[1].saved" 
-                                        [disabled]="dateForm.get('datePicker').invalid || getFormattedDate(dateForm.get('datePicker').value) === getFormattedDate(project.dateButtoire)" 
-                                        (click)="saveDate()">Enregistrer</button>
-                                <div *ngIf="fields[1].saved">
-                                    <mat-icon>check_circle</mat-icon>
-                                </div>
-                            </div>
-                        </div>
-                        <div *ngIf="dateForm.invalid && dateForm.touched">
-                            Date invalide
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="section">
-                <div class="section-container">
-                    <div class="header_section">Description:</div>
-                    <form [formGroup]="descriptionForm">
-                        <textarea formControlName="description"></textarea>
-                        <button *ngIf="!fields[2].saved" 
-                        [disabled]="descriptionForm.get('description').invalid || descriptionForm.get('description').value === project.description" 
-                        (click)="saveDescription()">Enregistrer</button>
-                        <div *ngIf="fields[2].saved">
-                            <mat-icon>check_circle</mat-icon>
-                        </div>
-                    </form>
-                </div>
-            </div>
             <div class="section-last">
                 <div class="section-container">
                     <div class="header_section">Clôturer le projet:</div>
